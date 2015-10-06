@@ -216,7 +216,7 @@ namespace WindesHeim_Game
                         case 1:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
                             gameObject.FadeSmall();
-                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\EXPLODE1.WAV");
+                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\EXPLODE.WAV");
                             player.Play();
                             break;
                         case 2:
