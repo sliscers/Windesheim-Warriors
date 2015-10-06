@@ -293,10 +293,7 @@ namespace WindesHeim_Game
                 if(gameObject is Explosion) {
                     g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                    
-                    {
-
-                    }
-                    
+                           
                 }
             }
         }
