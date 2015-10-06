@@ -1070,6 +1070,9 @@ namespace WindesHeim_Game
         private Button goBack;
         private Label labelLevels;
         private Panel alignPanel;
+        private Label labelHighscore;
+
+        private List<XMLParser> Levels = new List<XMLParser>();
 
         private ControllerHighscores highscoresController;
 
@@ -1091,8 +1094,16 @@ namespace WindesHeim_Game
             {
                 XMLParser xml = new XMLParser(file);
                 xml.ReadXML();
+                this.Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
                 levels.Items.Add(xml.gameProperties.title);
-            }                
+
+                int i = 0;
+                foreach (GameHighscores highscore in xml.gameHighscores)
+                {
+                    i++;
+                    //new Label().Text = highscore.name + " score: " + highscore.score;
+                }
+            }   
 
             labelLevels = new Label();
             labelLevels.Text = "Levels";

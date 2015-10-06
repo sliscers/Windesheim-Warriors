@@ -50,10 +50,10 @@ namespace WindesHeim_Game
         }
 
         public void highscores_Click(object sender, EventArgs e)
-    {
+        {
             gameWindow.setController(ScreenStates.highscore);
         }
-        }
+    }
 
     public class ControllerGame : Controller
     {
@@ -145,7 +145,7 @@ namespace WindesHeim_Game
                     if(gameObstacle.CollidesWith(mg.player)) {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
-                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
                         mg.player.ImageURL = "../Player.png";
                     }
                 }
@@ -168,9 +168,9 @@ namespace WindesHeim_Game
                     if (gameObstacle.CollidesWith(mg.player)) {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
-                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
-                        mg.player.ImageURL = "../Player.png";                    }
-                }
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
+                        mg.player.ImageURL = "../Player.png";
+                    }
 
                 if (gameObject is StaticObstacle)
                 {
@@ -208,54 +208,67 @@ namespace WindesHeim_Game
                     double animationTimerTen = (difference.TotalMilliseconds / 100);
                     int animationTimer = Convert.ToInt32(animationTimerTen) ;
                     Console.WriteLine(animationTimer);
+                    
 
                     switch (animationTimer)
                     {
                         case 1:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
+                            gameObject.FadeSmall();
                             break;
                         case 2:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EC0C07");
+                            gameObject.FadeSmall();
                             break;
                         case 3:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#D9190F");
+                            gameObject.FadeSmall();
                             break;
                         case 4:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#C62517");
+                            gameObject.FadeSmall();
                             break;
                         case 5:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#B3312F");
+                            gameObject.FadeSmall();
                             break;
                         case 6:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#A03F27");
+                            gameObject.FadeSmall();
                             break;
                         case 7:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#8D4B2F");
+                            gameObject.FadeSmall();
                             break;
                         case 8:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#7A5837");
+                            gameObject.FadeSmall();
                             break;
                         case 9:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#67653F");
+                            gameObject.FadeSmall();
                             break;
                         case 10:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#547147");
+                            gameObject.FadeSmall();
                             break;
                         case 11:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#417E4F");
+                            gameObject.FadeSmall();
                             break;
                         case 12:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#2E8B57");
+                            gameObject.FadeSmall();
                             break;
 
-                    }
+                        }
 
-                    
-                        
 
-                    // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
-                    if(difference.TotalSeconds > 1.2) {
-                        mg.GameObjects.Remove(gameObject);
+
+                        // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
+                        if (difference.TotalSeconds > 1.2)
+                        {
+                            mg.GameObjects.Remove(gameObject);
                         mg.graphicsPanel.BackColor = Color.SeaGreen;
                     }
                 }
@@ -343,7 +356,7 @@ namespace WindesHeim_Game
             }
 
           
-            }
+        }
     }
 
     public class ControllerLevelSelect : Controller
@@ -352,7 +365,7 @@ namespace WindesHeim_Game
         {
             this.model = new ModelLevelSelect(this);
         }
-          
+
         public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.menu);
