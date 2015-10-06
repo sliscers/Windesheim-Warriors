@@ -1066,13 +1066,13 @@ namespace WindesHeim_Game
 
     public class ModelHighscores : Model
     {
-        private ListBox levels;
+        private ListBox listBoxLevels;
         private Button goBack;
         private Label labelLevels;
         private Panel alignPanel;
-        private Label labelHighscore;
+        private ListBox listBoxHighscores;
 
-        private List<XMLParser> Levels = new List<XMLParser>();
+        private List<XMLParser> levels = new List<XMLParser>();
 
         private ControllerHighscores highscoresController;
 
@@ -1086,22 +1086,30 @@ namespace WindesHeim_Game
             alignPanel = new Panel();
             alignPanel.AutoSize = true;
 
-            levels = new ListBox();
-            levels.Size = new System.Drawing.Size(200, 475);
-            levels.Location = new System.Drawing.Point(0, 40);
+            listBoxLevels = new ListBox();
+            listBoxLevels.Size = new System.Drawing.Size(200, 475);
+            listBoxLevels.Location = new System.Drawing.Point(0, 40);
+
+            listBoxHighscores = new ListBox();
+            listBoxHighscores.Size = new System.Drawing.Size(200, 475);
+            listBoxHighscores.Location = new System.Drawing.Point(200, 40);
+
             string[] fileEntries = Directory.GetFiles("../levels/");
             foreach (string file in fileEntries)
             {
                 XMLParser xml = new XMLParser(file);
                 xml.ReadXML();
-                this.Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
-                levels.Items.Add(xml.gameProperties.title);
+                this.levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+                listBoxLevels.Items.Add(xml.gameProperties.title);
 
                 int i = 0;
                 foreach (GameHighscores highscore in xml.gameHighscores)
                 {
                     i++;
-                    //new Label().Text = highscore.name + " score: " + highscore.score;
+                    char[] a = highscore.name.ToCharArray();
+                    a[0] = char.ToUpper(a[0]);
+
+                    listBoxHighscores.Items.Add( i + ". " + new string(a) + " score: " + highscore.score);
                 }
             }   
 
@@ -1121,7 +1129,10 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(alignPanel);
             alignPanel.Controls.Add(labelLevels);
             alignPanel.Controls.Add(goBack);
-            alignPanel.Controls.Add(levels);
+            alignPanel.Controls.Add(listBoxLevels);
+            alignPanel.Controls.Add(listBoxHighscores);
+
+
             alignPanel.Location = new Point(
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
