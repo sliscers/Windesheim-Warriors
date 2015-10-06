@@ -275,7 +275,7 @@ namespace WindesHeim_Game
         private Panel alignPanel;
         private Label labelHighscore;
 
-        private List<XMLParser> Levels;
+        private List<XMLParser> Levels = new List<XMLParser>();
 
         private ControllerHighscores highscoresController;
 
@@ -297,7 +297,7 @@ namespace WindesHeim_Game
             {
                 XMLParser xml = new XMLParser(file);
                 xml.ReadXML();
-                Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+                this.Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
                 levels.Items.Add(xml.gameProperties.title);
 
                 int i = 0;
