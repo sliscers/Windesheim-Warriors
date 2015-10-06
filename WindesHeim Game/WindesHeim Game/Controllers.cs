@@ -199,8 +199,9 @@ namespace WindesHeim_Game
 
                 // Check of we de explosie kunnen verwijderen
                 if (gameObject is Explosion) {
+                    
                     Explosion explosion = (Explosion)gameObject;
-
+                    
                     DateTime nowDateTime = DateTime.Now;
                     DateTime explosionDateTime = explosion.TimeStamp;
                     TimeSpan difference = nowDateTime - explosionDateTime;
@@ -215,6 +216,8 @@ namespace WindesHeim_Game
                         case 1:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
                             gameObject.FadeSmall();
+                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\EXPLODE1.WAV");
+                            player.Play();
                             break;
                         case 2:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EC0C07");
