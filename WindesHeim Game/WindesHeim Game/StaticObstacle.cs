@@ -5,13 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindesHeim_Game {
+namespace WindesHeim_Game
+{
 
-    class StaticObstacle : Obstacle {
+    class StaticObstacle : Obstacle
+    {
 
-        public StaticObstacle(Point location, int height, int width) : base (location, height, width)
+        public StaticObstacle(Point location, int height, int width) : base(location, height, width)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconTC.png";
+        }
+
+        public bool CollidesWith(Player player)
+        {
+            if (GetDistance(player.Location) < 40)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
