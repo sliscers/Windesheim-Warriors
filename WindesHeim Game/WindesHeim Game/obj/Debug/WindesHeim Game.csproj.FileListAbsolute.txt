@@ -19,3 +19,6 @@ C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors
 C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.GameWindow.resources
 C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.Properties.Resources.resources
 C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
+C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
+C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
+C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
