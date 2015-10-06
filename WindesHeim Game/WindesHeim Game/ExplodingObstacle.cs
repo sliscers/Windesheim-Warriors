@@ -15,7 +15,7 @@ namespace WindesHeim_Game {
         }
 
         public bool CollidesWith(Player player) {
-            if (GetDistance(player.Location) < 100) {
+            if (GetDistance(player.Location) < 75) {
                 return true;
             }
             else {

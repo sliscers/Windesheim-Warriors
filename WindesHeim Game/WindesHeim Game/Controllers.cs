@@ -151,6 +151,7 @@ namespace WindesHeim_Game
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
+                        mg.player.ImageURL = "../Player.png";
                     }
                 }
 
@@ -173,6 +174,7 @@ namespace WindesHeim_Game
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
+                        mg.player.ImageURL = "../Player.png";
                     }
                 }
 
@@ -186,7 +188,7 @@ namespace WindesHeim_Game
                     TimeSpan difference = nowDateTime - explosionDateTime;
 
                     // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
-                    if(difference.TotalSeconds > 3) {
+                    if(difference.TotalSeconds > 1) {
                         mg.GameObjects.Remove(gameObject);
                     }
                 }
