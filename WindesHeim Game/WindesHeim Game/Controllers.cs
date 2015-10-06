@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -167,6 +168,7 @@ namespace WindesHeim_Game
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
+                       
                     }
                 }
 
@@ -201,12 +203,60 @@ namespace WindesHeim_Game
 
                     DateTime nowDateTime = DateTime.Now;
                     DateTime explosionDateTime = explosion.TimeStamp;
-
                     TimeSpan difference = nowDateTime - explosionDateTime;
 
-                    // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
-                    if(difference.TotalSeconds > 3) {
+                    double animationTimerTen = (difference.TotalMilliseconds / 100);
+                    int animationTimer = Convert.ToInt32(animationTimerTen) ;
+                    Console.WriteLine(animationTimer);
+                    
+                    switch (animationTimer)
+                    {
+                        case 1:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
+                            break;
+                        case 2:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EC0C07");
+                            break;
+                        case 3:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#D9190F");
+                            break;
+                        case 4:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#C62517");
+                            break;
+                        case 5:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#B3312F");
+                            break;
+                        case 6:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#A03F27");
+                            break;
+                        case 7:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#8D4B2F");
+                            break;
+                        case 8:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#7A5837");
+                            break;
+                        case 9:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#67653F");
+                            break;
+                        case 10:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#547147");
+                            break;
+                        case 11:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#417E4F");
+                            break;
+                        case 12:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#2E8B57");
+                            break;
+
+                    }
+
+                    
+                        
+                    
+                    // Verschil is 0.9 seconden, dus het bestaat al voor 0.9 seconden, verwijderen maar!
+                    if (difference.TotalSeconds > 1.2) {
                         mg.GameObjects.Remove(gameObject);
+                        mg.graphicsPanel.BackColor = Color.SeaGreen;
                     }
                 }
             }      
@@ -232,7 +282,7 @@ namespace WindesHeim_Game
 
                 if(gameObject is Explosion) {
                     g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
-                    
+                   
                     {
 
                     }
