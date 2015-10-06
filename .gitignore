@@ -4,10 +4,7 @@ WindesHeim Game/WindesHeim Game/Debug/
 WindesHeim Game/WindesHeim Game/Release/
 
 #INSTRUCTIES
-#Wanneer je dit .gitignore bestand hebt, het volgende doen:
-#Doe ALLEEN een commit
-#Start GitHub client op, rechtermuisknop op Windesheim-Warriors -> Open in Git Shell
-#Voer de onderstaande commando's uit:
+#Je hoeft niks te doen
 # git rm . -r --cached
 # git add .
 # git commit -m "fixed untracked files"
