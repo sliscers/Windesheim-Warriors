@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 
 namespace WindesHeim_Game {
 
-    class Explosion : GameObject {
+    class Explosion : GameObject
+    {
 
         private DateTime timeStamp = DateTime.Now;
 
-        public Explosion(Point location, int height, int width) : base (location, width, height)
+        public Explosion(Point location, int height, int width) : base(location, width, height)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\explosion.png";
-            
+
         }
 
-        public DateTime TimeStamp {
+        public DateTime TimeStamp
+        {
             get { return timeStamp; }
         }
+
+       
     }
 }
