@@ -118,19 +118,19 @@ namespace WindesHeim_Game
                             //gameObjects.Add(new Player(new Point(gameObject.X, gameObject.Y)));
                         break;
 
-                        case "Car":
+                        case "ExplodingObstacle":
                             //gameObjects.Add(new ExplodingObstacle(new Point(20, 20), "../Player.png"));
                         break;
 
-                        case "Cyclist":
+                        case "FollowingObstacle":
                             //gameObjects.Add(new FollowingObstacle(new Point(20, 20), "../Player.png"));
                         break;
 
-                        case "TrafficController":
+                        case "StaticObstacle":
                             //gameObjects.Add(new StaticObstacle(new Point(20, 20), "../Player.png"));
                         break;
 
-                        case "Freshmen":
+                        case "SlowingObstacle":
                             //SlowingObstacle sb = new SlowingObstacle(new Point(20, 20))
                             //sb.MovingSpeed = 10;                       
 
@@ -184,19 +184,19 @@ namespace WindesHeim_Game
                 }
                 else if (gameObject is ExplodingObstacle)
                 {
-                    gameObjectType = "Car";
+                    gameObjectType = "ExplodingObstacle";
                 }
                 else if (gameObject is MovingExplodingObstacle)
                 {
-                    gameObjectType = "Cyclist";
+                    gameObjectType = "MovingExplodingObstacle";
                 }
                 else if (gameObject is StaticObstacle)
                 {
-                    gameObjectType = "TrafficController";
+                    gameObjectType = "StaticObstacle";
                 }
                 else if (gameObject is SlowingObstacle)
                 {
-                    gameObjectType = "Freshmen";
+                    gameObjectType = "SlowingObstacle";
                 }
                 xmlWriter.WriteStartElement("type");
                 xmlWriter.WriteValue(gameObjectType); //Type
