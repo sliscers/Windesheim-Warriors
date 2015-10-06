@@ -1,0 +1,3 @@
+C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
+C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
+C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
