@@ -14,6 +14,7 @@ namespace WindesHeim_Game {
         public Explosion(Point location, int height, int width) : base (location, width, height)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\explosion.png";
+            
         }
 
         public DateTime TimeStamp {

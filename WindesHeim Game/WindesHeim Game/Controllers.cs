@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -47,20 +48,12 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.gameSelect);
         }
-    }
 
-    public class ControllerLevelSelect : Controller
+        public void highscores_Click(object sender, EventArgs e)
     {
-        public ControllerLevelSelect(GameWindow form) : base(form)
-        {
-            this.model = new ModelLevelSelect(this);
+            gameWindow.setController(ScreenStates.highscore);
         }
-
-        public void goBack_Click(object sender, EventArgs e)
-        {
-            gameWindow.setController(ScreenStates.menu);
         }
-    }
 
     public class ControllerGame : Controller
     {
@@ -72,6 +65,7 @@ namespace WindesHeim_Game
         private bool pressedUp = false;
         private bool pressedDown = false;
         private bool pressedSpeed = false;
+        private int counter;
 
        
 
@@ -82,13 +76,14 @@ namespace WindesHeim_Game
             timer.Tick += new EventHandler(GameLoop);
             timer.Interval = 16;
             timer.Start();
+            
         }
 
         private void GameLoop(object sender, EventArgs e)
         {
             ProcessUserInput();
             ProcessObstacles();
-
+            counter++;
 
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
@@ -105,15 +100,15 @@ namespace WindesHeim_Game
 
             if (pressedSpeed && (mg.player.SpeedCooldown == 0))
             {
-                mg.player.Speed = 10;
+                mg.player.Speed = mg.player.OriginalSpeed * 2;
 
                 mg.player.SpeedDuration ++;
        
             }
-            if(mg.player.SpeedDuration > 60)
+            if(mg.player.SpeedDuration > 50)
             {
                 mg.player.SpeedDuration = 0;
-                mg.player.Speed = 5;
+                mg.player.Speed = mg.player.OriginalSpeed;
                 mg.player.SpeedCooldown = 200;
             }
 
@@ -160,10 +155,10 @@ namespace WindesHeim_Game
                     gameObstacle.ChasePlayer(mg.player);
 
                     if(gameObstacle.CollidesWith(mg.player)) {
-                        mg.player.Speed = 2;
+                        mg.player.Speed = mg.player.OriginalSpeed / 2;
                     }
                     else {
-                        mg.player.Speed = 5;
+                        mg.player.Speed = mg.player.OriginalSpeed;
                     }
                 }
 
@@ -174,22 +169,94 @@ namespace WindesHeim_Game
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
-                        mg.player.ImageURL = "../Player.png";
+                        mg.player.ImageURL = "../Player.png";                    }
+                }
+
+                if (gameObject is StaticObstacle)
+                {
+                    StaticObstacle gameObstacle = (StaticObstacle)gameObject;
+
+                    if (gameObstacle.CollidesWith(mg.player))
+                    {
+                        if (pressedUp)
+                        {
+                            mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
+                        }
+                        if (pressedDown)
+                        {
+                            mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
+                        }
+                        if (pressedLeft)
+                        {
+                            mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
+                        }
+                        if (pressedRight)
+                        {
+                            mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
+                        }
                     }
                 }
 
                 // Check of we de explosie kunnen verwijderen
-                if(gameObject is Explosion) {
+                if (gameObject is Explosion) {
                     Explosion explosion = (Explosion)gameObject;
 
                     DateTime nowDateTime = DateTime.Now;
                     DateTime explosionDateTime = explosion.TimeStamp;
-
                     TimeSpan difference = nowDateTime - explosionDateTime;
 
+                    double animationTimerTen = (difference.TotalMilliseconds / 100);
+                    int animationTimer = Convert.ToInt32(animationTimerTen) ;
+                    Console.WriteLine(animationTimer);
+
+                    switch (animationTimer)
+                    {
+                        case 1:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
+                            break;
+                        case 2:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EC0C07");
+                            break;
+                        case 3:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#D9190F");
+                            break;
+                        case 4:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#C62517");
+                            break;
+                        case 5:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#B3312F");
+                            break;
+                        case 6:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#A03F27");
+                            break;
+                        case 7:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#8D4B2F");
+                            break;
+                        case 8:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#7A5837");
+                            break;
+                        case 9:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#67653F");
+                            break;
+                        case 10:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#547147");
+                            break;
+                        case 11:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#417E4F");
+                            break;
+                        case 12:
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#2E8B57");
+                            break;
+
+                    }
+
+                    
+                        
+
                     // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
-                    if(difference.TotalSeconds > 1) {
+                    if(difference.TotalSeconds > 1.2) {
                         mg.GameObjects.Remove(gameObject);
+                        mg.graphicsPanel.BackColor = Color.SeaGreen;
                     }
                 }
             }      
@@ -210,11 +277,16 @@ namespace WindesHeim_Game
             // Teken andere gameobjects
             foreach (GameObject gameObject in mg.GameObjects) {
                 if(gameObject is Obstacle) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, 64, 64);
+                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
 
                 if(gameObject is Explosion) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, 64, 64);
+                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                   
+                    {
+
+                    }
+                    
                 }
             }
         }
@@ -271,14 +343,31 @@ namespace WindesHeim_Game
             }
 
           
+            }
+    }
+
+    public class ControllerLevelSelect : Controller
+    {
+        public ControllerLevelSelect(GameWindow form) : base(form)
+        {
+            this.model = new ModelLevelSelect(this);
+        }
+          
+        public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.menu);
         }
     }
 
-    class ControllerHighscores : Controller
+    public class ControllerHighscores : Controller
     {
         public ControllerHighscores(GameWindow form) : base(form)
         {
             this.model = new ModelHighscores(this);
+        }
+                public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.menu);
         }
     }
 }

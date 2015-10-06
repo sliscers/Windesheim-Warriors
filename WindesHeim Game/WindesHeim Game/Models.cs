@@ -85,26 +85,25 @@ namespace WindesHeim_Game
 
             this.tempPlay.Click += new EventHandler(menuController.button_Click);
 
+            this.highscore.Click += new EventHandler(menuController.highscores_Click);
+
+
             gameWindow.Controls.Add(play);
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
             gameWindow.Controls.Add(tempPlay);
-
-            //XML loading test
-            //XML test = new XML("");
-            //test.Write();
-            //test.Read();            
         }
     }
 
-    public class ModelGame : Model {
+    public class ModelGame : Model
+    {
         private ControllerGame gameController;
 
         // Houdt alle dynamische gameobjecten vast
         private List<GameObject> gameObjects = new List<GameObject>();
         
         // Er is maar 1 speler
-        public Player player = new Player(new Point(10, 10), 80, 80);
+        public Player player = new Player(new Point(10, 10), 40, 40);
 
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
@@ -185,14 +184,15 @@ namespace WindesHeim_Game
             InitializeField();
         }
 
-        public void InitializeField() {
+        public void InitializeField()
+        {
             gameObjects.Clear();
 
             // Toevoegen aan list, zodat we het kunnen volgen
-            gameObjects.Add(new MovingExplodingObstacle(new Point(520, 20), 80, 80));
-            gameObjects.Add(new StaticObstacle(new Point(150, 200), 80, 80));
-            gameObjects.Add(new ExplodingObstacle(new Point(380, 400), 80, 80));
-            gameObjects.Add(new SlowingObstacle(new Point(420, 100), 80, 80));
+            gameObjects.Add(new MovingExplodingObstacle(new Point(520, 20), 40, 40));
+            gameObjects.Add(new StaticObstacle(new Point(150, 200), 40, 40));
+            gameObjects.Add(new ExplodingObstacle(new Point(380, 400), 40, 40));
+            gameObjects.Add(new SlowingObstacle(new Point(420, 100), 40, 40));
         }
 
         public override void ControlsInit(Form gameWindow)
@@ -812,7 +812,7 @@ namespace WindesHeim_Game
             this.logoPanel.Name = "logoPanel";
             this.logoPanel.Size = new System.Drawing.Size(431, 242);
             this.logoPanel.TabIndex = 0;
-            
+
 
             // Voeg hieronder de overige panels toe, zoals objectbeschrijvingen etc.
 
@@ -978,12 +978,8 @@ namespace WindesHeim_Game
                 mute = true;
             }
         }
-
-
-
-
-
-        public List<GameObject> GameObjects {
+        public List<GameObject> GameObjects
+        {
             get { return gameObjects; }
         }
     }
@@ -1000,11 +996,13 @@ namespace WindesHeim_Game
 
         private ControllerLevelSelect levelSelectController;
 
-        public ModelLevelSelect(ControllerLevelSelect controller) : base(controller) {
+        public ModelLevelSelect(ControllerLevelSelect controller) : base(controller)
+        {
             this.levelSelectController = controller;
         }
 
-        public override void ControlsInit(Form gameWindow) {
+        public override void ControlsInit(Form gameWindow)
+        {
             alignPanel = new Panel();
             alignPanel.AutoSize = true;
 
@@ -1019,8 +1017,12 @@ namespace WindesHeim_Game
             levels.Size = new System.Drawing.Size(200, 475);
             levels.Location = new System.Drawing.Point(0, 40);
             string[] fileEntries = Directory.GetFiles("../levels/");
-            foreach (string fileName in fileEntries)
-            levels.Items.Add(Path.GetFileName(fileName));
+            foreach (string file in fileEntries)
+            {
+                XMLParser xml = new XMLParser(file);
+                xml.ReadXML();
+                levels.Items.Add(xml.gameProperties.title);
+            }
 
             labelLevels = new Label();
             labelLevels.Text = "Levels";
@@ -1064,14 +1066,55 @@ namespace WindesHeim_Game
 
     public class ModelHighscores : Model
     {
-        public ModelHighscores(Controller controller) : base(controller)
-        {
+        private ListBox levels;
+        private Button goBack;
+        private Label labelLevels;
+        private Panel alignPanel;
 
+        private ControllerHighscores highscoresController;
+
+        public ModelHighscores(ControllerHighscores controller) : base(controller)
+        {
+            this.highscoresController = controller;
         }
 
         public override void ControlsInit(Form gameWindow)
         {
-        // todo
+            alignPanel = new Panel();
+            alignPanel.AutoSize = true;
+
+            levels = new ListBox();
+            levels.Size = new System.Drawing.Size(200, 475);
+            levels.Location = new System.Drawing.Point(0, 40);
+            string[] fileEntries = Directory.GetFiles("../levels/");
+            foreach (string file in fileEntries)
+            {
+                XMLParser xml = new XMLParser(file);
+                xml.ReadXML();
+                levels.Items.Add(xml.gameProperties.title);
+            }                
+
+            labelLevels = new Label();
+            labelLevels.Text = "Levels";
+            labelLevels.Font = new Font("Arial", 20);
+            labelLevels.Location = new System.Drawing.Point(0, 0);
+            labelLevels.Size = new System.Drawing.Size(200, 30);
+            labelLevels.TextAlign = ContentAlignment.MiddleCenter;
+
+            goBack = new Button();
+            goBack.Size = new System.Drawing.Size(200, 25);
+            goBack.Location = new System.Drawing.Point(0, 525);
+            goBack.Text = "Go Back";
+            goBack.Click += new EventHandler(highscoresController.goBack_Click);
+
+            gameWindow.Controls.Add(alignPanel);
+            alignPanel.Controls.Add(labelLevels);
+            alignPanel.Controls.Add(goBack);
+            alignPanel.Controls.Add(levels);
+            alignPanel.Location = new Point(
+                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
+            alignPanel.Anchor = AnchorStyles.None;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace WindesHeim_Game
         private ControllerMenu menu;
         private ControllerGame game;
         private ControllerLevelSelect levelSelect;
+        private ControllerHighscores highscores;
 
         private ScreenStates state = ScreenStates.menu;
         private System.ComponentModel.IContainer components = null;
@@ -37,6 +38,7 @@ namespace WindesHeim_Game
             menu = new ControllerMenu(this);
             game = new ControllerGame(this);
             levelSelect = new ControllerLevelSelect(this);
+            highscores = new ControllerHighscores(this);
 
             this.setController(ScreenStates.menu);
 
@@ -76,6 +78,7 @@ namespace WindesHeim_Game
                     break;
                 case ScreenStates.highscore:
                     this.state = ScreenStates.highscore;
+                    highscores.RunController();
                     break;
                 default:
                     this.state = ScreenStates.menu;
