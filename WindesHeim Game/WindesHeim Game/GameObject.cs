@@ -17,6 +17,14 @@ namespace WindesHeim_Game
 
         protected int collisionSize;
 
+        public GameObject(Point location, string imageURL, int height, int width)
+        {
+            this.imageURL = imageURL;
+            this.location = location;
+            this.height = height;
+            this.width = width;
+        }
+
         public GameObject(Point location, int height, int width)
         {
             this.location = location;

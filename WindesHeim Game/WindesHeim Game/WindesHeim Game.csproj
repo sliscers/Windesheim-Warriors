@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checkpoint.cs" />
     <Compile Include="ExplodingObstacle.cs" />
     <Compile Include="Explosion.cs" />
     <Compile Include="MovingExplodingObstacle.cs" />

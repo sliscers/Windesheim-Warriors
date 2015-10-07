@@ -238,6 +238,8 @@ namespace WindesHeim_Game
             gameObjects.Add(new StaticObstacle(new Point(150, 200), 40, 40));
             gameObjects.Add(new ExplodingObstacle(new Point(380, 400), 40, 40));
             gameObjects.Add(new SlowingObstacle(new Point(420, 100), 40, 40));
+            gameObjects.Add(new Checkpoint(new Point(10, 10), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconWIN.png", 40, 40));
+            gameObjects.Add(new Checkpoint(new Point(720, 720), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconSP.png", 40, 40));
         }
 
         public override void ControlsInit(Form gameWindow)
