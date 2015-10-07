@@ -637,17 +637,14 @@ namespace WindesHeim_Game
         }
 
         public void newLevel_Click(object sender, EventArgs e)
-        {
-            ModelEditor.level = currentSelectedLevel;
-            gameWindow.setController(ScreenStates.editor);
+        {            
+            gameWindow.setController(ScreenStates.editorNewLevel);
         }
     }
 
     public class ControllerEditor : Controller
     {
         public static XMLParser level;
-
-        private XMLParser currentSelectedLevel;
 
         private ModelEditor modelEditor;
 
@@ -656,6 +653,39 @@ namespace WindesHeim_Game
             this.model = new ModelEditor(this);
             this.modelEditor = (ModelEditor)model;
         }
-        
+
+        public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.editorSelect);
+        }
+
+        public override void RunController()
+        {
+            base.RunController();
+            if(level == null) //New Level aanmaken
+            {
+
+            }else{ //Bestaand level bewerken
+
+            }
+        }
+
+        public void playLevel_Click(object sender, EventArgs e)
+        {
+            if(level == null)
+            {
+                Console.WriteLine("error, level is null");
+            }            else            {
+                ModelGame.level = level;
+                gameWindow.setController(ScreenStates.game);
+
+                //Workaround om focus conflict met windows forms en buttons op te lossen
+                modelEditor.alignPanel.Controls.Remove(modelEditor.playLevel);
+                modelEditor.alignPanel.Controls.Remove(modelEditor.goBack);
+                modelEditor.alignPanel.Controls.Remove(modelEditor.listBoxLevels);
+            }
+
+        }
+
     }
 }

@@ -291,7 +291,7 @@ namespace WindesHeim_Game
                 if(gameObject is ExplodingObstacle)
                 {
                     gameObjects.Add(new ExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
-        }
+                }
                 if (gameObject is MovingExplodingObstacle)
                 {
                     gameObjects.Add(new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
@@ -990,8 +990,8 @@ namespace WindesHeim_Game
             {
                 listBoxLevels.Items.Add(xml);
             }
-
             listBoxLevels.SelectedIndexChanged += levelSelectController.level_Select;
+            listBoxLevels.SetSelected(0, true);
 
             labelLevels = new Label();
             labelLevels.Text = "Levels";
@@ -1076,6 +1076,8 @@ namespace WindesHeim_Game
                 this.levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
                 listBoxLevels.Items.Add(xml);                
             }
+            listBoxLevels.SetSelected(0, true);
+
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
             goBack.Location = new System.Drawing.Point(0, 210);
@@ -1099,7 +1101,7 @@ namespace WindesHeim_Game
     {
         public ListBox listBoxLevels;
         public Button goBack;
-        public Button playLevel;
+        public Button editLevel;
         public Button newLevel;
         private Label labelLevels;
         private Label labelLevelPreview;
@@ -1135,6 +1137,7 @@ namespace WindesHeim_Game
             }
 
             listBoxLevels.SelectedIndexChanged += editorSelectController.level_Select;
+            listBoxLevels.SetSelected(0, true);
 
             labelLevels = new Label();
             labelLevels.Text = "Levels";
@@ -1156,11 +1159,11 @@ namespace WindesHeim_Game
             goBack.Text = "Go Back";
             goBack.Click += editorSelectController.goBack_Click;
 
-            playLevel = new Button();
-            playLevel.Size = new System.Drawing.Size(422, 25);
-            playLevel.Location = new System.Drawing.Point(210, 525);
-            playLevel.Text = "Edit Level";
-            playLevel.Click += editorSelectController.editLevel_Click;
+            editLevel = new Button();
+            editLevel.Size = new System.Drawing.Size(422, 25);
+            editLevel.Location = new System.Drawing.Point(210, 525);
+            editLevel.Text = "Edit Level";
+            editLevel.Click += editorSelectController.editLevel_Click;
 
             newLevel = new Button();
             newLevel.Size = new System.Drawing.Size(422, 25);
@@ -1172,7 +1175,7 @@ namespace WindesHeim_Game
             alignPanel.Controls.Add(labelLevels);
             alignPanel.Controls.Add(labelLevelPreview);
             alignPanel.Controls.Add(goBack);
-            alignPanel.Controls.Add(playLevel);
+            alignPanel.Controls.Add(editLevel);
             alignPanel.Controls.Add(newLevel);
             alignPanel.Controls.Add(listBoxLevels);
             alignPanel.Controls.Add(gamePanel);
@@ -1189,24 +1192,42 @@ namespace WindesHeim_Game
         public ListBox listBoxLevels;
         public Button goBack;
         public Button playLevel;
-        private Label labelLevels;
-        private Label labelLevelPreview;
         public Panel alignPanel;
         private Panel gamePanel;
 
         //XML Gegevens van level worden hierin meeggegeven
         public static XMLParser level;
 
-        private ControllerEditor editorSelectController;
+        private ControllerEditor editorController;
 
         public ModelEditor(ControllerEditor controller) : base(controller)
         {
-            this.editorSelectController = controller;
+            this.editorController = controller;
         }
 
         public override void ControlsInit(Form gameWindow)
         {
-            // TODO
+            gamePanel = new Panel();
+            gamePanel.Location = new System.Drawing.Point(0, 0);
+            gamePanel.Size = new System.Drawing.Size(845, 475);
+            gamePanel.BackColor = Color.DarkGray;
+            //gamePanel.Paint += editorController.OnPreviewPaint;
+
+            goBack = new Button();
+            goBack.Size = new System.Drawing.Size(200, 25);
+            goBack.Location = new System.Drawing.Point(0, 525);
+            goBack.Text = "Go Back";
+            goBack.Click += editorController.goBack_Click;
+
+            playLevel = new Button();
+            playLevel.Size = new System.Drawing.Size(422, 25);
+            playLevel.Location = new System.Drawing.Point(210, 525);
+            playLevel.Text = "Test Level";
+            playLevel.Click += editorController.playLevel_Click;
+
+            gameWindow.Controls.Add(gamePanel);
+            gameWindow.Controls.Add(goBack);
+            gameWindow.Controls.Add(playLevel);
         }
     }
 }

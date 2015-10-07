@@ -118,11 +118,11 @@ namespace WindesHeim_Game
                             X = Int32.Parse(r.Element("x").Value),
                             Y = Int32.Parse(r.Element("y").Value),
                             Height = Int32.Parse(r.Element("height").Value),
-                            Width = Int32.Parse(r.Element("width").Value)//,
-                            //Hieronder volgen dynamische gegevens en is vaak null, hier moet ik nog verder naar kijken ~jonathan
-                            //Movingspeed = Int32.Parse(r.Element("movingspeed").Value),
-                            //Slowdown = Int32.Parse(r.Element("slowdown").Value)
-                        };
+                            Width = Int32.Parse(r.Element("width").Value),
+                            //If statements voor dynamische gegevens in xml <object>
+                            Movingspeed = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("movingspeed").Value): 0,
+                            Slowdown = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("slowdown").Value): 0
+                       };
             //Voegt de gameproperties toe aan de variable gameProperties
             foreach (var property in lproperties)
             {
