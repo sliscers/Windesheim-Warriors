@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game {
 
@@ -14,7 +15,7 @@ namespace WindesHeim_Game {
 
         public Explosion(Point location, int height, int width) : base(location, height, width)
         {
-            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\explosion.png";
+            base.ObjectImage = Resources.explosion;
 
         }
 

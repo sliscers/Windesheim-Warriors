@@ -134,12 +134,6 @@ namespace WindesHeim_Game
             this.highscore.TabIndex = 2;
             this.highscore.Click += new EventHandler(menuController.highscore_Click);
 
-            this.tempPlay.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\playButton.png");
-            this.tempPlay.Location = new System.Drawing.Point(0, 180);
-            this.tempPlay.Size = new System.Drawing.Size(304, 44);
-            this.tempPlay.TabIndex = 3;
-            this.tempPlay.Click += new EventHandler(menuController.exit_Click);
-
             menuPanel = new Panel();
             menuPanel.AutoSize = true;
             menuPanel.BackColor = Color.Transparent;
@@ -148,7 +142,6 @@ namespace WindesHeim_Game
             menuPanel.Controls.Add(play);
             menuPanel.Controls.Add(editor);
             menuPanel.Controls.Add(highscore);
-            menuPanel.Controls.Add(tempPlay);
 
 
             System.Console.WriteLine(gameWindow.Width);
@@ -298,7 +291,7 @@ namespace WindesHeim_Game
                 if(gameObject is ExplodingObstacle)
                 {
                     gameObjects.Add(new ExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
-                }
+        }
                 if (gameObject is MovingExplodingObstacle)
                 {
                     gameObjects.Add(new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
@@ -312,9 +305,9 @@ namespace WindesHeim_Game
                     gameObjects.Add(new SlowingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
                 }
             }
-            gameObjects.Add(new Checkpoint(new Point(750, 400), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconWIN.png", 80, 80));
-            gameObjects.Add(new Checkpoint(new Point(5, -5), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconSP.png", 80, 80));
 
+            gameObjects.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+            gameObjects.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
         }
 
         public override void ControlsInit(Form gameWindow)
@@ -968,7 +961,7 @@ namespace WindesHeim_Game
         private Label labelLevels;
         private Label labelLevelPreview;
         public Panel alignPanel;
-        private Panel gamePanel;
+        public Panel gamePanel;
 
         private ControllerLevelSelect levelSelectController;
 
@@ -986,6 +979,7 @@ namespace WindesHeim_Game
             gamePanel.Location = new System.Drawing.Point(210, 40);
             gamePanel.Size = new System.Drawing.Size(845, 475);
             gamePanel.BackColor = Color.DarkGray;
+            gamePanel.Paint += levelSelectController.OnPreviewPaint;
 
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 475);
