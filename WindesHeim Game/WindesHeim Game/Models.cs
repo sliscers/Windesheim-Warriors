@@ -171,6 +171,8 @@ namespace WindesHeim_Game
         // Er is maar 1 speler
         public Player player = new Player(new Point(10, 10), 40, 40);
 
+
+
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
 
@@ -266,10 +268,10 @@ namespace WindesHeim_Game
         //START CONTROL PANEL
         private System.Windows.Forms.Panel controlPanel = new Panel();
 
-        private System.Windows.Forms.Button btnUp = new Button();
-        private System.Windows.Forms.Button btnDown = new Button();
-        private System.Windows.Forms.Button btnLeft = new Button();
-        private System.Windows.Forms.Button btnRight = new Button();
+        private System.Windows.Forms.PictureBox btnUp = new PictureBox();
+        private System.Windows.Forms.PictureBox btnDown = new PictureBox();
+        private System.Windows.Forms.PictureBox btnLeft = new PictureBox();
+        private System.Windows.Forms.PictureBox btnRight = new PictureBox();
         //STOP CONTROL PANEL
 
 
@@ -309,6 +311,9 @@ namespace WindesHeim_Game
                     gameObjects.Add(new SlowingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
                 }
             }
+            gameObjects.Add(new Checkpoint(new Point(750, 400), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconWIN.png", 80, 80));
+            gameObjects.Add(new Checkpoint(new Point(5, -5), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconSP.png", 80, 80));
+
         }
 
         public override void ControlsInit(Form gameWindow)
