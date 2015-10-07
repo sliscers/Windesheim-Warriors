@@ -53,6 +53,7 @@ namespace WindesHeim_Game
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
+            this.Icon = global::WindesHeim_Game.Properties.Resources.IconWIN;
             this.ResumeLayout(false);
         }
 
