@@ -192,14 +192,14 @@ namespace WindesHeim_Game
         private System.Windows.Forms.Label lblObstacleProps1 = new Label();
 
         private System.Windows.Forms.Label lblObstaclePosXTitle1 = new Label();
-        private System.Windows.Forms.Label lblObstaclePosX1 = new Label();
+        internal System.Windows.Forms.Label lblObstaclePosX1 = new Label();
 
         private System.Windows.Forms.Label lblObstaclePosYTitle1 = new Label();
-        private System.Windows.Forms.Label lblObstaclePosY1 = new Label();
+        internal System.Windows.Forms.Label lblObstaclePosY1 = new Label();
 
         //Obstacle Description 1
         private System.Windows.Forms.Label lblObstacleDescTitle1 = new Label();
-        private System.Windows.Forms.Label lblObstacleDesc1 = new Label();
+        internal System.Windows.Forms.Label lblObstacleDesc1 = new Label();
         // STOP OBSTACLE 1
 
         // START OBSTACLE 2
@@ -210,19 +210,19 @@ namespace WindesHeim_Game
         private System.Windows.Forms.PictureBox pbObstacle2 = new PictureBox();
 
         //Obstacle Name 2
-        private System.Windows.Forms.Label lblObstacleName2 = new Label();
+        internal System.Windows.Forms.Label lblObstacleName2 = new Label();
 
         //Obstacle Properties 2
         private System.Windows.Forms.Label lblObstacleProps2 = new Label();
 
         private System.Windows.Forms.Label lblObstaclePosXTitle2 = new Label();
-        private System.Windows.Forms.Label lblObstaclePosX2 = new Label();
+        internal System.Windows.Forms.Label lblObstaclePosX2 = new Label();
         private System.Windows.Forms.Label lblObstaclePosYTitle2 = new Label();
-        private System.Windows.Forms.Label lblObstaclePosY2 = new Label();
+        internal System.Windows.Forms.Label lblObstaclePosY2 = new Label();
 
         //Obstacle Description 2
         private System.Windows.Forms.Label lblObstacleDescTitle2 = new Label();
-        private System.Windows.Forms.Label lblObstacleDesc2 = new Label();
+        internal System.Windows.Forms.Label lblObstacleDesc2 = new Label();
         // STOP OBSTACLE 2
         //STOP OBSTACLEPANEL
 
@@ -250,12 +250,12 @@ namespace WindesHeim_Game
         private System.Windows.Forms.Label lblCharacterProps = new Label();
 
         private System.Windows.Forms.Label lblCharacterPosXTitle = new Label();
-        private System.Windows.Forms.Label lblCharacterPosX = new Label();
+        internal System.Windows.Forms.Label lblCharacterPosX = new Label();
         private System.Windows.Forms.Label lblCharacterPosYTitle = new Label();
-        private System.Windows.Forms.Label lblCharacterPosY = new Label();
+        internal System.Windows.Forms.Label lblCharacterPosY = new Label();
 
         private System.Windows.Forms.Label lblCharacterSpeedTitle = new Label();
-        private System.Windows.Forms.Label lblCharacterSpeed = new Label();
+        internal System.Windows.Forms.Label lblCharacterSpeed = new Label();
         // STOP CHARACTER
         //STOP CHARACTER PANEL
 
