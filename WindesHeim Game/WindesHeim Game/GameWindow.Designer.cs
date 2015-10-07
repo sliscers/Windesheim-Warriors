@@ -67,6 +67,7 @@ namespace WindesHeim_Game
                     levelSelect.RunController();
                     break;
                 case ScreenStates.game:
+                    game.TimerStart();
                     this.state = ScreenStates.game;
                     game.RunController();
                     break;

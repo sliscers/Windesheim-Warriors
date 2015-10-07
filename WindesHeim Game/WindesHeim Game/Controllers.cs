@@ -73,11 +73,9 @@ namespace WindesHeim_Game
         public ControllerGame(GameWindow form) : base(form)
         {
             this.model = new ModelGame(this);
-
             timer.Tick += new EventHandler(GameLoop);
             timer.Interval = 16;
-            timer.Start();
-            
+                      
         }
 
         private void GameLoop(object sender, EventArgs e)
@@ -370,6 +368,10 @@ namespace WindesHeim_Game
 
           
             }
+        public void TimerStart()
+        {
+            timer.Start();
+        }
     }
 
     public class ControllerLevelSelect : Controller
