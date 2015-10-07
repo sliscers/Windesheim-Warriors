@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace WindesHeim_Game {
 
-    class FollowingObstacle : Obstacle {
+    class MovingExplodingObstacle : Obstacle {
 
-        public FollowingObstacle(Point location, string imageURL) : base (location, imageURL)
+        public MovingExplodingObstacle(Point location, int height, int width) : base (location, height, width)
         {
-
+            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconBike.png";
         }
 
         public void ChasePlayer(Player player) {
@@ -26,6 +26,15 @@ namespace WindesHeim_Game {
 
             if (Location.Y <= player.Location.Y)
                 Location = new Point(Location.X, Location.Y + 1);
+        }
+
+        public bool CollidesWith(Player player) {
+            if(GetDistance(player.Location) < 50) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     }
 }
