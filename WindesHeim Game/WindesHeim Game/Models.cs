@@ -175,7 +175,7 @@ namespace WindesHeim_Game
 
         //INITIALISATIES CONTROLS
         //START OBSTACLEPANEL
-        private System.Windows.Forms.Panel obstaclePanel = new Panel();
+        internal System.Windows.Forms.Panel obstaclePanel = new Panel();
 
         // START OBSTACLE 1
         private System.Windows.Forms.Panel pnlObstacle1 = new Panel();
@@ -186,7 +186,7 @@ namespace WindesHeim_Game
         private System.Windows.Forms.PictureBox pbObstacle1 = new PictureBox();
 
         //Obstacle Name 1
-        private System.Windows.Forms.Label lblObstacleName1 = new Label();
+        internal System.Windows.Forms.Label lblObstacleName1 = new Label();
 
         //Obstacle Properties 1
         private System.Windows.Forms.Label lblObstacleProps1 = new Label();

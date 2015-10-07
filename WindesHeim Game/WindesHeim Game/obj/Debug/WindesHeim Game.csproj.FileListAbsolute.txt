@@ -50,3 +50,12 @@ C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warr
 C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.GameWindow.resources
 C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.Properties.Resources.resources
 C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
+F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csprojResolveAssemblyReference.cache
+F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.GameWindow.resources
+F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.Properties.Resources.resources
+F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
+F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
+F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
+F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
+F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe
+F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.pdb
