@@ -240,18 +240,18 @@ namespace WindesHeim_Game
                     if (gameObstacle.CollidesWith(mg.player))
                     {
                         mg.player.Speed = mg.player.OriginalSpeed / 2;
-                        UpdatePlayerSpeed("langzaam");
+                        UpdatePlayerSpeed("Langzaam");
                     }
                     else
                     {
                         mg.player.Speed = mg.player.OriginalSpeed;
                         if (pressedSpeed && (mg.player.SpeedCooldown == 0))
                         {
-                            UpdatePlayerSpeed("snel");
+                            UpdatePlayerSpeed("Snel");
                         }
                         else
                         {
-                            UpdatePlayerSpeed("normaal");
+                            UpdatePlayerSpeed("Normaal");
                         }
                     }
                 }
