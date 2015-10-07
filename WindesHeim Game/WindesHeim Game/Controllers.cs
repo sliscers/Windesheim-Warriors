@@ -48,12 +48,13 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.gameSelect);
         }
-
-        public void highscores_Click(object sender, EventArgs e)
+        public void highscore_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.highscore);
         }
     }
+
+        
 
     public class ControllerGame : Controller
     {
@@ -66,8 +67,8 @@ namespace WindesHeim_Game
         private bool pressedDown = false;
         private bool pressedSpeed = false;
         private int counter;
-
        
+
 
         public ControllerGame(GameWindow form) : base(form)
         {
@@ -103,7 +104,7 @@ namespace WindesHeim_Game
                 mg.player.Speed = mg.player.OriginalSpeed * 2;
 
                 mg.player.SpeedDuration ++;
-       
+              
             }
             if(mg.player.SpeedDuration > 50)
             {
@@ -129,7 +130,7 @@ namespace WindesHeim_Game
 
         private void ProcessObstacles() 
         {
-            ModelGame mg = (ModelGame) model;
+            ModelGame mg = (ModelGame)model;
 
             // We moeten een 2e array maken om door heen te loopen
             // Er is kans dat we de array door lopen en ook tegelijkertijd een explosie toevoegen
@@ -137,39 +138,50 @@ namespace WindesHeim_Game
             List<GameObject> safeListArray = new List<GameObject>(mg.GameObjects);
 
             // Loop door alle obstacles objecten en roep methode aan
-            foreach(GameObject gameObject in safeListArray) {
-                if(gameObject is MovingExplodingObstacle) {
+            foreach (GameObject gameObject in safeListArray)
+            {
+                if (gameObject is MovingExplodingObstacle)
+                {
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if(gameObstacle.CollidesWith(mg.player)) {
+                    if (gameObstacle.CollidesWith(mg.player))
+                    {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
+                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
                     }
                 }
 
-                if (gameObject is SlowingObstacle) {
+                if (gameObject is SlowingObstacle)
+                {
                     SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if(gameObstacle.CollidesWith(mg.player)) {
+                    if (gameObstacle.CollidesWith(mg.player))
+                    {
                         mg.player.Speed = mg.player.OriginalSpeed / 2;
                     }
-                    else {
+                    else
+                    {
                         mg.player.Speed = mg.player.OriginalSpeed;
                     }
                 }
 
-                if (gameObject is ExplodingObstacle) {
+                if (gameObject is ExplodingObstacle)
+                {
                     ExplodingObstacle gameObstacle = (ExplodingObstacle)gameObject;
 
-                    if (gameObstacle.CollidesWith(mg.player)) {
+                    if (gameObstacle.CollidesWith(mg.player))
+                    {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                       
+                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
                     }
+
+                    
                 }
 
                 if (gameObject is StaticObstacle)
@@ -198,7 +210,9 @@ namespace WindesHeim_Game
                 }
 
                 // Check of we de explosie kunnen verwijderen
-                if (gameObject is Explosion) {
+                if (gameObject is Explosion)
+                {
+
                     Explosion explosion = (Explosion)gameObject;
 
                     DateTime nowDateTime = DateTime.Now;
@@ -206,71 +220,76 @@ namespace WindesHeim_Game
                     TimeSpan difference = nowDateTime - explosionDateTime;
 
                     double animationTimerTen = (difference.TotalMilliseconds / 100);
-                    int animationTimer = Convert.ToInt32(animationTimerTen) ;
+                    int animationTimer = Convert.ToInt32(animationTimerTen);
                     Console.WriteLine(animationTimer);
-                    
+
 
                     switch (animationTimer)
                     {
                         case 1:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
                             gameObject.FadeSmall();
+                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\EXPLODE.WAV");
+                            player.Play();
                             break;
                         case 2:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EC0C07");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FC1212");
                             gameObject.FadeSmall();
                             break;
                         case 3:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#D9190F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F92525");
                             gameObject.FadeSmall();
                             break;
                         case 4:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#C62517");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F63737");
                             gameObject.FadeSmall();
                             break;
                         case 5:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#B3312F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F44A4A");
                             gameObject.FadeSmall();
                             break;
                         case 6:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#A03F27");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F15C5C");
                             gameObject.FadeSmall();
                             break;
                         case 7:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#8D4B2F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EE6F6F");
                             gameObject.FadeSmall();
                             break;
                         case 8:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#7A5837");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EB8181");
                             gameObject.FadeSmall();
                             break;
                         case 9:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#67653F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E99494");
                             gameObject.FadeSmall();
                             break;
                         case 10:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#547147");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E6A6A6");
                             gameObject.FadeSmall();
                             break;
                         case 11:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#417E4F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E3B9B9");
                             gameObject.FadeSmall();
                             break;
                         case 12:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#2E8B57");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E0CBCB");
                             gameObject.FadeSmall();
                             break;
-
                     }
 
-                    // Verschil is 1.2 seconden, dus het bestaat al voor 1.2 seconden, verwijderen maar!
-                    if (difference.TotalSeconds > 1.2) {
+
+
+                    // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
+                    if (difference.TotalSeconds > 1.2)
+                    {
                         mg.GameObjects.Remove(gameObject);
-                        mg.graphicsPanel.BackColor = Color.SeaGreen;
+                        mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#DEDEDE");
                     }
                 }
             }      
         }
+
 
         public override void RunController()
         {
@@ -293,10 +312,7 @@ namespace WindesHeim_Game
                 if(gameObject is Explosion) {
                     g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                    
-                    {
-
-                    }
-                    
+                           
                 }
             }
         }
@@ -322,7 +338,7 @@ namespace WindesHeim_Game
             if (e.KeyCode == Keys.Space)
             {
                 pressedSpeed = true;
-        }
+            }
         }
 
         public void OnKeyUp(object sender, KeyEventArgs e) {
@@ -353,7 +369,7 @@ namespace WindesHeim_Game
             }
 
           
-        }
+            }
     }
 
     public class ControllerLevelSelect : Controller
@@ -362,20 +378,19 @@ namespace WindesHeim_Game
         {
             this.model = new ModelLevelSelect(this);
         }
-
+          
         public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.menu);
         }
     }
-
     public class ControllerHighscores : Controller
     {
         public ControllerHighscores(GameWindow form) : base(form)
         {
             this.model = new ModelHighscores(this);
         }
-                public void goBack_Click(object sender, EventArgs e)
+        public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.menu);
         }

@@ -47,8 +47,8 @@ namespace WindesHeim_Game
         }
         public void FadeSmall()
         {
-            this.Height+=3;
-            this.Width+=3;
+            this.Height+=2;
+            this.Width+=2;
         }
     }
 }
