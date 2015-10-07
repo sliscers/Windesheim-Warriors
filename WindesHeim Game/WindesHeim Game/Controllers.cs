@@ -331,7 +331,7 @@ namespace WindesHeim_Game
             }
             if (e.KeyCode == Keys.D) {
                 pressedRight = true;
-                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png";
+                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; //
             }
             if (e.KeyCode == Keys.Space)
             {

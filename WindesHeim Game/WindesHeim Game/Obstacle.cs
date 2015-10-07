@@ -14,11 +14,18 @@ namespace WindesHeim_Game {
             
         }
 
-        protected double GetDistance(Point q) {
-            double a = Location.X - q.X;
-            double b = Location.Y - q.Y;
-            double distance = Math.Sqrt(a * a + b * b);
-            return distance;
+        public void ChasePlayer(Player player) {
+            if (Location.X >= player.Location.X)
+                Location = new Point(Location.X - 1, Location.Y);
+
+            if (Location.X <= player.Location.X)
+                Location = new Point(Location.X + 1, Location.Y);
+
+            if (Location.Y >= player.Location.Y)
+                Location = new Point(Location.X, Location.Y - 1);
+
+            if (Location.Y <= player.Location.Y)
+                Location = new Point(Location.X, Location.Y + 1);
         }
     }
 }
