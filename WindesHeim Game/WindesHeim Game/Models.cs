@@ -144,7 +144,7 @@ namespace WindesHeim_Game
 
             this.highscore.Click += new EventHandler(menuController.highscore_Click);
 
-
+            gameWindow.BackgroundImage = Resources.menuBackground;
             gameWindow.Controls.Add(play);
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
@@ -288,6 +288,8 @@ namespace WindesHeim_Game
             gameObjects.Add(new StaticObstacle(new Point(150, 200), 40, 40));
             gameObjects.Add(new ExplodingObstacle(new Point(380, 400), 40, 40));
             gameObjects.Add(new SlowingObstacle(new Point(420, 100), 40, 40));
+            gameObjects.Add(new Checkpoint(new Point(750, 400), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconWIN.png", 80, 80));
+            gameObjects.Add(new Checkpoint(new Point(10, 0), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconSP.png", 80, 80));
         }
 
         public override void ControlsInit(Form gameWindow)

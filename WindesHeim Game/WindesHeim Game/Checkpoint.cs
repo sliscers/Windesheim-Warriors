@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace WindesHeim_Game
 {
-
-    class StaticObstacle : Obstacle
+    class Checkpoint : GameObject
     {
-
-        public StaticObstacle(Point location, int height, int width) : base(location, height, width)
+        public Checkpoint (Point location, string imageURL, int height, int width) : base(location, imageURL, height, width)
         {
-            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconTC.png";
             base.collisionSize = 40;
         }
     }
