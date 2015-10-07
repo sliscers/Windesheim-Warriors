@@ -1066,19 +1066,19 @@ namespace WindesHeim_Game
 
     public class ModelHighscores : Model
     {
-        private ListBox levels;
+        private ListBox listBoxLevels;
         private Button goBack;
-        private Button playLevel;
         private Label labelLevels;
-        private Label highscoresLabel;
         private Panel alignPanel;
-        private Panel gamePanel;
+        private ListBox listBoxHighscores;
 
-        private ControllerHighscores levelSelectController;
+        private List<XMLParser> levels = new List<XMLParser>();
+
+        private ControllerHighscores highscoresController;
 
         public ModelHighscores(ControllerHighscores controller) : base(controller)
         {
-            this.levelSelectController = controller;
+            this.highscoresController = controller;
         }
 
         public override void ControlsInit(Form gameWindow)
@@ -1086,19 +1086,32 @@ namespace WindesHeim_Game
             alignPanel = new Panel();
             alignPanel.AutoSize = true;
 
+            listBoxLevels = new ListBox();
+            listBoxLevels.Size = new System.Drawing.Size(200, 475);
+            listBoxLevels.Location = new System.Drawing.Point(0, 40);
 
-            gamePanel = new Panel();
-            gamePanel.Location = new System.Drawing.Point(210, 40);
-            gamePanel.Size = new System.Drawing.Size(845, 475);
-            gamePanel.BackColor = Color.DarkGray;
+            listBoxHighscores = new ListBox();
+            listBoxHighscores.Size = new System.Drawing.Size(200, 475);
+            listBoxHighscores.Location = new System.Drawing.Point(200, 40);
 
-
-            levels = new ListBox();
-            levels.Size = new System.Drawing.Size(200, 475);
-            levels.Location = new System.Drawing.Point(0, 40);
             string[] fileEntries = Directory.GetFiles("../levels/");
-            foreach (string fileName in fileEntries)
-                levels.Items.Add(Path.GetFileName(fileName));
+            foreach (string file in fileEntries)
+            {
+                XMLParser xml = new XMLParser(file);
+                xml.ReadXML();
+                this.levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+                listBoxLevels.Items.Add(xml.gameProperties.title);
+
+                int i = 0;
+                foreach (GameHighscores highscore in xml.gameHighscores)
+                {
+                    i++;
+                    char[] a = highscore.name.ToCharArray();
+                    a[0] = char.ToUpper(a[0]);
+
+                    listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score);
+                }
+            }
 
             labelLevels = new Label();
             labelLevels.Text = "Levels";
@@ -1107,25 +1120,19 @@ namespace WindesHeim_Game
             labelLevels.Size = new System.Drawing.Size(200, 30);
             labelLevels.TextAlign = ContentAlignment.MiddleCenter;
 
-            highscoresLabel = new Label();
-            highscoresLabel.Text = "Highscores";
-            highscoresLabel.Font = new Font("Arial", 20);
-            highscoresLabel.Location = new System.Drawing.Point(210, 0);
-            highscoresLabel.Size = new System.Drawing.Size(845, 30);
-            highscoresLabel.TextAlign = ContentAlignment.MiddleCenter;
-
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
             goBack.Location = new System.Drawing.Point(0, 525);
             goBack.Text = "Go Back";
-            goBack.Click += new EventHandler(levelSelectController.goBack_Click);
+            goBack.Click += new EventHandler(highscoresController.goBack_Click);
 
             gameWindow.Controls.Add(alignPanel);
             alignPanel.Controls.Add(labelLevels);
-            alignPanel.Controls.Add(highscoresLabel);
             alignPanel.Controls.Add(goBack);
-            alignPanel.Controls.Add(levels);
-            alignPanel.Controls.Add(gamePanel);
+            alignPanel.Controls.Add(listBoxLevels);
+            alignPanel.Controls.Add(listBoxHighscores);
+
+
             alignPanel.Location = new Point(
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
