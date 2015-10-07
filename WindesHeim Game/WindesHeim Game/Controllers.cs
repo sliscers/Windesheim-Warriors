@@ -50,6 +50,10 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.gameSelect);
         }
+        public void editor_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.editorSelect);
+        }
         public void highscore_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.highscore);
@@ -509,25 +513,14 @@ namespace WindesHeim_Game
 
     public class ControllerLevelSelect : Controller
     {
-        public List<XMLParser> Levels { get; set; } = new List<XMLParser>();
-
         private XMLParser currentSelectedLevel;
+
+        private ModelLevelSelect modelLevelSelect;
 
         public ControllerLevelSelect(GameWindow form) : base(form)
         {
             this.model = new ModelLevelSelect(this);
-            fillLevels();
-        }
-          
-        public void fillLevels()
-        {
-            string[] fileEntries = Directory.GetFiles("../levels/");
-            foreach (string file in fileEntries)
-            {
-                XMLParser xml = new XMLParser(file);
-                xml.ReadXML();
-                this.Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
-            }
+            this.modelLevelSelect = (ModelLevelSelect)model;
         }
           
         public void goBack_Click(object sender, EventArgs e)
@@ -540,10 +533,10 @@ namespace WindesHeim_Game
             ModelGame.level = currentSelectedLevel;
             gameWindow.setController(ScreenStates.game);
 
-            ModelLevelSelect ml = (ModelLevelSelect)model;
-            ml.alignPanel.Controls.Remove(ml.playLevel);
-            ml.alignPanel.Controls.Remove(ml.goBack);
-            ml.alignPanel.Controls.Remove(ml.listBoxLevels);
+            //Workaround om focus conflict met windows forms en buttons op te lossen
+            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.playLevel);
+            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.goBack);
+            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.listBoxLevels);
 
         }
 
@@ -552,17 +545,16 @@ namespace WindesHeim_Game
             ListBox listBoxLevels = (ListBox)sender;
             currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
 
-            ModelLevelSelect ml = (ModelLevelSelect)model;
-            ml.gamePanel.Invalidate(); // refresh
+
+            modelLevelSelect.gamePanel.Invalidate(); // refresh
         }
 
-        internal void OnPreviewPaint(object sender, PaintEventArgs e) {
+        public void OnPreviewPaint(object sender, PaintEventArgs e) {
             Graphics g = e.Graphics;
 
             // Teken preview
             if(currentSelectedLevel != null) {
                 List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
-                previewList.Add(new Player(new Point(10, 10), 40, 40));
                 previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
                 previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
 
@@ -574,13 +566,140 @@ namespace WindesHeim_Game
     }
     public class ControllerHighscores : Controller
     {
+        private XMLParser currentSelectedLevel;
+
+        private ModelHighscores modelHighscores;
+
         public ControllerHighscores(GameWindow form) : base(form)
         {
             this.model = new ModelHighscores(this);
+            this.modelHighscores = (ModelHighscores)model;
         }
         public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.menu);
         }
+        public void level_Select(object sender, EventArgs e)
+        {
+            ListBox listBoxLevels = (ListBox)sender;
+            currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
+
+            modelHighscores.listBoxHighscores.Items.Clear();
+            int i = 0;
+            foreach (GameHighscores highscore in currentSelectedLevel.gameHighscores)
+            {
+                i++;
+                char[] a = highscore.name.ToCharArray();
+                a[0] = char.ToUpper(a[0]);
+
+                modelHighscores.listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score + " | " + highscore.dateTime.ToString("dd-MM-yy H:mm"));
+                if(i == 0)
+                {
+                    listBoxLevels.SetSelected(0, true);
+                }
+            }            
+        }
+    }
+
+    public class ControllerEditorSelect : Controller
+    {
+        public static XMLParser level;
+
+        private XMLParser currentSelectedLevel;
+
+        private ModelEditorSelect modelEditorSelect;
+
+        public ControllerEditorSelect(GameWindow form) : base(form)
+        {
+            this.model = new ModelEditorSelect(this);
+            modelEditorSelect = (ModelEditorSelect)model;
+        }
+        public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.menu);
+        }
+        public void level_Select(object sender, EventArgs e)
+        {
+            ListBox listBoxLevels = (ListBox)sender;
+            currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
+
+            modelEditorSelect.gamePanel.Invalidate(); // refresh
+        }
+
+        public void OnPreviewPaint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            // Teken preview
+            if (currentSelectedLevel != null)
+            {
+                List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
+                previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+                previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
+
+                foreach (GameObject gameObject in previewList)
+                {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                }
+            }
+        }
+
+        public void editLevel_Click(object sender, EventArgs e)
+        {
+            ModelEditor.level = currentSelectedLevel;
+            gameWindow.setController(ScreenStates.editor);
+        }
+
+        public void newLevel_Click(object sender, EventArgs e)
+        {            
+            gameWindow.setController(ScreenStates.editorNewLevel);
+        }
+    }
+
+    public class ControllerEditor : Controller
+    {
+        public static XMLParser level;
+
+        private ModelEditor modelEditor;
+
+        public ControllerEditor(GameWindow form) : base(form)
+        {
+            this.model = new ModelEditor(this);
+            this.modelEditor = (ModelEditor)model;
+        }
+
+        public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.editorSelect);
+        }
+
+        public override void RunController()
+        {
+            base.RunController();
+            if(level == null) //New Level aanmaken
+            {
+
+            }else{ //Bestaand level bewerken
+
+            }
+        }
+
+        public void playLevel_Click(object sender, EventArgs e)
+        {
+            if(level == null)
+            {
+                Console.WriteLine("error, level is null");
+            }            else            {
+                ModelGame.level = level;
+                gameWindow.setController(ScreenStates.game);
+
+                //Workaround om focus conflict met windows forms en buttons op te lossen
+                modelEditor.alignPanel.Controls.Remove(modelEditor.playLevel);
+                modelEditor.alignPanel.Controls.Remove(modelEditor.goBack);
+                modelEditor.alignPanel.Controls.Remove(modelEditor.listBoxLevels);
+            }
+
+        }
+
     }
 }

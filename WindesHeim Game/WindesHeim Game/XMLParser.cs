@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
@@ -55,6 +56,9 @@ namespace WindesHeim_Game
         public List<GameObject> gameObjects;
         public List<GameHighscores> gameHighscores;
 
+        //Lijst met ingeladen levels
+        public static List<XMLParser> Levels { get; set; } = new List<XMLParser>();
+
         public XMLParser(String path)
         {
             this.path = path;
@@ -63,6 +67,20 @@ namespace WindesHeim_Game
         public override string ToString()
         {
             return gameProperties.title;
+        }
+
+        //Laad alle levels en stopt deze in de static property Levels
+        //Belangerijk om deze eerst aan te roepen voordat je de static property gebruikt via XMLParser.Levels
+        public static void LoadAllLevels()
+        {
+            Levels.Clear();
+            string[] fileEntries = Directory.GetFiles("../levels/");
+            foreach (string file in fileEntries)
+            {
+                XMLParser xml = new XMLParser(file);
+                xml.ReadXML();
+                Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+            }
         }
 
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
@@ -100,11 +118,11 @@ namespace WindesHeim_Game
                             X = Int32.Parse(r.Element("x").Value),
                             Y = Int32.Parse(r.Element("y").Value),
                             Height = Int32.Parse(r.Element("height").Value),
-                            Width = Int32.Parse(r.Element("width").Value)//,
-                            //Hieronder volgen dynamische gegevens en is vaak null, hier moet ik nog verder naar kijken ~jonathan
-                            //Movingspeed = Int32.Parse(r.Element("movingspeed").Value),
-                            //Slowdown = Int32.Parse(r.Element("slowdown").Value)
-                        };
+                            Width = Int32.Parse(r.Element("width").Value),
+                            //If statements voor dynamische gegevens in xml <object>
+                            Movingspeed = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("movingspeed").Value): 0,
+                            Slowdown = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("slowdown").Value): 0
+                       };
             //Voegt de gameproperties toe aan de variable gameProperties
             foreach (var property in lproperties)
             {
@@ -112,10 +130,13 @@ namespace WindesHeim_Game
             }
 
             //Voegt alle highscores toe in een List
+            highscores.OrderBy(o => o.Score);
             foreach (var highscore in highscores)
             {
                 gameHighscores.Add(new GameHighscores(highscore.Name, highscore.DateTime, highscore.Score));
             }
+            //Sorteert highscores op volgorde van behaalde score
+            gameHighscores = gameHighscores.OrderBy(highscore => highscore.score).ToList();
 
             //Voegt alle gameObjecten toe in een List
             foreach (var gameObject in items)
