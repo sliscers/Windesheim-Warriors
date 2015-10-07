@@ -48,6 +48,7 @@ namespace WindesHeim_Game
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.StartPosition = FormStartPosition.CenterScreen;
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
