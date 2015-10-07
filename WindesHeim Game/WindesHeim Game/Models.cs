@@ -85,7 +85,7 @@ namespace WindesHeim_Game
             this.highscore.Click += new EventHandler(menuController.highscore_Click);
             this.tempPlay.Click += new EventHandler(menuController.button_Click);
 
-            this.highscore.Click += new EventHandler(menuController.highscores_Click);
+            this.highscore.Click += new EventHandler(menuController.highscore_Click);
 
 
             gameWindow.Controls.Add(play);
@@ -1118,7 +1118,7 @@ namespace WindesHeim_Game
             goBack.Size = new System.Drawing.Size(200, 25);
             goBack.Location = new System.Drawing.Point(0, 525);
             goBack.Text = "Go Back";
-            //goBack.Click += new EventHandler(levelSelectController.goBack_Click);
+            goBack.Click += new EventHandler(levelSelectController.goBack_Click);
 
             gameWindow.Controls.Add(alignPanel);
             alignPanel.Controls.Add(labelLevels);

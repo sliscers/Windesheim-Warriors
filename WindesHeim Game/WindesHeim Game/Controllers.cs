@@ -54,11 +54,7 @@ namespace WindesHeim_Game
         }
     }
 
-        public void highscores_Click(object sender, EventArgs e)
-    {
-            gameWindow.setController(ScreenStates.highscore);
-        }
-    }
+        
 
     public class ControllerGame : Controller
     {
@@ -288,7 +284,7 @@ namespace WindesHeim_Game
                     if (difference.TotalSeconds > 1.2)
                     {
                         mg.GameObjects.Remove(gameObject);
-                        mg.graphicsPanel.BackColor = Color.SeaGreen;
+                        mg.graphicsPanel.BackColor = Color.Gray;
                     }
                 }
             }      
@@ -394,7 +390,7 @@ namespace WindesHeim_Game
         {
             this.model = new ModelHighscores(this);
         }
-                public void goBack_Click(object sender, EventArgs e)
+        public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.menu);
         }
