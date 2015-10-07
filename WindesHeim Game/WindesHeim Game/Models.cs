@@ -1068,7 +1068,7 @@ namespace WindesHeim_Game
     {
         private ListBox listBoxLevels;
         private Button goBack;
-        private Label labelLevels;
+        private Label labelHighscores;
         private Panel alignPanel;
         private ListBox listBoxHighscores;
 
@@ -1113,12 +1113,12 @@ namespace WindesHeim_Game
                 }
             }
 
-            labelLevels = new Label();
-            labelLevels.Text = "Levels";
-            labelLevels.Font = new Font("Arial", 20);
-            labelLevels.Location = new System.Drawing.Point(0, 0);
-            labelLevels.Size = new System.Drawing.Size(200, 30);
-            labelLevels.TextAlign = ContentAlignment.MiddleCenter;
+            labelHighscores = new Label();
+            labelHighscores.Text = "Highscores";
+            labelHighscores.Font = new Font("Arial", 20);
+            labelHighscores.Location = new System.Drawing.Point(0, 0);
+            labelHighscores.Size = new System.Drawing.Size(200, 30);
+            labelHighscores.TextAlign = ContentAlignment.MiddleCenter;
 
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
@@ -1127,7 +1127,7 @@ namespace WindesHeim_Game
             goBack.Click += new EventHandler(highscoresController.goBack_Click);
 
             gameWindow.Controls.Add(alignPanel);
-            alignPanel.Controls.Add(labelLevels);
+            alignPanel.Controls.Add(labelHighscores);
             alignPanel.Controls.Add(goBack);
             alignPanel.Controls.Add(listBoxLevels);
             alignPanel.Controls.Add(listBoxHighscores);
