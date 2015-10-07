@@ -652,7 +652,7 @@ namespace WindesHeim_Game
             this.lblCharacterPosX.Name = "lblCharacterPosX";
             this.lblCharacterPosX.Size = new System.Drawing.Size(23, 18);
             this.lblCharacterPosX.TabIndex = 8;
-            this.lblCharacterPosX.Text = "int";
+            this.lblCharacterPosX.Text = "0";
 
             //Label Character Position Y Title
             this.lblCharacterPosYTitle.AutoSize = true;
@@ -670,7 +670,7 @@ namespace WindesHeim_Game
             this.lblCharacterPosY.Name = "lblCharacterPosY";
             this.lblCharacterPosY.Size = new System.Drawing.Size(23, 18);
             this.lblCharacterPosY.TabIndex = 9;
-            this.lblCharacterPosY.Text = "int";
+            this.lblCharacterPosY.Text = "0";
 
             //Label Character Speed Title
             this.lblCharacterSpeedTitle.AutoSize = true;
