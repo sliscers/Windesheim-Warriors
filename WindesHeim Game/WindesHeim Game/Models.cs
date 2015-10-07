@@ -960,7 +960,7 @@ namespace WindesHeim_Game
         private Label labelLevels;
         private Label labelLevelPreview;
         public Panel alignPanel;
-        private Panel gamePanel;
+        public Panel gamePanel;
 
         private ControllerLevelSelect levelSelectController;
 
@@ -979,6 +979,7 @@ namespace WindesHeim_Game
             gamePanel.Location = new System.Drawing.Point(210, 40);
             gamePanel.Size = new System.Drawing.Size(845, 475);
             gamePanel.BackColor = Color.DarkGray;
+            gamePanel.Paint += levelSelectController.OnPreviewPaint;
 
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 475);

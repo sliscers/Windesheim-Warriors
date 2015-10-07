@@ -61,6 +61,13 @@ namespace WindesHeim_Game
             set { collisionY = value; }
         }
 
+        public double GetDistance(Point q) {
+            double a = Location.X  - q.X;
+            double b = Location.Y - q.Y;
+            double distance = Math.Sqrt(a * a + b * b);
+            return distance;
+        }
+
         public bool CollidesWith(GameObject gameObject)
         {
             if((this.location.X > (gameObject.location.X - gameObject.CollisionX)) && (this.location.X < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
@@ -78,6 +85,7 @@ namespace WindesHeim_Game
 
             return false;
         }
+
      
 
         public void FadeSmall()

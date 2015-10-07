@@ -537,6 +537,25 @@ namespace WindesHeim_Game
         {
             ListBox listBoxLevels = (ListBox)sender;
             currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
+
+            ModelLevelSelect ml = (ModelLevelSelect)model;
+            ml.gamePanel.Invalidate(); // refresh
+        }
+
+        internal void OnPreviewPaint(object sender, PaintEventArgs e) {
+            Graphics g = e.Graphics;
+
+            // Teken preview
+            if(currentSelectedLevel != null) {
+                List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
+                previewList.Add(new Player(new Point(10, 10), 40, 40));
+                previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+                previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
+
+                foreach (GameObject gameObject in previewList) {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                }
+            }       
         }
     }
     public class ControllerHighscores : Controller
