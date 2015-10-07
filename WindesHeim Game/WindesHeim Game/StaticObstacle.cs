@@ -17,6 +17,7 @@ namespace WindesHeim_Game
             base.collisionSize = 40;
             base.Name = "Verkeersregelaar";
             base.Description = "Doet niets";
+            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.IconTCEdited;
         }
     }
 }

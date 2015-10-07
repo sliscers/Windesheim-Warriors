@@ -11,6 +11,7 @@ namespace WindesHeim_Game {
     {
         private string name;
         private string description;
+        private Image panelIcon;
 
         public Obstacle(Point location, int height, int width) : base (location, height, width)
         {
@@ -27,6 +28,12 @@ namespace WindesHeim_Game {
         {
             get { return description; }
             set { description = value; }
+        }
+
+        public Image PanelIcon
+        {
+            get { return panelIcon; }
+            set { panelIcon = value; }
         }
 
         public void ChasePlayer(Player player) {

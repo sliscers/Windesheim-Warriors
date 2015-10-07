@@ -143,9 +143,29 @@ namespace WindesHeim_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap IconESEdited {
+            get {
+                object obj = ResourceManager.GetObject("IconESEdited", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap IconTC {
             get {
                 object obj = ResourceManager.GetObject("IconTC", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IconTCEdited {
+            get {
+                object obj = ResourceManager.GetObject("IconTCEdited", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

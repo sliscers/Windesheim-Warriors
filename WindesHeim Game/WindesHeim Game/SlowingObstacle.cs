@@ -15,6 +15,7 @@ namespace WindesHeim_Game {
             base.collisionSize = 75;
             base.Name = "Eerstejaars studenten";
             base.Description = "Volgt character en vertraagt";
+            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.IconESEdited;
         }
     }
 }

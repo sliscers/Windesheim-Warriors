@@ -202,6 +202,8 @@ namespace WindesHeim_Game
                 mg.lblObstacleDesc2.Text = obstacle2.Description;
                 mg.lblObstacleName1.Text = obstacle1.Name;
                 mg.lblObstacleName2.Text = obstacle2.Name;
+                mg.pbObstacle1.BackgroundImage = obstacle1.PanelIcon;
+                mg.pbObstacle2.BackgroundImage = obstacle2.PanelIcon;
             }
         }
 

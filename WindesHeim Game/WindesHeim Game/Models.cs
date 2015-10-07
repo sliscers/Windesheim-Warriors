@@ -183,7 +183,7 @@ namespace WindesHeim_Game
 
         // Icon 1
         private System.Windows.Forms.Panel pnlObstacleIcon1 = new Panel();
-        private System.Windows.Forms.PictureBox pbObstacle1 = new PictureBox();
+        internal System.Windows.Forms.PictureBox pbObstacle1 = new PictureBox();
 
         //Obstacle Name 1
         internal System.Windows.Forms.Label lblObstacleName1 = new Label();
@@ -207,7 +207,7 @@ namespace WindesHeim_Game
 
         //Icon 2
         private System.Windows.Forms.Panel pnlObstacleIcon2 = new Panel();
-        private System.Windows.Forms.PictureBox pbObstacle2 = new PictureBox();
+        internal System.Windows.Forms.PictureBox pbObstacle2 = new PictureBox();
 
         //Obstacle Name 2
         internal System.Windows.Forms.Label lblObstacleName2 = new Label();
