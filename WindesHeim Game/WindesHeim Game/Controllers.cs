@@ -372,6 +372,10 @@ namespace WindesHeim_Game
         {
             timer.Start();
         }
+        public void TimerStop()
+        {
+            timer.Stop();
+        }
     }
 
     public class ControllerLevelSelect : Controller

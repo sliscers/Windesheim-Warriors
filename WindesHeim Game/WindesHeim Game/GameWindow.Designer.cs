@@ -59,6 +59,7 @@ namespace WindesHeim_Game
             switch (state)
             {
                 case ScreenStates.menu:
+                    game.TimerStop();
                     this.state = ScreenStates.menu;
                     menu.RunController();
                     break;
@@ -78,6 +79,7 @@ namespace WindesHeim_Game
                     this.state = ScreenStates.editor;
                     break;
                 case ScreenStates.highscore:
+                    game.TimerStop();
                     this.state = ScreenStates.highscore;
                     highscores.RunController();
                     break;
