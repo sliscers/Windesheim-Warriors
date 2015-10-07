@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game
 {
@@ -225,13 +226,13 @@ namespace WindesHeim_Game
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if (mg.player.YoranColission(gameObstacle))
+                    if (mg.player.CollidesWith(gameObstacle))
                     {
                         mg.player.Location = new Point(0, 0);
                         UpdatePlayerPosition();
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
+                        mg.player.ObjectImage = Resources.Player;
                     }
                 }
 
@@ -240,7 +241,7 @@ namespace WindesHeim_Game
                     SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if (mg.player.YoranColission(gameObstacle))
+                    if (mg.player.CollidesWith(gameObstacle))
                     {
                         mg.player.Speed = mg.player.OriginalSpeed / 2;
                         UpdatePlayerSpeed("Langzaam");
@@ -263,13 +264,13 @@ namespace WindesHeim_Game
                 {
                     ExplodingObstacle gameObstacle = (ExplodingObstacle)gameObject;
 
-                    if (mg.player.YoranColission(gameObstacle))
+                    if (mg.player.CollidesWith(gameObstacle))
                     {
                         mg.player.Location = new Point(0, 0);
                         UpdatePlayerPosition();
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
+                        mg.player.ObjectImage = Resources.Player;
                     }
 
                     
@@ -279,7 +280,7 @@ namespace WindesHeim_Game
                 {
                     StaticObstacle gameObstacle = (StaticObstacle)gameObject;
 
-                    if (mg.player.YoranColission(gameObstacle)) 
+                    if (mg.player.CollidesWith(gameObstacle)) 
                     {
                         if (pressedUp)
                         {
@@ -299,10 +300,10 @@ namespace WindesHeim_Game
                         }
                     }
                 }
-                if (gameObject is Checkpoint && gameObject.ImageURL == AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconWIN.png")
+                if (gameObject is Checkpoint)
                 {
                     Checkpoint gameObstacle = (Checkpoint)gameObject;
-                    if (mg.player.YoranColission(gameObstacle))
+                    if (mg.player.CollidesWith(gameObstacle) && !gameObstacle.Start)
                     {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
@@ -330,7 +331,7 @@ namespace WindesHeim_Game
                         case 1:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
                             gameObject.FadeSmall();
-                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\EXPLODE.WAV");
+                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(Resources.EXPLODE);
                             player.Play();
                             break;
                         case 2:
@@ -409,15 +410,15 @@ namespace WindesHeim_Game
             foreach (GameObject gameObject in mg.GameObjects) {
                 if (gameObject is Checkpoint)
                 {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
 
                 }
                 if (gameObject is Obstacle) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
 
                 if(gameObject is Explosion) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                    
                 }
                            
@@ -425,7 +426,7 @@ namespace WindesHeim_Game
                
                 }
             // Teken player
-            g.DrawImage(Image.FromFile(mg.player.ImageURL), mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
+            g.DrawImage(mg.player.ObjectImage, mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
 
        
             }
@@ -441,11 +442,11 @@ namespace WindesHeim_Game
             }
             if (e.KeyCode == Keys.A) {
                 pressedLeft = true;
-                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\PlayerLeft.png";
+                mg.player.ObjectImage = Resources.PlayerLeft;
             }
             if (e.KeyCode == Keys.D) {
                 pressedRight = true;
-                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; //
+                mg.player.ObjectImage = Resources.Player;
             }
             if (e.KeyCode == Keys.Space)
             {

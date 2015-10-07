@@ -11,23 +11,14 @@ namespace WindesHeim_Game
     public class GameObject
     {
         private Point location;
-        private string imageURL;
+        private Bitmap objectImage;
         private int height;
         private int width;
 
         private int collisionX = 0;
         private int collisionY = 0;
-
-        
-        public int collisionSize;
        
-        public GameObject(Point location, string imageURL, int height, int width)
-        {
-            this.imageURL = imageURL;
-            this.location = location;
-            this.height = height;
-            this.width = width;
-        }
+        public int collisionSize;
 
         public GameObject(Point location, int height, int width)
         {
@@ -42,10 +33,11 @@ namespace WindesHeim_Game
             set { location = value; }
         }
 
-        public string ImageURL {
-            get { return imageURL; }
-            set { imageURL = value; }
+        public Bitmap ObjectImage {
+            get { return objectImage; }
+            set { objectImage = value; }
         }
+
         public int Height
         {
             get { return height; }
@@ -69,26 +61,7 @@ namespace WindesHeim_Game
             set { collisionY = value; }
         }
 
-        //protected double GetDistance(Point q) {
-
-        //    double a = Location.X  - q.X;
-        //    double b = Location.Y - q.Y;
-        //    double distance = Math.Sqrt(a * a + b * b);
-        //    return distance;
-        //}
-
-        //public bool CollidesWith(GameObject gameObject) {
-
-        //    if (GetDistance(gameObject.Location) < collisionSize) {
-        //        return true;
-
-        //    }
-        //    else {
-        //        return false;
-        //    }
-        //}
-
-        public bool YoranColission(GameObject gameObject)
+        public bool CollidesWith(GameObject gameObject)
         {
             if((this.location.X > (gameObject.location.X - gameObject.CollisionX)) && (this.location.X < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
                 && (this.location.Y > (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
@@ -105,10 +78,9 @@ namespace WindesHeim_Game
 
             return false;
         }
-
      
 
-       public void FadeSmall()
+        public void FadeSmall()
         {
             this.Height+=2;
             this.Width+=2;
