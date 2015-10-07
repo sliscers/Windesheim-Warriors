@@ -55,9 +55,11 @@ namespace WindesHeim_Game
         }
 
         protected double GetDistance(Point q) {
+           
             double a = Location.X - q.X;
             double b = Location.Y - q.Y;
             double distance = Math.Sqrt(a * a + b * b);
+            Console.WriteLine(distance);
             return distance;
         }
 

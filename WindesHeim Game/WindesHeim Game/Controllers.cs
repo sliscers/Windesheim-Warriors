@@ -206,6 +206,16 @@ namespace WindesHeim_Game
                         }
                     }
                 }
+                if (gameObject is Checkpoint && gameObject.ImageURL == AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconWIN.png")
+                {
+                    Checkpoint gameObstacle = (Checkpoint)gameObject;
+                    if (gameObstacle.CollidesWith(mg.player))
+                    {
+                        mg.player.Location = new Point(0, 0);
+                        mg.InitializeField();
+                        gameWindow.setController(ScreenStates.menu);
+                    }
+                }
 
                 // Check of we de explosie kunnen verwijderen
                 if (gameObject is Explosion)
@@ -298,21 +308,27 @@ namespace WindesHeim_Game
             Graphics g = pe.Graphics;
             ModelGame mg = (ModelGame)model;
 
-            // Teken player
-            g.DrawImage(Image.FromFile(mg.player.ImageURL), mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
+            
 
             // Teken andere gameobjects
             foreach (GameObject gameObject in mg.GameObjects) {
-                if(gameObject is Obstacle) {
+                if (gameObject is Checkpoint)
+                {
+                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+
+                }
+                if (gameObject is Obstacle) {
                     g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
 
                 if(gameObject is Explosion) {
                     g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
-                   
-                           
+                                           
                 }
+               
             }
+            // Teken player
+            g.DrawImage(Image.FromFile(mg.player.ImageURL), mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
         }
 
         public void OnKeyDownWASD(object sender, KeyEventArgs e) {
