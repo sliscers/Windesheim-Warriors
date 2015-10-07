@@ -41,9 +41,9 @@ namespace WindesHeim_Game
             this.model = new ModelMenu(this);
         }
 
-        public void button_Click(object sender, EventArgs e)
+        public void exit_Click(object sender, EventArgs e)
         {
-            gameWindow.setController(ScreenStates.game);
+            //Todo
         }
         public void play_Click(object sender, EventArgs e)
         {
@@ -445,7 +445,7 @@ namespace WindesHeim_Game
             }
             if (e.KeyCode == Keys.D) {
                 pressedRight = true;
-                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; //
+                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; 
             }
             if (e.KeyCode == Keys.Space)
             {
