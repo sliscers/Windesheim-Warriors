@@ -290,7 +290,7 @@ namespace WindesHeim_Game
                 if(gameObject is ExplodingObstacle)
                 {
                     gameObjects.Add(new ExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
-                }
+        }
                 if (gameObject is MovingExplodingObstacle)
                 {
                     gameObjects.Add(new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
@@ -315,8 +315,6 @@ namespace WindesHeim_Game
             // Registreer key events voor de player
             gameWindow.KeyDown += gameController.OnKeyDownWASD;
             gameWindow.KeyUp += gameController.OnKeyUp;
-
-            Console.WriteLine("zuw hw q");
 
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
             graphicsPanel.BackColor = Color.LightGray;

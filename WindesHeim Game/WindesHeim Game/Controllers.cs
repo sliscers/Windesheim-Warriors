@@ -42,9 +42,9 @@ namespace WindesHeim_Game
             this.model = new ModelMenu(this);
         }
 
-        public void button_Click(object sender, EventArgs e)
+        public void exit_Click(object sender, EventArgs e)
         {
-            gameWindow.setController(ScreenStates.game);
+            //Todo
         }
         public void play_Click(object sender, EventArgs e)
         {
