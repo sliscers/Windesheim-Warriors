@@ -13,6 +13,8 @@ namespace WindesHeim_Game {
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconBike.png";
             base.collisionSize = 50;
-        } 
+            base.Name = "Fietser";
+            base.Description = "Volgt character en ontploft";
+        }
     }
 }

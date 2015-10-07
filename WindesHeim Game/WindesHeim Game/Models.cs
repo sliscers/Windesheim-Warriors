@@ -21,17 +21,18 @@ namespace WindesHeim_Game
         [DllImport("gdi32.dll")]
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
-        public FontFamily windesheimFontFamily;
-        public Font windesheimSheriffFont;
-        public Font windesheimSheriffFontSmall;
-        public Font windesheimSheriffFontXSmall;
-        public Font windesheimTransitFont;
-        public FontFamily windesheimFontFamilyTransit;
+        protected FontFamily windesheimFontFamily;
+        protected Font windesheimSheriffFont;
+        protected Font windesheimSheriffFontSmall;
+        protected Font windesheimSheriffFontXSmall;
+        protected Font windesheimTransitFont;
+        protected FontFamily windesheimFontFamilyTransit;
 
         public Model(Controller controller)
         {
             this.controller = controller;
 
+            //Windesheimfonts definieren
             SetWindesheimFontSheriff();
             SetWindesheimFontTransit();
         }
@@ -52,7 +53,6 @@ namespace WindesHeim_Game
             IntPtr ptrData = Marshal.AllocCoTaskMem(dataLength);
             Marshal.Copy(fontArray, 0, ptrData, dataLength);
 
-
             uint cFonts = 0;
             AddFontMemResourceEx(ptrData, (uint)fontArray.Length, IntPtr.Zero, ref cFonts);
 
@@ -63,7 +63,7 @@ namespace WindesHeim_Game
 
             windesheimFontFamilyTransit = pfc.Families[0];
             windesheimTransitFont = new Font(windesheimFontFamilyTransit, 11f, FontStyle.Regular);
-        }
+    }
 
         private void SetWindesheimFontSheriff()
         {
@@ -72,7 +72,6 @@ namespace WindesHeim_Game
 
             IntPtr ptrData = Marshal.AllocCoTaskMem(dataLength);
             Marshal.Copy(fontArray, 0, ptrData, dataLength);
-
 
             uint cFonts = 0;
             AddFontMemResourceEx(ptrData, (uint)fontArray.Length, IntPtr.Zero, ref cFonts);
@@ -94,10 +93,12 @@ namespace WindesHeim_Game
     {
         private ControllerMenu menuController;
 
-        private Button play;
-        private Button editor;
-        private Button highscore;
-        private Button tempPlay;
+        private PictureBox play;
+        private PictureBox editor;
+        private PictureBox highscore;
+        private PictureBox tempPlay;
+        private Panel menuPanel;
+        private Panel backgroundImage;
 
         public ModelMenu(ControllerMenu controller) : base(controller)
         {
@@ -106,50 +107,54 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            this.play = new System.Windows.Forms.Button();
-            this.editor = new System.Windows.Forms.Button();
-            this.highscore = new System.Windows.Forms.Button();
-            this.tempPlay = new System.Windows.Forms.Button();
+            this.play = new System.Windows.Forms.PictureBox();
+            this.editor = new System.Windows.Forms.PictureBox();
+            this.highscore = new System.Windows.Forms.PictureBox();
+            this.tempPlay = new System.Windows.Forms.PictureBox();
 
-            this.play.Location = new System.Drawing.Point(254, 52);
-            this.play.Name = "play";
-            this.play.Size = new System.Drawing.Size(259, 33);
+            this.backgroundImage = new Panel();
+            this.backgroundImage.Size = gameWindow.Size;
+            this.backgroundImage.BackgroundImage = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\menuBackground.png");
+
+            this.play.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\playButton.png");
+            this.play.Location = new System.Drawing.Point(0, 0);
+            this.play.Size = new System.Drawing.Size(304, 44);
             this.play.TabIndex = 0;
-            this.play.Text = "Play";
-            this.play.UseVisualStyleBackColor = true;
-
-            this.editor.Location = new System.Drawing.Point(254, 91);
-            this.editor.Name = "editor";
-            this.editor.Size = new System.Drawing.Size(259, 33);
-            this.editor.TabIndex = 1;
-            this.editor.Text = "Editor";
-            this.editor.UseVisualStyleBackColor = true;
-
-            this.highscore.Location = new System.Drawing.Point(254, 130);
-            this.highscore.Name = "highscore";
-            this.highscore.Size = new System.Drawing.Size(259, 33);
-            this.highscore.TabIndex = 2;
-            this.highscore.Text = "highscore";
-            this.highscore.UseVisualStyleBackColor = true;
-
-            this.tempPlay.Location = new System.Drawing.Point(254, 169);
-            this.tempPlay.Name = "play test";
-            this.tempPlay.Size = new System.Drawing.Size(259, 33);
-            this.tempPlay.TabIndex = 2;
-            this.tempPlay.Text = "play test";
-            this.tempPlay.UseVisualStyleBackColor = true;
-
             this.play.Click += new EventHandler(menuController.play_Click);
+
+            this.editor.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\editorButton.png");
+            this.editor.Location = new System.Drawing.Point(0, 60);
+            this.editor.Size = new System.Drawing.Size(304, 44);
+            this.editor.TabIndex = 1;
+
+            this.highscore.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\highscoresButton.png");
+            this.highscore.Location = new System.Drawing.Point(0, 120);
+            this.highscore.Size = new System.Drawing.Size(304, 44);
+            this.highscore.TabIndex = 2;
             this.highscore.Click += new EventHandler(menuController.highscore_Click);
+
+            this.tempPlay.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\playButton.png");
+            this.tempPlay.Location = new System.Drawing.Point(0, 180);
+            this.tempPlay.Size = new System.Drawing.Size(304, 44);
+            this.tempPlay.TabIndex = 3;
             this.tempPlay.Click += new EventHandler(menuController.button_Click);
 
-            this.highscore.Click += new EventHandler(menuController.highscore_Click);
+            menuPanel = new Panel();
+            menuPanel.AutoSize = true;
+            menuPanel.BackColor = Color.Transparent;
 
-            gameWindow.BackgroundImage = Resources.menuBackground;
-            gameWindow.Controls.Add(play);
-            gameWindow.Controls.Add(editor);
-            gameWindow.Controls.Add(highscore);
-            gameWindow.Controls.Add(tempPlay);
+
+            menuPanel.Controls.Add(play);
+            menuPanel.Controls.Add(editor);
+            menuPanel.Controls.Add(highscore);
+            menuPanel.Controls.Add(tempPlay);
+
+
+            System.Console.WriteLine(gameWindow.Width);
+            menuPanel.Location = new Point((gameWindow.Width / 2 - menuPanel.Size.Width / 2), (gameWindow.Height / 2 - menuPanel.Size.Height / 2));
+            menuPanel.Anchor = AnchorStyles.None;
+            this.backgroundImage.Controls.Add(menuPanel);
+            gameWindow.Controls.Add(backgroundImage);
         }
     }
 
@@ -168,59 +173,110 @@ namespace WindesHeim_Game
 
         private Boolean mute = false;
 
-        private Color windesheimBlauw = Color.FromArgb(0, 67, 131);
+        //INITIALISATIES CONTROLS
+        //START OBSTACLEPANEL
+        internal System.Windows.Forms.Panel obstaclePanel = new Panel();
 
-        private System.Windows.Forms.Panel logoPanel;
-        private System.Windows.Forms.Panel obstaclePanel;
-        private System.Windows.Forms.Panel actionPanel;
-        private System.Windows.Forms.Panel controlPanel;
-        private System.Windows.Forms.Panel characterPanel;
-        private System.Windows.Forms.Label lblObstacles;
-        private System.Windows.Forms.Label lblCharacter;
-        private System.Windows.Forms.Button btnLeft;
-        private System.Windows.Forms.Button btnDown;
-        private System.Windows.Forms.Panel pnlObstacle1;
-        private System.Windows.Forms.Label lblObstacleName1;
-        private System.Windows.Forms.Panel pnlObstacle2;
-        private System.Windows.Forms.Label lblObstacleName2;
-        private System.Windows.Forms.PictureBox pbIconMenu;
-        private System.Windows.Forms.PictureBox pbIconRestart;
-        private System.Windows.Forms.PictureBox pbIconSound;
-        private System.Windows.Forms.Label lblObstacleProps1;
-        private System.Windows.Forms.Label lblObstacleProps2;
-        private System.Windows.Forms.Panel pnlObstacleIcon2;
-        private System.Windows.Forms.PictureBox pbObstacle2;
-        private System.Windows.Forms.Panel pnlObstacleIcon1;
-        private System.Windows.Forms.PictureBox pbObstacle1;
-        private System.Windows.Forms.Label lblObstaclePosXTitle1;
-        private System.Windows.Forms.Label lblObstaclePosYTitle1;
-        private System.Windows.Forms.Label lblObstaclePosX1;
-        private System.Windows.Forms.Label lblObstaclePosY2;
-        private System.Windows.Forms.Label lblObstaclePosX2;
-        private System.Windows.Forms.Label lblObstaclePosYTitle2;
-        private System.Windows.Forms.Label lblObstaclePosXTitle2;
-        private System.Windows.Forms.Label lblObstaclePosY1;
-        private System.Windows.Forms.Label lblObstacleDescTitle1;
-        private System.Windows.Forms.Label lblObstacleDesc2;
-        private System.Windows.Forms.Label lblObstacleDescTitle2;
-        private System.Windows.Forms.Label lblObstacleDesc1;
-        private System.Windows.Forms.Button btnRight;
-        private System.Windows.Forms.Button btnUp;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblCharacterPosY;
-        private System.Windows.Forms.Label lblCharacterPosX;
-        private System.Windows.Forms.Label lblCharacterPosYTitle;
-        private System.Windows.Forms.Label lblCharacterPosXTitle;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label lblCharacterProps;
-        private System.Windows.Forms.Label lblCharacterName;
-        private System.Windows.Forms.Label lblCharacterSpeed;
-        private System.Windows.Forms.Label lblCharacterSpeedTitle;
+        // START OBSTACLE 1
+        private System.Windows.Forms.Panel pnlObstacle1 = new Panel();
+        private System.Windows.Forms.Label lblObstacles = new Label();
+
+        // Icon 1
+        private System.Windows.Forms.Panel pnlObstacleIcon1 = new Panel();
+        private System.Windows.Forms.PictureBox pbObstacle1 = new PictureBox();
+
+        //Obstacle Name 1
+        internal System.Windows.Forms.Label lblObstacleName1 = new Label();
+
+        //Obstacle Properties 1
+        private System.Windows.Forms.Label lblObstacleProps1 = new Label();
+
+        private System.Windows.Forms.Label lblObstaclePosXTitle1 = new Label();
+        internal System.Windows.Forms.Label lblObstaclePosX1 = new Label();
+
+        private System.Windows.Forms.Label lblObstaclePosYTitle1 = new Label();
+        internal System.Windows.Forms.Label lblObstaclePosY1 = new Label();
+
+        //Obstacle Description 1
+        private System.Windows.Forms.Label lblObstacleDescTitle1 = new Label();
+        internal System.Windows.Forms.Label lblObstacleDesc1 = new Label();
+        // STOP OBSTACLE 1
+
+        // START OBSTACLE 2
+        private System.Windows.Forms.Panel pnlObstacle2 = new Panel();
+
+        //Icon 2
+        private System.Windows.Forms.Panel pnlObstacleIcon2 = new Panel();
+        private System.Windows.Forms.PictureBox pbObstacle2 = new PictureBox();
+
+        //Obstacle Name 2
+        internal System.Windows.Forms.Label lblObstacleName2 = new Label();
+
+        //Obstacle Properties 2
+        private System.Windows.Forms.Label lblObstacleProps2 = new Label();
+
+        private System.Windows.Forms.Label lblObstaclePosXTitle2 = new Label();
+        internal System.Windows.Forms.Label lblObstaclePosX2 = new Label();
+        private System.Windows.Forms.Label lblObstaclePosYTitle2 = new Label();
+        internal System.Windows.Forms.Label lblObstaclePosY2 = new Label();
+
+        //Obstacle Description 2
+        private System.Windows.Forms.Label lblObstacleDescTitle2 = new Label();
+        internal System.Windows.Forms.Label lblObstacleDesc2 = new Label();
+        // STOP OBSTACLE 2
+        //STOP OBSTACLEPANEL
 
 
+        //START LOGO PANEL
+        private System.Windows.Forms.Panel logoPanel = new Panel();
+        //STOP LOGO PANEL
 
 
+        //START CHARACTER PANEL
+        private System.Windows.Forms.Panel characterPanel = new Panel();
+
+        // START CHARACTER
+        private System.Windows.Forms.Panel pnlCharacter = new Panel();
+        private System.Windows.Forms.Label lblCharacter = new Label();
+
+        //Character Name
+        private System.Windows.Forms.Label lblCharacterName = new Label();
+
+        //Character Icon
+        private System.Windows.Forms.Panel pnlCharacterIcon = new Panel();
+        private System.Windows.Forms.PictureBox pbCharacter = new PictureBox();
+
+        //Character Properties
+        private System.Windows.Forms.Label lblCharacterProps = new Label();
+
+        private System.Windows.Forms.Label lblCharacterPosXTitle = new Label();
+        internal System.Windows.Forms.Label lblCharacterPosX = new Label();
+        private System.Windows.Forms.Label lblCharacterPosYTitle = new Label();
+        internal System.Windows.Forms.Label lblCharacterPosY = new Label();
+
+        private System.Windows.Forms.Label lblCharacterSpeedTitle = new Label();
+        internal System.Windows.Forms.Label lblCharacterSpeed = new Label();
+        // STOP CHARACTER
+        //STOP CHARACTER PANEL
+
+
+        //START CONTROL PANEL
+        private System.Windows.Forms.Panel controlPanel = new Panel();
+
+        private System.Windows.Forms.Button btnUp = new Button();
+        private System.Windows.Forms.Button btnDown = new Button();
+        private System.Windows.Forms.Button btnLeft = new Button();
+        private System.Windows.Forms.Button btnRight = new Button();
+        //STOP CONTROL PANEL
+
+
+        //START ACTION PANEL       
+        private System.Windows.Forms.Panel actionPanel = new Panel();
+
+        private System.Windows.Forms.PictureBox pbIconSound = new PictureBox();
+        private System.Windows.Forms.PictureBox pbIconRestart = new PictureBox();
+        private System.Windows.Forms.PictureBox pbIconMenu = new PictureBox();
+        //STOP ACTION PANEL
 
         public ModelGame(ControllerGame controller) : base(controller)
         {
@@ -252,86 +308,14 @@ namespace WindesHeim_Game
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
             graphicsPanel.BackColor = Color.LightGray;
             graphicsPanel.Location = new Point(0, 0);
-            graphicsPanel.Size = new Size(845, 480);
+            graphicsPanel.Size = new Size(845, 475);
             graphicsPanel.Paint += gameController.OnPaintEvent;
 
             // Overige panels
-
-            //obstaclePanel1.Location = new Point(845, 0);
-            //obstaclePanel1.Size = new Size(445, 240);
-            //obstaclePanel1.BackColor = Color.White;
-
-
-
-
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameWindow));
-            this.obstaclePanel = new System.Windows.Forms.Panel();
-            this.pnlObstacle2 = new System.Windows.Forms.Panel();
-            this.lblObstacleDesc2 = new System.Windows.Forms.Label();
-            this.lblObstacleDescTitle2 = new System.Windows.Forms.Label();
-            this.lblObstaclePosY2 = new System.Windows.Forms.Label();
-            this.pnlObstacleIcon2 = new System.Windows.Forms.Panel();
-            this.pbObstacle2 = new System.Windows.Forms.PictureBox();
-            this.lblObstaclePosX2 = new System.Windows.Forms.Label();
-            this.lblObstacleProps2 = new System.Windows.Forms.Label();
-            this.lblObstaclePosYTitle2 = new System.Windows.Forms.Label();
-            this.lblObstacleName2 = new System.Windows.Forms.Label();
-            this.lblObstaclePosXTitle2 = new System.Windows.Forms.Label();
-            this.pnlObstacle1 = new System.Windows.Forms.Panel();
-            this.lblObstacleDesc1 = new System.Windows.Forms.Label();
-            this.lblObstacleDescTitle1 = new System.Windows.Forms.Label();
-            this.lblObstaclePosY1 = new System.Windows.Forms.Label();
-            this.lblObstaclePosX1 = new System.Windows.Forms.Label();
-            this.lblObstaclePosYTitle1 = new System.Windows.Forms.Label();
-            this.lblObstaclePosXTitle1 = new System.Windows.Forms.Label();
-            this.pnlObstacleIcon1 = new System.Windows.Forms.Panel();
-            this.pbObstacle1 = new System.Windows.Forms.PictureBox();
-            this.lblObstacleProps1 = new System.Windows.Forms.Label();
-            this.lblObstacleName1 = new System.Windows.Forms.Label();
-            this.lblObstacles = new System.Windows.Forms.Label();
-            this.actionPanel = new System.Windows.Forms.Panel();
-            this.pbIconMenu = new System.Windows.Forms.PictureBox();
-            this.pbIconRestart = new System.Windows.Forms.PictureBox();
-            this.pbIconSound = new System.Windows.Forms.PictureBox();
-            this.controlPanel = new System.Windows.Forms.Panel();
-            this.btnLeft = new System.Windows.Forms.Button();
-            this.btnRight = new System.Windows.Forms.Button();
-            this.btnUp = new System.Windows.Forms.Button();
-            this.btnDown = new System.Windows.Forms.Button();
-            this.characterPanel = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblCharacterSpeed = new System.Windows.Forms.Label();
-            this.lblCharacterSpeedTitle = new System.Windows.Forms.Label();
-            this.lblCharacterPosY = new System.Windows.Forms.Label();
-            this.lblCharacterPosX = new System.Windows.Forms.Label();
-            this.lblCharacterPosYTitle = new System.Windows.Forms.Label();
-            this.lblCharacterPosXTitle = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblCharacterProps = new System.Windows.Forms.Label();
-            this.lblCharacterName = new System.Windows.Forms.Label();
-            this.lblCharacter = new System.Windows.Forms.Label();
-            this.logoPanel = new System.Windows.Forms.Panel();
-            this.obstaclePanel.SuspendLayout();
-            this.pnlObstacle2.SuspendLayout();
-            this.pnlObstacleIcon2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbObstacle2)).BeginInit();
-            this.pnlObstacle1.SuspendLayout();
-            this.pnlObstacleIcon1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbObstacle1)).BeginInit();
-            this.actionPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbIconMenu)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbIconRestart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbIconSound)).BeginInit();
-            this.controlPanel.SuspendLayout();
-            this.characterPanel.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 
-            
-            // obstaclePanel
-            // 
+            //START OBSTACLE PANEL
+            //Main ObstaclePanel
             this.obstaclePanel.BackColor = System.Drawing.SystemColors.Window;
             this.obstaclePanel.Controls.Add(this.pnlObstacle2);
             this.obstaclePanel.Controls.Add(this.pnlObstacle1);
@@ -342,132 +326,16 @@ namespace WindesHeim_Game
             this.obstaclePanel.Size = new System.Drawing.Size(431, 475);
             this.obstaclePanel.TabIndex = 2;
 
-            // 
-            // pnlObstacle2
-            // 
-            this.pnlObstacle2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pnlObstacle2.Controls.Add(this.lblObstacleDesc2);
-            this.pnlObstacle2.Controls.Add(this.lblObstacleDescTitle2);
-            this.pnlObstacle2.Controls.Add(this.lblObstaclePosY2);
-            this.pnlObstacle2.Controls.Add(this.pnlObstacleIcon2);
-            this.pnlObstacle2.Controls.Add(this.lblObstaclePosX2);
-            this.pnlObstacle2.Controls.Add(this.lblObstacleProps2);
-            this.pnlObstacle2.Controls.Add(this.lblObstaclePosYTitle2);
-            this.pnlObstacle2.Controls.Add(this.lblObstacleName2);
-            this.pnlObstacle2.Controls.Add(this.lblObstaclePosXTitle2);
-            this.pnlObstacle2.Location = new System.Drawing.Point(8, 285);
-            this.pnlObstacle2.Name = "pnlObstacle2";
-            this.pnlObstacle2.Size = new System.Drawing.Size(412, 190);
-            this.pnlObstacle2.TabIndex = 4;
-            // 
-            // lblObstacleDesc2
-            // 
-            this.lblObstacleDesc2.AutoSize = true;
-            this.lblObstacleDesc2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstacleDesc2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstacleDesc2.Location = new System.Drawing.Point(173, 136);
-            this.lblObstacleDesc2.Margin = new System.Windows.Forms.Padding(0);
-            this.lblObstacleDesc2.Name = "lblObstacleDesc2";
-            this.lblObstacleDesc2.Size = new System.Drawing.Size(85, 18);
-            this.lblObstacleDesc2.TabIndex = 14;
-            this.lblObstacleDesc2.Text = "beschrijving";
-            // 
-            // lblObstacleDescTitle2
-            // 
-            this.lblObstacleDescTitle2.AutoSize = true;
-            this.lblObstacleDescTitle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(161)))), ((int)(((byte)(15)))));
-            this.lblObstacleDescTitle2.Location = new System.Drawing.Point(173, 116);
-            this.lblObstacleDescTitle2.Margin = new System.Windows.Forms.Padding(0);
-            this.lblObstacleDescTitle2.Name = "lblObstacleDescTitle2";
-            this.lblObstacleDescTitle2.Size = new System.Drawing.Size(64, 13);
-            this.lblObstacleDescTitle2.TabIndex = 11;
-            this.lblObstacleDescTitle2.Text = "Beschrijving";
-            // 
-            // lblObstaclePosY2
-            // 
-            this.lblObstaclePosY2.AutoSize = true;
-            this.lblObstaclePosY2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstaclePosY2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstaclePosY2.Location = new System.Drawing.Point(249, 83);
-            this.lblObstaclePosY2.Name = "lblObstaclePosY2";
-            this.lblObstaclePosY2.Size = new System.Drawing.Size(23, 18);
-            this.lblObstaclePosY2.TabIndex = 13;
-            this.lblObstaclePosY2.Text = "int";
-            // 
-            // pnlObstacleIcon2
-            // 
-            this.pnlObstacleIcon2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
-            this.pnlObstacleIcon2.Controls.Add(this.pbObstacle2);
-            this.pnlObstacleIcon2.Location = new System.Drawing.Point(7, 12);
-            this.pnlObstacleIcon2.Name = "pnlObstacleIcon2";
-            this.pnlObstacleIcon2.Size = new System.Drawing.Size(160, 160);
-            this.pnlObstacleIcon2.TabIndex = 6;
-            // 
-            // pbObstacle2
-            // 
-            this.pbObstacle2.BackgroundImage = global::WindesHeim_Game.Properties.Resources.carEdited;
-            this.pbObstacle2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbObstacle2.Location = new System.Drawing.Point(5, 5);
-            this.pbObstacle2.Name = "pbObstacle2";
-            this.pbObstacle2.Size = new System.Drawing.Size(150, 150);
-            this.pbObstacle2.TabIndex = 1;
-            this.pbObstacle2.TabStop = false;
-            // 
-            // lblObstaclePosX2
-            // 
-            this.lblObstaclePosX2.AutoSize = true;
-            this.lblObstaclePosX2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstaclePosX2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstaclePosX2.Location = new System.Drawing.Point(249, 63);
-            this.lblObstaclePosX2.Name = "lblObstaclePosX2";
-            this.lblObstaclePosX2.Size = new System.Drawing.Size(23, 18);
-            this.lblObstaclePosX2.TabIndex = 12;
-            this.lblObstaclePosX2.Text = "int";
-            // 
-            // lblObstacleProps2
-            // 
-            this.lblObstacleProps2.AutoSize = true;
-            this.lblObstacleProps2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(161)))), ((int)(((byte)(15)))));
-            this.lblObstacleProps2.Location = new System.Drawing.Point(173, 43);
-            this.lblObstacleProps2.Name = "lblObstacleProps2";
-            this.lblObstacleProps2.Size = new System.Drawing.Size(81, 13);
-            this.lblObstacleProps2.TabIndex = 5;
-            this.lblObstacleProps2.Text = "Eigenschappen";
-            // 
-            // lblObstaclePosYTitle2
-            // 
-            this.lblObstaclePosYTitle2.AutoSize = true;
-            this.lblObstaclePosYTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstaclePosYTitle2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstaclePosYTitle2.Location = new System.Drawing.Point(174, 83);
-            this.lblObstaclePosYTitle2.Name = "lblObstaclePosYTitle2";
-            this.lblObstaclePosYTitle2.Size = new System.Drawing.Size(70, 18);
-            this.lblObstaclePosYTitle2.TabIndex = 11;
-            this.lblObstaclePosYTitle2.Text = "Positie Y:";
-            // 
-            // lblObstacleName2
-            // 
-            this.lblObstacleName2.AutoSize = true;
-            this.lblObstacleName2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
-            this.lblObstacleName2.Location = new System.Drawing.Point(173, 12);
-            this.lblObstacleName2.Name = "lblObstacleName2";
-            this.lblObstacleName2.Size = new System.Drawing.Size(75, 13);
-            this.lblObstacleName2.TabIndex = 3;
-            this.lblObstacleName2.Text = "Obstakelnaam";
-            // 
-            // lblObstaclePosXTitle2
-            // 
-            this.lblObstaclePosXTitle2.AutoSize = true;
-            this.lblObstaclePosXTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstaclePosXTitle2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstaclePosXTitle2.Location = new System.Drawing.Point(174, 63);
-            this.lblObstaclePosXTitle2.Name = "lblObstaclePosXTitle2";
-            this.lblObstaclePosXTitle2.Size = new System.Drawing.Size(71, 18);
-            this.lblObstaclePosXTitle2.TabIndex = 10;
-            this.lblObstaclePosXTitle2.Text = "Positie X:";
-            // 
-            // pnlObstacle1
-            // 
+            //Label Obstacle Title
+            this.lblObstacles.AutoSize = true;
+            this.lblObstacles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
+            this.lblObstacles.Location = new System.Drawing.Point(3, 9);
+            this.lblObstacles.Name = "lblObstacles";
+            this.lblObstacles.Size = new System.Drawing.Size(54, 13);
+            this.lblObstacles.TabIndex = 0;
+            this.lblObstacles.Text = "Obstakels";
+
+            //Panel Obstacle 1
             this.pnlObstacle1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.pnlObstacle1.Controls.Add(this.lblObstacleDesc1);
             this.pnlObstacle1.Controls.Add(this.lblObstacleDescTitle1);
@@ -482,21 +350,79 @@ namespace WindesHeim_Game
             this.pnlObstacle1.Name = "pnlObstacle1";
             this.pnlObstacle1.Size = new System.Drawing.Size(412, 190);
             this.pnlObstacle1.TabIndex = 1;
-            // 
-            // lblObstacleDesc1
-            // 
-            this.lblObstacleDesc1.AutoSize = true;
-            this.lblObstacleDesc1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstacleDesc1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstacleDesc1.Location = new System.Drawing.Point(173, 136);
-            this.lblObstacleDesc1.Margin = new System.Windows.Forms.Padding(0);
-            this.lblObstacleDesc1.Name = "lblObstacleDesc1";
-            this.lblObstacleDesc1.Size = new System.Drawing.Size(85, 18);
-            this.lblObstacleDesc1.TabIndex = 15;
-            this.lblObstacleDesc1.Text = "beschrijving";
-            // 
-            // lblObstacleDescTitle1
-            // 
+
+            //Panel ObstacleIcon1
+            this.pnlObstacleIcon1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
+            this.pnlObstacleIcon1.Controls.Add(this.pbObstacle1);
+            this.pnlObstacleIcon1.Location = new System.Drawing.Point(7, 12);
+            this.pnlObstacleIcon1.Name = "pnlObstacleIcon1";
+            this.pnlObstacleIcon1.Size = new System.Drawing.Size(160, 160);
+            this.pnlObstacleIcon1.TabIndex = 5;
+
+            //Picturebox Obstacle 1
+            this.pbObstacle1.BackgroundImage = global::WindesHeim_Game.Properties.Resources.bikeEdited;
+            this.pbObstacle1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbObstacle1.Location = new System.Drawing.Point(5, 5);
+            this.pbObstacle1.Name = "pbObstacle1";
+            this.pbObstacle1.Size = new System.Drawing.Size(150, 150);
+            this.pbObstacle1.TabIndex = 0;
+            this.pbObstacle1.TabStop = false;
+
+            //Label Obstacle Name 1
+            this.lblObstacleName1.AutoSize = true;
+            this.lblObstacleName1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
+            this.lblObstacleName1.Location = new System.Drawing.Point(173, 12);
+            this.lblObstacleName1.Name = "lblObstacleName1";
+            this.lblObstacleName1.Size = new System.Drawing.Size(75, 13);
+            this.lblObstacleName1.TabIndex = 3;
+            this.lblObstacleName1.Text = "Obstakelnaam";
+
+            //Label Obstacle Properties 1
+            this.lblObstacleProps1.AutoSize = true;
+            this.lblObstacleProps1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(161)))), ((int)(((byte)(15)))));
+            this.lblObstacleProps1.Location = new System.Drawing.Point(173, 43);
+            this.lblObstacleProps1.Name = "lblObstacleProps1";
+            this.lblObstacleProps1.Size = new System.Drawing.Size(81, 13);
+            this.lblObstacleProps1.TabIndex = 4;
+            this.lblObstacleProps1.Text = "Eigenschappen";
+
+            //Label Obstacle Postition X Title 1
+            this.lblObstaclePosXTitle1.AutoSize = true;
+            this.lblObstaclePosXTitle1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstaclePosXTitle1.Location = new System.Drawing.Point(173, 63);
+            this.lblObstaclePosXTitle1.Name = "lblObstaclePosXTitle1";
+            this.lblObstaclePosXTitle1.Size = new System.Drawing.Size(71, 18);
+            this.lblObstaclePosXTitle1.TabIndex = 6;
+            this.lblObstaclePosXTitle1.Text = "Positie X:";
+
+            //Label Obstacle Position X 1
+            this.lblObstaclePosX1.AutoSize = true;
+            this.lblObstaclePosX1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstaclePosX1.Location = new System.Drawing.Point(250, 63);
+            this.lblObstaclePosX1.Name = "lblObstaclePosX1";
+            this.lblObstaclePosX1.Size = new System.Drawing.Size(23, 18);
+            this.lblObstaclePosX1.TabIndex = 8;
+            this.lblObstaclePosX1.Text = "int";
+
+            //Label Obstacle Position Y Title 1
+            this.lblObstaclePosYTitle1.AutoSize = true;
+            this.lblObstaclePosYTitle1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstaclePosYTitle1.Location = new System.Drawing.Point(173, 83);
+            this.lblObstaclePosYTitle1.Name = "lblObstaclePosYTitle1";
+            this.lblObstaclePosYTitle1.Size = new System.Drawing.Size(70, 18);
+            this.lblObstaclePosYTitle1.TabIndex = 7;
+            this.lblObstaclePosYTitle1.Text = "Positie Y:";
+
+            //Label Obstacle Position Y 1
+            this.lblObstaclePosY1.AutoSize = true;
+            this.lblObstaclePosY1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstaclePosY1.Location = new System.Drawing.Point(249, 83);
+            this.lblObstaclePosY1.Name = "lblObstaclePosY1";
+            this.lblObstaclePosY1.Size = new System.Drawing.Size(23, 18);
+            this.lblObstaclePosY1.TabIndex = 9;
+            this.lblObstaclePosY1.Text = "int";
+
+            //Label Obstacle Description Title 1
             this.lblObstacleDescTitle1.AutoSize = true;
             this.lblObstacleDescTitle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(161)))), ((int)(((byte)(15)))));
             this.lblObstacleDescTitle1.Location = new System.Drawing.Point(173, 116);
@@ -505,152 +431,271 @@ namespace WindesHeim_Game
             this.lblObstacleDescTitle1.Size = new System.Drawing.Size(64, 13);
             this.lblObstacleDescTitle1.TabIndex = 10;
             this.lblObstacleDescTitle1.Text = "Beschrijving";
-            // 
-            // lblObstaclePosY1
-            // 
-            this.lblObstaclePosY1.AutoSize = true;
-            this.lblObstaclePosY1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstaclePosY1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstaclePosY1.Location = new System.Drawing.Point(249, 83);
-            this.lblObstaclePosY1.Name = "lblObstaclePosY1";
-            this.lblObstaclePosY1.Size = new System.Drawing.Size(23, 18);
-            this.lblObstaclePosY1.TabIndex = 9;
-            this.lblObstaclePosY1.Text = "int";
-            // 
-            // lblObstaclePosX1
-            // 
-            this.lblObstaclePosX1.AutoSize = true;
-            this.lblObstaclePosX1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstaclePosX1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstaclePosX1.Location = new System.Drawing.Point(250, 63);
-            this.lblObstaclePosX1.Name = "lblObstaclePosX1";
-            this.lblObstaclePosX1.Size = new System.Drawing.Size(23, 18);
-            this.lblObstaclePosX1.TabIndex = 8;
-            this.lblObstaclePosX1.Text = "int";
-            // 
-            // lblObstaclePosYTitle1
-            // 
-            this.lblObstaclePosYTitle1.AutoSize = true;
-            this.lblObstaclePosYTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstaclePosYTitle1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstaclePosYTitle1.Location = new System.Drawing.Point(173, 83);
-            this.lblObstaclePosYTitle1.Name = "lblObstaclePosYTitle1";
-            this.lblObstaclePosYTitle1.Size = new System.Drawing.Size(70, 18);
-            this.lblObstaclePosYTitle1.TabIndex = 7;
-            this.lblObstaclePosYTitle1.Text = "Positie Y:";
-            // 
-            // lblObstaclePosXTitle1
-            // 
-            this.lblObstaclePosXTitle1.AutoSize = true;
-            this.lblObstaclePosXTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObstaclePosXTitle1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblObstaclePosXTitle1.Location = new System.Drawing.Point(173, 63);
-            this.lblObstaclePosXTitle1.Name = "lblObstaclePosXTitle1";
-            this.lblObstaclePosXTitle1.Size = new System.Drawing.Size(71, 18);
-            this.lblObstaclePosXTitle1.TabIndex = 6;
-            this.lblObstaclePosXTitle1.Text = "Positie X:";
-            // 
-            // pnlObstacleIcon1
-            // 
-            this.pnlObstacleIcon1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
-            this.pnlObstacleIcon1.Controls.Add(this.pbObstacle1);
-            this.pnlObstacleIcon1.Location = new System.Drawing.Point(7, 12);
-            this.pnlObstacleIcon1.Name = "pnlObstacleIcon1";
-            this.pnlObstacleIcon1.Size = new System.Drawing.Size(160, 160);
-            this.pnlObstacleIcon1.TabIndex = 5;
-            // 
-            // pbObstacle1
-            // 
-            this.pbObstacle1.BackgroundImage = global::WindesHeim_Game.Properties.Resources.bikeEdited;
-            this.pbObstacle1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbObstacle1.Location = new System.Drawing.Point(5, 5);
-            this.pbObstacle1.Name = "pbObstacle1";
-            this.pbObstacle1.Size = new System.Drawing.Size(150, 150);
-            this.pbObstacle1.TabIndex = 0;
-            this.pbObstacle1.TabStop = false;
-            // 
-            // lblObstacleProps1
-            // 
-            this.lblObstacleProps1.AutoSize = true;
-            this.lblObstacleProps1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(161)))), ((int)(((byte)(15)))));
-            this.lblObstacleProps1.Location = new System.Drawing.Point(173, 43);
-            this.lblObstacleProps1.Name = "lblObstacleProps1";
-            this.lblObstacleProps1.Size = new System.Drawing.Size(81, 13);
-            this.lblObstacleProps1.TabIndex = 4;
-            this.lblObstacleProps1.Text = "Eigenschappen";
-            // 
-            // lblObstacleName1
-            // 
-            this.lblObstacleName1.AutoSize = true;
-            this.lblObstacleName1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
-            this.lblObstacleName1.Location = new System.Drawing.Point(173, 12);
-            this.lblObstacleName1.Name = "lblObstacleName1";
-            this.lblObstacleName1.Size = new System.Drawing.Size(75, 13);
-            this.lblObstacleName1.TabIndex = 3;
-            this.lblObstacleName1.Text = "Obstakelnaam";
-            // 
-            // lblObstacles
-            // 
-            this.lblObstacles.AutoSize = true;
-            this.lblObstacles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
-            this.lblObstacles.Location = new System.Drawing.Point(3, 9);
-            this.lblObstacles.Name = "lblObstacles";
-            this.lblObstacles.Size = new System.Drawing.Size(54, 13);
-            this.lblObstacles.TabIndex = 0;
-            this.lblObstacles.Text = "Obstakels";
-            // 
-            // actionPanel
-            // 
-            this.actionPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.actionPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.actionPanel.Controls.Add(this.pbIconMenu);
-            this.actionPanel.Controls.Add(this.pbIconRestart);
-            this.actionPanel.Controls.Add(this.pbIconSound);
-            this.actionPanel.Location = new System.Drawing.Point(-11, 467);
-            this.actionPanel.Margin = new System.Windows.Forms.Padding(1);
-            this.actionPanel.Name = "actionPanel";
-            this.actionPanel.Size = new System.Drawing.Size(111, 284);
-            this.actionPanel.TabIndex = 3;
-            // 
-            // pbIconMenu
-            // 
-            this.pbIconMenu.BackgroundImage = global::WindesHeim_Game.Properties.Resources.menuEdited;
-            this.pbIconMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbIconMenu.Location = new System.Drawing.Point(34, 190);
-            this.pbIconMenu.Name = "pbIconMenu";
-            this.pbIconMenu.Size = new System.Drawing.Size(50, 50);
-            this.pbIconMenu.TabIndex = 8;
-            this.pbIconMenu.TabStop = false;
-            this.pbIconMenu.MouseEnter += new System.EventHandler(this.MenuHoverEnter);
-            this.pbIconMenu.MouseLeave += new System.EventHandler(this.MenuHoverLeave);
-            // 
-            // pbIconRestart
-            // 
-            this.pbIconRestart.BackgroundImage = global::WindesHeim_Game.Properties.Resources.restartEdited;
-            this.pbIconRestart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbIconRestart.Location = new System.Drawing.Point(34, 106);
-            this.pbIconRestart.Name = "pbIconRestart";
-            this.pbIconRestart.Size = new System.Drawing.Size(50, 50);
-            this.pbIconRestart.TabIndex = 7;
-            this.pbIconRestart.TabStop = false;
-            this.pbIconRestart.MouseEnter += new System.EventHandler(this.RestartHoverEnter);
-            this.pbIconRestart.MouseLeave += new System.EventHandler(this.RestartHoverLeave);
-            // 
-            // pbIconSound
-            // 
-            this.pbIconSound.BackgroundImage = global::WindesHeim_Game.Properties.Resources.soundEdited1;
-            this.pbIconSound.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pbIconSound.Location = new System.Drawing.Point(34, 22);
-            this.pbIconSound.Name = "pbIconSound";
-            this.pbIconSound.Size = new System.Drawing.Size(50, 50);
-            this.pbIconSound.TabIndex = 6;
-            this.pbIconSound.TabStop = false;
-            this.pbIconSound.Click += new System.EventHandler(this.pbIconSound_Click);
-            this.pbIconSound.MouseEnter += new System.EventHandler(this.SoundHoverEnter);
-            this.pbIconSound.MouseLeave += new System.EventHandler(this.SoundHoverLeave);
-            // 
-            // controlPanel
-            // 
+
+            //Label Obstacle Description 1
+            this.lblObstacleDesc1.AutoSize = true;
+            this.lblObstacleDesc1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstacleDesc1.Location = new System.Drawing.Point(173, 136);
+            this.lblObstacleDesc1.Margin = new System.Windows.Forms.Padding(0);
+            this.lblObstacleDesc1.Name = "lblObstacleDesc1";
+            this.lblObstacleDesc1.Size = new System.Drawing.Size(85, 18);
+            this.lblObstacleDesc1.TabIndex = 15;
+            this.lblObstacleDesc1.Text = "beschrijving";
+
+            //Panel Obstacle 2 
+            this.pnlObstacle2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pnlObstacle2.Controls.Add(this.lblObstacleDesc2);
+            this.pnlObstacle2.Controls.Add(this.lblObstacleDescTitle2);
+            this.pnlObstacle2.Controls.Add(this.lblObstaclePosY2);
+            this.pnlObstacle2.Controls.Add(this.pnlObstacleIcon2);
+            this.pnlObstacle2.Controls.Add(this.lblObstaclePosX2);
+            this.pnlObstacle2.Controls.Add(this.lblObstacleProps2);
+            this.pnlObstacle2.Controls.Add(this.lblObstaclePosYTitle2);
+            this.pnlObstacle2.Controls.Add(this.lblObstacleName2);
+            this.pnlObstacle2.Controls.Add(this.lblObstaclePosXTitle2);
+            this.pnlObstacle2.Location = new System.Drawing.Point(8, 285);
+            this.pnlObstacle2.Name = "pnlObstacle2";
+            this.pnlObstacle2.Size = new System.Drawing.Size(412, 190);
+            this.pnlObstacle2.TabIndex = 4;
+
+            //Panel Obstacle Icon 2
+            this.pnlObstacleIcon2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
+            this.pnlObstacleIcon2.Controls.Add(this.pbObstacle2);
+            this.pnlObstacleIcon2.Location = new System.Drawing.Point(7, 12);
+            this.pnlObstacleIcon2.Name = "pnlObstacleIcon2";
+            this.pnlObstacleIcon2.Size = new System.Drawing.Size(160, 160);
+            this.pnlObstacleIcon2.TabIndex = 6;
+
+            //Picturebox Obstacle 2
+            this.pbObstacle2.BackgroundImage = global::WindesHeim_Game.Properties.Resources.carEdited;
+            this.pbObstacle2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbObstacle2.Location = new System.Drawing.Point(5, 5);
+            this.pbObstacle2.Name = "pbObstacle2";
+            this.pbObstacle2.Size = new System.Drawing.Size(150, 150);
+            this.pbObstacle2.TabIndex = 1;
+            this.pbObstacle2.TabStop = false;
+
+            //Label Obstacle Name 2
+            this.lblObstacleName2.AutoSize = true;
+            this.lblObstacleName2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
+            this.lblObstacleName2.Location = new System.Drawing.Point(173, 12);
+            this.lblObstacleName2.Name = "lblObstacleName2";
+            this.lblObstacleName2.Size = new System.Drawing.Size(75, 13);
+            this.lblObstacleName2.TabIndex = 3;
+            this.lblObstacleName2.Text = "Obstakelnaam";
+
+            //Label Obstacle Properties 2
+            this.lblObstacleProps2.AutoSize = true;
+            this.lblObstacleProps2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(161)))), ((int)(((byte)(15)))));
+            this.lblObstacleProps2.Location = new System.Drawing.Point(173, 43);
+            this.lblObstacleProps2.Name = "lblObstacleProps2";
+            this.lblObstacleProps2.Size = new System.Drawing.Size(81, 13);
+            this.lblObstacleProps2.TabIndex = 5;
+            this.lblObstacleProps2.Text = "Eigenschappen";
+
+            //Label Obstacle Postition X Title 2
+            this.lblObstaclePosXTitle2.AutoSize = true;
+            this.lblObstaclePosXTitle2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstaclePosXTitle2.Location = new System.Drawing.Point(174, 63);
+            this.lblObstaclePosXTitle2.Name = "lblObstaclePosXTitle2";
+            this.lblObstaclePosXTitle2.Size = new System.Drawing.Size(71, 18);
+            this.lblObstaclePosXTitle2.TabIndex = 10;
+            this.lblObstaclePosXTitle2.Text = "Positie X:";
+
+            //Label Obstacle Position X 2
+            this.lblObstaclePosX2.AutoSize = true;
+            this.lblObstaclePosX2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstaclePosX2.Location = new System.Drawing.Point(249, 63);
+            this.lblObstaclePosX2.Name = "lblObstaclePosX2";
+            this.lblObstaclePosX2.Size = new System.Drawing.Size(23, 18);
+            this.lblObstaclePosX2.TabIndex = 12;
+            this.lblObstaclePosX2.Text = "int";
+
+            //Label Obstacle Position Y Title 2
+            this.lblObstaclePosYTitle2.AutoSize = true;
+            this.lblObstaclePosYTitle2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstaclePosYTitle2.Location = new System.Drawing.Point(174, 83);
+            this.lblObstaclePosYTitle2.Name = "lblObstaclePosYTitle2";
+            this.lblObstaclePosYTitle2.Size = new System.Drawing.Size(70, 18);
+            this.lblObstaclePosYTitle2.TabIndex = 11;
+            this.lblObstaclePosYTitle2.Text = "Positie Y:";
+
+            //Label Obstacle Position Y 2
+            this.lblObstaclePosY2.AutoSize = true;
+            this.lblObstaclePosY2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstaclePosY2.Location = new System.Drawing.Point(249, 83);
+            this.lblObstaclePosY2.Name = "lblObstaclePosY2";
+            this.lblObstaclePosY2.Size = new System.Drawing.Size(23, 18);
+            this.lblObstaclePosY2.TabIndex = 13;
+            this.lblObstaclePosY2.Text = "int";
+
+            //Label Obstacle Description Title 2
+            this.lblObstacleDescTitle2.AutoSize = true;
+            this.lblObstacleDescTitle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(161)))), ((int)(((byte)(15)))));
+            this.lblObstacleDescTitle2.Location = new System.Drawing.Point(173, 116);
+            this.lblObstacleDescTitle2.Margin = new System.Windows.Forms.Padding(0);
+            this.lblObstacleDescTitle2.Name = "lblObstacleDescTitle2";
+            this.lblObstacleDescTitle2.Size = new System.Drawing.Size(64, 13);
+            this.lblObstacleDescTitle2.TabIndex = 11;
+            this.lblObstacleDescTitle2.Text = "Beschrijving";
+
+            //Label Obstacle Description 2
+            this.lblObstacleDesc2.AutoSize = true;
+            this.lblObstacleDesc2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblObstacleDesc2.Location = new System.Drawing.Point(173, 136);
+            this.lblObstacleDesc2.Margin = new System.Windows.Forms.Padding(0);
+            this.lblObstacleDesc2.Name = "lblObstacleDesc2";
+            this.lblObstacleDesc2.Size = new System.Drawing.Size(85, 18);
+            this.lblObstacleDesc2.TabIndex = 14;
+            this.lblObstacleDesc2.Text = "beschrijving";
+            //STOP OBSTACLE PANEL
+
+
+            //START LOGO PANEL
+
+            //Main Panel
+            this.logoPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.logoPanel.BackgroundImage = global::WindesHeim_Game.Properties.Resources.ConceptTransparentBackgroundSmall;
+            this.logoPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.logoPanel.Location = new System.Drawing.Point(848, 477);
+            this.logoPanel.Margin = new System.Windows.Forms.Padding(1);
+            this.logoPanel.Name = "logoPanel";
+            this.logoPanel.Size = new System.Drawing.Size(431, 242);
+            this.logoPanel.TabIndex = 0;
+            //STOP LOGO PANEL
+
+
+            //START CHARACTER PANEL
+
+            //Main Panel
+            this.characterPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.characterPanel.Controls.Add(this.pnlCharacter);
+            this.characterPanel.Controls.Add(this.lblCharacter);
+            this.characterPanel.Location = new System.Drawing.Point(475, 477);
+            this.characterPanel.Margin = new System.Windows.Forms.Padding(1);
+            this.characterPanel.Name = "characterPanel";
+            this.characterPanel.Size = new System.Drawing.Size(372, 242);
+            this.characterPanel.TabIndex = 5;
+
+            //Label Character Title 
+            this.lblCharacter.AutoSize = true;
+            this.lblCharacter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
+            this.lblCharacter.Location = new System.Drawing.Point(2, 2);
+            this.lblCharacter.Name = "lblCharacter";
+            this.lblCharacter.Size = new System.Drawing.Size(53, 13);
+            this.lblCharacter.TabIndex = 0;
+            this.lblCharacter.Text = "Character";
+
+            //Panel Character
+            this.pnlCharacter.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pnlCharacter.Controls.Add(this.lblCharacterSpeed);
+            this.pnlCharacter.Controls.Add(this.lblCharacterSpeedTitle);
+            this.pnlCharacter.Controls.Add(this.lblCharacterPosY);
+            this.pnlCharacter.Controls.Add(this.lblCharacterPosX);
+            this.pnlCharacter.Controls.Add(this.lblCharacterPosYTitle);
+            this.pnlCharacter.Controls.Add(this.lblCharacterPosXTitle);
+            this.pnlCharacter.Controls.Add(this.pnlCharacterIcon);
+            this.pnlCharacter.Controls.Add(this.lblCharacterProps);
+            this.pnlCharacter.Controls.Add(this.lblCharacterName);
+            this.pnlCharacter.Location = new System.Drawing.Point(5, 55);
+            this.pnlCharacter.Name = "pnlCharacter";
+            this.pnlCharacter.Size = new System.Drawing.Size(364, 179);
+            this.pnlCharacter.TabIndex = 2;
+
+            //Panel Character Icon
+            this.pnlCharacterIcon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
+            this.pnlCharacterIcon.Controls.Add(this.pbCharacter);
+            this.pnlCharacterIcon.Location = new System.Drawing.Point(7, 12);
+            this.pnlCharacterIcon.Name = "pnlCharacterIcon";
+            this.pnlCharacterIcon.Size = new System.Drawing.Size(160, 160);
+            this.pnlCharacterIcon.TabIndex = 5;
+
+            //PictureBox Character
+            this.pbCharacter.BackgroundImage = global::WindesHeim_Game.Properties.Resources.playerEdited1;
+            this.pbCharacter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbCharacter.Location = new System.Drawing.Point(5, 5);
+            this.pbCharacter.Name = "pbCharacter";
+            this.pbCharacter.Size = new System.Drawing.Size(150, 150);
+            this.pbCharacter.TabIndex = 0;
+            this.pbCharacter.TabStop = false;
+
+            //Label Character Name
+            this.lblCharacterName.AutoSize = true;
+            this.lblCharacterName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
+            this.lblCharacterName.Location = new System.Drawing.Point(173, 12);
+            this.lblCharacterName.Name = "lblCharacterName";
+            this.lblCharacterName.Size = new System.Drawing.Size(63, 13);
+            this.lblCharacterName.TabIndex = 3;
+            this.lblCharacterName.Text = "Spelernaam";
+
+            //Label Character Properties
+            this.lblCharacterProps.AutoSize = true;
+            this.lblCharacterProps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(161)))), ((int)(((byte)(15)))));
+            this.lblCharacterProps.Location = new System.Drawing.Point(173, 43);
+            this.lblCharacterProps.Name = "lblCharacterProps";
+            this.lblCharacterProps.Size = new System.Drawing.Size(81, 13);
+            this.lblCharacterProps.TabIndex = 4;
+            this.lblCharacterProps.Text = "Eigenschappen";
+
+            //Label Character Position X Title
+            this.lblCharacterPosXTitle.AutoSize = true;
+            this.lblCharacterPosXTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblCharacterPosXTitle.Location = new System.Drawing.Point(173, 63);
+            this.lblCharacterPosXTitle.Name = "lblCharacterPosXTitle";
+            this.lblCharacterPosXTitle.Size = new System.Drawing.Size(71, 18);
+            this.lblCharacterPosXTitle.TabIndex = 6;
+            this.lblCharacterPosXTitle.Text = "Positie X:";
+
+            //Label Character Position X
+            this.lblCharacterPosX.AutoSize = true;
+            this.lblCharacterPosX.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblCharacterPosX.Location = new System.Drawing.Point(250, 63);
+            this.lblCharacterPosX.Name = "lblCharacterPosX";
+            this.lblCharacterPosX.Size = new System.Drawing.Size(23, 18);
+            this.lblCharacterPosX.TabIndex = 8;
+            this.lblCharacterPosX.Text = "0";
+
+            //Label Character Position Y Title
+            this.lblCharacterPosYTitle.AutoSize = true;
+            this.lblCharacterPosYTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblCharacterPosYTitle.Location = new System.Drawing.Point(173, 83);
+            this.lblCharacterPosYTitle.Name = "lblCharacterPosYTitle";
+            this.lblCharacterPosYTitle.Size = new System.Drawing.Size(70, 18);
+            this.lblCharacterPosYTitle.TabIndex = 7;
+            this.lblCharacterPosYTitle.Text = "Positie Y:";
+
+            //Label Character Position Y
+            this.lblCharacterPosY.AutoSize = true;
+            this.lblCharacterPosY.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblCharacterPosY.Location = new System.Drawing.Point(249, 83);
+            this.lblCharacterPosY.Name = "lblCharacterPosY";
+            this.lblCharacterPosY.Size = new System.Drawing.Size(23, 18);
+            this.lblCharacterPosY.TabIndex = 9;
+            this.lblCharacterPosY.Text = "0";
+
+            //Label Character Speed Title
+            this.lblCharacterSpeedTitle.AutoSize = true;
+            this.lblCharacterSpeedTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblCharacterSpeedTitle.Location = new System.Drawing.Point(173, 114);
+            this.lblCharacterSpeedTitle.Name = "lblCharacterSpeedTitle";
+            this.lblCharacterSpeedTitle.Size = new System.Drawing.Size(68, 18);
+            this.lblCharacterSpeedTitle.TabIndex = 10;
+            this.lblCharacterSpeedTitle.Text = "Snelheid:";
+
+            //Label Character Speed
+            this.lblCharacterSpeed.AutoSize = true;
+            this.lblCharacterSpeed.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblCharacterSpeed.Location = new System.Drawing.Point(249, 114);
+            this.lblCharacterSpeed.Name = "lblCharacterSpeed";
+            this.lblCharacterSpeed.Size = new System.Drawing.Size(23, 18);
+            this.lblCharacterSpeed.TabIndex = 11;
+            this.lblCharacterSpeed.Text = "int";
+            //STOP CHARACTER PANEL
+
+
+            //START CONTROL PANEL
+
+            //Main Panel
             this.controlPanel.BackColor = System.Drawing.SystemColors.Window;
             this.controlPanel.Controls.Add(this.btnLeft);
             this.controlPanel.Controls.Add(this.btnRight);
@@ -661,31 +706,8 @@ namespace WindesHeim_Game
             this.controlPanel.Name = "controlPanel";
             this.controlPanel.Size = new System.Drawing.Size(372, 242);
             this.controlPanel.TabIndex = 4;
-            // 
-            // btnLeft
-            // 
-            this.btnLeft.BackgroundImage = global::WindesHeim_Game.Properties.Resources.Left;
-            this.btnLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnLeft.Location = new System.Drawing.Point(21, 134);
-            this.btnLeft.Margin = new System.Windows.Forms.Padding(0);
-            this.btnLeft.Name = "btnLeft";
-            this.btnLeft.Size = new System.Drawing.Size(100, 100);
-            this.btnLeft.TabIndex = 3;
-            this.btnLeft.UseVisualStyleBackColor = true;
-            // 
-            // btnRight
-            // 
-            this.btnRight.BackgroundImage = global::WindesHeim_Game.Properties.Resources.Right;
-            this.btnRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnRight.Location = new System.Drawing.Point(250, 134);
-            this.btnRight.Margin = new System.Windows.Forms.Padding(0);
-            this.btnRight.Name = "btnRight";
-            this.btnRight.Size = new System.Drawing.Size(100, 100);
-            this.btnRight.TabIndex = 2;
-            this.btnRight.UseVisualStyleBackColor = true;
-            // 
-            // btnUp
-            // 
+
+            //Button Up
             this.btnUp.BackgroundImage = global::WindesHeim_Game.Properties.Resources.Up;
             this.btnUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnUp.Location = new System.Drawing.Point(136, 13);
@@ -694,9 +716,8 @@ namespace WindesHeim_Game
             this.btnUp.Size = new System.Drawing.Size(100, 100);
             this.btnUp.TabIndex = 1;
             this.btnUp.UseVisualStyleBackColor = true;
-            // 
-            // btnDown
-            // 
+
+            //Button Down
             this.btnDown.BackgroundImage = global::WindesHeim_Game.Properties.Resources.Down;
             this.btnDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnDown.Location = new System.Drawing.Point(136, 134);
@@ -705,165 +726,80 @@ namespace WindesHeim_Game
             this.btnDown.Size = new System.Drawing.Size(100, 100);
             this.btnDown.TabIndex = 0;
             this.btnDown.UseVisualStyleBackColor = true;
-            // 
-            // characterPanel
-            // 
-            this.characterPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.characterPanel.Controls.Add(this.panel1);
-            this.characterPanel.Controls.Add(this.lblCharacter);
-            this.characterPanel.Location = new System.Drawing.Point(475, 477);
-            this.characterPanel.Margin = new System.Windows.Forms.Padding(1);
-            this.characterPanel.Name = "characterPanel";
-            this.characterPanel.Size = new System.Drawing.Size(372, 242);
-            this.characterPanel.TabIndex = 5;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panel1.Controls.Add(this.lblCharacterSpeed);
-            this.panel1.Controls.Add(this.lblCharacterSpeedTitle);
-            this.panel1.Controls.Add(this.lblCharacterPosY);
-            this.panel1.Controls.Add(this.lblCharacterPosX);
-            this.panel1.Controls.Add(this.lblCharacterPosYTitle);
-            this.panel1.Controls.Add(this.lblCharacterPosXTitle);
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.lblCharacterProps);
-            this.panel1.Controls.Add(this.lblCharacterName);
-            this.panel1.Location = new System.Drawing.Point(5, 55);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(364, 179);
-            this.panel1.TabIndex = 2;
-            // 
-            // lblCharacterSpeed
-            // 
-            this.lblCharacterSpeed.AutoSize = true;
-            this.lblCharacterSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCharacterSpeed.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblCharacterSpeed.Location = new System.Drawing.Point(249, 114);
-            this.lblCharacterSpeed.Name = "lblCharacterSpeed";
-            this.lblCharacterSpeed.Size = new System.Drawing.Size(23, 18);
-            this.lblCharacterSpeed.TabIndex = 11;
-            this.lblCharacterSpeed.Text = "int";
-            // 
-            // lblCharacterSpeedTitle
-            // 
-            this.lblCharacterSpeedTitle.AutoSize = true;
-            this.lblCharacterSpeedTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCharacterSpeedTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblCharacterSpeedTitle.Location = new System.Drawing.Point(173, 114);
-            this.lblCharacterSpeedTitle.Name = "lblCharacterSpeedTitle";
-            this.lblCharacterSpeedTitle.Size = new System.Drawing.Size(68, 18);
-            this.lblCharacterSpeedTitle.TabIndex = 10;
-            this.lblCharacterSpeedTitle.Text = "Snelheid:";
-            // 
-            // lblCharacterPosY
-            // 
-            this.lblCharacterPosY.AutoSize = true;
-            this.lblCharacterPosY.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCharacterPosY.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblCharacterPosY.Location = new System.Drawing.Point(249, 83);
-            this.lblCharacterPosY.Name = "lblCharacterPosY";
-            this.lblCharacterPosY.Size = new System.Drawing.Size(23, 18);
-            this.lblCharacterPosY.TabIndex = 9;
-            this.lblCharacterPosY.Text = "int";
-            // 
-            // lblCharacterPosX
-            // 
-            this.lblCharacterPosX.AutoSize = true;
-            this.lblCharacterPosX.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCharacterPosX.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblCharacterPosX.Location = new System.Drawing.Point(250, 63);
-            this.lblCharacterPosX.Name = "lblCharacterPosX";
-            this.lblCharacterPosX.Size = new System.Drawing.Size(23, 18);
-            this.lblCharacterPosX.TabIndex = 8;
-            this.lblCharacterPosX.Text = "int";
-            // 
-            // lblCharacterPosYTitle
-            // 
 
-            this.lblCharacterPosYTitle.AutoSize = true;
-            this.lblCharacterPosYTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCharacterPosYTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblCharacterPosYTitle.Location = new System.Drawing.Point(173, 83);
-            this.lblCharacterPosYTitle.Name = "lblCharacterPosYTitle";
-            this.lblCharacterPosYTitle.Size = new System.Drawing.Size(70, 18);
-            this.lblCharacterPosYTitle.TabIndex = 7;
-            this.lblCharacterPosYTitle.Text = "Positie Y:";
-            // 
-            // lblCharacterPosXTitle
-            // 
-            this.lblCharacterPosXTitle.AutoSize = true;
-            this.lblCharacterPosXTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCharacterPosXTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblCharacterPosXTitle.Location = new System.Drawing.Point(173, 63);
-            this.lblCharacterPosXTitle.Name = "lblCharacterPosXTitle";
-            this.lblCharacterPosXTitle.Size = new System.Drawing.Size(71, 18);
-            this.lblCharacterPosXTitle.TabIndex = 6;
-            this.lblCharacterPosXTitle.Text = "Positie X:";
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(216)))), ((int)(((byte)(216)))));
-            this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Location = new System.Drawing.Point(7, 12);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(160, 160);
-            this.panel2.TabIndex = 5;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::WindesHeim_Game.Properties.Resources.playerEdited1;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(5, 5);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(150, 150);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // lblCharacterProps
-            // 
-            this.lblCharacterProps.AutoSize = true;
-            this.lblCharacterProps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(161)))), ((int)(((byte)(15)))));
-            this.lblCharacterProps.Location = new System.Drawing.Point(173, 43);
-            this.lblCharacterProps.Name = "lblCharacterProps";
-            this.lblCharacterProps.Size = new System.Drawing.Size(81, 13);
-            this.lblCharacterProps.TabIndex = 4;
-            this.lblCharacterProps.Text = "Eigenschappen";
-            // 
-            // lblCharacterName
-            // 
-            this.lblCharacterName.AutoSize = true;
-            this.lblCharacterName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
-            this.lblCharacterName.Location = new System.Drawing.Point(173, 12);
-            this.lblCharacterName.Name = "lblCharacterName";
-            this.lblCharacterName.Size = new System.Drawing.Size(63, 13);
-            this.lblCharacterName.TabIndex = 3;
-            this.lblCharacterName.Text = "Spelernaam";
-            // 
-            // lblCharacter
-            // 
-            this.lblCharacter.AutoSize = true;
-            this.lblCharacter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(67)))), ((int)(((byte)(131)))));
-            this.lblCharacter.Location = new System.Drawing.Point(2, 2);
-            this.lblCharacter.Name = "lblCharacter";
-            this.lblCharacter.Size = new System.Drawing.Size(53, 13);
-            this.lblCharacter.TabIndex = 0;
-            this.lblCharacter.Text = "Character";
-            // 
-            // logoPanel
-            // 
-            this.logoPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.logoPanel.BackgroundImage = global::WindesHeim_Game.Properties.Resources.ConceptTransparentBackgroundSmall;
-            this.logoPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.logoPanel.Location = new System.Drawing.Point(848, 477);
-            this.logoPanel.Margin = new System.Windows.Forms.Padding(1);
-            this.logoPanel.Name = "logoPanel";
-            this.logoPanel.Size = new System.Drawing.Size(431, 242);
-            this.logoPanel.TabIndex = 0;
+            //Button Left
+            this.btnLeft.BackgroundImage = global::WindesHeim_Game.Properties.Resources.Left;
+            this.btnLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnLeft.Location = new System.Drawing.Point(21, 134);
+            this.btnLeft.Margin = new System.Windows.Forms.Padding(0);
+            this.btnLeft.Name = "btnLeft";
+            this.btnLeft.Size = new System.Drawing.Size(100, 100);
+            this.btnLeft.TabIndex = 3;
+            this.btnLeft.UseVisualStyleBackColor = true;
+
+            //Button Right
+            this.btnRight.BackgroundImage = global::WindesHeim_Game.Properties.Resources.Right;
+            this.btnRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnRight.Location = new System.Drawing.Point(250, 134);
+            this.btnRight.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRight.Name = "btnRight";
+            this.btnRight.Size = new System.Drawing.Size(100, 100);
+            this.btnRight.TabIndex = 2;
+            this.btnRight.UseVisualStyleBackColor = true;
+            //STOP CONTROL PANEL
+
+
+            //START ACTION PANEL
+
+            //Main Panel
+            this.actionPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.actionPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.actionPanel.Controls.Add(this.pbIconMenu);
+            this.actionPanel.Controls.Add(this.pbIconRestart);
+            this.actionPanel.Controls.Add(this.pbIconSound);
+            this.actionPanel.Location = new System.Drawing.Point(-11, 467);
+            this.actionPanel.Margin = new System.Windows.Forms.Padding(1);
+            this.actionPanel.Name = "actionPanel";
+            this.actionPanel.Size = new System.Drawing.Size(111, 284);
+            this.actionPanel.TabIndex = 3;
+
+            //Picturebox Action Sound
+            this.pbIconSound.BackgroundImage = global::WindesHeim_Game.Properties.Resources.soundEdited1;
+            this.pbIconSound.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbIconSound.Location = new System.Drawing.Point(34, 22);
+            this.pbIconSound.Name = "pbIconSound";
+            this.pbIconSound.Size = new System.Drawing.Size(50, 50);
+            this.pbIconSound.TabIndex = 6;
+            this.pbIconSound.TabStop = false;
+            this.pbIconSound.Click += new System.EventHandler(this.pbIconSound_Click);
+            this.pbIconSound.MouseEnter += new System.EventHandler(this.SoundHoverEnter);
+            this.pbIconSound.MouseLeave += new System.EventHandler(this.SoundHoverLeave);
+
+            //Picturebox Action Restart
+            this.pbIconRestart.BackgroundImage = global::WindesHeim_Game.Properties.Resources.restartEdited;
+            this.pbIconRestart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbIconRestart.Location = new System.Drawing.Point(34, 106);
+            this.pbIconRestart.Name = "pbIconRestart";
+            this.pbIconRestart.Size = new System.Drawing.Size(50, 50);
+            this.pbIconRestart.TabIndex = 7;
+            this.pbIconRestart.TabStop = false;
+            this.pbIconRestart.MouseEnter += new System.EventHandler(this.RestartHoverEnter);
+            this.pbIconRestart.MouseLeave += new System.EventHandler(this.RestartHoverLeave);
+
+            //Picturebox Action Menu
+            this.pbIconMenu.BackgroundImage = global::WindesHeim_Game.Properties.Resources.menuEdited;
+            this.pbIconMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbIconMenu.Location = new System.Drawing.Point(34, 190);
+            this.pbIconMenu.Name = "pbIconMenu";
+            this.pbIconMenu.Size = new System.Drawing.Size(50, 50);
+            this.pbIconMenu.TabIndex = 8;
+            this.pbIconMenu.TabStop = false;
+            this.pbIconMenu.MouseEnter += new System.EventHandler(this.MenuHoverEnter);
+            this.pbIconMenu.MouseLeave += new System.EventHandler(this.MenuHoverLeave);
+            //STOP ACTION PANEL
 
 
             // Voeg hieronder de overige panels toe, zoals objectbeschrijvingen etc.
-
             gameWindow.Controls.Add(graphicsPanel);
             gameWindow.Controls.Add(obstaclePanel);
             gameWindow.Controls.Add(characterPanel);
@@ -871,6 +807,7 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(actionPanel);
             gameWindow.Controls.Add(logoPanel);
 
+            //Windesheim Fonts toevoegen
             SetWindesheimTheme();
         }
 
@@ -943,10 +880,9 @@ namespace WindesHeim_Game
         {
             pbIconMenu.BackgroundImage = Resources.menuEditedOnHover;
         }
+
         private void SoundHoverLeave(object sender, EventArgs e)
         {
-
-
             if (mute)
             {
                 pbIconSound.BackgroundImage = Resources.soundEdited1;
@@ -958,8 +894,6 @@ namespace WindesHeim_Game
                 pbIconSound.BackgroundImage = Resources.muteEdited;
                 mute = true;
             }
-
-
         }
 
         private void SoundHoverEnter(object sender, EventArgs e)
@@ -975,6 +909,7 @@ namespace WindesHeim_Game
                 mute = true;
             }
         }
+
         public List<GameObject> GameObjects
         {
             get { return gameObjects; }
@@ -1065,9 +1000,9 @@ namespace WindesHeim_Game
     {
         private ListBox listBoxLevels;
         private Button goBack;
-        private Label labelHighscores;
         private Panel alignPanel;
         private ListBox listBoxHighscores;
+        private Panel backgroundImage;
 
         private List<XMLParser> levels = new List<XMLParser>();
 
@@ -1082,14 +1017,19 @@ namespace WindesHeim_Game
         {
             alignPanel = new Panel();
             alignPanel.AutoSize = true;
+            alignPanel.BackColor = Color.Transparent;
+
+            this.backgroundImage = new Panel();
+            this.backgroundImage.Size = gameWindow.Size;
+            this.backgroundImage.BackgroundImage = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\menuBackground.png");
 
             listBoxLevels = new ListBox();
-            listBoxLevels.Size = new System.Drawing.Size(200, 475);
-            listBoxLevels.Location = new System.Drawing.Point(0, 40);
+            listBoxLevels.Size = new System.Drawing.Size(200, 200);
+            listBoxLevels.Location = new System.Drawing.Point(0, 0);
 
             listBoxHighscores = new ListBox();
-            listBoxHighscores.Size = new System.Drawing.Size(200, 475);
-            listBoxHighscores.Location = new System.Drawing.Point(200, 40);
+            listBoxHighscores.Size = new System.Drawing.Size(200, 200);
+            listBoxHighscores.Location = new System.Drawing.Point(200, 0);
 
             string[] fileEntries = Directory.GetFiles("../levels/");
             foreach (string file in fileEntries)
@@ -1109,22 +1049,14 @@ namespace WindesHeim_Game
                     listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score);
                 }
             }
-
-            labelHighscores = new Label();
-            labelHighscores.Text = "Highscores";
-            labelHighscores.Font = new Font("Arial", 20);
-            labelHighscores.Location = new System.Drawing.Point(0, 0);
-            labelHighscores.Size = new System.Drawing.Size(200, 30);
-            labelHighscores.TextAlign = ContentAlignment.MiddleCenter;
-
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
-            goBack.Location = new System.Drawing.Point(0, 525);
+            goBack.Location = new System.Drawing.Point(0, 210);
             goBack.Text = "Go Back";
             goBack.Click += new EventHandler(highscoresController.goBack_Click);
 
-            gameWindow.Controls.Add(alignPanel);
-            alignPanel.Controls.Add(labelHighscores);
+            gameWindow.Controls.Add(backgroundImage);
+            backgroundImage.Controls.Add(alignPanel);
             alignPanel.Controls.Add(goBack);
             alignPanel.Controls.Add(listBoxLevels);
             alignPanel.Controls.Add(listBoxHighscores);
