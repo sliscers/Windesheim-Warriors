@@ -18,9 +18,22 @@ namespace WindesHeim_Game
     {
         protected Controller controller;
 
+        [DllImport("gdi32.dll")]
+        private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
+
+        public FontFamily windesheimFontFamily;
+        public Font windesheimSheriffFont;
+        public Font windesheimSheriffFontSmall;
+        public Font windesheimSheriffFontXSmall;
+        public Font windesheimTransitFont;
+        public FontFamily windesheimFontFamilyTransit;
+
         public Model(Controller controller)
         {
             this.controller = controller;
+
+            SetWindesheimFontSheriff();
+            SetWindesheimFontTransit();
         }
 
         public virtual void ControlsInit(Form GameWindow)
@@ -29,6 +42,51 @@ namespace WindesHeim_Game
 
         public virtual void GraphicsInit(Graphics g)
         {
+        }
+
+        private void SetWindesheimFontTransit()
+        {
+            byte[] fontArray = global::WindesHeim_Game.Properties.Resources.ufonts_com_transitfront_negativ;
+            int dataLength = global::WindesHeim_Game.Properties.Resources.ufonts_com_transitfront_negativ.Length;
+
+            IntPtr ptrData = Marshal.AllocCoTaskMem(dataLength);
+            Marshal.Copy(fontArray, 0, ptrData, dataLength);
+
+
+            uint cFonts = 0;
+            AddFontMemResourceEx(ptrData, (uint)fontArray.Length, IntPtr.Zero, ref cFonts);
+
+            PrivateFontCollection pfc = new PrivateFontCollection();
+            pfc.AddMemoryFont(ptrData, dataLength);
+
+            Marshal.FreeCoTaskMem(ptrData);
+
+            windesheimFontFamilyTransit = pfc.Families[0];
+            windesheimTransitFont = new Font(windesheimFontFamilyTransit, 11f, FontStyle.Regular);
+        }
+
+        private void SetWindesheimFontSheriff()
+        {
+            byte[] fontArray = global::WindesHeim_Game.Properties.Resources.ufonts_com_sheriff_roman;
+            int dataLength = global::WindesHeim_Game.Properties.Resources.ufonts_com_sheriff_roman.Length;
+
+            IntPtr ptrData = Marshal.AllocCoTaskMem(dataLength);
+            Marshal.Copy(fontArray, 0, ptrData, dataLength);
+
+
+            uint cFonts = 0;
+            AddFontMemResourceEx(ptrData, (uint)fontArray.Length, IntPtr.Zero, ref cFonts);
+
+            PrivateFontCollection pfc = new PrivateFontCollection();
+            pfc.AddMemoryFont(ptrData, dataLength);
+
+            Marshal.FreeCoTaskMem(ptrData);
+
+            windesheimFontFamily = pfc.Families[0];
+            windesheimSheriffFont = new Font(windesheimFontFamily, 28f, FontStyle.Regular);
+            windesheimSheriffFontSmall = new Font(windesheimFontFamily, 14f, FontStyle.Regular);
+            windesheimSheriffFontXSmall = new Font(windesheimFontFamily, 12f, FontStyle.Regular);
+
         }
     }
 
@@ -108,22 +166,9 @@ namespace WindesHeim_Game
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
 
-
-        [DllImport("gdi32.dll")]
-        private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
-
-        private FontFamily windesheimFontFamily;
-        private Font windesheimSheriffFont;
-        private Font windesheimSheriffFontSmall;
-        private Font windesheimSheriffFontXSmall;
-        private Font windesheimTransitFont;
-        private FontFamily windesheimFontFamilyTransit;
-
         private Boolean mute = false;
 
         private Color windesheimBlauw = Color.FromArgb(0, 67, 131);
-
-
 
         private System.Windows.Forms.Panel logoPanel;
         private System.Windows.Forms.Panel obstaclePanel;
@@ -823,62 +868,11 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(actionPanel);
             gameWindow.Controls.Add(logoPanel);
 
-
-        }
-
-
-
-
-        private void SetWindesheimFontTransit()
-        {
-            byte[] fontArray = global::WindesHeim_Game.Properties.Resources.ufonts_com_transitfront_negativ;
-            int dataLength = global::WindesHeim_Game.Properties.Resources.ufonts_com_transitfront_negativ.Length;
-
-            IntPtr ptrData = Marshal.AllocCoTaskMem(dataLength);
-            Marshal.Copy(fontArray, 0, ptrData, dataLength);
-
-
-            uint cFonts = 0;
-            AddFontMemResourceEx(ptrData, (uint)fontArray.Length, IntPtr.Zero, ref cFonts);
-
-            PrivateFontCollection pfc = new PrivateFontCollection();
-            pfc.AddMemoryFont(ptrData, dataLength);
-
-            Marshal.FreeCoTaskMem(ptrData);
-
-            windesheimFontFamilyTransit = pfc.Families[0];
-            windesheimTransitFont = new Font(windesheimFontFamilyTransit, 11f, FontStyle.Regular);
-        }
-
-        private void SetWindesheimFontSheriff()
-        {
-            byte[] fontArray = global::WindesHeim_Game.Properties.Resources.ufonts_com_sheriff_roman;
-            int dataLength = global::WindesHeim_Game.Properties.Resources.ufonts_com_sheriff_roman.Length;
-
-            IntPtr ptrData = Marshal.AllocCoTaskMem(dataLength);
-            Marshal.Copy(fontArray, 0, ptrData, dataLength);
-
-
-            uint cFonts = 0;
-            AddFontMemResourceEx(ptrData, (uint)fontArray.Length, IntPtr.Zero, ref cFonts);
-
-            PrivateFontCollection pfc = new PrivateFontCollection();
-            pfc.AddMemoryFont(ptrData, dataLength);
-
-            Marshal.FreeCoTaskMem(ptrData);
-
-            windesheimFontFamily = pfc.Families[0];
-            windesheimSheriffFont = new Font(windesheimFontFamily, 28f, FontStyle.Regular);
-            windesheimSheriffFontSmall = new Font(windesheimFontFamily, 14f, FontStyle.Regular);
-            windesheimSheriffFontXSmall = new Font(windesheimFontFamily, 12f, FontStyle.Regular);
-
+            SetWindesheimTheme();
         }
 
         private void SetWindesheimTheme()
         {
-            SetWindesheimFontSheriff();
-            SetWindesheimFontTransit();
-
             this.lblObstacles.Font = windesheimSheriffFont;
             this.lblCharacter.Font = windesheimSheriffFont;
 
