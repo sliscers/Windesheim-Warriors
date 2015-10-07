@@ -145,7 +145,7 @@ namespace WindesHeim_Game
 
             this.highscore.Click += new EventHandler(menuController.highscore_Click);
 
-
+            gameWindow.BackgroundImage = Resources.menuBackground;
             gameWindow.Controls.Add(play);
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
