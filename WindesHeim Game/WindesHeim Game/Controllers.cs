@@ -127,9 +127,9 @@ namespace WindesHeim_Game
             
         }
 
-        private void ProcessObstacles() 
+        private void ProcessObstacles()
         {
-            ModelGame mg = (ModelGame) model;
+            ModelGame mg = (ModelGame)model;
 
             // We moeten een 2e array maken om door heen te loopen
             // Er is kans dat we de array door lopen en ook tegelijkertijd een explosie toevoegen
@@ -137,40 +137,51 @@ namespace WindesHeim_Game
             List<GameObject> safeListArray = new List<GameObject>(mg.GameObjects);
 
             // Loop door alle obstacles objecten en roep methode aan
-            foreach(GameObject gameObject in safeListArray) {
-                if(gameObject is MovingExplodingObstacle) {
+            foreach (GameObject gameObject in safeListArray)
+            {
+                if (gameObject is MovingExplodingObstacle)
+                {
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if(gameObstacle.CollidesWith(mg.player)) {
+                    if (gameObstacle.CollidesWith(mg.player))
+                    {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ImageURL = "../Player.png";
+                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
                     }
                 }
 
-                if (gameObject is SlowingObstacle) {
+                if (gameObject is SlowingObstacle)
+                {
                     SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if(gameObstacle.CollidesWith(mg.player)) {
+                    if (gameObstacle.CollidesWith(mg.player))
+                    {
                         mg.player.Speed = mg.player.OriginalSpeed / 2;
                     }
-                    else {
+                    else
+                    {
                         mg.player.Speed = mg.player.OriginalSpeed;
                     }
                 }
 
-                if (gameObject is ExplodingObstacle) {
+                if (gameObject is ExplodingObstacle)
+                {
                     ExplodingObstacle gameObstacle = (ExplodingObstacle)gameObject;
 
-                    if (gameObstacle.CollidesWith(mg.player)) {
+                    if (gameObstacle.CollidesWith(mg.player))
+                    {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ImageURL = "../Player.png";
+                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
                     }
+
+                    
+                }
 
                 if (gameObject is StaticObstacle)
                 {
@@ -198,18 +209,19 @@ namespace WindesHeim_Game
                 }
 
                 // Check of we de explosie kunnen verwijderen
-                if (gameObject is Explosion) {
-                    
+                if (gameObject is Explosion)
+                {
+
                     Explosion explosion = (Explosion)gameObject;
-                    
+
                     DateTime nowDateTime = DateTime.Now;
                     DateTime explosionDateTime = explosion.TimeStamp;
                     TimeSpan difference = nowDateTime - explosionDateTime;
 
                     double animationTimerTen = (difference.TotalMilliseconds / 100);
-                    int animationTimer = Convert.ToInt32(animationTimerTen) ;
+                    int animationTimer = Convert.ToInt32(animationTimerTen);
                     Console.WriteLine(animationTimer);
-                    
+
 
                     switch (animationTimer)
                     {
@@ -263,19 +275,18 @@ namespace WindesHeim_Game
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#2E8B57");
                             gameObject.FadeSmall();
                             break;
-
-                        }
-
+                    }
 
 
-                        // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
-                        if (difference.TotalSeconds > 1.2)
-                        {
-                            mg.GameObjects.Remove(gameObject);
+
+                    // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
+                    if (difference.TotalSeconds > 1.2)
+                    {
+                        mg.GameObjects.Remove(gameObject);
                         mg.graphicsPanel.BackColor = Color.SeaGreen;
                     }
                 }
-            }      
+            }
         }
 
 
@@ -326,7 +337,7 @@ namespace WindesHeim_Game
             if (e.KeyCode == Keys.Space)
             {
                 pressedSpeed = true;
-        }
+            }
         }
 
         public void OnKeyUp(object sender, KeyEventArgs e) {
