@@ -1,6 +1,10 @@
-WindesHeim Game/WindesHeim Game/bin/Debug/
-WindesHeim Game/WindesHeim Game/obj/Debug/
 WindesHeim Game/WindesHeim Game/bin/
 WindesHeim Game/WindesHeim Game/obj/
 WindesHeim Game/WindesHeim Game/Debug/
 WindesHeim Game/WindesHeim Game/Release/
+
+#INSTRUCTIES
+#Je hoeft niks te doen
+# git rm . -r --cached
+# git add .
+# git commit -m "fixed untracked files"

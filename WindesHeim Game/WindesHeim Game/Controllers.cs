@@ -199,8 +199,9 @@ namespace WindesHeim_Game
 
                 // Check of we de explosie kunnen verwijderen
                 if (gameObject is Explosion) {
+                    
                     Explosion explosion = (Explosion)gameObject;
-
+                    
                     DateTime nowDateTime = DateTime.Now;
                     DateTime explosionDateTime = explosion.TimeStamp;
                     TimeSpan difference = nowDateTime - explosionDateTime;
@@ -215,6 +216,8 @@ namespace WindesHeim_Game
                         case 1:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
                             gameObject.FadeSmall();
+                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\EXPLODE.WAV");
+                            player.Play();
                             break;
                         case 2:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EC0C07");
@@ -297,10 +300,7 @@ namespace WindesHeim_Game
                 if(gameObject is Explosion) {
                     g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                    
-                    {
-
-                    }
-                    
+                           
                 }
             }
         }
@@ -317,11 +317,11 @@ namespace WindesHeim_Game
             }
             if (e.KeyCode == Keys.A) {
                 pressedLeft = true;
-                mg.player.ImageURL = "../PlayerLeft.png";
+                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\PlayerLeft.png";
             }
             if (e.KeyCode == Keys.D) {
                 pressedRight = true;
-                mg.player.ImageURL = "../Player.png";
+                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png";
             }
             if (e.KeyCode == Keys.Space)
             {
