@@ -5,29 +5,32 @@
      </properties>
      <items>
           <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
-          </object>
-          <object>
                <type>ExplodingObstacle</type>
                <x>175</x>
                <y>175</y>
+			   <height>40</height>
+			   <width>40</width>
           </object>
           <object>
                <type>MovingExplodingObstacle</type>
                <x>175</x>
                <y>300</y>
+			   <height>40</height>
+			   <width>40</width>
           </object>
           <object>
                <type>StaticObstacle</type>
                <x>125</x>
                <y>200</y>
+			   <height>40</height>
+			   <width>40</width>
           </object>
           <object>
                <type>SlowingObstacle</type>
                <x>150</x>
                <y>200</y>
+			   <height>40</height>
+			   <width>40</width>
           </object>
      </items>
      <highscores>
@@ -35,6 +38,11 @@
                <name>Jonathan</name>
                <datetime>2015-10-06T11:59:03.1472859+02:00</datetime>
                <score>120</score>
+          </highscore>
+		  <highscore>
+               <name>Marten</name>
+               <datetime>2015-10-06T11:45:03.1472859+02:00</datetime>
+               <score>99</score>
           </highscore>
      </highscores>
 </level>

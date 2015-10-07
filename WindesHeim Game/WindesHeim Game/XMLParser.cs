@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
@@ -59,6 +60,11 @@ namespace WindesHeim_Game
             this.path = path;
         }
 
+        public override string ToString()
+        {
+            return gameProperties.title;
+        }
+
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
         public void ReadXML()
         {
@@ -92,7 +98,9 @@ namespace WindesHeim_Game
                             Type = r.Element("type").Value,
                             //Directe conversie naar int omdat deze ook zo wordt weggeschreven
                             X = Int32.Parse(r.Element("x").Value),
-                            Y = Int32.Parse(r.Element("y").Value)//,
+                            Y = Int32.Parse(r.Element("y").Value),
+                            Height = Int32.Parse(r.Element("height").Value),
+                            Width = Int32.Parse(r.Element("width").Value)//,
                             //Hieronder volgen dynamische gegevens en is vaak null, hier moet ik nog verder naar kijken ~jonathan
                             //Movingspeed = Int32.Parse(r.Element("movingspeed").Value),
                             //Slowdown = Int32.Parse(r.Element("slowdown").Value)
@@ -114,27 +122,24 @@ namespace WindesHeim_Game
             {
                     switch (gameObject.Type)
                     {
-                        case "Player":
-                            //gameObjects.Add(new Player(new Point(gameObject.X, gameObject.Y)));
-                        break;
 
                         case "ExplodingObstacle":
-                            //gameObjects.Add(new ExplodingObstacle(new Point(20, 20), "../Player.png"));
+                            gameObjects.Add(new ExplodingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width));
                         break;
 
-                        case "FollowingObstacle":
-                            //gameObjects.Add(new FollowingObstacle(new Point(20, 20), "../Player.png"));
+                        case "MovingExplodingObstacle":
+                            gameObjects.Add(new MovingExplodingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width));
                         break;
 
                         case "StaticObstacle":
-                            //gameObjects.Add(new StaticObstacle(new Point(20, 20), "../Player.png"));
+                            gameObjects.Add(new StaticObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width));
                         break;
 
                         case "SlowingObstacle":
-                            //SlowingObstacle sb = new SlowingObstacle(new Point(20, 20))
-                            //sb.MovingSpeed = 10;                       
+                            SlowingObstacle sb = new SlowingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width);
+                            //sb.MovingSpeed = 10;                                                
 
-                            //gameObjects.Add(sb);
+                            gameObjects.Add(sb);
                         break;
                 }
                 
@@ -178,11 +183,7 @@ namespace WindesHeim_Game
                 xmlWriter.WriteStartElement("object");
 
                 string gameObjectType = "";
-                if (gameObject is Player)
-                {
-                    gameObjectType = "Player";
-                }
-                else if (gameObject is ExplodingObstacle)
+                if (gameObject is ExplodingObstacle)
                 {
                     gameObjectType = "ExplodingObstacle";
                 }
@@ -208,6 +209,14 @@ namespace WindesHeim_Game
 
                 xmlWriter.WriteStartElement("y"); 
                 xmlWriter.WriteValue(gameObject); //Y positie
+                xmlWriter.WriteEndElement();
+
+                xmlWriter.WriteStartElement("height");
+                xmlWriter.WriteValue(gameObject); //Hoogte
+                xmlWriter.WriteEndElement();
+
+                xmlWriter.WriteStartElement("width");
+                xmlWriter.WriteValue(gameObject); //Breedte
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteEndElement();

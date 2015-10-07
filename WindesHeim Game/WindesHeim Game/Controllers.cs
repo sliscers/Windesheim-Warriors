@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -88,6 +89,9 @@ namespace WindesHeim_Game
 
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
+
+            if(ModelGame.level != null)
+                Console.WriteLine(ModelGame.level.gameObjects[1].Location.Y);
         }
 
         private void ProcessUserInput() 
@@ -221,7 +225,7 @@ namespace WindesHeim_Game
 
                     double animationTimerTen = (difference.TotalMilliseconds / 100);
                     int animationTimer = Convert.ToInt32(animationTimerTen);
-                    Console.WriteLine(animationTimer);
+                    //Console.WriteLine(animationTimer);
 
 
                     switch (animationTimer)
@@ -294,6 +298,8 @@ namespace WindesHeim_Game
         public override void RunController()
         {
             base.RunController();
+            ModelGame mg = (ModelGame)model;
+            mg.InitializeField();
         }
 
         public void OnPaintEvent(object sender, PaintEventArgs pe) {
@@ -319,7 +325,6 @@ namespace WindesHeim_Game
 
         public void OnKeyDownWASD(object sender, KeyEventArgs e) {
             ModelGame mg = (ModelGame)model;
-
 
             if (e.KeyCode == Keys.W) {
                 pressedUp = true;
@@ -374,14 +379,48 @@ namespace WindesHeim_Game
 
     public class ControllerLevelSelect : Controller
     {
+        public List<XMLParser> Levels { get; set; } = new List<XMLParser>();
+
+        private XMLParser currentSelectedLevel;
+
         public ControllerLevelSelect(GameWindow form) : base(form)
         {
             this.model = new ModelLevelSelect(this);
+            fillLevels();
+        }
+
+        public void fillLevels()
+        {
+            string[] fileEntries = Directory.GetFiles("../levels/");
+            foreach (string file in fileEntries)
+            {
+                XMLParser xml = new XMLParser(file);
+                xml.ReadXML();
+                this.Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+            }
         }
           
         public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.menu);
+        }
+
+        public void playLevel_Click(object sender, EventArgs e)
+        {
+            ModelGame.level = currentSelectedLevel;
+            gameWindow.setController(ScreenStates.game);
+
+            ModelLevelSelect ml = (ModelLevelSelect)model;
+            ml.alignPanel.Controls.Remove(ml.playLevel);
+            ml.alignPanel.Controls.Remove(ml.goBack);
+            ml.alignPanel.Controls.Remove(ml.listBoxLevels);
+
+        }
+
+        public void level_Select(object sender, EventArgs e)
+        {
+            ListBox listBoxLevels = (ListBox)sender;
+            currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
         }
     }
     public class ControllerHighscores : Controller
