@@ -115,6 +115,7 @@
     <None Include="resources\menuEditedOnHover.png" />
     <None Include="resources\muteEdited.png" />
     <None Include="resources\muteEditedOnHover.png" />
+    <Content Include="resources\menuBackground.png" />
     <Content Include="resources\Player.png" />
     <None Include="resources\playerEdited.png" />
     <None Include="resources\playerEdited1.png" />
