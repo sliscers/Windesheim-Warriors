@@ -14,7 +14,7 @@ namespace WindesHeim_Game
         public StaticObstacle(Point location, int height, int width) : base(location, height, width)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconTC.png";
-            base.collisionSize = 40;
+
             base.Name = "Verkeersregelaar";
             base.Description = "Doet niets";
             base.PanelIcon = global::WindesHeim_Game.Properties.Resources.IconTCEdited;

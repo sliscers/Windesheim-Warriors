@@ -224,7 +224,7 @@ namespace WindesHeim_Game
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if (gameObstacle.CollidesWith(mg.player))
+                    if (mg.player.YoranColission(gameObstacle))
                     {
                         mg.player.Location = new Point(0, 0);
                         UpdatePlayerPosition();
@@ -239,7 +239,7 @@ namespace WindesHeim_Game
                     SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if (gameObstacle.CollidesWith(mg.player))
+                    if (mg.player.YoranColission(gameObstacle))
                     {
                         mg.player.Speed = mg.player.OriginalSpeed / 2;
                         UpdatePlayerSpeed("Langzaam");
@@ -262,7 +262,7 @@ namespace WindesHeim_Game
                 {
                     ExplodingObstacle gameObstacle = (ExplodingObstacle)gameObject;
 
-                    if (gameObstacle.CollidesWith(mg.player))
+                    if (mg.player.YoranColission(gameObstacle))
                     {
                         mg.player.Location = new Point(0, 0);
                         UpdatePlayerPosition();
@@ -278,7 +278,7 @@ namespace WindesHeim_Game
                 {
                     StaticObstacle gameObstacle = (StaticObstacle)gameObject;
 
-                    if (gameObstacle.CollidesWith(mg.player))
+                    if (mg.player.YoranColission(gameObstacle)) 
                     {
                         if (pressedUp)
                         {
@@ -301,7 +301,7 @@ namespace WindesHeim_Game
                 if (gameObject is Checkpoint && gameObject.ImageURL == AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconWIN.png")
                 {
                     Checkpoint gameObstacle = (Checkpoint)gameObject;
-                    if (gameObstacle.CollidesWith(mg.player))
+                    if (mg.player.YoranColission(gameObstacle))
                     {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
@@ -417,10 +417,14 @@ namespace WindesHeim_Game
                     g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                                            
                 }
+
+               
                
             }
             // Teken player
             g.DrawImage(Image.FromFile(mg.player.ImageURL), mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
+
+       
         }
 
         public void OnKeyDownWASD(object sender, KeyEventArgs e) {
