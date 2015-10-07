@@ -12,6 +12,8 @@ namespace WindesHeim_Game {
         public SlowingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconES.png";
+            base.Name = "Eerstejaars studenten";
+            base.Description = "Volgen + vertragen";
         }
 
         public void ChasePlayer(Player player) {

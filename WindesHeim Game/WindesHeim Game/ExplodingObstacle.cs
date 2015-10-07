@@ -12,6 +12,8 @@ namespace WindesHeim_Game {
         public ExplodingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconCar.png";
+            base.Name = "Auto";
+            base.Description = "Ontploft.";
         }
 
         public bool CollidesWith(Player player) {

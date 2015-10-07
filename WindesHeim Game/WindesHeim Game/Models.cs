@@ -126,7 +126,7 @@ namespace WindesHeim_Game
 
 
         private System.Windows.Forms.Panel logoPanel;
-        private System.Windows.Forms.Panel obstaclePanel;
+        internal System.Windows.Forms.Panel obstaclePanel;
         private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Panel controlPanel;
         private System.Windows.Forms.Panel characterPanel;
@@ -135,9 +135,9 @@ namespace WindesHeim_Game
         private System.Windows.Forms.Button btnLeft;
         private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.Panel pnlObstacle1;
-        private System.Windows.Forms.Label lblObstacleName1;
+        internal System.Windows.Forms.Label lblObstacleName1;
         private System.Windows.Forms.Panel pnlObstacle2;
-        private System.Windows.Forms.Label lblObstacleName2;
+        internal System.Windows.Forms.Label lblObstacleName2;
         private System.Windows.Forms.PictureBox pbIconMenu;
         private System.Windows.Forms.PictureBox pbIconRestart;
         private System.Windows.Forms.PictureBox pbIconSound;
@@ -149,28 +149,28 @@ namespace WindesHeim_Game
         private System.Windows.Forms.PictureBox pbObstacle1;
         private System.Windows.Forms.Label lblObstaclePosXTitle1;
         private System.Windows.Forms.Label lblObstaclePosYTitle1;
-        private System.Windows.Forms.Label lblObstaclePosX1;
-        private System.Windows.Forms.Label lblObstaclePosY2;
-        private System.Windows.Forms.Label lblObstaclePosX2;
+        internal System.Windows.Forms.Label lblObstaclePosX1;
+        internal System.Windows.Forms.Label lblObstaclePosY2;
+        internal System.Windows.Forms.Label lblObstaclePosX2;
         private System.Windows.Forms.Label lblObstaclePosYTitle2;
         private System.Windows.Forms.Label lblObstaclePosXTitle2;
-        private System.Windows.Forms.Label lblObstaclePosY1;
+        internal System.Windows.Forms.Label lblObstaclePosY1;
         private System.Windows.Forms.Label lblObstacleDescTitle1;
-        private System.Windows.Forms.Label lblObstacleDesc2;
+        internal System.Windows.Forms.Label lblObstacleDesc2;
         private System.Windows.Forms.Label lblObstacleDescTitle2;
-        private System.Windows.Forms.Label lblObstacleDesc1;
+        internal System.Windows.Forms.Label lblObstacleDesc1;
         private System.Windows.Forms.Button btnRight;
         private System.Windows.Forms.Button btnUp;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblCharacterPosY;
-        private System.Windows.Forms.Label lblCharacterPosX;
+        internal System.Windows.Forms.Label lblCharacterPosY;
+        internal System.Windows.Forms.Label lblCharacterPosX;
         private System.Windows.Forms.Label lblCharacterPosYTitle;
         private System.Windows.Forms.Label lblCharacterPosXTitle;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblCharacterProps;
         private System.Windows.Forms.Label lblCharacterName;
-        private System.Windows.Forms.Label lblCharacterSpeed;
+        internal System.Windows.Forms.Label lblCharacterSpeed;
         private System.Windows.Forms.Label lblCharacterSpeedTitle;
 
 
@@ -322,7 +322,7 @@ namespace WindesHeim_Game
             this.lblObstacleDesc2.Name = "lblObstacleDesc2";
             this.lblObstacleDesc2.Size = new System.Drawing.Size(85, 18);
             this.lblObstacleDesc2.TabIndex = 14;
-            this.lblObstacleDesc2.Text = "beschrijving";
+            this.lblObstacleDesc2.Text = "Obstakel 2";
             // 
             // lblObstacleDescTitle2
             // 
@@ -445,7 +445,7 @@ namespace WindesHeim_Game
             this.lblObstacleDesc1.Name = "lblObstacleDesc1";
             this.lblObstacleDesc1.Size = new System.Drawing.Size(85, 18);
             this.lblObstacleDesc1.TabIndex = 15;
-            this.lblObstacleDesc1.Text = "beschrijving";
+            this.lblObstacleDesc1.Text = "Obstakel 1";
             // 
             // lblObstacleDescTitle1
             // 
@@ -695,7 +695,7 @@ namespace WindesHeim_Game
             this.lblCharacterSpeed.Name = "lblCharacterSpeed";
             this.lblCharacterSpeed.Size = new System.Drawing.Size(23, 18);
             this.lblCharacterSpeed.TabIndex = 11;
-            this.lblCharacterSpeed.Text = "int";
+            this.lblCharacterSpeed.Text = this.player.Speed.ToString();
             // 
             // lblCharacterSpeedTitle
             // 
@@ -717,7 +717,7 @@ namespace WindesHeim_Game
             this.lblCharacterPosY.Name = "lblCharacterPosY";
             this.lblCharacterPosY.Size = new System.Drawing.Size(23, 18);
             this.lblCharacterPosY.TabIndex = 9;
-            this.lblCharacterPosY.Text = "int";
+            this.lblCharacterPosY.Text = this.player.Location.Y.ToString();
             // 
             // lblCharacterPosX
             // 
@@ -728,7 +728,7 @@ namespace WindesHeim_Game
             this.lblCharacterPosX.Name = "lblCharacterPosX";
             this.lblCharacterPosX.Size = new System.Drawing.Size(23, 18);
             this.lblCharacterPosX.TabIndex = 8;
-            this.lblCharacterPosX.Text = "int";
+            this.lblCharacterPosX.Text = this.player.Location.X.ToString();
             // 
             // lblCharacterPosYTitle
             // 

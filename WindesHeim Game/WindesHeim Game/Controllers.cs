@@ -67,7 +67,9 @@ namespace WindesHeim_Game
         private bool pressedDown = false;
         private bool pressedSpeed = false;
         private int counter;
-       
+        private Obstacle closestObstacle = null;
+        private Obstacle nextClosestObstacle = null;
+
 
 
         public ControllerGame(GameWindow form) : base(form)
@@ -88,6 +90,8 @@ namespace WindesHeim_Game
 
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
+            GetClosestObstacle();
+            UpdateObstacleLabels(closestObstacle, nextClosestObstacle);
         }
 
         private void ProcessUserInput() 
@@ -102,9 +106,9 @@ namespace WindesHeim_Game
             if (pressedSpeed && (mg.player.SpeedCooldown == 0))
             {
                 mg.player.Speed = mg.player.OriginalSpeed * 2;
-
+                UpdatePlayerSpeed("snel");
                 mg.player.SpeedDuration ++;
-              
+
             }
             if(mg.player.SpeedDuration > 50)
             {
@@ -115,17 +119,92 @@ namespace WindesHeim_Game
 
             if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
+                UpdatePlayerPosition();
             }
             if (pressedUp && mg.player.Location.Y >= mg.graphicsPanel.Location.Y) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
+                UpdatePlayerPosition();
             }
             if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X ) {
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
+                UpdatePlayerPosition();
             }
             if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width) {
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
+                UpdatePlayerPosition();
             }
             
+        }
+
+        private void UpdatePlayerPosition()
+        {
+            ModelGame mg = (ModelGame)model;
+            mg.lblCharacterPosX.Text = mg.player.Location.X.ToString();
+            mg.lblCharacterPosY.Text = mg.player.Location.Y.ToString();
+        }
+
+        private void UpdatePlayerSpeed(string speed) {
+            ModelGame mg = (ModelGame)model;
+            if (mg.lblCharacterSpeed != null)
+            {
+                mg.lblCharacterSpeed.Text = speed;
+            }
+        }
+
+        private void GetClosestObstacle()
+        {
+            ModelGame mg = (ModelGame)model;
+
+            int playerX = mg.player.Location.X;
+            int playerY = mg.player.Location.Y;
+            double difference = 2000;
+
+            // We maken een array aan zodat we door alle objecten kunnen loopen en ze met elkaar kunnen vergelijken
+            List<GameObject> comparisonArray = new List<GameObject>(mg.GameObjects);
+
+            foreach (GameObject gameObject in comparisonArray)
+            {
+                if(gameObject is Obstacle)
+                {
+                    int obstacleX = gameObject.Location.X;
+                    int obstacleY = gameObject.Location.Y;
+                    int deltaX = playerX - obstacleX;
+                    int deltaY = playerY - obstacleY;
+                    if(deltaX < 0)
+                    {
+                        deltaX *= -1;
+                    }
+                    if(deltaY < 0)
+                    {
+                        deltaY *= -1;
+                    }
+                    int sum = (deltaX * deltaX) + (deltaY * deltaY);
+                    double result = Math.Sqrt(sum);
+                    if(result < difference)
+                    {
+                        nextClosestObstacle = closestObstacle;
+                        closestObstacle = (Obstacle)gameObject;
+                        difference = result;
+                    }
+                }
+            }
+        }
+
+        private void UpdateObstacleLabels(Obstacle obstacle1, Obstacle obstacle2)
+        {
+            ModelGame mg = (ModelGame)model;
+
+            if (closestObstacle != null && nextClosestObstacle != null && mg.obstaclePanel != null)
+            {
+                mg.lblObstaclePosX1.Text = obstacle1.Location.X.ToString();
+                mg.lblObstaclePosX2.Text = obstacle2.Location.X.ToString();
+                mg.lblObstaclePosY1.Text = obstacle1.Location.Y.ToString();
+                mg.lblObstaclePosY2.Text = obstacle2.Location.Y.ToString();
+                mg.lblObstacleDesc1.Text = obstacle1.Description;
+                mg.lblObstacleDesc2.Text = obstacle2.Description;
+                mg.lblObstacleName1.Text = obstacle1.Name;
+                mg.lblObstacleName2.Text = obstacle2.Name;
+            }
         }
 
         private void ProcessObstacles() 
@@ -148,6 +227,7 @@ namespace WindesHeim_Game
                     if (gameObstacle.CollidesWith(mg.player))
                     {
                         mg.player.Location = new Point(0, 0);
+                        UpdatePlayerPosition();
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
                         mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
@@ -162,10 +242,19 @@ namespace WindesHeim_Game
                     if (gameObstacle.CollidesWith(mg.player))
                     {
                         mg.player.Speed = mg.player.OriginalSpeed / 2;
+                        UpdatePlayerSpeed("langzaam");
                     }
                     else
                     {
                         mg.player.Speed = mg.player.OriginalSpeed;
+                        if (pressedSpeed && (mg.player.SpeedCooldown == 0))
+                        {
+                            UpdatePlayerSpeed("snel");
+                        }
+                        else
+                        {
+                            UpdatePlayerSpeed("normaal");
+                        }
                     }
                 }
 
@@ -176,6 +265,7 @@ namespace WindesHeim_Game
                     if (gameObstacle.CollidesWith(mg.player))
                     {
                         mg.player.Location = new Point(0, 0);
+                        UpdatePlayerPosition();
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
                         mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;

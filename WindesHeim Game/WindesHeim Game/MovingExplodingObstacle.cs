@@ -12,6 +12,8 @@ namespace WindesHeim_Game {
         public MovingExplodingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconBike.png";
+            base.Name = "Fietser";
+            base.Description = "Volgt + ontploft.";
         }
 
         public void ChasePlayer(Player player) {
