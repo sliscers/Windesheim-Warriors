@@ -9,16 +9,45 @@ namespace WindesHeim_Game {
 
     public class Obstacle : GameObject 
     {
+        private string name;
+        private string description;
+        private Image panelIcon;
+
         public Obstacle(Point location, int height, int width) : base (location, height, width)
         {
             
         }
 
-        protected double GetDistance(Point q) {
-            double a = Location.X - q.X;
-            double b = Location.Y - q.Y;
-            double distance = Math.Sqrt(a * a + b * b);
-            return distance;
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
+
+        public Image PanelIcon
+        {
+            get { return panelIcon; }
+            set { panelIcon = value; }
+        }
+
+        public void ChasePlayer(Player player) {
+            if (Location.X >= player.Location.X)
+                Location = new Point(Location.X - 1, Location.Y);
+
+            if (Location.X <= player.Location.X)
+                Location = new Point(Location.X + 1, Location.Y);
+
+            if (Location.Y >= player.Location.Y)
+                Location = new Point(Location.X, Location.Y - 1);
+
+            if (Location.Y <= player.Location.Y)
+                Location = new Point(Location.X, Location.Y + 1);
         }
     }
 }

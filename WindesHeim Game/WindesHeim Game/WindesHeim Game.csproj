@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checkpoint.cs" />
     <Compile Include="ExplodingObstacle.cs" />
     <Compile Include="Explosion.cs" />
     <Compile Include="MovingExplodingObstacle.cs" />
@@ -109,12 +110,17 @@
     <Content Include="resources\IconBike.png" />
     <Content Include="resources\IconCar.png" />
     <Content Include="resources\IconES.png" />
+    <None Include="resources\IconESEdited.png" />
     <Content Include="resources\IconTC.png" />
     <None Include="resources\Left.png" />
     <None Include="resources\menuEdited.png" />
     <None Include="resources\menuEditedOnHover.png" />
     <None Include="resources\muteEdited.png" />
     <None Include="resources\muteEditedOnHover.png" />
+    <None Include="resources\IconWIN.png" />
+    <None Include="resources\IconWIN.ico" />
+    <None Include="resources\IconTCEdited.png" />
+    <Content Include="resources\menuBackground.png" />
     <Content Include="resources\Player.png" />
     <None Include="resources\playerEdited.png" />
     <None Include="resources\playerEdited1.png" />
