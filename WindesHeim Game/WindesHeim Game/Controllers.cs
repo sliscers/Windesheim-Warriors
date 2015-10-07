@@ -233,47 +233,47 @@ namespace WindesHeim_Game
                             player.Play();
                             break;
                         case 2:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EC0C07");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FC1212");
                             gameObject.FadeSmall();
                             break;
                         case 3:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#D9190F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F92525");
                             gameObject.FadeSmall();
                             break;
                         case 4:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#C62517");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F63737");
                             gameObject.FadeSmall();
                             break;
                         case 5:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#B3312F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F44A4A");
                             gameObject.FadeSmall();
                             break;
                         case 6:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#A03F27");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F15C5C");
                             gameObject.FadeSmall();
                             break;
                         case 7:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#8D4B2F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EE6F6F");
                             gameObject.FadeSmall();
                             break;
                         case 8:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#7A5837");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EB8181");
                             gameObject.FadeSmall();
                             break;
                         case 9:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#67653F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E99494");
                             gameObject.FadeSmall();
                             break;
                         case 10:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#547147");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E6A6A6");
                             gameObject.FadeSmall();
                             break;
                         case 11:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#417E4F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E3B9B9");
                             gameObject.FadeSmall();
                             break;
                         case 12:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#2E8B57");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E0CBCB");
                             gameObject.FadeSmall();
                             break;
                     }
@@ -284,7 +284,7 @@ namespace WindesHeim_Game
                     if (difference.TotalSeconds > 1.2)
                     {
                         mg.GameObjects.Remove(gameObject);
-                        mg.graphicsPanel.BackColor = Color.Gray;
+                        mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#DEDEDE");
                     }
                 }
             }      
