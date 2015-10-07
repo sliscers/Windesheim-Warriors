@@ -35,12 +35,20 @@ namespace WindesHeim_Game
         public int Height
         {
             get { return height; }
+            set { height = value;  }
+            
 
         }
 
         public int Width
         {
             get { return width; }
+            set { width = value; }
+        }
+        public void FadeSmall()
+        {
+            this.Height+=2;
+            this.Width+=2;
         }
     }
 }
