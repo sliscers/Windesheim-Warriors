@@ -15,8 +15,12 @@ namespace WindesHeim_Game
         private int height;
         private int width;
 
-        protected int collisionSize;
+        private int collisionX = 0;
+        private int collisionY = 0;
 
+        
+        public int collisionSize;
+       
         public GameObject(Point location, string imageURL, int height, int width)
         {
             this.imageURL = imageURL;
@@ -53,26 +57,58 @@ namespace WindesHeim_Game
             get { return width; }
             set { width = value; }
         }
-
-        protected double GetDistance(Point q) {
-           
-            double a = Location.X - q.X;
-            double b = Location.Y - q.Y;
-            double distance = Math.Sqrt(a * a + b * b);
-            Console.WriteLine(distance);
-            return distance;
+        public int CollisionX
+        {
+            get { return collisionX; }
+            set { collisionX = value; }
         }
 
-        public bool CollidesWith(GameObject gameObject) {
-            if (GetDistance(gameObject.Location) < collisionSize) {
+        public int CollisionY
+        {
+            get { return collisionY; }
+            set { collisionY = value; }
+        }
+
+        //protected double GetDistance(Point q) {
+
+        //    double a = Location.X  - q.X;
+        //    double b = Location.Y - q.Y;
+        //    double distance = Math.Sqrt(a * a + b * b);
+        //    return distance;
+        //}
+
+        //public bool CollidesWith(GameObject gameObject) {
+
+        //    if (GetDistance(gameObject.Location) < collisionSize) {
+        //        return true;
+
+        //    }
+        //    else {
+        //        return false;
+        //    }
+        //}
+
+        public bool YoranColission(GameObject gameObject)
+        {
+            if((this.location.X > (gameObject.location.X - gameObject.CollisionX)) && (this.location.X < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && (this.location.Y > (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                || ((this.location.X + this.Width) > (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && (this.location.Y > (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                || (this.location.X > (gameObject.location.X - gameObject.CollisionX)) && (this.location.X < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && ((this.location.Y + this.Height) > (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                || ((this.location.X + this.Width) > (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && ((this.location.Y + this.Height) > (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                )
+            {
                 return true;
             }
-            else {
-                return false;
-            }
+
+            return false;
         }
 
-        public void FadeSmall()
+     
+
+       public void FadeSmall()
         {
             this.Height+=2;
             this.Width+=2;
