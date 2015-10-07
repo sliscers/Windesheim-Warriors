@@ -48,9 +48,12 @@ namespace WindesHeim_Game
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.BackColor = Color.White;
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
+            this.Icon = global::WindesHeim_Game.Properties.Resources.IconWIN;
             this.ResumeLayout(false);
         }
 
@@ -59,6 +62,7 @@ namespace WindesHeim_Game
             switch (state)
             {
                 case ScreenStates.menu:
+                    game.TimerStop();
                     this.state = ScreenStates.menu;
                     menu.RunController();
                     break;
@@ -67,6 +71,7 @@ namespace WindesHeim_Game
                     levelSelect.RunController();
                     break;
                 case ScreenStates.game:
+                    game.TimerStart();
                     this.state = ScreenStates.game;
                     game.RunController();
                     break;
@@ -77,6 +82,7 @@ namespace WindesHeim_Game
                     this.state = ScreenStates.editor;
                     break;
                 case ScreenStates.highscore:
+                    game.TimerStop();
                     this.state = ScreenStates.highscore;
                     highscores.RunController();
                     break;

@@ -15,6 +15,16 @@ namespace WindesHeim_Game
         private int height;
         private int width;
 
+        protected int collisionSize;
+
+        public GameObject(Point location, string imageURL, int height, int width)
+        {
+            this.imageURL = imageURL;
+            this.location = location;
+            this.height = height;
+            this.width = width;
+        }
+
         public GameObject(Point location, int height, int width)
         {
             this.location = location;
@@ -36,8 +46,6 @@ namespace WindesHeim_Game
         {
             get { return height; }
             set { height = value;  }
-            
-
         }
 
         public int Width
@@ -45,6 +53,25 @@ namespace WindesHeim_Game
             get { return width; }
             set { width = value; }
         }
+
+        protected double GetDistance(Point q) {
+           
+            double a = Location.X - q.X;
+            double b = Location.Y - q.Y;
+            double distance = Math.Sqrt(a * a + b * b);
+            Console.WriteLine(distance);
+            return distance;
+        }
+
+        public bool CollidesWith(GameObject gameObject) {
+            if (GetDistance(gameObject.Location) < collisionSize) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
         public void FadeSmall()
         {
             this.Height+=2;

@@ -12,17 +12,9 @@ namespace WindesHeim_Game {
         public ExplodingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconCar.png";
+            base.collisionSize = 40;
             base.Name = "Auto";
             base.Description = "Ontploft.";
-        }
-
-        public bool CollidesWith(Player player) {
-            if (GetDistance(player.Location) < 40) {
-                return true;
-            }
-            else {
-                return false;
-            }
         }
     }
 }

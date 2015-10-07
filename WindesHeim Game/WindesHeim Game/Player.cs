@@ -9,7 +9,6 @@ namespace WindesHeim_Game
 {
     public class Player : GameObject
     {
-        private int lives;
         private const int originalSpeed = 4;
         private int speed = originalSpeed;
         private int speedDuration = 0;

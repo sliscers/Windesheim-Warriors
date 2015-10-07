@@ -12,31 +12,9 @@ namespace WindesHeim_Game {
         public SlowingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconES.png";
+            base.collisionSize = 75;
             base.Name = "Eerstejaars studenten";
             base.Description = "Volgen + vertragen";
-        }
-
-        public void ChasePlayer(Player player) {
-            if (Location.X >= player.Location.X)
-                Location = new Point(Location.X - 1, Location.Y);
-
-            if (Location.X <= player.Location.X)
-                Location = new Point(Location.X + 1, Location.Y);
-
-            if (Location.Y >= player.Location.Y)
-                Location = new Point(Location.X, Location.Y - 1);
-
-            if (Location.Y <= player.Location.Y)
-                Location = new Point(Location.X, Location.Y + 1);
-        }
-
-        public bool CollidesWith(Player player) {
-            if (GetDistance(player.Location) < 75) {
-                return true;
-            }
-            else {
-                return false;
-            }
         }
     }
 }
