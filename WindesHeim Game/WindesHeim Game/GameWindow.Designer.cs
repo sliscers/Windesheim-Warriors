@@ -40,7 +40,6 @@ namespace WindesHeim_Game
             levelSelect = new ControllerLevelSelect(this);
             highscores = new ControllerHighscores(this);
 
-            this.setController(ScreenStates.menu);
 
             this.SuspendLayout();
 
@@ -52,6 +51,9 @@ namespace WindesHeim_Game
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
             this.ResumeLayout(false);
+
+            this.setController(ScreenStates.menu);
+
         }
 
         public void setController(ScreenStates state)

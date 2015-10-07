@@ -106,7 +106,10 @@
     <None Include="resources\carEdited.png" />
     <None Include="resources\ConceptTransparentBackgroundSmall.png" />
     <None Include="resources\Down.png" />
+    <Content Include="resources\closeButton.png" />
+    <Content Include="resources\editorButton.png" />
     <Content Include="resources\explosion.png" />
+    <Content Include="resources\highscoresButton.png" />
     <Content Include="resources\IconBike.png" />
     <Content Include="resources\IconCar.png" />
     <Content Include="resources\IconES.png" />
@@ -116,7 +119,9 @@
     <None Include="resources\menuEditedOnHover.png" />
     <None Include="resources\muteEdited.png" />
     <None Include="resources\muteEditedOnHover.png" />
+    <Content Include="resources\menuBackground.jpg" />
     <Content Include="resources\menuBackground.png" />
+    <Content Include="resources\playButton.png" />
     <Content Include="resources\Player.png" />
     <None Include="resources\playerEdited.png" />
     <None Include="resources\playerEdited1.png" />
