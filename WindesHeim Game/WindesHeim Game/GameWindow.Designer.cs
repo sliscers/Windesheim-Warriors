@@ -49,6 +49,7 @@ namespace WindesHeim_Game
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.StartPosition = FormStartPosition.CenterScreen;
+            this.BackColor = Color.White;
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";

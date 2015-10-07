@@ -301,7 +301,7 @@ namespace WindesHeim_Game
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
             graphicsPanel.BackColor = Color.LightGray;
             graphicsPanel.Location = new Point(0, 0);
-            graphicsPanel.Size = new Size(845, 480);
+            graphicsPanel.Size = new Size(845, 475);
             graphicsPanel.Paint += gameController.OnPaintEvent;
 
             // Overige panels
