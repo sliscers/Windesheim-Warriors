@@ -381,7 +381,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Postition X Title 1
             this.lblObstaclePosXTitle1.AutoSize = true;
-            this.lblObstaclePosXTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosXTitle1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosXTitle1.Location = new System.Drawing.Point(173, 63);
             this.lblObstaclePosXTitle1.Name = "lblObstaclePosXTitle1";
@@ -391,7 +390,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position X 1
             this.lblObstaclePosX1.AutoSize = true;
-            this.lblObstaclePosX1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosX1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosX1.Location = new System.Drawing.Point(250, 63);
             this.lblObstaclePosX1.Name = "lblObstaclePosX1";
@@ -401,7 +399,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position Y Title 1
             this.lblObstaclePosYTitle1.AutoSize = true;
-            this.lblObstaclePosYTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosYTitle1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosYTitle1.Location = new System.Drawing.Point(173, 83);
             this.lblObstaclePosYTitle1.Name = "lblObstaclePosYTitle1";
@@ -411,7 +408,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position Y 1
             this.lblObstaclePosY1.AutoSize = true;
-            this.lblObstaclePosY1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosY1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosY1.Location = new System.Drawing.Point(249, 83);
             this.lblObstaclePosY1.Name = "lblObstaclePosY1";
@@ -431,7 +427,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Description 1
             this.lblObstacleDesc1.AutoSize = true;
-            this.lblObstacleDesc1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstacleDesc1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstacleDesc1.Location = new System.Drawing.Point(173, 136);
             this.lblObstacleDesc1.Margin = new System.Windows.Forms.Padding(0);
@@ -493,7 +488,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Postition X Title 2
             this.lblObstaclePosXTitle2.AutoSize = true;
-            this.lblObstaclePosXTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosXTitle2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosXTitle2.Location = new System.Drawing.Point(174, 63);
             this.lblObstaclePosXTitle2.Name = "lblObstaclePosXTitle2";
@@ -503,7 +497,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position X 2
             this.lblObstaclePosX2.AutoSize = true;
-            this.lblObstaclePosX2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosX2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosX2.Location = new System.Drawing.Point(249, 63);
             this.lblObstaclePosX2.Name = "lblObstaclePosX2";
@@ -513,7 +506,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position Y Title 2
             this.lblObstaclePosYTitle2.AutoSize = true;
-            this.lblObstaclePosYTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosYTitle2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosYTitle2.Location = new System.Drawing.Point(174, 83);
             this.lblObstaclePosYTitle2.Name = "lblObstaclePosYTitle2";
@@ -523,7 +515,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position Y 2
             this.lblObstaclePosY2.AutoSize = true;
-            this.lblObstaclePosY2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosY2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosY2.Location = new System.Drawing.Point(249, 83);
             this.lblObstaclePosY2.Name = "lblObstaclePosY2";
@@ -543,7 +534,6 @@ namespace WindesHeim_Game
 
             //Label Obstacle Description 2
             this.lblObstacleDesc2.AutoSize = true;
-            this.lblObstacleDesc2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstacleDesc2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstacleDesc2.Location = new System.Drawing.Point(173, 136);
             this.lblObstacleDesc2.Margin = new System.Windows.Forms.Padding(0);
@@ -642,7 +632,6 @@ namespace WindesHeim_Game
 
             //Label Character Position X Title
             this.lblCharacterPosXTitle.AutoSize = true;
-            this.lblCharacterPosXTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCharacterPosXTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblCharacterPosXTitle.Location = new System.Drawing.Point(173, 63);
             this.lblCharacterPosXTitle.Name = "lblCharacterPosXTitle";
@@ -652,7 +641,6 @@ namespace WindesHeim_Game
 
             //Label Character Position X
             this.lblCharacterPosX.AutoSize = true;
-            this.lblCharacterPosX.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCharacterPosX.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblCharacterPosX.Location = new System.Drawing.Point(250, 63);
             this.lblCharacterPosX.Name = "lblCharacterPosX";
@@ -662,7 +650,6 @@ namespace WindesHeim_Game
 
             //Label Character Position Y Title
             this.lblCharacterPosYTitle.AutoSize = true;
-            this.lblCharacterPosYTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCharacterPosYTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblCharacterPosYTitle.Location = new System.Drawing.Point(173, 83);
             this.lblCharacterPosYTitle.Name = "lblCharacterPosYTitle";
@@ -672,7 +659,6 @@ namespace WindesHeim_Game
 
             //Label Character Position Y
             this.lblCharacterPosY.AutoSize = true;
-            this.lblCharacterPosY.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCharacterPosY.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblCharacterPosY.Location = new System.Drawing.Point(249, 83);
             this.lblCharacterPosY.Name = "lblCharacterPosY";
@@ -682,7 +668,6 @@ namespace WindesHeim_Game
 
             //Label Character Speed Title
             this.lblCharacterSpeedTitle.AutoSize = true;
-            this.lblCharacterSpeedTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCharacterSpeedTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblCharacterSpeedTitle.Location = new System.Drawing.Point(173, 114);
             this.lblCharacterSpeedTitle.Name = "lblCharacterSpeedTitle";
@@ -692,7 +677,6 @@ namespace WindesHeim_Game
 
             //Label Character Speed
             this.lblCharacterSpeed.AutoSize = true;
-            this.lblCharacterSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCharacterSpeed.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblCharacterSpeed.Location = new System.Drawing.Point(249, 114);
             this.lblCharacterSpeed.Name = "lblCharacterSpeed";
