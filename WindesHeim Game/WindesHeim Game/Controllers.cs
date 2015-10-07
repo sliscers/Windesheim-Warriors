@@ -46,6 +46,10 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.gameSelect);
         }
+        public void highscore_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.highscore);
+        }
     }
 
     public class ControllerLevelSelect : Controller
@@ -198,8 +202,7 @@ namespace WindesHeim_Game
           
         }
     }
-
-    class ControllerHighscores : Controller
+    public class ControllerHighscores : Controller
     {
         public ControllerHighscores(GameWindow form) : base(form)
         {

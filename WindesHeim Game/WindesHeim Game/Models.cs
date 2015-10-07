@@ -79,7 +79,7 @@ namespace WindesHeim_Game
             this.tempPlay.UseVisualStyleBackColor = true;
 
             this.play.Click += new EventHandler(menuController.play_Click);
-
+            this.highscore.Click += new EventHandler(menuController.highscore_Click);
             this.tempPlay.Click += new EventHandler(menuController.button_Click);
 
             gameWindow.Controls.Add(play);
@@ -257,14 +257,70 @@ namespace WindesHeim_Game
 
     public class ModelHighscores : Model
     {
-        public ModelHighscores(Controller controller) : base(controller)
-        {
+        private ListBox levels;
+        private Button goBack;
+        private Button playLevel;
+        private Label labelLevels;
+        private Label highscoresLabel;
+        private Panel alignPanel;
+        private Panel gamePanel;
 
+        private ControllerHighscores levelSelectController;
+
+        public ModelHighscores(ControllerHighscores controller) : base(controller)
+        {
+            this.levelSelectController = controller;
         }
 
         public override void ControlsInit(Form gameWindow)
         {
-        // todo
+            alignPanel = new Panel();
+            alignPanel.AutoSize = true;
+
+
+            gamePanel = new Panel();
+            gamePanel.Location = new System.Drawing.Point(210, 40);
+            gamePanel.Size = new System.Drawing.Size(845, 475);
+            gamePanel.BackColor = Color.DarkGray;
+
+
+            levels = new ListBox();
+            levels.Size = new System.Drawing.Size(200, 475);
+            levels.Location = new System.Drawing.Point(0, 40);
+            string[] fileEntries = Directory.GetFiles("../levels/");
+            foreach (string fileName in fileEntries)
+                levels.Items.Add(Path.GetFileName(fileName));
+
+            labelLevels = new Label();
+            labelLevels.Text = "Levels";
+            labelLevels.Font = new Font("Arial", 20);
+            labelLevels.Location = new System.Drawing.Point(0, 0);
+            labelLevels.Size = new System.Drawing.Size(200, 30);
+            labelLevels.TextAlign = ContentAlignment.MiddleCenter;
+
+            highscoresLabel = new Label();
+            highscoresLabel.Text = "Highscores";
+            highscoresLabel.Font = new Font("Arial", 20);
+            highscoresLabel.Location = new System.Drawing.Point(210, 0);
+            highscoresLabel.Size = new System.Drawing.Size(845, 30);
+            highscoresLabel.TextAlign = ContentAlignment.MiddleCenter;
+
+            goBack = new Button();
+            goBack.Size = new System.Drawing.Size(200, 25);
+            goBack.Location = new System.Drawing.Point(0, 525);
+            goBack.Text = "Go Back";
+            //goBack.Click += new EventHandler(levelSelectController.goBack_Click);
+
+            gameWindow.Controls.Add(alignPanel);
+            alignPanel.Controls.Add(labelLevels);
+            alignPanel.Controls.Add(highscoresLabel);
+            alignPanel.Controls.Add(goBack);
+            alignPanel.Controls.Add(levels);
+            alignPanel.Controls.Add(gamePanel);
+            alignPanel.Location = new Point(
+                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
+            alignPanel.Anchor = AnchorStyles.None;
         }
     }
 }
