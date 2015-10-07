@@ -501,9 +501,12 @@ namespace WindesHeim_Game
     {
         private XMLParser currentSelectedLevel;
 
+        private ModelLevelSelect modelLevelSelect;
+
         public ControllerLevelSelect(GameWindow form) : base(form)
         {
             this.model = new ModelLevelSelect(this);
+            this.modelLevelSelect = (ModelLevelSelect)model;
         }
           
         public void goBack_Click(object sender, EventArgs e)
@@ -516,10 +519,10 @@ namespace WindesHeim_Game
             ModelGame.level = currentSelectedLevel;
             gameWindow.setController(ScreenStates.game);
 
-            ModelLevelSelect ml = (ModelLevelSelect)model;
-            ml.alignPanel.Controls.Remove(ml.playLevel);
-            ml.alignPanel.Controls.Remove(ml.goBack);
-            ml.alignPanel.Controls.Remove(ml.listBoxLevels);
+            //Workaround om focus conflict met windows forms en buttons op te lossen
+            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.playLevel);
+            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.goBack);
+            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.listBoxLevels);
 
         }
 
@@ -528,17 +531,16 @@ namespace WindesHeim_Game
             ListBox listBoxLevels = (ListBox)sender;
             currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
 
-            ModelLevelSelect ml = (ModelLevelSelect)model;
-            ml.gamePanel.Invalidate(); // refresh
+
+            modelLevelSelect.gamePanel.Invalidate(); // refresh
         }
 
-        internal void OnPreviewPaint(object sender, PaintEventArgs e) {
+        public void OnPreviewPaint(object sender, PaintEventArgs e) {
             Graphics g = e.Graphics;
 
             // Teken preview
             if(currentSelectedLevel != null) {
                 List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
-                previewList.Add(new Player(new Point(10, 10), 40, 40));
                 previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
                 previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
 
@@ -552,9 +554,12 @@ namespace WindesHeim_Game
     {
         private XMLParser currentSelectedLevel;
 
+        private ModelHighscores modelHighscores;
+
         public ControllerHighscores(GameWindow form) : base(form)
         {
             this.model = new ModelHighscores(this);
+            this.modelHighscores = (ModelHighscores)model;
         }
         public void goBack_Click(object sender, EventArgs e)
         {
@@ -565,8 +570,7 @@ namespace WindesHeim_Game
             ListBox listBoxLevels = (ListBox)sender;
             currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
 
-            ModelHighscores ml = (ModelHighscores)model;
-            ml.listBoxHighscores.Items.Clear();
+            modelHighscores.listBoxHighscores.Items.Clear();
             int i = 0;
             foreach (GameHighscores highscore in currentSelectedLevel.gameHighscores)
             {
@@ -574,7 +578,7 @@ namespace WindesHeim_Game
                 char[] a = highscore.name.ToCharArray();
                 a[0] = char.ToUpper(a[0]);
 
-                ml.listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score);
+                modelHighscores.listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score + " | " + highscore.dateTime.ToString("dd-MM-yy H:mm"));
                 if(i == 0)
                 {
                     listBoxLevels.SetSelected(0, true);
@@ -589,9 +593,12 @@ namespace WindesHeim_Game
 
         private XMLParser currentSelectedLevel;
 
+        private ModelEditorSelect modelEditorSelect;
+
         public ControllerEditorSelect(GameWindow form) : base(form)
         {
             this.model = new ModelEditorSelect(this);
+            modelEditorSelect = (ModelEditorSelect)model;
         }
         public void goBack_Click(object sender, EventArgs e)
         {
@@ -601,8 +608,35 @@ namespace WindesHeim_Game
         {
             ListBox listBoxLevels = (ListBox)sender;
             currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
+
+            modelEditorSelect.gamePanel.Invalidate(); // refresh
         }
+
+        public void OnPreviewPaint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            // Teken preview
+            if (currentSelectedLevel != null)
+            {
+                List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
+                previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+                previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
+
+                foreach (GameObject gameObject in previewList)
+                {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                }
+            }
+        }
+
         public void editLevel_Click(object sender, EventArgs e)
+        {
+            ModelEditor.level = currentSelectedLevel;
+            gameWindow.setController(ScreenStates.editor);
+        }
+
+        public void newLevel_Click(object sender, EventArgs e)
         {
             ModelEditor.level = currentSelectedLevel;
             gameWindow.setController(ScreenStates.editor);
@@ -615,10 +649,13 @@ namespace WindesHeim_Game
 
         private XMLParser currentSelectedLevel;
 
+        private ModelEditor modelEditor;
+
         public ControllerEditor(GameWindow form) : base(form)
         {
             this.model = new ModelEditor(this);
+            this.modelEditor = (ModelEditor)model;
         }
-
+        
     }
 }

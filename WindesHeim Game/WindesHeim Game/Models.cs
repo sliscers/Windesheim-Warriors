@@ -1100,10 +1100,11 @@ namespace WindesHeim_Game
         public ListBox listBoxLevels;
         public Button goBack;
         public Button playLevel;
+        public Button newLevel;
         private Label labelLevels;
         private Label labelLevelPreview;
         public Panel alignPanel;
-        private Panel gamePanel;        
+        public Panel gamePanel;        
 
         private ControllerEditorSelect editorSelectController;
 
@@ -1121,6 +1122,7 @@ namespace WindesHeim_Game
             gamePanel.Location = new System.Drawing.Point(210, 40);
             gamePanel.Size = new System.Drawing.Size(845, 475);
             gamePanel.BackColor = Color.DarkGray;
+            gamePanel.Paint += editorSelectController.OnPreviewPaint;
 
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 475);
@@ -1155,16 +1157,23 @@ namespace WindesHeim_Game
             goBack.Click += editorSelectController.goBack_Click;
 
             playLevel = new Button();
-            playLevel.Size = new System.Drawing.Size(845, 25);
+            playLevel.Size = new System.Drawing.Size(422, 25);
             playLevel.Location = new System.Drawing.Point(210, 525);
-            playLevel.Text = "Play Level";
+            playLevel.Text = "Edit Level";
             playLevel.Click += editorSelectController.editLevel_Click;
+
+            newLevel = new Button();
+            newLevel.Size = new System.Drawing.Size(422, 25);
+            newLevel.Location = new System.Drawing.Point(632, 525);
+            newLevel.Text = "New Level";
+            newLevel.Click += editorSelectController.newLevel_Click;
 
             gameWindow.Controls.Add(alignPanel);
             alignPanel.Controls.Add(labelLevels);
             alignPanel.Controls.Add(labelLevelPreview);
             alignPanel.Controls.Add(goBack);
             alignPanel.Controls.Add(playLevel);
+            alignPanel.Controls.Add(newLevel);
             alignPanel.Controls.Add(listBoxLevels);
             alignPanel.Controls.Add(gamePanel);
             alignPanel.Location = new Point(
