@@ -49,6 +49,10 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.gameSelect);
         }
+        public void editor_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.editorSelect);
+        }
         public void highscore_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.highscore);
@@ -494,25 +498,11 @@ namespace WindesHeim_Game
 
     public class ControllerLevelSelect : Controller
     {
-        public List<XMLParser> Levels { get; set; } = new List<XMLParser>();
-
         private XMLParser currentSelectedLevel;
 
         public ControllerLevelSelect(GameWindow form) : base(form)
         {
             this.model = new ModelLevelSelect(this);
-            fillLevels();
-        }
-          
-        public void fillLevels()
-        {
-            string[] fileEntries = Directory.GetFiles("../levels/");
-            foreach (string file in fileEntries)
-            {
-                XMLParser xml = new XMLParser(file);
-                xml.ReadXML();
-                this.Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
-            }
         }
           
         public void goBack_Click(object sender, EventArgs e)
@@ -540,6 +530,8 @@ namespace WindesHeim_Game
     }
     public class ControllerHighscores : Controller
     {
+        private XMLParser currentSelectedLevel;
+
         public ControllerHighscores(GameWindow form) : base(form)
         {
             this.model = new ModelHighscores(this);
@@ -548,5 +540,65 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.menu);
         }
+        public void level_Select(object sender, EventArgs e)
+        {
+            ListBox listBoxLevels = (ListBox)sender;
+            currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
+
+            ModelHighscores ml = (ModelHighscores)model;
+            ml.listBoxHighscores.Items.Clear();
+            int i = 0;
+            foreach (GameHighscores highscore in currentSelectedLevel.gameHighscores)
+            {
+                i++;
+                char[] a = highscore.name.ToCharArray();
+                a[0] = char.ToUpper(a[0]);
+
+                ml.listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score);
+                if(i == 0)
+                {
+                    listBoxLevels.SetSelected(0, true);
+                }
+            }            
+        }
+    }
+
+    public class ControllerEditorSelect : Controller
+    {
+        public static XMLParser level;
+
+        private XMLParser currentSelectedLevel;
+
+        public ControllerEditorSelect(GameWindow form) : base(form)
+        {
+            this.model = new ModelEditorSelect(this);
+        }
+        public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.menu);
+        }
+        public void level_Select(object sender, EventArgs e)
+        {
+            ListBox listBoxLevels = (ListBox)sender;
+            currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
+        }
+        public void editLevel_Click(object sender, EventArgs e)
+        {
+            ModelEditor.level = currentSelectedLevel;
+            gameWindow.setController(ScreenStates.editor);
+        }
+    }
+
+    public class ControllerEditor : Controller
+    {
+        public static XMLParser level;
+
+        private XMLParser currentSelectedLevel;
+
+        public ControllerEditor(GameWindow form) : base(form)
+        {
+            this.model = new ModelEditor(this);
+        }
+
     }
 }
