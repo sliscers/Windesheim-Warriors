@@ -10,49 +10,24 @@
                <y>10</y>
           </object>
           <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
+               <type>ExplodingObstacle</type>
+               <x>175</x>
+               <y>175</y>
           </object>
           <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
+               <type>MovingExplodingObstacle</type>
+               <x>175</x>
+               <y>300</y>
           </object>
           <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
+               <type>StaticObstacle</type>
+               <x>125</x>
+               <y>200</y>
           </object>
           <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
-          </object>
-          <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
-          </object>
-          <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
-          </object>
-          <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
-          </object>
-          <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
-          </object>
-          <object>
-               <type>Player</type>
-               <x>10</x>
-               <y>10</y>
+               <type>SlowingObstacle</type>
+               <x>150</x>
+               <y>200</y>
           </object>
      </items>
      <highscores>
