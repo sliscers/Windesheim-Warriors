@@ -21,12 +21,12 @@ namespace WindesHeim_Game
         [DllImport("gdi32.dll")]
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
-        public FontFamily windesheimFontFamily;
-        public Font windesheimSheriffFont;
-        public Font windesheimSheriffFontSmall;
-        public Font windesheimSheriffFontXSmall;
-        public Font windesheimTransitFont;
-        public FontFamily windesheimFontFamilyTransit;
+        protected FontFamily windesheimFontFamily;
+        protected Font windesheimSheriffFont;
+        protected Font windesheimSheriffFontSmall;
+        protected Font windesheimSheriffFontXSmall;
+        protected Font windesheimTransitFont;
+        protected FontFamily windesheimFontFamilyTransit;
 
         public Model(Controller controller)
         {
