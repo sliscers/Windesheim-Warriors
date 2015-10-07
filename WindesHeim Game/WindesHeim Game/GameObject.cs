@@ -11,7 +11,7 @@ namespace WindesHeim_Game
     public class GameObject
     {
         private Point location;
-        private string imageURL;
+        private Bitmap image;
         private int height;
         private int width;
 
@@ -30,9 +30,9 @@ namespace WindesHeim_Game
             set { location = value; }
         }
 
-        public string ImageURL {
-            get { return imageURL; }
-            set { imageURL = value; }
+        public Bitmap ObjectImage {
+            get { return image; }
+            set { image = value; }
         }
         public int Height
         {

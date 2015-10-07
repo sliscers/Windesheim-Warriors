@@ -218,10 +218,6 @@ namespace WindesHeim_Game
         private System.Windows.Forms.Label lblCharacterSpeed;
         private System.Windows.Forms.Label lblCharacterSpeedTitle;
 
-
-
-
-
         public ModelGame(ControllerGame controller) : base(controller)
         {
             this.gameController = controller;
@@ -1055,6 +1051,10 @@ namespace WindesHeim_Game
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
             alignPanel.Anchor = AnchorStyles.None;
+        }
+
+        public void Remove() {
+            alignPanel = null;
         }
     }
 

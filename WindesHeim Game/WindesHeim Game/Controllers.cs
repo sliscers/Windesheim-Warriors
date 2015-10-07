@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
 using System.Windows.Forms;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game
 {
@@ -148,7 +149,7 @@ namespace WindesHeim_Game
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
+                        mg.player.ObjectImage = Resources.Player;
                     }
                 }
 
@@ -176,10 +177,8 @@ namespace WindesHeim_Game
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
-                    }
-
-                    
+                        mg.player.ObjectImage = Resources.Player;
+                    }    
                 }
 
                 if (gameObject is StaticObstacle)
@@ -299,18 +298,16 @@ namespace WindesHeim_Game
             ModelGame mg = (ModelGame)model;
 
             // Teken player
-            g.DrawImage(Image.FromFile(mg.player.ImageURL), mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
+            g.DrawImage(mg.player.ObjectImage, mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
 
             // Teken andere gameobjects
             foreach (GameObject gameObject in mg.GameObjects) {
                 if(gameObject is Obstacle) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
 
                 if(gameObject is Explosion) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
-                   
-                           
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);          
                 }
             }
         }
@@ -327,11 +324,11 @@ namespace WindesHeim_Game
             }
             if (e.KeyCode == Keys.A) {
                 pressedLeft = true;
-                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\PlayerLeft.png";
+                mg.player.ObjectImage = Resources.PlayerLeft;
             }
             if (e.KeyCode == Keys.D) {
                 pressedRight = true;
-                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; //
+                mg.player.ObjectImage = Resources.Player;
             }
             if (e.KeyCode == Keys.Space)
             {
@@ -383,7 +380,7 @@ namespace WindesHeim_Game
           
         public void goBack_Click(object sender, EventArgs e)
         {
-            gameWindow.setController(ScreenStates.menu);
+            gameWindow.setController(ScreenStates.game);
         }
     }
     public class ControllerHighscores : Controller

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -52,7 +53,17 @@ namespace WindesHeim_Game
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
             this.ResumeLayout(false);
+
+            /*System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
+            myTimer.Start();
+            myTimer.Tick += delegate (object sender, EventArgs e) {
+                Console.WriteLine(ActiveControl);
+            };*/
+
+            
         }
+
+        
 
         public void setController(ScreenStates state)
         {
