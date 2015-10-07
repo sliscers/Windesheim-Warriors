@@ -15,6 +15,8 @@ namespace WindesHeim_Game
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconTC.png";
             base.collisionSize = 40;
+            base.Name = "Verkeersregelaar";
+            base.Description = "Doet niets.";
         }
     }
 }

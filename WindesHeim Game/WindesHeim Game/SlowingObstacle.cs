@@ -13,6 +13,8 @@ namespace WindesHeim_Game {
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconES.png";
             base.collisionSize = 75;
+            base.Name = "Eerstejaars studenten";
+            base.Description = "Volgen + vertragen";
         }
     }
 }
