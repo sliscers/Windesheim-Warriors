@@ -12,7 +12,10 @@ namespace WindesHeim_Game {
         public SlowingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconES.png";
-            base.collisionSize = 75;
+            base.CollisionX = 10;
+            base.CollisionY = 10;
         }
+
+
     }
 }
