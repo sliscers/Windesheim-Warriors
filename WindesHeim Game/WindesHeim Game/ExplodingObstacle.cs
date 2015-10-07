@@ -14,7 +14,7 @@ namespace WindesHeim_Game {
             base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconCar.png";
             base.collisionSize = 40;
             base.Name = "Auto";
-            base.Description = "Ontploft.";
+            base.Description = "Ontploft bij aanraking";
         }
     }
 }
