@@ -47,9 +47,12 @@ namespace WindesHeim_Game
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.BackColor = Color.White;
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
+            this.Icon = global::WindesHeim_Game.Properties.Resources.IconWIN;
             this.ResumeLayout(false);
 
             this.setController(ScreenStates.menu);

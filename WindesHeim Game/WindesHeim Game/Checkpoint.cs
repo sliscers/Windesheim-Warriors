@@ -9,9 +9,9 @@ namespace WindesHeim_Game
 {
     class Checkpoint : GameObject
     {
-        public Checkpoint (Point location, string imageURL, int height, int width) : base(location, imageURL, width, height)
+        public Checkpoint (Point location, string imageURL, int height, int width) : base(location, imageURL, height, width)
         {
-        
+            base.collisionSize = 40;
         }
     }
 }
