@@ -224,10 +224,18 @@ namespace WindesHeim_Game
                 if (gameObject is MovingExplodingObstacle)
                 {
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
+
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if (mg.player.CollidesWith(gameObstacle))
-                    {
+                    // Loop door alle objecten op het veld
+                    foreach (GameObject potentialCollision in safeListArray) {
+                        // We willen niet onszelf checken, en we willen alleen collision voor StaticObstacles en ExplodingObstacles
+                        if (gameObject != potentialCollision && (potentialCollision is StaticObstacle || potentialCollision is ExplodingObstacle)) {
+                            gameObject.ProcessCollision(potentialCollision);
+                        }
+                    }
+
+                    if (gameObstacle.CollidesWith(mg.player)) {
                         mg.player.Location = new Point(0, 0);
                         UpdatePlayerPosition();
                         mg.InitializeField();
@@ -239,7 +247,16 @@ namespace WindesHeim_Game
                 if (gameObject is SlowingObstacle)
                 {
                     SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
+
                     gameObstacle.ChasePlayer(mg.player);
+
+                    // Loop door alle objecten op het veld
+                    foreach (GameObject potentialCollision in safeListArray) {
+                        // We willen niet onszelf checken, maar we willen we collision op alles
+                        if (gameObject != potentialCollision) {
+                            gameObject.ProcessCollision(potentialCollision);
+                        }
+                    }
 
                     if (mg.player.CollidesWith(gameObstacle))
                     {
@@ -404,32 +421,29 @@ namespace WindesHeim_Game
             Graphics g = pe.Graphics;
             ModelGame mg = (ModelGame)model;
 
-            
-
             // Teken andere gameobjects
             foreach (GameObject gameObject in mg.GameObjects) {
                 if (gameObject is Checkpoint)
                 {
                     g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
-
                 }
-                if (gameObject is Obstacle) {
+
+                if (gameObject is Obstacle) 
+                {
                     g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
 
-                if(gameObject is Explosion) {
-                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
-                   
+                if(gameObject is Explosion) 
+                {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);           
                 }
-                           
+
+                //g.DrawRectangle(new Pen(Color.Red), new Rectangle(gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height));
                
-               
-                }
+            }
             // Teken player
             g.DrawImage(mg.player.ObjectImage, mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
-
-       
-            }
+        }
 
         public void OnKeyDownWASD(object sender, KeyEventArgs e) {
             ModelGame mg = (ModelGame)model;
