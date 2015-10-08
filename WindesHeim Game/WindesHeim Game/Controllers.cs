@@ -222,7 +222,6 @@ namespace WindesHeim_Game
                     int animationTimer = Convert.ToInt32(animationTimerTen);
                     Console.WriteLine(animationTimer);
 
-
                     switch (animationTimer)
                     {
                         case 1:
@@ -283,7 +282,7 @@ namespace WindesHeim_Game
                     if (difference.TotalSeconds > 1.2)
                     {
                         mg.GameObjects.Remove(gameObject);
-                        mg.graphicsPanel.BackColor = Color.SeaGreen;
+                        mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#DDD");
                     }
                 }
             }
