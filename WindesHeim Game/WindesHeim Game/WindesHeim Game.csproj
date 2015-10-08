@@ -51,8 +51,6 @@
     <Compile Include="Explosion.cs" />
     <Compile Include="MovingExplodingObstacle.cs" />
     <Compile Include="GameObject.cs" />
-    <Compile Include="Models.cs" />
-    <Compile Include="Controllers.cs" />
     <Compile Include="GameWindow.cs">
       <SubType>Form</SubType>
     </Compile>
