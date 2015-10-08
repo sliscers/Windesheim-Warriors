@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checkpoint.cs" />
+    <Compile Include="Controllers.cs" />
     <Compile Include="ExplodingObstacle.cs" />
     <Compile Include="Explosion.cs" />
+    <Compile Include="Models.cs" />
     <Compile Include="MovingExplodingObstacle.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameWindow.cs">
