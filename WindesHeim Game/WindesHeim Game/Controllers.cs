@@ -652,7 +652,7 @@ namespace WindesHeim_Game
 
         public void newLevel_Click(object sender, EventArgs e)
         {            
-            gameWindow.setController(ScreenStates.editorNewLevel);
+            //gameWindow.setController(ScreenStates.editorNewLevel);
         }
     }
 
