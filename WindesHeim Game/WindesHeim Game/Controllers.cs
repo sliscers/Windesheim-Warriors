@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lidgren.Network;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -86,65 +87,94 @@ namespace WindesHeim_Game
             
         }
 
+        public Player GetLocalPlayer() {
+            ModelGame mg = (ModelGame)model;
+
+            foreach (GameObject gameObject in mg.GameObjects) {
+                if(gameObject is Player) {
+                    Player player = (Player)gameObject;
+                    if(player.localPlayer) {
+                        return player;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private bool ArePlayersActive() {
+            ModelGame mg = (ModelGame)model;
+
+            foreach (GameObject gameObject in mg.GameObjects) {
+                if (gameObject is Player) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void GameLoop(object sender, EventArgs e)
         {
-            ProcessUserInput();
-            ProcessObstacles();
-            counter++;
+            if(ArePlayersActive()) {
+                ProcessUserInput();
+                ProcessObstacles();
+                counter++;
 
-            ModelGame mg = (ModelGame)model;
-            mg.graphicsPanel.Invalidate();
-            GetClosestObstacle();
-            UpdateObstacleLabels(closestObstacle, nextClosestObstacle);
+                ModelGame mg = (ModelGame)model;
+                mg.graphicsPanel.Invalidate();
+                GetClosestObstacle();
+                UpdateObstacleLabels(closestObstacle, nextClosestObstacle);
+
+                mg.networkPlayer.SendPositionToServer(GetLocalPlayer());
+            }       
         }
 
         private void ProcessUserInput() 
         {
             ModelGame mg = (ModelGame) model;
 
-            if(mg.player.SpeedCooldown > 0)
+            if(GetLocalPlayer().SpeedCooldown > 0)
             {
-                mg.player.SpeedCooldown--;
+                GetLocalPlayer().SpeedCooldown--;
             }
 
-            if (pressedSpeed && (mg.player.SpeedCooldown == 0))
+            if (pressedSpeed && (GetLocalPlayer().SpeedCooldown == 0))
             {
-                mg.player.Speed = mg.player.OriginalSpeed * 2;
+                GetLocalPlayer().Speed = GetLocalPlayer().OriginalSpeed * 2;
                 UpdatePlayerSpeed("snel");
-                mg.player.SpeedDuration ++;
+                GetLocalPlayer().SpeedDuration ++;
               
             }
-            if(mg.player.SpeedDuration > 50)
+            if(GetLocalPlayer().SpeedDuration > 50)
             {
-                mg.player.SpeedDuration = 0;
-                mg.player.Speed = mg.player.OriginalSpeed;
-                mg.player.SpeedCooldown = 200;
+                GetLocalPlayer().SpeedDuration = 0;
+                GetLocalPlayer().Speed = GetLocalPlayer().OriginalSpeed;
+                GetLocalPlayer().SpeedCooldown = 200;
             }
 
-            if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height) {
-                mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
+            if (pressedDown && GetLocalPlayer().Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - GetLocalPlayer().Height) {
+                GetLocalPlayer().Location = new Point(GetLocalPlayer().Location.X, GetLocalPlayer().Location.Y + GetLocalPlayer().Speed);
                 UpdatePlayerPosition();
             }
-            if (pressedUp && mg.player.Location.Y >= mg.graphicsPanel.Location.Y) {
-                mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
+            if (pressedUp && GetLocalPlayer().Location.Y >= mg.graphicsPanel.Location.Y) {
+                GetLocalPlayer().Location = new Point(GetLocalPlayer().Location.X, GetLocalPlayer().Location.Y - GetLocalPlayer().Speed);
                 UpdatePlayerPosition();
             }
-            if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X ) {
-                mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
+            if (pressedLeft && GetLocalPlayer().Location.X >= mg.graphicsPanel.Location.X ) {
+                GetLocalPlayer().Location = new Point(GetLocalPlayer().Location.X - GetLocalPlayer().Speed, GetLocalPlayer().Location.Y);
                 UpdatePlayerPosition();
             }
-            if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width) {
-                mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
+            if (pressedRight && GetLocalPlayer().Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - GetLocalPlayer().Width) {
+                GetLocalPlayer().Location = new Point(GetLocalPlayer().Location.X + GetLocalPlayer().Speed, GetLocalPlayer().Location.Y);
                 UpdatePlayerPosition();
             }
-            
         }
 
         private void UpdatePlayerPosition()
         {
             ModelGame mg = (ModelGame)model;
-            mg.lblCharacterPosX.Text = mg.player.Location.X.ToString();
-            mg.lblCharacterPosY.Text = mg.player.Location.Y.ToString();
+            mg.lblCharacterPosX.Text = GetLocalPlayer().Location.X.ToString();
+            mg.lblCharacterPosY.Text = GetLocalPlayer().Location.Y.ToString();
         }
 
         private void UpdatePlayerSpeed(string speed) {
@@ -159,8 +189,8 @@ namespace WindesHeim_Game
         {
             ModelGame mg = (ModelGame)model;
 
-            int playerX = mg.player.Location.X;
-            int playerY = mg.player.Location.Y;
+            int playerX = GetLocalPlayer().Location.X;
+            int playerY = GetLocalPlayer().Location.Y;
             double difference = 2000;
 
             // We maken een array aan zodat we door alle objecten kunnen loopen en ze met elkaar kunnen vergelijken
@@ -210,7 +240,7 @@ namespace WindesHeim_Game
                 mg.lblObstacleName2.Text = obstacle2.Name;
                 mg.pbObstacle1.BackgroundImage = obstacle1.PanelIcon;
                 mg.pbObstacle2.BackgroundImage = obstacle2.PanelIcon;
-        }
+            }
         }
 
         private void ProcessObstacles() 
@@ -229,7 +259,7 @@ namespace WindesHeim_Game
                 {
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
 
-                    gameObstacle.ChasePlayer(mg.player);
+                    gameObstacle.ChasePlayer(GetLocalPlayer());
 
                     // Loop door alle objecten op het veld
                     foreach (GameObject potentialCollision in safeListArray) {
@@ -239,12 +269,12 @@ namespace WindesHeim_Game
                         }
                     }
 
-                    if (gameObstacle.CollidesWith(mg.player)) {
-                        mg.player.Location = new Point(0, 0);
+                    if (gameObstacle.CollidesWith(GetLocalPlayer())) {
+                        GetLocalPlayer().Location = new Point(0, 0);
                         UpdatePlayerPosition();
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ObjectImage = Resources.Player;
+                        GetLocalPlayer().ObjectImage = Resources.Player;
                     }
                 }
 
@@ -252,7 +282,7 @@ namespace WindesHeim_Game
                 {
                     SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
 
-                    gameObstacle.ChasePlayer(mg.player);
+                    gameObstacle.ChasePlayer(GetLocalPlayer());
 
                     // Loop door alle objecten op het veld
                     foreach (GameObject potentialCollision in safeListArray) {
@@ -262,15 +292,15 @@ namespace WindesHeim_Game
                         }
                     }
 
-                    if (mg.player.CollidesWith(gameObstacle))
+                    if (GetLocalPlayer().CollidesWith(gameObstacle))
                     {
-                        mg.player.Speed = mg.player.OriginalSpeed / 2;
+                        GetLocalPlayer().Speed = GetLocalPlayer().OriginalSpeed / 2;
                         UpdatePlayerSpeed("Langzaam");
                     }
                     else
                     {
-                        mg.player.Speed = mg.player.OriginalSpeed;
-                        if (pressedSpeed && (mg.player.SpeedCooldown == 0))
+                        GetLocalPlayer().Speed = GetLocalPlayer().OriginalSpeed;
+                        if (pressedSpeed && (GetLocalPlayer().SpeedCooldown == 0))
                         {
                             UpdatePlayerSpeed("Snel");
                         }
@@ -285,13 +315,13 @@ namespace WindesHeim_Game
                 {
                     ExplodingObstacle gameObstacle = (ExplodingObstacle)gameObject;
 
-                    if (mg.player.CollidesWith(gameObstacle))
+                    if (GetLocalPlayer().CollidesWith(gameObstacle))
                     {
-                        mg.player.Location = new Point(0, 0);
+                        GetLocalPlayer().Location = new Point(0, 0);
                         UpdatePlayerPosition();
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ObjectImage = Resources.Player;
+                        GetLocalPlayer().ObjectImage = Resources.Player;
                     }
 
                     
@@ -301,32 +331,32 @@ namespace WindesHeim_Game
                 {
                     StaticObstacle gameObstacle = (StaticObstacle)gameObject;
 
-                    if (mg.player.CollidesWith(gameObstacle)) 
+                    if (GetLocalPlayer().CollidesWith(gameObstacle)) 
                     {
                         if (pressedUp)
                         {
-                            mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
+                            GetLocalPlayer().Location = new Point(GetLocalPlayer().Location.X, GetLocalPlayer().Location.Y + GetLocalPlayer().Speed);
                         }
                         if (pressedDown)
                         {
-                            mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
+                            GetLocalPlayer().Location = new Point(GetLocalPlayer().Location.X, GetLocalPlayer().Location.Y - GetLocalPlayer().Speed);
                         }
                         if (pressedLeft)
                         {
-                            mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
+                            GetLocalPlayer().Location = new Point(GetLocalPlayer().Location.X + GetLocalPlayer().Speed, GetLocalPlayer().Location.Y);
                         }
                         if (pressedRight)
                         {
-                            mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
+                            GetLocalPlayer().Location = new Point(GetLocalPlayer().Location.X - GetLocalPlayer().Speed, GetLocalPlayer().Location.Y);
                         }
                     }
                 }
                 if (gameObject is Checkpoint)
                 {
                     Checkpoint gameObstacle = (Checkpoint)gameObject;
-                    if (mg.player.CollidesWith(gameObstacle) && !gameObstacle.Start)
+                    if (GetLocalPlayer().CollidesWith(gameObstacle) && !gameObstacle.Start)
                     {
-                        mg.player.Location = new Point(0, 0);
+                        GetLocalPlayer().Location = new Point(0, 0);
                         mg.InitializeField();
                         gameWindow.setController(ScreenStates.menu);
                     }
@@ -426,7 +456,8 @@ namespace WindesHeim_Game
             ModelGame mg = (ModelGame)model;
 
             // Teken andere gameobjects
-            foreach (GameObject gameObject in mg.GameObjects) {
+            foreach (GameObject gameObject in mg.GameObjects) 
+            {
                 if (gameObject is Checkpoint)
                 {
                     g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
@@ -443,10 +474,12 @@ namespace WindesHeim_Game
                 }
 
                 //g.DrawRectangle(new Pen(Color.Red), new Rectangle(gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height));
-               
+               if(gameObject is Player) {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                }
             }
             // Teken player
-            g.DrawImage(mg.player.ObjectImage, mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
+            //g.DrawImage(mg.player.ObjectImage, mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
         }
 
         public void OnKeyDownWASD(object sender, KeyEventArgs e) {
@@ -460,11 +493,11 @@ namespace WindesHeim_Game
             }
             if (e.KeyCode == Keys.A) {
                 pressedLeft = true;
-                mg.player.ObjectImage = Resources.PlayerLeft;
+                GetLocalPlayer().ObjectImage = Resources.PlayerLeft;
             }
             if (e.KeyCode == Keys.D) {
                 pressedRight = true;
-                mg.player.ObjectImage = Resources.Player;
+                GetLocalPlayer().ObjectImage = Resources.Player;
             }
             if (e.KeyCode == Keys.Space)
             {
@@ -495,7 +528,7 @@ namespace WindesHeim_Game
             if (e.KeyCode == Keys.Space)
             {
                 pressedSpeed = false;
-                mg.player.Speed = 5;
+                GetLocalPlayer().Speed = 5;
 
             }
 
@@ -537,14 +570,12 @@ namespace WindesHeim_Game
             modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.playLevel);
             modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.goBack);
             modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.listBoxLevels);
-
         }
 
         public void level_Select(object sender, EventArgs e)
         {
             ListBox listBoxLevels = (ListBox)sender;
             currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
-
 
             modelLevelSelect.gamePanel.Invalidate(); // refresh
         }
@@ -652,7 +683,7 @@ namespace WindesHeim_Game
 
         public void newLevel_Click(object sender, EventArgs e)
         {            
-            gameWindow.setController(ScreenStates.editorNewLevel);
+            //gameWindow.setController(ScreenStates.editorNewLevel);
         }
     }
 

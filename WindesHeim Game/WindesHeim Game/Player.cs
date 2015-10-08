@@ -15,6 +15,9 @@ namespace WindesHeim_Game
         private int speedDuration = 0;
         private int speedCooldown = 0;
 
+        // MULTIPLAYER TEST
+        public bool localPlayer = false;
+
         public Player(Point location, int height, int width) : base (location, height, width)
         {
             base.ObjectImage = Resources.Player;

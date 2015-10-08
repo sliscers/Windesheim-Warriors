@@ -20,6 +20,8 @@ namespace WindesHeim_Game
        
         public int collisionSize;
 
+        public int entityId = -1;
+
         public GameObject(Point location, int height, int width)
         {
             this.location = location;

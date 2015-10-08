@@ -156,6 +156,9 @@ namespace WindesHeim_Game
     {
         private ControllerGame gameController;
 
+        // MULTIPLAYER TEST
+        public NetworkPlayer networkPlayer;
+
         //XML Gegevens van level worden hierin meeggegeven
         public static XMLParser level; 
 
@@ -163,9 +166,7 @@ namespace WindesHeim_Game
         private List<GameObject> gameObjects = new List<GameObject>();
         
         // Er is maar 1 speler
-        public Player player = new Player(new Point(10, 10), 40, 40);
-
-
+        //public Player player = new Player(new Point(10, 10), 40, 40);
 
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
@@ -284,7 +285,13 @@ namespace WindesHeim_Game
             
         public void InitializeField()
         {
-            gameObjects.Clear();
+            // MULTIPLAYER TEST
+            List<GameObject> safeGameObjects = new List<GameObject>(gameObjects);
+            foreach(GameObject gameObject in safeGameObjects) {
+                if(!(gameObject is Player)) {
+                    gameObjects.Remove(gameObject);
+                }
+            }
 
             foreach (GameObject gameObject in level.gameObjects)
             {
@@ -306,12 +313,16 @@ namespace WindesHeim_Game
                 }
             }
 
-            gameObjects.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+            //gameObjects.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
             gameObjects.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
         }
 
         public override void ControlsInit(Form gameWindow)
         {
+            // MULTIPLAYER TEST
+            networkPlayer = new NetworkPlayer(this);
+            networkPlayer.Connect();
+            Console.WriteLine("HALLO");
 
             // Registreer key events voor de player
             gameWindow.KeyDown += gameController.OnKeyDownWASD;
