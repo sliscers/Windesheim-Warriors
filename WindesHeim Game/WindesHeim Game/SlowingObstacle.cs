@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game {
 
@@ -11,30 +12,15 @@ namespace WindesHeim_Game {
 
         public SlowingObstacle(Point location, int height, int width) : base (location, height, width)
         {
-            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconES.png";
+            base.ObjectImage = Resources.IconES;
+           
+            base.Name = "Eerstejaars studenten";
+            base.Description = "Volgt character en vertraagt";
+            base.CollisionX = 10;
+            base.CollisionY = 10;
+            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.IconESEdited;
         }
 
-        public void ChasePlayer(Player player) {
-            if (Location.X >= player.Location.X)
-                Location = new Point(Location.X - 1, Location.Y);
 
-            if (Location.X <= player.Location.X)
-                Location = new Point(Location.X + 1, Location.Y);
-
-            if (Location.Y >= player.Location.Y)
-                Location = new Point(Location.X, Location.Y - 1);
-
-            if (Location.Y <= player.Location.Y)
-                Location = new Point(Location.X, Location.Y + 1);
-        }
-
-        public bool CollidesWith(Player player) {
-            if (GetDistance(player.Location) < 75) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
     }
 }

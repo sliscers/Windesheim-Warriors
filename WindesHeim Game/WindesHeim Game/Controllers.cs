@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game
 {
@@ -40,20 +42,25 @@ namespace WindesHeim_Game
             this.model = new ModelMenu(this);
         }
 
-        public void button_Click(object sender, EventArgs e)
+        public void exit_Click(object sender, EventArgs e)
         {
-            gameWindow.setController(ScreenStates.game);
+            //Todo
         }
         public void play_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.gameSelect);
         }
-
-        public void highscores_Click(object sender, EventArgs e)
+        public void editor_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.editorSelect);
+        }
+        public void highscore_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.highscore);
         }
     }
+
+        
 
     public class ControllerGame : Controller
     {
@@ -66,16 +73,16 @@ namespace WindesHeim_Game
         private bool pressedDown = false;
         private bool pressedSpeed = false;
         private int counter;
-
+        private Obstacle closestObstacle = null;
+        private Obstacle nextClosestObstacle = null;
        
+
 
         public ControllerGame(GameWindow form) : base(form)
         {
             this.model = new ModelGame(this);
-
             timer.Tick += new EventHandler(GameLoop);
             timer.Interval = 16;
-            timer.Start();
             
         }
 
@@ -87,6 +94,8 @@ namespace WindesHeim_Game
 
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
+            GetClosestObstacle();
+            UpdateObstacleLabels(closestObstacle, nextClosestObstacle);
         }
 
         private void ProcessUserInput() 
@@ -101,9 +110,9 @@ namespace WindesHeim_Game
             if (pressedSpeed && (mg.player.SpeedCooldown == 0))
             {
                 mg.player.Speed = mg.player.OriginalSpeed * 2;
-
+                UpdatePlayerSpeed("snel");
                 mg.player.SpeedDuration ++;
-       
+              
             }
             if(mg.player.SpeedDuration > 50)
             {
@@ -114,20 +123,97 @@ namespace WindesHeim_Game
 
             if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
+                UpdatePlayerPosition();
             }
             if (pressedUp && mg.player.Location.Y >= mg.graphicsPanel.Location.Y) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
+                UpdatePlayerPosition();
             }
             if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X ) {
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
+                UpdatePlayerPosition();
             }
             if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width) {
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
+                UpdatePlayerPosition();
             }
             
         }
 
-        private void ProcessObstacles()
+        private void UpdatePlayerPosition()
+        {
+            ModelGame mg = (ModelGame)model;
+            mg.lblCharacterPosX.Text = mg.player.Location.X.ToString();
+            mg.lblCharacterPosY.Text = mg.player.Location.Y.ToString();
+        }
+
+        private void UpdatePlayerSpeed(string speed) {
+            ModelGame mg = (ModelGame)model;
+            if (mg.lblCharacterSpeed != null)
+            {
+                mg.lblCharacterSpeed.Text = speed;
+            }
+        }
+
+        private void GetClosestObstacle()
+        {
+            ModelGame mg = (ModelGame)model;
+
+            int playerX = mg.player.Location.X;
+            int playerY = mg.player.Location.Y;
+            double difference = 2000;
+
+            // We maken een array aan zodat we door alle objecten kunnen loopen en ze met elkaar kunnen vergelijken
+            List<GameObject> comparisonArray = new List<GameObject>(mg.GameObjects);
+
+            foreach (GameObject gameObject in comparisonArray)
+            {
+                if(gameObject is Obstacle)
+                {
+                    int obstacleX = gameObject.Location.X;
+                    int obstacleY = gameObject.Location.Y;
+                    int deltaX = playerX - obstacleX;
+                    int deltaY = playerY - obstacleY;
+                    if(deltaX < 0)
+                    {
+                        deltaX *= -1;
+                    }
+                    if(deltaY < 0)
+                    {
+                        deltaY *= -1;
+                    }
+                    int sum = (deltaX * deltaX) + (deltaY * deltaY);
+                    double result = Math.Sqrt(sum);
+                    if(result < difference)
+                    {
+                        nextClosestObstacle = closestObstacle;
+                        closestObstacle = (Obstacle)gameObject;
+                        difference = result;
+                    }
+                }
+            }
+        }
+
+        private void UpdateObstacleLabels(Obstacle obstacle1, Obstacle obstacle2)
+        {
+            ModelGame mg = (ModelGame)model;
+            
+            if (closestObstacle != null && nextClosestObstacle != null && mg.obstaclePanel != null)
+            {
+                mg.lblObstaclePosX1.Text = obstacle1.Location.X.ToString();
+                mg.lblObstaclePosX2.Text = obstacle2.Location.X.ToString();
+                mg.lblObstaclePosY1.Text = obstacle1.Location.Y.ToString();
+                mg.lblObstaclePosY2.Text = obstacle2.Location.Y.ToString();
+                mg.lblObstacleDesc1.Text = obstacle1.Description;
+                mg.lblObstacleDesc2.Text = obstacle2.Description;
+                mg.lblObstacleName1.Text = obstacle1.Name;
+                mg.lblObstacleName2.Text = obstacle2.Name;
+                mg.pbObstacle1.BackgroundImage = obstacle1.PanelIcon;
+                mg.pbObstacle2.BackgroundImage = obstacle2.PanelIcon;
+        }
+        }
+
+        private void ProcessObstacles() 
         {
             ModelGame mg = (ModelGame)model;
 
@@ -142,29 +228,56 @@ namespace WindesHeim_Game
                 if (gameObject is MovingExplodingObstacle)
                 {
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
+
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if (gameObstacle.CollidesWith(mg.player))
-                    {
+                    // Loop door alle objecten op het veld
+                    foreach (GameObject potentialCollision in safeListArray) {
+                        // We willen niet onszelf checken, en we willen alleen collision voor StaticObstacles en ExplodingObstacles
+                        if (gameObject != potentialCollision && (potentialCollision is StaticObstacle || potentialCollision is ExplodingObstacle)) {
+                            gameObject.ProcessCollision(potentialCollision);
+                        }
+                    }
+
+                    if (gameObstacle.CollidesWith(mg.player)) {
                         mg.player.Location = new Point(0, 0);
+                        UpdatePlayerPosition();
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
+                        mg.player.ObjectImage = Resources.Player;
                     }
                 }
 
                 if (gameObject is SlowingObstacle)
                 {
                     SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
+
                     gameObstacle.ChasePlayer(mg.player);
 
-                    if (gameObstacle.CollidesWith(mg.player))
+                    // Loop door alle objecten op het veld
+                    foreach (GameObject potentialCollision in safeListArray) {
+                        // We willen niet onszelf checken, maar we willen we collision op alles
+                        if (gameObject != potentialCollision) {
+                            gameObject.ProcessCollision(potentialCollision);
+                        }
+                    }
+
+                    if (mg.player.CollidesWith(gameObstacle))
                     {
                         mg.player.Speed = mg.player.OriginalSpeed / 2;
+                        UpdatePlayerSpeed("Langzaam");
                     }
                     else
                     {
                         mg.player.Speed = mg.player.OriginalSpeed;
+                        if (pressedSpeed && (mg.player.SpeedCooldown == 0))
+                        {
+                            UpdatePlayerSpeed("Snel");
+                        }
+                        else
+                        {
+                            UpdatePlayerSpeed("Normaal");
+                        }
                     }
                 }
 
@@ -172,12 +285,13 @@ namespace WindesHeim_Game
                 {
                     ExplodingObstacle gameObstacle = (ExplodingObstacle)gameObject;
 
-                    if (gameObstacle.CollidesWith(mg.player))
+                    if (mg.player.CollidesWith(gameObstacle))
                     {
                         mg.player.Location = new Point(0, 0);
+                        UpdatePlayerPosition();
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png"; ;
+                        mg.player.ObjectImage = Resources.Player;
                     }
 
                     
@@ -187,7 +301,7 @@ namespace WindesHeim_Game
                 {
                     StaticObstacle gameObstacle = (StaticObstacle)gameObject;
 
-                    if (gameObstacle.CollidesWith(mg.player))
+                    if (mg.player.CollidesWith(gameObstacle)) 
                     {
                         if (pressedUp)
                         {
@@ -207,6 +321,16 @@ namespace WindesHeim_Game
                         }
                     }
                 }
+                if (gameObject is Checkpoint)
+                {
+                    Checkpoint gameObstacle = (Checkpoint)gameObject;
+                    if (mg.player.CollidesWith(gameObstacle) && !gameObstacle.Start)
+                    {
+                        mg.player.Location = new Point(0, 0);
+                        mg.InitializeField();
+                        gameWindow.setController(ScreenStates.menu);
+                    }
+                }
 
                 // Check of we de explosie kunnen verwijderen
                 if (gameObject is Explosion)
@@ -220,7 +344,7 @@ namespace WindesHeim_Game
 
                     double animationTimerTen = (difference.TotalMilliseconds / 100);
                     int animationTimer = Convert.ToInt32(animationTimerTen);
-                    Console.WriteLine(animationTimer);
+                    //Console.WriteLine(animationTimer);
 
 
                     switch (animationTimer)
@@ -228,51 +352,51 @@ namespace WindesHeim_Game
                         case 1:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
                             gameObject.FadeSmall();
-                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\EXPLODE.WAV");
+                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(Resources.EXPLODE);
                             player.Play();
                             break;
                         case 2:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EC0C07");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FC1212");
                             gameObject.FadeSmall();
                             break;
                         case 3:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#D9190F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F92525");
                             gameObject.FadeSmall();
                             break;
                         case 4:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#C62517");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F63737");
                             gameObject.FadeSmall();
                             break;
                         case 5:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#B3312F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F44A4A");
                             gameObject.FadeSmall();
                             break;
                         case 6:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#A03F27");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#F15C5C");
                             gameObject.FadeSmall();
                             break;
                         case 7:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#8D4B2F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EE6F6F");
                             gameObject.FadeSmall();
                             break;
                         case 8:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#7A5837");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#EB8181");
                             gameObject.FadeSmall();
                             break;
                         case 9:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#67653F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E99494");
                             gameObject.FadeSmall();
                             break;
                         case 10:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#547147");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E6A6A6");
                             gameObject.FadeSmall();
                             break;
                         case 11:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#417E4F");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E3B9B9");
                             gameObject.FadeSmall();
                             break;
                         case 12:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#2E8B57");
+                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E0CBCB");
                             gameObject.FadeSmall();
                             break;
                     }
@@ -283,42 +407,50 @@ namespace WindesHeim_Game
                     if (difference.TotalSeconds > 1.2)
                     {
                         mg.GameObjects.Remove(gameObject);
-                        mg.graphicsPanel.BackColor = Color.SeaGreen;
+                        mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#DEDEDE");
                     }
                 }
-            }
+            }      
         }
 
 
         public override void RunController()
         {
             base.RunController();
+            ModelGame mg = (ModelGame)model;
+            mg.InitializeField();
         }
 
         public void OnPaintEvent(object sender, PaintEventArgs pe) {
             Graphics g = pe.Graphics;
             ModelGame mg = (ModelGame)model;
 
-            // Teken player
-            g.DrawImage(Image.FromFile(mg.player.ImageURL), mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
-
             // Teken andere gameobjects
             foreach (GameObject gameObject in mg.GameObjects) {
-                if(gameObject is Obstacle) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                if (gameObject is Checkpoint)
+                {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
 
-                if(gameObject is Explosion) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
-                   
-                           
+                if (gameObject is Obstacle) 
+                {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
+
+                if(gameObject is Explosion) 
+                {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);           
+                }
+
+                //g.DrawRectangle(new Pen(Color.Red), new Rectangle(gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height));
+               
             }
+            // Teken player
+            g.DrawImage(mg.player.ObjectImage, mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
         }
 
         public void OnKeyDownWASD(object sender, KeyEventArgs e) {
             ModelGame mg = (ModelGame)model;
-
 
             if (e.KeyCode == Keys.W) {
                 pressedUp = true;
@@ -328,11 +460,11 @@ namespace WindesHeim_Game
             }
             if (e.KeyCode == Keys.A) {
                 pressedLeft = true;
-                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\PlayerLeft.png";
+                mg.player.ObjectImage = Resources.PlayerLeft;
             }
             if (e.KeyCode == Keys.D) {
                 pressedRight = true;
-                mg.player.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png";
+                mg.player.ObjectImage = Resources.Player;
             }
             if (e.KeyCode == Keys.Space)
             {
@@ -368,31 +500,206 @@ namespace WindesHeim_Game
             }
 
           
+            }
+        public void TimerStart()
+        {
+            timer.Start();
+        }
+        public void TimerStop()
+        {
+            timer.Stop();
         }
     }
 
     public class ControllerLevelSelect : Controller
     {
+        private XMLParser currentSelectedLevel;
+
+        private ModelLevelSelect modelLevelSelect;
+
         public ControllerLevelSelect(GameWindow form) : base(form)
         {
             this.model = new ModelLevelSelect(this);
+            this.modelLevelSelect = (ModelLevelSelect)model;
         }
-
+          
         public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.menu);
         }
-    }
 
+        public void playLevel_Click(object sender, EventArgs e)
+        {
+            ModelGame.level = currentSelectedLevel;
+            gameWindow.setController(ScreenStates.game);
+
+            //Workaround om focus conflict met windows forms en buttons op te lossen
+            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.playLevel);
+            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.goBack);
+            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.listBoxLevels);
+
+        }
+
+        public void level_Select(object sender, EventArgs e)
+        {
+            ListBox listBoxLevels = (ListBox)sender;
+            currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
+
+
+            modelLevelSelect.gamePanel.Invalidate(); // refresh
+        }
+
+        public void OnPreviewPaint(object sender, PaintEventArgs e) {
+            Graphics g = e.Graphics;
+
+            // Teken preview
+            if(currentSelectedLevel != null) {
+                List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
+                previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+                previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
+
+                foreach (GameObject gameObject in previewList) {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                }
+            }       
+        }
+    }
     public class ControllerHighscores : Controller
     {
+        private XMLParser currentSelectedLevel;
+
+        private ModelHighscores modelHighscores;
+
         public ControllerHighscores(GameWindow form) : base(form)
         {
             this.model = new ModelHighscores(this);
+            this.modelHighscores = (ModelHighscores)model;
         }
-                public void goBack_Click(object sender, EventArgs e)
+        public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.menu);
         }
+        public void level_Select(object sender, EventArgs e)
+        {
+            ListBox listBoxLevels = (ListBox)sender;
+            currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
+
+            modelHighscores.listBoxHighscores.Items.Clear();
+            int i = 0;
+            foreach (GameHighscores highscore in currentSelectedLevel.gameHighscores)
+            {
+                i++;
+                char[] a = highscore.name.ToCharArray();
+                a[0] = char.ToUpper(a[0]);
+
+                modelHighscores.listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score + " | " + highscore.dateTime.ToString("dd-MM-yy H:mm"));
+                if(i == 0)
+                {
+                    listBoxLevels.SetSelected(0, true);
+                }
+            }            
+        }
+    }
+
+    public class ControllerEditorSelect : Controller
+    {
+        public static XMLParser level;
+
+        private XMLParser currentSelectedLevel;
+
+        private ModelEditorSelect modelEditorSelect;
+
+        public ControllerEditorSelect(GameWindow form) : base(form)
+        {
+            this.model = new ModelEditorSelect(this);
+            modelEditorSelect = (ModelEditorSelect)model;
+        }
+        public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.menu);
+        }
+        public void level_Select(object sender, EventArgs e)
+        {
+            ListBox listBoxLevels = (ListBox)sender;
+            currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
+
+            modelEditorSelect.gamePanel.Invalidate(); // refresh
+        }
+
+        public void OnPreviewPaint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            // Teken preview
+            if (currentSelectedLevel != null)
+            {
+                List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
+                previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+                previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
+
+                foreach (GameObject gameObject in previewList)
+                {
+                    g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                }
+            }
+        }
+
+        public void editLevel_Click(object sender, EventArgs e)
+        {
+            ModelEditor.level = currentSelectedLevel;
+            gameWindow.setController(ScreenStates.editor);
+        }
+
+        public void newLevel_Click(object sender, EventArgs e)
+        {            
+            gameWindow.setController(ScreenStates.editorNewLevel);
+        }
+    }
+
+    public class ControllerEditor : Controller
+    {
+        public static XMLParser level;
+
+        private ModelEditor modelEditor;
+
+        public ControllerEditor(GameWindow form) : base(form)
+        {
+            this.model = new ModelEditor(this);
+            this.modelEditor = (ModelEditor)model;
+        }
+
+        public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.editorSelect);
+        }
+
+        public override void RunController()
+        {
+            base.RunController();
+            if(level == null) //New Level aanmaken
+            {
+
+            }else{ //Bestaand level bewerken
+
+            }
+        }
+
+        public void playLevel_Click(object sender, EventArgs e)
+        {
+            if(level == null)
+            {
+                Console.WriteLine("error, level is null");
+            }            else            {
+                ModelGame.level = level;
+                gameWindow.setController(ScreenStates.game);
+
+                //Workaround om focus conflict met windows forms en buttons op te lossen
+                modelEditor.alignPanel.Controls.Remove(modelEditor.playLevel);
+                modelEditor.alignPanel.Controls.Remove(modelEditor.goBack);
+                modelEditor.alignPanel.Controls.Remove(modelEditor.listBoxLevels);
+            }
+
+        }
+
     }
 }

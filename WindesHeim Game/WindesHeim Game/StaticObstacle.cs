@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game
 {
@@ -13,19 +14,11 @@ namespace WindesHeim_Game
 
         public StaticObstacle(Point location, int height, int width) : base(location, height, width)
         {
-            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconTC.png";
-        }
+            base.ObjectImage = Resources.IconTC;
 
-        public bool CollidesWith(Player player)
-        {
-            if (GetDistance(player.Location) < 40)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            base.Name = "Verkeersregelaar";
+            base.Description = "Doet niets";
+            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.IconTCEdited;
         }
     }
 }
