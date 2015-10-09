@@ -72,11 +72,26 @@ namespace WindesHeim_Game
         private bool pressedUp = false;
         private bool pressedDown = false;
         private bool pressedSpeed = false;
-        private int counter;
         private Obstacle closestObstacle = null;
         private Obstacle nextClosestObstacle = null;
 
+        public void RestartClicked(object sender, MouseEventArgs e)
+        {
+            ModelGame mg = (ModelGame)model;
+            timer.Stop();
 
+            mg.player.Location = new Point(0, 0);
+            UpdatePlayerPosition();
+            mg.InitializeField();
+            timer.Start();
+        }
+
+        public void MenuClicked(object sender, MouseEventArgs e)
+        {
+
+            gameWindow.setController(ScreenStates.menu);
+
+        }
 
         public ControllerGame(GameWindow form) : base(form)
         {
@@ -90,8 +105,6 @@ namespace WindesHeim_Game
         {
             ProcessUserInput();
             ProcessObstacles();
-            counter++;
-
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
             GetClosestObstacle();
@@ -123,23 +136,60 @@ namespace WindesHeim_Game
 
             if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
                 UpdatePlayerPosition();
             }
             if (pressedUp && mg.player.Location.Y >= mg.graphicsPanel.Location.Y)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
                 UpdatePlayerPosition();
             }
             if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
                 UpdatePlayerPosition();
             }
             if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
                 UpdatePlayerPosition();
+            }
+
+            if (pressedRight)
+            {
+                mg.btnRight.BackgroundImage = Resources.RightOnClick;
+            }
+            if (pressedLeft)
+            {
+                mg.btnLeft.BackgroundImage = Resources.LeftOnClick;
+            }
+            if (pressedUp)
+            {
+                mg.btnUp.BackgroundImage = Resources.UpOnClick;
+            }
+            if (pressedDown)
+            {
+                mg.btnDown.BackgroundImage = Resources.DownOnClick;
+            }
+            if (pressedRight == false)
+            {
+                mg.btnRight.BackgroundImage = Resources.Right;
+            }
+            if (pressedLeft == false)
+            {
+                mg.btnLeft.BackgroundImage = Resources.Left;
+            }
+            if (pressedUp == false)
+            {
+                mg.btnUp.BackgroundImage = Resources.Up;
+            }
+            if (pressedDown == false)
+            {
+                mg.btnDown.BackgroundImage = Resources.Down;
             }
 
         }
@@ -527,8 +577,10 @@ namespace WindesHeim_Game
         {
             timer.Stop();
         }
-    }
 
+
+      
+    }
     public class ControllerLevelSelect : Controller
     {
         private XMLParser currentSelectedLevel;
@@ -845,6 +897,8 @@ namespace WindesHeim_Game
             g = e.Graphics;
             gamePanelGraphics = modelEditor.gamePanel.CreateGraphics();            
         }
+
+      
 
     }
 }
