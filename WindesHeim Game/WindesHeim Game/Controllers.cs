@@ -65,9 +65,11 @@ namespace WindesHeim_Game
     public class ControllerGame : Controller
     {
         public Boolean mute = false;
+        System.Media.SoundPlayer player = new System.Media.SoundPlayer(Resources.EXPLODE);
         // Timer voor de gameloop
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        System.Media.SoundPlayer player = new System.Media.SoundPlayer(Resources.EXPLODE);
+        
+        
 
         private bool pressedLeft = false;
         private bool pressedRight = false;
@@ -123,6 +125,7 @@ namespace WindesHeim_Game
         {
             if (mute)
             {
+               
                 player.Stop();
             }
         }
@@ -422,6 +425,8 @@ namespace WindesHeim_Game
                         mg.player.ObjectImage = Resources.Player;
                     }
 
+                   
+
 
                 }
 
@@ -482,6 +487,7 @@ namespace WindesHeim_Game
                             gameObject.FadeSmall();
                             if (!mute)
                             {
+                                
                                 player.Play();
                             }
                             break;
