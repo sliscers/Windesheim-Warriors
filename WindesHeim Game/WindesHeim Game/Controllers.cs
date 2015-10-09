@@ -76,7 +76,23 @@ namespace WindesHeim_Game
         private Obstacle closestObstacle = null;
         private Obstacle nextClosestObstacle = null;
 
+        public void RestartClicked(object sender, MouseEventArgs e)
+        {
+            ModelGame mg = (ModelGame)model;
+            timer.Stop();
+          
+            mg.player.Location = new Point(0, 0);
+            UpdatePlayerPosition();
+            mg.InitializeField();
+            timer.Start();
+        }
 
+        public void MenuClicked(object sender, MouseEventArgs e)
+        {
+           
+            gameWindow.setController(ScreenStates.menu);
+
+        }
 
         public ControllerGame(GameWindow form) : base(form)
         {
@@ -90,8 +106,6 @@ namespace WindesHeim_Game
         {
             ProcessUserInput();
             ProcessObstacles();
-            counter++;
-
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
             GetClosestObstacle();
@@ -845,6 +859,8 @@ namespace WindesHeim_Game
             g = e.Graphics;
             gamePanelGraphics = modelEditor.gamePanel.CreateGraphics();            
         }
+
+      
 
     }
 }

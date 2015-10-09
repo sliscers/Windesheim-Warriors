@@ -798,6 +798,7 @@ namespace WindesHeim_Game
             this.pbIconRestart.TabIndex = 7;
             this.pbIconRestart.TabStop = false;
             this.pbIconRestart.MouseEnter += new System.EventHandler(this.RestartHoverEnter);
+            this.pbIconRestart.MouseClick += new System.Windows.Forms.MouseEventHandler(gameController.RestartClicked);
             this.pbIconRestart.MouseLeave += new System.EventHandler(this.RestartHoverLeave);
 
             //Picturebox Action Menu
@@ -809,6 +810,7 @@ namespace WindesHeim_Game
             this.pbIconMenu.TabIndex = 8;
             this.pbIconMenu.TabStop = false;
             this.pbIconMenu.MouseEnter += new System.EventHandler(this.MenuHoverEnter);
+            this.pbIconMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(gameController.MenuClicked);
             this.pbIconMenu.MouseLeave += new System.EventHandler(this.MenuHoverLeave);
             //STOP ACTION PANEL
 
