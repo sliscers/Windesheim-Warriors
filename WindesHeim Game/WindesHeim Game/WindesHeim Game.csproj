@@ -79,6 +79,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="bin\Debug\WindesHeim Game.exe.config" />
+    <None Include="bin\Debug\WindesHeim Game.vshost.exe.config" />
+    <None Include="bin\Debug\WindesHeim Game.vshost.exe.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -107,6 +110,7 @@
     <None Include="resources\ConceptTransparentBackgroundSmall.png" />
     <None Include="resources\Down.png" />
     <None Include="resources\EXPLODE.wav" />
+    <Content Include="bin\Debug\WindesHeim Game.vshost.exe" />
     <Content Include="resources\explosion.png" />
     <Content Include="resources\IconBike.png" />
     <Content Include="resources\IconCar.png" />
