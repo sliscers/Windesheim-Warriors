@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game {
 
@@ -11,10 +12,11 @@ namespace WindesHeim_Game {
 
         public ExplodingObstacle(Point location, int height, int width) : base (location, height, width)
         {
-            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconCar.png";
+            base.ObjectImage = Resources.IconCar;
             base.collisionSize = 40;
             base.Name = "Auto";
             base.Description = "Ontploft bij aanraking";
+            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.carEdited;
         }
     }
 }

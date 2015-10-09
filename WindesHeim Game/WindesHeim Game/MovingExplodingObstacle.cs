@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game {
 
@@ -11,10 +12,11 @@ namespace WindesHeim_Game {
 
         public MovingExplodingObstacle(Point location, int height, int width) : base (location, height, width)
         {
-            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconBike.png";
+            base.ObjectImage = Resources.IconBike;
             base.collisionSize = 50;
             base.Name = "Fietser";
             base.Description = "Volgt character en ontploft";
+            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.bikeEdited;
         }
     }
 }

@@ -20,6 +20,9 @@ namespace WindesHeim_Game
         private ControllerGame game;
         private ControllerLevelSelect levelSelect;
         private ControllerHighscores highscores;
+        private ControllerEditorSelect editorSelect;
+        private ControllerEditor editor;
+
 
         private ScreenStates state = ScreenStates.menu;
         private System.ComponentModel.IContainer components = null;
@@ -39,6 +42,9 @@ namespace WindesHeim_Game
             game = new ControllerGame(this);
             levelSelect = new ControllerLevelSelect(this);
             highscores = new ControllerHighscores(this);
+            editorSelect = new ControllerEditorSelect(this);
+            editor = new ControllerEditor(this);
+
 
 
             this.SuspendLayout();
@@ -52,7 +58,7 @@ namespace WindesHeim_Game
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
-            this.Icon = global::WindesHeim_Game.Properties.Resources.IconWIN;
+            //this.Icon = global::WindesHeim_Game.Properties.Resources.IconWIN;
             this.ResumeLayout(false);
 
             this.setController(ScreenStates.menu);
@@ -79,9 +85,11 @@ namespace WindesHeim_Game
                     break;
                 case ScreenStates.editorSelect:
                     this.state = ScreenStates.editorSelect;
+                    editorSelect.RunController();
                     break;
                 case ScreenStates.editor:
                     this.state = ScreenStates.editor;
+                    editor.RunController();
                     break;
                 case ScreenStates.highscore:
                     game.TimerStop();

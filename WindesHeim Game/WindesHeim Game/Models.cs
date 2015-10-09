@@ -21,12 +21,12 @@ namespace WindesHeim_Game
         [DllImport("gdi32.dll")]
         private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
-        protected FontFamily windesheimFontFamily;
-        protected Font windesheimSheriffFont;
-        protected Font windesheimSheriffFontSmall;
-        protected Font windesheimSheriffFontXSmall;
-        protected Font windesheimTransitFont;
-        protected FontFamily windesheimFontFamilyTransit;
+        public FontFamily windesheimFontFamily;
+        public Font windesheimSheriffFont;
+        public Font windesheimSheriffFontSmall;
+        public Font windesheimSheriffFontXSmall;
+        public Font windesheimTransitFont;
+        public FontFamily windesheimFontFamilyTransit;
 
         public Model(Controller controller)
         {
@@ -63,7 +63,7 @@ namespace WindesHeim_Game
 
             windesheimFontFamilyTransit = pfc.Families[0];
             windesheimTransitFont = new Font(windesheimFontFamilyTransit, 11f, FontStyle.Regular);
-    }
+        }
 
         private void SetWindesheimFontSheriff()
         {
@@ -126,18 +126,13 @@ namespace WindesHeim_Game
             this.editor.Location = new System.Drawing.Point(0, 60);
             this.editor.Size = new System.Drawing.Size(304, 44);
             this.editor.TabIndex = 1;
+            this.editor.Click += new EventHandler(menuController.editor_Click);
 
             this.highscore.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\highscoresButton.png");
             this.highscore.Location = new System.Drawing.Point(0, 120);
             this.highscore.Size = new System.Drawing.Size(304, 44);
             this.highscore.TabIndex = 2;
             this.highscore.Click += new EventHandler(menuController.highscore_Click);
-
-            this.tempPlay.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\playButton.png");
-            this.tempPlay.Location = new System.Drawing.Point(0, 180);
-            this.tempPlay.Size = new System.Drawing.Size(304, 44);
-            this.tempPlay.TabIndex = 3;
-            this.tempPlay.Click += new EventHandler(menuController.button_Click);
 
             menuPanel = new Panel();
             menuPanel.AutoSize = true;
@@ -147,7 +142,6 @@ namespace WindesHeim_Game
             menuPanel.Controls.Add(play);
             menuPanel.Controls.Add(editor);
             menuPanel.Controls.Add(highscore);
-            menuPanel.Controls.Add(tempPlay);
 
 
             System.Console.WriteLine(gameWindow.Width);
@@ -162,11 +156,16 @@ namespace WindesHeim_Game
     {
         private ControllerGame gameController;
 
+        //XML Gegevens van level worden hierin meeggegeven
+        public static XMLParser level;
+
         // Houdt alle dynamische gameobjecten vast
         private List<GameObject> gameObjects = new List<GameObject>();
-        
+
         // Er is maar 1 speler
         public Player player = new Player(new Point(10, 10), 40, 40);
+
+
 
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
@@ -183,7 +182,7 @@ namespace WindesHeim_Game
 
         // Icon 1
         private System.Windows.Forms.Panel pnlObstacleIcon1 = new Panel();
-        private System.Windows.Forms.PictureBox pbObstacle1 = new PictureBox();
+        internal System.Windows.Forms.PictureBox pbObstacle1 = new PictureBox();
 
         //Obstacle Name 1
         internal System.Windows.Forms.Label lblObstacleName1 = new Label();
@@ -207,7 +206,7 @@ namespace WindesHeim_Game
 
         //Icon 2
         private System.Windows.Forms.Panel pnlObstacleIcon2 = new Panel();
-        private System.Windows.Forms.PictureBox pbObstacle2 = new PictureBox();
+        internal System.Windows.Forms.PictureBox pbObstacle2 = new PictureBox();
 
         //Obstacle Name 2
         internal System.Windows.Forms.Label lblObstacleName2 = new Label();
@@ -263,10 +262,10 @@ namespace WindesHeim_Game
         //START CONTROL PANEL
         private System.Windows.Forms.Panel controlPanel = new Panel();
 
-        private System.Windows.Forms.Button btnUp = new Button();
-        private System.Windows.Forms.Button btnDown = new Button();
-        private System.Windows.Forms.Button btnLeft = new Button();
-        private System.Windows.Forms.Button btnRight = new Button();
+        private System.Windows.Forms.PictureBox btnUp = new PictureBox();
+        private System.Windows.Forms.PictureBox btnDown = new PictureBox();
+        private System.Windows.Forms.PictureBox btnLeft = new PictureBox();
+        private System.Windows.Forms.PictureBox btnRight = new PictureBox();
         //STOP CONTROL PANEL
 
 
@@ -281,26 +280,18 @@ namespace WindesHeim_Game
         public ModelGame(ControllerGame controller) : base(controller)
         {
             this.gameController = controller;
-
-            InitializeField();
         }
-            
+
         public void InitializeField()
         {
             gameObjects.Clear();
 
-            // Toevoegen aan list, zodat we het kunnen volgen
-            gameObjects.Add(new MovingExplodingObstacle(new Point(520, 20), 40, 40));
-            gameObjects.Add(new StaticObstacle(new Point(150, 200), 40, 40));
-            gameObjects.Add(new ExplodingObstacle(new Point(380, 400), 40, 40));
-            gameObjects.Add(new SlowingObstacle(new Point(420, 100), 40, 40));
-            gameObjects.Add(new Checkpoint(new Point(750, 400), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconWIN.png", 80, 80));
-            gameObjects.Add(new Checkpoint(new Point(5, -5), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconSP.png", 80, 80));
-
+            gameObjects = level.getCleanGameObjects();           
         }
 
         public override void ControlsInit(Form gameWindow)
         {
+
             // Registreer key events voor de player
             gameWindow.KeyDown += gameController.OnKeyDownWASD;
             gameWindow.KeyUp += gameController.OnKeyUp;
@@ -388,6 +379,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Postition X Title 1
             this.lblObstaclePosXTitle1.AutoSize = true;
+            this.lblObstaclePosXTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosXTitle1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosXTitle1.Location = new System.Drawing.Point(173, 63);
             this.lblObstaclePosXTitle1.Name = "lblObstaclePosXTitle1";
@@ -397,6 +389,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position X 1
             this.lblObstaclePosX1.AutoSize = true;
+            this.lblObstaclePosX1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosX1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosX1.Location = new System.Drawing.Point(250, 63);
             this.lblObstaclePosX1.Name = "lblObstaclePosX1";
@@ -406,6 +399,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position Y Title 1
             this.lblObstaclePosYTitle1.AutoSize = true;
+            this.lblObstaclePosYTitle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosYTitle1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosYTitle1.Location = new System.Drawing.Point(173, 83);
             this.lblObstaclePosYTitle1.Name = "lblObstaclePosYTitle1";
@@ -415,6 +409,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position Y 1
             this.lblObstaclePosY1.AutoSize = true;
+            this.lblObstaclePosY1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosY1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosY1.Location = new System.Drawing.Point(249, 83);
             this.lblObstaclePosY1.Name = "lblObstaclePosY1";
@@ -434,6 +429,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Description 1
             this.lblObstacleDesc1.AutoSize = true;
+            this.lblObstacleDesc1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstacleDesc1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstacleDesc1.Location = new System.Drawing.Point(173, 136);
             this.lblObstacleDesc1.Margin = new System.Windows.Forms.Padding(0);
@@ -495,6 +491,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Postition X Title 2
             this.lblObstaclePosXTitle2.AutoSize = true;
+            this.lblObstaclePosXTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosXTitle2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosXTitle2.Location = new System.Drawing.Point(174, 63);
             this.lblObstaclePosXTitle2.Name = "lblObstaclePosXTitle2";
@@ -504,6 +501,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position X 2
             this.lblObstaclePosX2.AutoSize = true;
+            this.lblObstaclePosX2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosX2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosX2.Location = new System.Drawing.Point(249, 63);
             this.lblObstaclePosX2.Name = "lblObstaclePosX2";
@@ -513,6 +511,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position Y Title 2
             this.lblObstaclePosYTitle2.AutoSize = true;
+            this.lblObstaclePosYTitle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosYTitle2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosYTitle2.Location = new System.Drawing.Point(174, 83);
             this.lblObstaclePosYTitle2.Name = "lblObstaclePosYTitle2";
@@ -522,6 +521,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Position Y 2
             this.lblObstaclePosY2.AutoSize = true;
+            this.lblObstaclePosY2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstaclePosY2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstaclePosY2.Location = new System.Drawing.Point(249, 83);
             this.lblObstaclePosY2.Name = "lblObstaclePosY2";
@@ -541,6 +541,7 @@ namespace WindesHeim_Game
 
             //Label Obstacle Description 2
             this.lblObstacleDesc2.AutoSize = true;
+            this.lblObstacleDesc2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObstacleDesc2.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblObstacleDesc2.Location = new System.Drawing.Point(173, 136);
             this.lblObstacleDesc2.Margin = new System.Windows.Forms.Padding(0);
@@ -639,6 +640,7 @@ namespace WindesHeim_Game
 
             //Label Character Position X Title
             this.lblCharacterPosXTitle.AutoSize = true;
+            this.lblCharacterPosXTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCharacterPosXTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblCharacterPosXTitle.Location = new System.Drawing.Point(173, 63);
             this.lblCharacterPosXTitle.Name = "lblCharacterPosXTitle";
@@ -653,7 +655,7 @@ namespace WindesHeim_Game
             this.lblCharacterPosX.Name = "lblCharacterPosX";
             this.lblCharacterPosX.Size = new System.Drawing.Size(23, 18);
             this.lblCharacterPosX.TabIndex = 8;
-            this.lblCharacterPosX.Text = "0";
+            this.lblCharacterPosX.Text = "int";
 
             //Label Character Position Y Title
             this.lblCharacterPosYTitle.AutoSize = true;
@@ -666,21 +668,34 @@ namespace WindesHeim_Game
 
             //Label Character Position Y
             this.lblCharacterPosY.AutoSize = true;
+            this.lblCharacterPosY.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCharacterPosY.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblCharacterPosY.Location = new System.Drawing.Point(249, 83);
             this.lblCharacterPosY.Name = "lblCharacterPosY";
             this.lblCharacterPosY.Size = new System.Drawing.Size(23, 18);
             this.lblCharacterPosY.TabIndex = 9;
-            this.lblCharacterPosY.Text = "0";
+            this.lblCharacterPosY.Text = "int";
 
             //Label Character Speed Title
             this.lblCharacterSpeedTitle.AutoSize = true;
+            this.lblCharacterSpeedTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCharacterSpeedTitle.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.lblCharacterSpeedTitle.Location = new System.Drawing.Point(173, 114);
             this.lblCharacterSpeedTitle.Name = "lblCharacterSpeedTitle";
             this.lblCharacterSpeedTitle.Size = new System.Drawing.Size(68, 18);
             this.lblCharacterSpeedTitle.TabIndex = 10;
             this.lblCharacterSpeedTitle.Text = "Snelheid:";
+
+            //Label Character Speed
+            this.lblCharacterSpeed.AutoSize = true;
+            this.lblCharacterSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCharacterSpeed.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblCharacterSpeed.Location = new System.Drawing.Point(249, 114);
+            this.lblCharacterSpeed.Name = "lblCharacterSpeed";
+            this.lblCharacterSpeed.Size = new System.Drawing.Size(23, 18);
+            this.lblCharacterSpeed.TabIndex = 11;
+            this.lblCharacterSpeed.Text = "int";
+            //STOP CHARACTER PANEL
 
             //Label Character Speed
             this.lblCharacterSpeed.AutoSize = true;
@@ -691,7 +706,6 @@ namespace WindesHeim_Game
             this.lblCharacterSpeed.TabIndex = 11;
             this.lblCharacterSpeed.Text = "int";
             //STOP CHARACTER PANEL
-
 
             //START CONTROL PANEL
 
@@ -715,7 +729,7 @@ namespace WindesHeim_Game
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(100, 100);
             this.btnUp.TabIndex = 1;
-            this.btnUp.UseVisualStyleBackColor = true;
+            //this.btnUp.UseVisualStyleBackColor = true;
 
             //Button Down
             this.btnDown.BackgroundImage = global::WindesHeim_Game.Properties.Resources.Down;
@@ -725,7 +739,7 @@ namespace WindesHeim_Game
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(100, 100);
             this.btnDown.TabIndex = 0;
-            this.btnDown.UseVisualStyleBackColor = true;
+            //this.btnDown.UseVisualStyleBackColor = true;
 
             //Button Left
             this.btnLeft.BackgroundImage = global::WindesHeim_Game.Properties.Resources.Left;
@@ -735,7 +749,7 @@ namespace WindesHeim_Game
             this.btnLeft.Name = "btnLeft";
             this.btnLeft.Size = new System.Drawing.Size(100, 100);
             this.btnLeft.TabIndex = 3;
-            this.btnLeft.UseVisualStyleBackColor = true;
+            //this.btnLeft.UseVisualStyleBackColor = true;
 
             //Button Right
             this.btnRight.BackgroundImage = global::WindesHeim_Game.Properties.Resources.Right;
@@ -745,7 +759,7 @@ namespace WindesHeim_Game
             this.btnRight.Name = "btnRight";
             this.btnRight.Size = new System.Drawing.Size(100, 100);
             this.btnRight.TabIndex = 2;
-            this.btnRight.UseVisualStyleBackColor = true;
+            //this.btnRight.UseVisualStyleBackColor = true;
             //STOP CONTROL PANEL
 
 
@@ -807,6 +821,7 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(actionPanel);
             gameWindow.Controls.Add(logoPanel);
 
+
             //Windesheim Fonts toevoegen
             SetWindesheimTheme();
         }
@@ -846,7 +861,7 @@ namespace WindesHeim_Game
             this.lblCharacterSpeed.Font = windesheimTransitFont;
             this.lblCharacterSpeedTitle.Font = windesheimTransitFont;
         }
-        
+
         private void pbIconSound_Click(object sender, EventArgs e)
         {
             if (mute)
@@ -886,7 +901,7 @@ namespace WindesHeim_Game
             if (mute)
             {
                 pbIconSound.BackgroundImage = Resources.soundEdited1;
-                
+
                 mute = false;
             }
             else
@@ -910,6 +925,7 @@ namespace WindesHeim_Game
             }
         }
 
+
         public List<GameObject> GameObjects
         {
             get { return gameObjects; }
@@ -918,13 +934,13 @@ namespace WindesHeim_Game
 
     public class ModelLevelSelect : Model
     {
-        private ListBox levels;
-        private Button goBack;
-        private Button playLevel;
+        public ListBox listBoxLevels;
+        public Button goBack;
+        public Button playLevel;
         private Label labelLevels;
         private Label labelLevelPreview;
-        private Panel alignPanel;
-        private Panel gamePanel;
+        public Panel alignPanel;
+        public Panel gamePanel;
 
         private ControllerLevelSelect levelSelectController;
 
@@ -938,23 +954,23 @@ namespace WindesHeim_Game
             alignPanel = new Panel();
             alignPanel.AutoSize = true;
 
-
             gamePanel = new Panel();
             gamePanel.Location = new System.Drawing.Point(210, 40);
             gamePanel.Size = new System.Drawing.Size(845, 475);
             gamePanel.BackColor = Color.DarkGray;
+            gamePanel.Paint += levelSelectController.OnPreviewPaint;
 
+            listBoxLevels = new ListBox();
+            listBoxLevels.Size = new System.Drawing.Size(200, 475);
+            listBoxLevels.Location = new System.Drawing.Point(0, 40);
 
-            levels = new ListBox();
-            levels.Size = new System.Drawing.Size(200, 475);
-            levels.Location = new System.Drawing.Point(0, 40);
-            string[] fileEntries = Directory.GetFiles("../levels/");
-            foreach (string file in fileEntries)
+            XMLParser.LoadAllLevels();
+            foreach (XMLParser xml in XMLParser.Levels)
             {
-                XMLParser xml = new XMLParser(file);
-                xml.ReadXML();
-                levels.Items.Add(xml.gameProperties.title);
+                listBoxLevels.Items.Add(xml);
             }
+            listBoxLevels.SelectedIndexChanged += levelSelectController.level_Select;
+            listBoxLevels.SetSelected(0, true);
 
             labelLevels = new Label();
             labelLevels.Text = "Levels";
@@ -974,25 +990,26 @@ namespace WindesHeim_Game
             goBack.Size = new System.Drawing.Size(200, 25);
             goBack.Location = new System.Drawing.Point(0, 525);
             goBack.Text = "Go Back";
-            goBack.Click += new EventHandler(levelSelectController.goBack_Click);
+            goBack.Click += levelSelectController.goBack_Click;
 
             playLevel = new Button();
             playLevel.Size = new System.Drawing.Size(845, 25);
             playLevel.Location = new System.Drawing.Point(210, 525);
             playLevel.Text = "Play Level";
-            playLevel.Click += new EventHandler(levelSelectController.goBack_Click);
+            playLevel.Click += levelSelectController.playLevel_Click;
 
             gameWindow.Controls.Add(alignPanel);
             alignPanel.Controls.Add(labelLevels);
             alignPanel.Controls.Add(labelLevelPreview);
             alignPanel.Controls.Add(goBack);
             alignPanel.Controls.Add(playLevel);
-            alignPanel.Controls.Add(levels);
+            alignPanel.Controls.Add(listBoxLevels);
             alignPanel.Controls.Add(gamePanel);
             alignPanel.Location = new Point(
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
             alignPanel.Anchor = AnchorStyles.None;
+
         }
     }
 
@@ -1001,7 +1018,7 @@ namespace WindesHeim_Game
         private ListBox listBoxLevels;
         private Button goBack;
         private Panel alignPanel;
-        private ListBox listBoxHighscores;
+        public ListBox listBoxHighscores;
         private Panel backgroundImage;
 
         private List<XMLParser> levels = new List<XMLParser>();
@@ -1026,29 +1043,20 @@ namespace WindesHeim_Game
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 200);
             listBoxLevels.Location = new System.Drawing.Point(0, 0);
+            listBoxLevels.SelectedIndexChanged += highscoresController.level_Select;
 
             listBoxHighscores = new ListBox();
             listBoxHighscores.Size = new System.Drawing.Size(200, 200);
             listBoxHighscores.Location = new System.Drawing.Point(200, 0);
 
-            string[] fileEntries = Directory.GetFiles("../levels/");
-            foreach (string file in fileEntries)
+            XMLParser.LoadAllLevels();
+            foreach (XMLParser xml in XMLParser.Levels)
             {
-                XMLParser xml = new XMLParser(file);
-                xml.ReadXML();
                 this.levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
-                listBoxLevels.Items.Add(xml.gameProperties.title);
-
-                int i = 0;
-                foreach (GameHighscores highscore in xml.gameHighscores)
-                {
-                    i++;
-                    char[] a = highscore.name.ToCharArray();
-                    a[0] = char.ToUpper(a[0]);
-
-                    listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score);
-                }
+                listBoxLevels.Items.Add(xml);
             }
+            listBoxLevels.SetSelected(0, true);
+
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
             goBack.Location = new System.Drawing.Point(0, 210);
@@ -1061,11 +1069,230 @@ namespace WindesHeim_Game
             alignPanel.Controls.Add(listBoxLevels);
             alignPanel.Controls.Add(listBoxHighscores);
 
-
             alignPanel.Location = new Point(
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
             alignPanel.Anchor = AnchorStyles.None;
+        }
+    }
+
+    public class ModelEditorSelect : Model
+    {
+        public ListBox listBoxLevels;
+        public Button goBack;
+        public Button editLevel;
+        public Button newLevel;
+        private Label labelLevels;
+        private Label labelLevelPreview;
+        public Panel alignPanel;
+        public Panel gamePanel;
+
+        private ControllerEditorSelect editorSelectController;
+
+        public ModelEditorSelect(ControllerEditorSelect controller) : base(controller)
+        {
+            this.editorSelectController = controller;
+        }
+
+        public override void ControlsInit(Form gameWindow)
+        {
+            alignPanel = new Panel();
+            alignPanel.AutoSize = true;
+
+            gamePanel = new Panel();
+            gamePanel.Location = new System.Drawing.Point(210, 40);
+            gamePanel.Size = new System.Drawing.Size(845, 475);
+            gamePanel.BackColor = Color.DarkGray;
+            gamePanel.Paint += editorSelectController.OnPreviewPaint;
+
+            listBoxLevels = new ListBox();
+            listBoxLevels.Size = new System.Drawing.Size(200, 475);
+            listBoxLevels.Location = new System.Drawing.Point(0, 40);
+
+            XMLParser.LoadAllLevels();
+            foreach (XMLParser xml in XMLParser.Levels)
+            {
+                listBoxLevels.Items.Add(xml);
+            }
+
+            listBoxLevels.SelectedIndexChanged += editorSelectController.level_Select;
+            listBoxLevels.SetSelected(0, true);
+
+            labelLevels = new Label();
+            labelLevels.Text = "Levels";
+            labelLevels.Font = new Font("Arial", 20);
+            labelLevels.Location = new System.Drawing.Point(0, 0);
+            labelLevels.Size = new System.Drawing.Size(200, 30);
+            labelLevels.TextAlign = ContentAlignment.MiddleCenter;
+
+            labelLevelPreview = new Label();
+            labelLevelPreview.Text = "Level Preview";
+            labelLevelPreview.Font = new Font("Arial", 20);
+            labelLevelPreview.Location = new System.Drawing.Point(210, 0);
+            labelLevelPreview.Size = new System.Drawing.Size(845, 30);
+            labelLevelPreview.TextAlign = ContentAlignment.MiddleCenter;
+
+            goBack = new Button();
+            goBack.Size = new System.Drawing.Size(200, 25);
+            goBack.Location = new System.Drawing.Point(0, 525);
+            goBack.Text = "Go Back";
+            goBack.Click += editorSelectController.goBack_Click;
+
+            editLevel = new Button();
+            editLevel.Size = new System.Drawing.Size(422, 25);
+            editLevel.Location = new System.Drawing.Point(210, 525);
+            editLevel.Text = "Edit Level";
+            editLevel.Click += editorSelectController.editLevel_Click;
+
+            newLevel = new Button();
+            newLevel.Size = new System.Drawing.Size(422, 25);
+            newLevel.Location = new System.Drawing.Point(632, 525);
+            newLevel.Text = "New Level";
+            newLevel.Click += editorSelectController.newLevel_Click;
+
+            gameWindow.Controls.Add(alignPanel);
+            alignPanel.Controls.Add(labelLevels);
+            alignPanel.Controls.Add(labelLevelPreview);
+            alignPanel.Controls.Add(goBack);
+            alignPanel.Controls.Add(editLevel);
+            alignPanel.Controls.Add(newLevel);
+            alignPanel.Controls.Add(listBoxLevels);
+            alignPanel.Controls.Add(gamePanel);
+            alignPanel.Location = new Point(
+                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
+            alignPanel.Anchor = AnchorStyles.None;
+
+        }
+    }
+
+    public class ModelEditor : Model
+    {
+        public ListBox listBoxLevels;
+        public Button goBack;
+        public Button playLevel;
+        public Button undoButton;
+        public Button clearButton;
+        public Panel alignPanel;
+        public Panel gamePanel;
+        public PictureBox staticObstacle;
+        public PictureBox explodingObstacle;
+        public PictureBox movingExplodingObstacle;
+        public PictureBox slowingObstacle;
+        private Label dragDropLabel;
+
+
+        //XML Gegevens van level worden hierin meeggegeven
+        public static XMLParser level;
+
+        private ControllerEditor editorController;
+
+        public ModelEditor(ControllerEditor controller) : base(controller)
+        {
+            this.editorController = controller;
+        }
+
+        public override void ControlsInit(Form gameWindow)
+        {
+            dragDropLabel = new Label();
+            dragDropLabel.Text = "Drag en drop";
+            dragDropLabel.Font = new Font("Arial", 12);
+            dragDropLabel.Location = new System.Drawing.Point(920, 50);
+            dragDropLabel.Size = new System.Drawing.Size(200, 30);
+
+            gamePanel = new Panel();
+            gamePanel.Location = new System.Drawing.Point(0, 0);
+            gamePanel.Size = new System.Drawing.Size(845, 475);
+            gamePanel.BackColor = Color.DarkGray;
+            gamePanel.Paint += new PaintEventHandler(editorController.GamePanel_Paint);
+
+            goBack = new Button();
+            goBack.Size = new System.Drawing.Size(200, 25);
+            goBack.Location = new System.Drawing.Point(0, 525);
+            goBack.Text = "Go Back";
+            goBack.Click += editorController.goBack_Click;
+
+            playLevel = new Button();
+            playLevel.Size = new System.Drawing.Size(422, 25);
+            playLevel.Location = new System.Drawing.Point(210, 525);
+            playLevel.Text = "Test Level";
+            playLevel.Click += editorController.playLevel_Click;
+
+            undoButton = new Button();
+            undoButton.Size = new System.Drawing.Size(100, 25);
+            undoButton.Location = new System.Drawing.Point(920, 287);
+            undoButton.Text = "Undo";
+            undoButton.Click += editorController.undoLastChange_Click;
+
+            clearButton = new Button();
+            clearButton.Size = new System.Drawing.Size(100, 25);
+            clearButton.Location = new System.Drawing.Point(920, 337);
+            clearButton.Text = "Clear";
+            clearButton.Click += editorController.clearAll_Click;
+
+            staticObstacle = new PictureBox();
+            //staticObstacle.AllowDrop = true;
+            staticObstacle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            staticObstacle.Image = Resources.IconTC;
+            staticObstacle.Location = new System.Drawing.Point(920, 87);
+            staticObstacle.Name = "staticObstacle";
+            staticObstacle.Size = new System.Drawing.Size(40, 40);
+            staticObstacle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            staticObstacle.TabIndex = 999;
+            staticObstacle.TabStop = false;
+            staticObstacle.MouseDown += editorController.updateMousePosition;
+            staticObstacle.MouseMove += editorController.updateDragPosition;
+            staticObstacle.MouseUp += editorController.StaticObstacle_MouseUp;
+
+            explodingObstacle = new PictureBox();
+            explodingObstacle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            explodingObstacle.Image = Resources.IconCar;
+            explodingObstacle.Location = new System.Drawing.Point(920, 137);
+            explodingObstacle.Name = "explodingObstacle";
+            explodingObstacle.Size = new System.Drawing.Size(40, 40);
+            explodingObstacle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            explodingObstacle.TabIndex = 999;
+            explodingObstacle.TabStop = false;
+            explodingObstacle.MouseDown += editorController.updateMousePosition;
+            explodingObstacle.MouseMove += editorController.updateDragPosition;
+            explodingObstacle.MouseUp += editorController.ExplodingObstacle_MouseUp;
+
+            movingExplodingObstacle = new PictureBox();
+            movingExplodingObstacle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            movingExplodingObstacle.Image = Resources.IconBike;
+            movingExplodingObstacle.Location = new System.Drawing.Point(920, 187);
+            movingExplodingObstacle.Name = "movingExplodingObstacle";
+            movingExplodingObstacle.Size = new System.Drawing.Size(40, 40);
+            movingExplodingObstacle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            movingExplodingObstacle.TabIndex = 999;
+            movingExplodingObstacle.TabStop = false;
+            movingExplodingObstacle.MouseDown += editorController.updateMousePosition;
+            movingExplodingObstacle.MouseMove += editorController.updateDragPosition;
+            movingExplodingObstacle.MouseUp += editorController.MovingExplodingObstacle_MouseUp;
+
+            slowingObstacle = new PictureBox();
+            slowingObstacle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            slowingObstacle.Image = Resources.IconES;
+            slowingObstacle.Location = new System.Drawing.Point(920, 237);
+            slowingObstacle.Name = "slowingObstacle";
+            slowingObstacle.Size = new System.Drawing.Size(40, 40);
+            slowingObstacle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            slowingObstacle.TabIndex = 999;
+            slowingObstacle.TabStop = false;
+            slowingObstacle.MouseDown += editorController.updateMousePosition;
+            slowingObstacle.MouseMove += editorController.updateDragPosition;
+            slowingObstacle.MouseUp += editorController.SlowingObstacle_MouseUp;
+
+            gameWindow.Controls.Add(staticObstacle);
+            gameWindow.Controls.Add(explodingObstacle);
+            gameWindow.Controls.Add(movingExplodingObstacle);
+            gameWindow.Controls.Add(slowingObstacle);
+            gameWindow.Controls.Add(gamePanel);
+            gameWindow.Controls.Add(goBack);
+            gameWindow.Controls.Add(playLevel);
+            gameWindow.Controls.Add(undoButton);
+            gameWindow.Controls.Add(clearButton);
+            gameWindow.Controls.Add(dragDropLabel);
         }
     }
 }
