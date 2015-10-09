@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A02B275D-4876-40CD-A7DA-1AFBCA0167A5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WindesHeim_Game</RootNamespace>
+    <AssemblyName>WindesHeim Game</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Checkpoint.cs" />
+    <Compile Include="Controllers.cs" />
+    <Compile Include="ExplodingObstacle.cs" />
+    <Compile Include="Explosion.cs" />
+    <Compile Include="Models.cs" />
+    <Compile Include="MovingExplodingObstacle.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="GameWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameWindow.Designer.cs">
+      <DependentUpon>GameWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Obstacle.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlowingObstacle.cs" />
+    <Compile Include="StaticObstacle.cs" />
+    <Compile Include="XMLParser.cs" />
+    <EmbeddedResource Include="GameWindow.resx">
+      <DependentUpon>GameWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="resources\ufonts.com_sheriff-roman.ttf" />
+    <None Include="resources\ufonts.com_transitfront-negativ.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\UpOnClick.png" />
+    <None Include="resources\RightOnClick.png" />
+    <None Include="resources\Up.png" />
+    <None Include="resources\soundEditedOnHover.png" />
+    <None Include="resources\soundEdited1.png" />
+    <None Include="resources\soundEdited.png" />
+    <None Include="resources\Right.png" />
+    <None Include="resources\restartEditedOnHover.png" />
+    <None Include="resources\restartEdited.png" />
+    <None Include="resources\bikeEdited.png" />
+    <None Include="resources\carEdited.png" />
+    <None Include="resources\ConceptTransparentBackgroundSmall.png" />
+    <None Include="resources\Down.png" />
+    <None Include="resources\EXPLODE.wav" />
+    <None Include="resources\DownOnClick.png" />
+    <None Include="resources\CARHORN.wav" />
+    <Content Include="resources\explosion.png" />
+    <Content Include="resources\IconBike.png" />
+    <Content Include="resources\IconCar.png" />
+    <Content Include="resources\IconES.png" />
+    <None Include="resources\IconESEdited.png" />
+    <None Include="resources\IconSP.png" />
+    <Content Include="resources\IconTC.png" />
+    <None Include="resources\Left.png" />
+    <None Include="resources\menuEdited.png" />
+    <None Include="resources\menuEditedOnHover.png" />
+    <None Include="resources\muteEdited.png" />
+    <None Include="resources\muteEditedOnHover.png" />
+    <None Include="resources\IconWIN.png" />
+    <None Include="resources\IconTCEdited.png" />
+    <None Include="resources\LeftOnClick.png" />
+    <Content Include="resources\menuBackground.png" />
+    <Content Include="resources\Player.png" />
+    <None Include="resources\playerEdited.png" />
+    <None Include="resources\playerEdited1.png" />
+    <Content Include="resources\PlayerLeft.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
