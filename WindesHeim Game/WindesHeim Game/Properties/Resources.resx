@@ -214,4 +214,19 @@
   <data name="IconWIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\iconwin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DownOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\DownOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LeftOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\LeftOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RightOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\RightOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UpOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\UpOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconWINico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconWINico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

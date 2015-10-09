@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game
 {
@@ -67,6 +68,36 @@ namespace WindesHeim_Game
         public override string ToString()
         {
             return gameProperties.title;
+        }
+
+        public List<GameObject> getCleanGameObjects()
+        {
+            List<GameObject> returnList = new List<GameObject>();
+
+            //Hardcoded start en eindpunt toevoegen aan level
+            returnList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+            returnList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
+
+            foreach (GameObject gameObject in gameObjects)
+            {
+                if (gameObject is ExplodingObstacle)
+                {
+                    returnList.Add(new ExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                }
+                else if (gameObject is MovingExplodingObstacle)
+                {
+                    returnList.Add(new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                }
+                else if (gameObject is StaticObstacle)
+                {
+                    returnList.Add(new StaticObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                }
+                else if (gameObject is SlowingObstacle)
+                {
+                    returnList.Add(new SlowingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                }
+            }
+            return returnList;
         }
 
         //Laad alle levels en stopt deze in de static property Levels
@@ -137,6 +168,10 @@ namespace WindesHeim_Game
             }
             //Sorteert highscores op volgorde van behaalde score
             gameHighscores = gameHighscores.OrderBy(highscore => highscore.score).ToList();
+
+            //Hardcoded start en eindpunt toevoegen aan level
+            gameObjects.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+            gameObjects.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
 
             //Voegt alle gameObjecten toe in een List
             foreach (var gameObject in items)
