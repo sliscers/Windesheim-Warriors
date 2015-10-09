@@ -170,7 +170,8 @@ namespace WindesHeim_Game
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
 
-        private Boolean mute = false;
+        
+        
 
         //INITIALISATIES CONTROLS
         //START OBSTACLEPANEL
@@ -272,7 +273,7 @@ namespace WindesHeim_Game
         //START ACTION PANEL       
         private System.Windows.Forms.Panel actionPanel = new Panel();
 
-        private System.Windows.Forms.PictureBox pbIconSound = new PictureBox();
+        public System.Windows.Forms.PictureBox pbIconSound = new PictureBox();
         private System.Windows.Forms.PictureBox pbIconRestart = new PictureBox();
         private System.Windows.Forms.PictureBox pbIconMenu = new PictureBox();
         //STOP ACTION PANEL
@@ -778,16 +779,16 @@ namespace WindesHeim_Game
             this.actionPanel.TabIndex = 3;
 
             //Picturebox Action Sound
-            this.pbIconSound.BackgroundImage = global::WindesHeim_Game.Properties.Resources.soundEdited1;
+            this.pbIconSound.BackgroundImage = global::WindesHeim_Game.Properties.Resources.soundEdited;
             this.pbIconSound.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pbIconSound.Location = new System.Drawing.Point(34, 22);
             this.pbIconSound.Name = "pbIconSound";
             this.pbIconSound.Size = new System.Drawing.Size(50, 50);
             this.pbIconSound.TabIndex = 6;
             this.pbIconSound.TabStop = false;
-            this.pbIconSound.Click += new System.EventHandler(this.pbIconSound_Click);
-            this.pbIconSound.MouseEnter += new System.EventHandler(this.SoundHoverEnter);
-            this.pbIconSound.MouseLeave += new System.EventHandler(this.SoundHoverLeave);
+            this.pbIconSound.Click += new System.EventHandler(gameController.pbIconSound_Click);
+            this.pbIconSound.MouseEnter += new System.EventHandler(gameController.SoundHoverEnter);
+            this.pbIconSound.MouseLeave += new System.EventHandler(gameController.SoundHoverLeave);
 
             //Picturebox Action Restart
             this.pbIconRestart.BackgroundImage = global::WindesHeim_Game.Properties.Resources.restartEdited;
@@ -864,19 +865,7 @@ namespace WindesHeim_Game
             this.lblCharacterSpeedTitle.Font = windesheimTransitFont;
         }
 
-        private void pbIconSound_Click(object sender, EventArgs e)
-        {
-            if (mute)
-            {
-                pbIconSound.BackgroundImage = Resources.muteEditedOnHover;
-                mute = false;
-            }
-            else
-            {
-                pbIconSound.BackgroundImage = Resources.soundEditedOnHover;
-                mute = true;
-            }
-        }
+        
 
         private void RestartHoverEnter(object sender, EventArgs e)
         {
@@ -898,34 +887,7 @@ namespace WindesHeim_Game
             pbIconMenu.BackgroundImage = Resources.menuEditedOnHover;
         }
 
-        private void SoundHoverLeave(object sender, EventArgs e)
-        {
-            if (mute)
-            {
-                pbIconSound.BackgroundImage = Resources.soundEdited1;
-
-                mute = false;
-            }
-            else
-            {
-                pbIconSound.BackgroundImage = Resources.muteEdited;
-                mute = true;
-            }
-        }
-
-        private void SoundHoverEnter(object sender, EventArgs e)
-        {
-            if (mute)
-            {
-                pbIconSound.BackgroundImage = Resources.muteEditedOnHover;
-                mute = false;
-            }
-            else
-            {
-                pbIconSound.BackgroundImage = Resources.soundEditedOnHover;
-                mute = true;
-            }
-        }
+        
 
 
         public List<GameObject> GameObjects

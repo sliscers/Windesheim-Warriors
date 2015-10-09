@@ -64,8 +64,10 @@ namespace WindesHeim_Game
 
     public class ControllerGame : Controller
     {
+        public Boolean mute = false;
         // Timer voor de gameloop
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        System.Media.SoundPlayer player = new System.Media.SoundPlayer(Resources.EXPLODE);
 
         private bool pressedLeft = false;
         private bool pressedRight = false;
@@ -74,6 +76,7 @@ namespace WindesHeim_Game
         private bool pressedSpeed = false;
         private Obstacle closestObstacle = null;
         private Obstacle nextClosestObstacle = null;
+
 
         public void RestartClicked(object sender, MouseEventArgs e)
         {
@@ -88,7 +91,9 @@ namespace WindesHeim_Game
 
         public void MenuClicked(object sender, MouseEventArgs e)
         {
-
+            ModelGame mg = (ModelGame)model;
+            mg.player.Location = new Point(0, 0);
+            mg.InitializeField();
             gameWindow.setController(ScreenStates.menu);
 
         }
@@ -105,10 +110,72 @@ namespace WindesHeim_Game
         {
             ProcessUserInput();
             ProcessObstacles();
+            MuteSound();
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
             GetClosestObstacle();
             UpdateObstacleLabels(closestObstacle, nextClosestObstacle);
+        }
+
+
+        public void MuteSound()
+        {
+            if (mute)
+            {
+                player.Stop();
+            }
+        }
+
+
+
+
+        public void pbIconSound_Click(object sender, EventArgs e)
+        {
+            ModelGame mg = (ModelGame)model;
+
+            if (mute)
+            {
+                mg.pbIconSound.BackgroundImage = Resources.soundEditedOnHover;
+                mute = false;
+
+            }
+            else
+            {
+                mg.pbIconSound.BackgroundImage = Resources.muteEditedOnHover;
+                mute = true;
+            }
+        }
+
+
+        public void SoundHoverLeave(object sender, EventArgs e)
+        {
+            ModelGame mg = (ModelGame)model;
+            if (mute)
+            {
+                mg.pbIconSound.BackgroundImage = Resources.muteEdited;
+
+
+            }
+            else
+            {
+                mg.pbIconSound.BackgroundImage = Resources.soundEdited;
+
+            }
+        }
+
+        public void SoundHoverEnter(object sender, EventArgs e)
+        {
+            ModelGame mg = (ModelGame)model;
+            if (mute)
+            {
+                mg.pbIconSound.BackgroundImage = Resources.muteEditedOnHover;
+
+            }
+            else
+            {
+                mg.pbIconSound.BackgroundImage = Resources.soundEditedOnHover;
+
+            }
         }
 
         private void ProcessUserInput()
@@ -271,7 +338,7 @@ namespace WindesHeim_Game
         private void ProcessObstacles()
         {
             ModelGame mg = (ModelGame)model;
-
+            
             // We moeten een 2e array maken om door heen te loopen
             // Er is kans dat we de array door lopen en ook tegelijkertijd een explosie toevoegen
             // We voegen dan als het ware iets toe en lezen tegelijk, dit mag niet
@@ -412,8 +479,10 @@ namespace WindesHeim_Game
                         case 1:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
                             gameObject.FadeSmall();
-                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(Resources.EXPLODE);
-                            player.Play();
+                            if (!mute)
+                            {
+                                player.Play();
+                            }
                             break;
                         case 2:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FC1212");
@@ -526,12 +595,12 @@ namespace WindesHeim_Game
             if (e.KeyCode == Keys.A)
             {
                 pressedLeft = true;
-                mg.player.ObjectImage = Resources.PlayerLeft;
+                    mg.player.ObjectImage = Resources.PlayerLeft;
             }
             if (e.KeyCode == Keys.D)
             {
                 pressedRight = true;
-                mg.player.ObjectImage = Resources.Player;
+                    mg.player.ObjectImage = Resources.Player;
             }
             if (e.KeyCode == Keys.Space)
             {
@@ -578,8 +647,9 @@ namespace WindesHeim_Game
             timer.Stop();
         }
 
-
       
+        
+
     }
     public class ControllerLevelSelect : Controller
     {

@@ -86,20 +86,19 @@ namespace WindesHeim_Game
         }
 
         public void ProcessCollision(GameObject gameObject) {
-            string side = "none";
+            
 
             if (this.location.Y == gameObject.Location.Y + Height
                 && (this.Location.X <= gameObject.Location.X && this.Location.X + this.Width >= gameObject.Location.X
                 || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-                side = "top";
-                Location = new Point(Location.X, Location.Y + 1);
+               Location = new Point(Location.X, Location.Y + 1);
                 //ProcessCollision(gameObject);
             }
 
             if(this.Location.Y + this.Height == gameObject.Location.Y
                 && (this.Location.X + this.Width >= gameObject.Location.X && this.Location.X <= gameObject.Location.X
                 || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-                side = "bottom";
+               
                 Location = new Point(Location.X, Location.Y - 1);
                 //ProcessCollision(gameObject);
             }
@@ -107,7 +106,7 @@ namespace WindesHeim_Game
             if(this.location.X == gameObject.Location.X + gameObject.Width
                 && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
                 || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
-                side = "left";
+                
                 Location = new Point(Location.X + 1, Location.Y);
                 //ProcessCollision(gameObject);
             }
@@ -117,7 +116,7 @@ namespace WindesHeim_Game
                 || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
                 Location = new Point(Location.X - 1, Location.Y);
                 //ProcessCollision(gameObject);
-                side = "right";
+             
             }
         }
 
