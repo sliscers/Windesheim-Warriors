@@ -95,6 +95,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\UpOnClick.png" />
+    <None Include="resources\RightOnClick.png" />
     <None Include="resources\Up.png" />
     <None Include="resources\soundEditedOnHover.png" />
     <None Include="resources\soundEdited1.png" />
@@ -107,6 +109,7 @@
     <None Include="resources\ConceptTransparentBackgroundSmall.png" />
     <None Include="resources\Down.png" />
     <None Include="resources\EXPLODE.wav" />
+    <None Include="resources\DownOnClick.png" />
     <Content Include="resources\explosion.png" />
     <Content Include="resources\IconBike.png" />
     <Content Include="resources\IconCar.png" />
@@ -121,6 +124,7 @@
     <None Include="resources\muteEditedOnHover.png" />
     <None Include="resources\IconWIN.png" />
     <None Include="resources\IconTCEdited.png" />
+    <None Include="resources\LeftOnClick.png" />
     <Content Include="resources\menuBackground.png" />
     <Content Include="resources\Player.png" />
     <None Include="resources\playerEdited.png" />

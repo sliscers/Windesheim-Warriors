@@ -262,10 +262,10 @@ namespace WindesHeim_Game
         //START CONTROL PANEL
         private System.Windows.Forms.Panel controlPanel = new Panel();
 
-        private System.Windows.Forms.PictureBox btnUp = new PictureBox();
-        private System.Windows.Forms.PictureBox btnDown = new PictureBox();
-        private System.Windows.Forms.PictureBox btnLeft = new PictureBox();
-        private System.Windows.Forms.PictureBox btnRight = new PictureBox();
+        public System.Windows.Forms.PictureBox btnUp = new PictureBox();
+        public System.Windows.Forms.PictureBox btnDown = new PictureBox();
+        public System.Windows.Forms.PictureBox btnLeft = new PictureBox();
+        public System.Windows.Forms.PictureBox btnRight = new PictureBox();
         //STOP CONTROL PANEL
 
 

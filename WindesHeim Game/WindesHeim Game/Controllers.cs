@@ -72,7 +72,6 @@ namespace WindesHeim_Game
         private bool pressedUp = false;
         private bool pressedDown = false;
         private bool pressedSpeed = false;
-        private int counter;
         private Obstacle closestObstacle = null;
         private Obstacle nextClosestObstacle = null;
 
@@ -80,7 +79,7 @@ namespace WindesHeim_Game
         {
             ModelGame mg = (ModelGame)model;
             timer.Stop();
-          
+
             mg.player.Location = new Point(0, 0);
             UpdatePlayerPosition();
             mg.InitializeField();
@@ -89,7 +88,7 @@ namespace WindesHeim_Game
 
         public void MenuClicked(object sender, MouseEventArgs e)
         {
-           
+
             gameWindow.setController(ScreenStates.menu);
 
         }
@@ -137,17 +136,19 @@ namespace WindesHeim_Game
 
             if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
                 UpdatePlayerPosition();
             }
             if (pressedUp && mg.player.Location.Y >= mg.graphicsPanel.Location.Y)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
                 UpdatePlayerPosition();
             }
             if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X)
             {
-                mg.btnLeft.BackgroundImage = global::WindesHeim_Game.Properties.Resources.LeftOnClick;
+
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
                 UpdatePlayerPosition();
             }
@@ -156,6 +157,39 @@ namespace WindesHeim_Game
 
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
                 UpdatePlayerPosition();
+            }
+
+            if (pressedRight)
+            {
+                mg.btnRight.BackgroundImage = Resources.RightOnClick;
+            }
+            if (pressedLeft)
+            {
+                mg.btnLeft.BackgroundImage = Resources.LeftOnClick;
+            }
+            if (pressedUp)
+            {
+                mg.btnUp.BackgroundImage = Resources.UpOnClick;
+            }
+            if (pressedDown)
+            {
+                mg.btnDown.BackgroundImage = Resources.DownOnClick;
+            }
+            if (pressedRight == false)
+            {
+                mg.btnRight.BackgroundImage = Resources.Right;
+            }
+            if (pressedLeft == false)
+            {
+                mg.btnLeft.BackgroundImage = Resources.Left;
+            }
+            if (pressedUp == false)
+            {
+                mg.btnUp.BackgroundImage = Resources.Up;
+            }
+            if (pressedDown == false)
+            {
+                mg.btnDown.BackgroundImage = Resources.Down;
             }
 
         }
@@ -543,8 +577,10 @@ namespace WindesHeim_Game
         {
             timer.Stop();
         }
-    }
 
+
+      
+    }
     public class ControllerLevelSelect : Controller
     {
         private XMLParser currentSelectedLevel;
