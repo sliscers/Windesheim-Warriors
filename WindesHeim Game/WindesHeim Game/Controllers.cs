@@ -108,6 +108,7 @@ namespace WindesHeim_Game
 
         private void GameLoop(object sender, EventArgs e)
         {
+            
             ProcessUserInput();
             ProcessObstacles();
             MuteSound();
@@ -671,13 +672,14 @@ namespace WindesHeim_Game
         public void playLevel_Click(object sender, EventArgs e)
         {
             ModelGame.level = currentSelectedLevel;
-            gameWindow.setController(ScreenStates.game);
+            
 
             //Workaround om focus conflict met windows forms en buttons op te lossen
             modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.playLevel);
             modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.goBack);
             modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.listBoxLevels);
 
+            gameWindow.setController(ScreenStates.game);
         }
 
         public void level_Select(object sender, EventArgs e)
