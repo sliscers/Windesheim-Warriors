@@ -5,6 +5,11 @@ WindesHeim Game/WindesHeim Game/Debug/
 WindesHeim Game/WindesHeim Game/Release/
 WindesHeim Game/.vs/
 
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
 #INSTRUCTIES
 #Je hoeft niks te doen
 # git rm . -r --cached
