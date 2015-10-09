@@ -58,7 +58,7 @@ namespace WindesHeim_Game
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
-            //this.Icon = global::WindesHeim_Game.Properties.Resources.IconWIN;
+            this.Icon = global::WindesHeim_Game.Properties.Resources.IconWINico;
             this.ResumeLayout(false);
 
             this.setController(ScreenStates.menu);

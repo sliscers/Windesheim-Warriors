@@ -125,6 +125,7 @@
     <None Include="resources\IconWIN.png" />
     <None Include="resources\IconTCEdited.png" />
     <None Include="resources\LeftOnClick.png" />
+    <None Include="resources\IconWINico.ico" />
     <Content Include="resources\menuBackground.png" />
     <Content Include="resources\Player.png" />
     <None Include="resources\playerEdited.png" />
