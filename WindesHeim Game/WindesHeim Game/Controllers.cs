@@ -147,11 +147,13 @@ namespace WindesHeim_Game
             }
             if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X)
             {
+                mg.btnLeft.BackgroundImage = global::WindesHeim_Game.Properties.Resources.LeftOnClick;
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
                 UpdatePlayerPosition();
             }
             if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
                 UpdatePlayerPosition();
             }
