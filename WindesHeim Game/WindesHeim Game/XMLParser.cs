@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game
 {
@@ -54,9 +57,61 @@ namespace WindesHeim_Game
         public List<GameObject> gameObjects;
         public List<GameHighscores> gameHighscores;
 
+        //Lijst met ingeladen levels
+        public static List<XMLParser> Levels { get; set; } = new List<XMLParser>();
+
         public XMLParser(String path)
         {
             this.path = path;
+        }
+
+        public override string ToString()
+        {
+            return gameProperties.title;
+        }
+
+        public List<GameObject> getCleanGameObjects()
+        {
+            List<GameObject> returnList = new List<GameObject>();
+
+            //Hardcoded start en eindpunt toevoegen aan level
+            returnList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+            returnList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
+
+            foreach (GameObject gameObject in gameObjects)
+            {
+                if (gameObject is ExplodingObstacle)
+                {
+                    returnList.Add(new ExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                }
+                else if (gameObject is MovingExplodingObstacle)
+                {
+                    returnList.Add(new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                }
+                else if (gameObject is StaticObstacle)
+                {
+                    returnList.Add(new StaticObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                }
+                else if (gameObject is SlowingObstacle)
+                {
+                    returnList.Add(new SlowingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                }
+            }
+            return returnList;
+        }
+
+        //Laad alle levels en stopt deze in de static property Levels
+        //Belangerijk om deze eerst aan te roepen voordat je de static property gebruikt via XMLParser.Levels
+        public static void LoadAllLevels()
+        {
+            Levels.Clear();
+            string[] fileEntries = Directory.GetFiles("../levels/");
+            foreach (string file in fileEntries)
+            {
+                XMLParser xml = new XMLParser(file);
+                xml.ReadXML();
+                Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+            }
         }
 
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
@@ -92,11 +147,13 @@ namespace WindesHeim_Game
                             Type = r.Element("type").Value,
                             //Directe conversie naar int omdat deze ook zo wordt weggeschreven
                             X = Int32.Parse(r.Element("x").Value),
-                            Y = Int32.Parse(r.Element("y").Value)//,
-                            //Hieronder volgen dynamische gegevens en is vaak null, hier moet ik nog verder naar kijken ~jonathan
-                            //Movingspeed = Int32.Parse(r.Element("movingspeed").Value),
-                            //Slowdown = Int32.Parse(r.Element("slowdown").Value)
-                        };
+                            Y = Int32.Parse(r.Element("y").Value),
+                            Height = Int32.Parse(r.Element("height").Value),
+                            Width = Int32.Parse(r.Element("width").Value),
+                            //If statements voor dynamische gegevens in xml <object>
+                            Movingspeed = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("movingspeed").Value): 0,
+                            Slowdown = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("slowdown").Value): 0
+                       };
             //Voegt de gameproperties toe aan de variable gameProperties
             foreach (var property in lproperties)
             {
@@ -104,37 +161,41 @@ namespace WindesHeim_Game
             }
 
             //Voegt alle highscores toe in een List
+            highscores.OrderBy(o => o.Score);
             foreach (var highscore in highscores)
             {
                 gameHighscores.Add(new GameHighscores(highscore.Name, highscore.DateTime, highscore.Score));
             }
+            //Sorteert highscores op volgorde van behaalde score
+            gameHighscores = gameHighscores.OrderBy(highscore => highscore.score).ToList();
+
+            //Hardcoded start en eindpunt toevoegen aan level
+            gameObjects.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
+            gameObjects.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
 
             //Voegt alle gameObjecten toe in een List
             foreach (var gameObject in items)
             {
                     switch (gameObject.Type)
                     {
-                        case "Player":
-                            //gameObjects.Add(new Player(new Point(gameObject.X, gameObject.Y)));
-                        break;
 
                         case "ExplodingObstacle":
-                            //gameObjects.Add(new ExplodingObstacle(new Point(20, 20), "../Player.png"));
+                            gameObjects.Add(new ExplodingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width));
                         break;
 
-                        case "FollowingObstacle":
-                            //gameObjects.Add(new FollowingObstacle(new Point(20, 20), "../Player.png"));
+                        case "MovingExplodingObstacle":
+                            gameObjects.Add(new MovingExplodingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width));
                         break;
 
                         case "StaticObstacle":
-                            //gameObjects.Add(new StaticObstacle(new Point(20, 20), "../Player.png"));
+                            gameObjects.Add(new StaticObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width));
                         break;
 
                         case "SlowingObstacle":
-                            //SlowingObstacle sb = new SlowingObstacle(new Point(20, 20))
-                            //sb.MovingSpeed = 10;                       
+                            SlowingObstacle sb = new SlowingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width);
+                            //sb.MovingSpeed = 10;                                                
 
-                            //gameObjects.Add(sb);
+                            gameObjects.Add(sb);
                         break;
                 }
                 
@@ -178,11 +239,7 @@ namespace WindesHeim_Game
                 xmlWriter.WriteStartElement("object");
 
                 string gameObjectType = "";
-                if (gameObject is Player)
-                {
-                    gameObjectType = "Player";
-                }
-                else if (gameObject is ExplodingObstacle)
+                if (gameObject is ExplodingObstacle)
                 {
                     gameObjectType = "ExplodingObstacle";
                 }
@@ -208,6 +265,14 @@ namespace WindesHeim_Game
 
                 xmlWriter.WriteStartElement("y"); 
                 xmlWriter.WriteValue(gameObject); //Y positie
+                xmlWriter.WriteEndElement();
+
+                xmlWriter.WriteStartElement("height");
+                xmlWriter.WriteValue(gameObject); //Hoogte
+                xmlWriter.WriteEndElement();
+
+                xmlWriter.WriteStartElement("width");
+                xmlWriter.WriteValue(gameObject); //Breedte
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteEndElement();

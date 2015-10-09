@@ -13,7 +13,14 @@ namespace WindesHeim_Game {
         public SlowingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ObjectImage = Resources.IconES;
-            base.collisionSize = 75;
+           
+            base.Name = "Eerstejaars studenten";
+            base.Description = "Volgt character en vertraagt";
+            base.CollisionX = 10;
+            base.CollisionY = 10;
+            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.IconESEdited;
         }
+
+
     }
 }

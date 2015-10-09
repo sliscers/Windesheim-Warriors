@@ -14,6 +14,9 @@ namespace WindesHeim_Game {
         {
             base.ObjectImage = Resources.IconBike;
             base.collisionSize = 50;
-        } 
+            base.Name = "Fietser";
+            base.Description = "Volgt character en ontploft";
+            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.bikeEdited;
+        }
     }
 }

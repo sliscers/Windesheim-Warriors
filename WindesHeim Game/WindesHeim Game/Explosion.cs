@@ -13,7 +13,7 @@ namespace WindesHeim_Game {
 
         private DateTime timeStamp = DateTime.Now;
 
-        public Explosion(Point location, int height, int width) : base(location, width, height)
+        public Explosion(Point location, int height, int width) : base(location, height, width)
         {
             base.ObjectImage = Resources.explosion;
 

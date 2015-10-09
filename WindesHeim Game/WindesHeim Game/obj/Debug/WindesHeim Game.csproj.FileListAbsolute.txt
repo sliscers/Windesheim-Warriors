@@ -1,6 +1,3 @@
-C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
-C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
-C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
 C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
 C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
 C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
@@ -10,29 +7,6 @@ C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim
 C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.GameWindow.resources
 C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.Properties.Resources.resources
 C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
-C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csprojResolveAssemblyReference.cache
-C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.GameWindow.resources
-C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.Properties.Resources.resources
-C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
-C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
-C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe
-C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.pdb
-C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
-C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
-C:\Users\Sliscers\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
-C:\Users\Sliscers\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe
-C:\Users\Sliscers\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.pdb
-C:\Users\Sliscers\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.GameWindow.resources
-C:\Users\Sliscers\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.Properties.Resources.resources
-C:\Users\Sliscers\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
-C:\Users\Sliscers\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
-C:\Users\Sliscers\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
-C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe
-C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.pdb
-C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csprojResolveAssemblyReference.cache
-C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.GameWindow.resources
-C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.Properties.Resources.resources
-C:\Users\jonat\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
 C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
 C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
 C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb

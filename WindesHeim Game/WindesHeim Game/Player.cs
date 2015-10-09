@@ -10,7 +10,6 @@ namespace WindesHeim_Game
 {
     public class Player : GameObject
     {
-        private int lives;
         private const int originalSpeed = 4;
         private int speed = originalSpeed;
         private int speedDuration = 0;
@@ -18,7 +17,7 @@ namespace WindesHeim_Game
 
         public Player(Point location, int height, int width) : base (location, height, width)
         {
-            base.ObjectImage = Resources.Player;    
+            base.ObjectImage = Resources.Player;
         }
 
         public int Speed
