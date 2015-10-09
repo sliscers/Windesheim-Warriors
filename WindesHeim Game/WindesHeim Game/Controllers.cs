@@ -395,7 +395,7 @@ namespace WindesHeim_Game
 
                     if (mg.player.CollidesWith(gameObstacle))
                     {
-                        mg.player.Speed = mg.player.OriginalSpeed / 2;
+                        mg.player.Speed = gameObstacle.SlowingSpeed;
                         UpdatePlayerSpeed("Langzaam");
                     }
                     else
