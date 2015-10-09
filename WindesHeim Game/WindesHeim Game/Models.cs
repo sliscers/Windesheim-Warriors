@@ -63,7 +63,7 @@ namespace WindesHeim_Game
 
             windesheimFontFamilyTransit = pfc.Families[0];
             windesheimTransitFont = new Font(windesheimFontFamilyTransit, 11f, FontStyle.Regular);
-    }
+        }
 
         private void SetWindesheimFontSheriff()
         {
@@ -126,18 +126,13 @@ namespace WindesHeim_Game
             this.editor.Location = new System.Drawing.Point(0, 60);
             this.editor.Size = new System.Drawing.Size(304, 44);
             this.editor.TabIndex = 1;
+            this.editor.Click += new EventHandler(menuController.editor_Click);
 
             this.highscore.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\highscoresButton.png");
             this.highscore.Location = new System.Drawing.Point(0, 120);
             this.highscore.Size = new System.Drawing.Size(304, 44);
             this.highscore.TabIndex = 2;
             this.highscore.Click += new EventHandler(menuController.highscore_Click);
-
-            this.tempPlay.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\playButton.png");
-            this.tempPlay.Location = new System.Drawing.Point(0, 180);
-            this.tempPlay.Size = new System.Drawing.Size(304, 44);
-            this.tempPlay.TabIndex = 3;
-            this.tempPlay.Click += new EventHandler(menuController.button_Click);
 
             menuPanel = new Panel();
             menuPanel.AutoSize = true;
@@ -147,7 +142,6 @@ namespace WindesHeim_Game
             menuPanel.Controls.Add(play);
             menuPanel.Controls.Add(editor);
             menuPanel.Controls.Add(highscore);
-            menuPanel.Controls.Add(tempPlay);
 
 
             System.Console.WriteLine(gameWindow.Width);
@@ -163,11 +157,11 @@ namespace WindesHeim_Game
         private ControllerGame gameController;
 
         //XML Gegevens van level worden hierin meeggegeven
-        public static XMLParser level; 
+        public static XMLParser level;
 
         // Houdt alle dynamische gameobjecten vast
         private List<GameObject> gameObjects = new List<GameObject>();
-        
+
         // Er is maar 1 speler
         public Player player = new Player(new Point(10, 10), 40, 40);
 
@@ -268,10 +262,10 @@ namespace WindesHeim_Game
         //START CONTROL PANEL
         private System.Windows.Forms.Panel controlPanel = new Panel();
 
-        private System.Windows.Forms.PictureBox btnUp = new PictureBox();
-        private System.Windows.Forms.PictureBox btnDown = new PictureBox();
-        private System.Windows.Forms.PictureBox btnLeft = new PictureBox();
-        private System.Windows.Forms.PictureBox btnRight = new PictureBox();
+        public System.Windows.Forms.PictureBox btnUp = new PictureBox();
+        public System.Windows.Forms.PictureBox btnDown = new PictureBox();
+        public System.Windows.Forms.PictureBox btnLeft = new PictureBox();
+        public System.Windows.Forms.PictureBox btnRight = new PictureBox();
         //STOP CONTROL PANEL
 
 
@@ -287,33 +281,12 @@ namespace WindesHeim_Game
         {
             this.gameController = controller;
         }
-            
+
         public void InitializeField()
         {
             gameObjects.Clear();
 
-            foreach (GameObject gameObject in level.gameObjects)
-            {
-                if(gameObject is ExplodingObstacle)
-                {
-                    gameObjects.Add(new ExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
-        }
-                if (gameObject is MovingExplodingObstacle)
-                {
-                    gameObjects.Add(new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
-                }
-                if (gameObject is StaticObstacle)
-                {
-                    gameObjects.Add(new StaticObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
-                }
-                if (gameObject is SlowingObstacle)
-                {
-                    gameObjects.Add(new SlowingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
-                }
-            }
-            gameObjects.Add(new Checkpoint(new Point(750, 400), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconWIN.png", 80, 80));
-            gameObjects.Add(new Checkpoint(new Point(5, -5), AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconSP.png", 80, 80));
-
+            gameObjects = level.getCleanGameObjects();           
         }
 
         public override void ControlsInit(Form gameWindow)
@@ -322,8 +295,6 @@ namespace WindesHeim_Game
             // Registreer key events voor de player
             gameWindow.KeyDown += gameController.OnKeyDownWASD;
             gameWindow.KeyUp += gameController.OnKeyUp;
-
-            Console.WriteLine("zuw hw q");
 
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
             graphicsPanel.BackColor = Color.LightGray;
@@ -827,6 +798,7 @@ namespace WindesHeim_Game
             this.pbIconRestart.TabIndex = 7;
             this.pbIconRestart.TabStop = false;
             this.pbIconRestart.MouseEnter += new System.EventHandler(this.RestartHoverEnter);
+            this.pbIconRestart.MouseClick += new System.Windows.Forms.MouseEventHandler(gameController.RestartClicked);
             this.pbIconRestart.MouseLeave += new System.EventHandler(this.RestartHoverLeave);
 
             //Picturebox Action Menu
@@ -838,6 +810,7 @@ namespace WindesHeim_Game
             this.pbIconMenu.TabIndex = 8;
             this.pbIconMenu.TabStop = false;
             this.pbIconMenu.MouseEnter += new System.EventHandler(this.MenuHoverEnter);
+            this.pbIconMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(gameController.MenuClicked);
             this.pbIconMenu.MouseLeave += new System.EventHandler(this.MenuHoverLeave);
             //STOP ACTION PANEL
 
@@ -890,7 +863,7 @@ namespace WindesHeim_Game
             this.lblCharacterSpeed.Font = windesheimTransitFont;
             this.lblCharacterSpeedTitle.Font = windesheimTransitFont;
         }
-        
+
         private void pbIconSound_Click(object sender, EventArgs e)
         {
             if (mute)
@@ -930,7 +903,7 @@ namespace WindesHeim_Game
             if (mute)
             {
                 pbIconSound.BackgroundImage = Resources.soundEdited1;
-                
+
                 mute = false;
             }
             else
@@ -969,7 +942,7 @@ namespace WindesHeim_Game
         private Label labelLevels;
         private Label labelLevelPreview;
         public Panel alignPanel;
-        private Panel gamePanel;
+        public Panel gamePanel;
 
         private ControllerLevelSelect levelSelectController;
 
@@ -980,7 +953,6 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            // HIER ONDER
             alignPanel = new Panel();
             alignPanel.AutoSize = true;
 
@@ -988,17 +960,19 @@ namespace WindesHeim_Game
             gamePanel.Location = new System.Drawing.Point(210, 40);
             gamePanel.Size = new System.Drawing.Size(845, 475);
             gamePanel.BackColor = Color.DarkGray;
+            gamePanel.Paint += levelSelectController.OnPreviewPaint;
 
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 475);
             listBoxLevels.Location = new System.Drawing.Point(0, 40);
 
-            foreach (XMLParser xml in levelSelectController.Levels)
+            XMLParser.LoadAllLevels();
+            foreach (XMLParser xml in XMLParser.Levels)
             {
                 listBoxLevels.Items.Add(xml);
             }
-
             listBoxLevels.SelectedIndexChanged += levelSelectController.level_Select;
+            listBoxLevels.SetSelected(0, true);
 
             labelLevels = new Label();
             labelLevels.Text = "Levels";
@@ -1038,7 +1012,6 @@ namespace WindesHeim_Game
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
             alignPanel.Anchor = AnchorStyles.None;
 
-            // HIER BOVEN
         }
     }
 
@@ -1047,7 +1020,7 @@ namespace WindesHeim_Game
         private ListBox listBoxLevels;
         private Button goBack;
         private Panel alignPanel;
-        private ListBox listBoxHighscores;
+        public ListBox listBoxHighscores;
         private Panel backgroundImage;
 
         private List<XMLParser> levels = new List<XMLParser>();
@@ -1072,31 +1045,20 @@ namespace WindesHeim_Game
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 200);
             listBoxLevels.Location = new System.Drawing.Point(0, 0);
+            listBoxLevels.SelectedIndexChanged += highscoresController.level_Select;
 
             listBoxHighscores = new ListBox();
             listBoxHighscores.Size = new System.Drawing.Size(200, 200);
             listBoxHighscores.Location = new System.Drawing.Point(200, 0);
 
-            string[] fileEntries = Directory.GetFiles("../levels/");
-            foreach (string file in fileEntries)
+            XMLParser.LoadAllLevels();
+            foreach (XMLParser xml in XMLParser.Levels)
             {
-                XMLParser xml = new XMLParser(file);
-                xml.ReadXML();
                 this.levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
-                listBoxLevels.Items.Add(xml.gameProperties.title);
-
-                xml.gameHighscores.OrderBy(o => o.score);
-
-                int i = 0;
-                foreach (GameHighscores highscore in xml.gameHighscores)
-                {
-                    i++;
-                    char[] a = highscore.name.ToCharArray();
-                    a[0] = char.ToUpper(a[0]);
-
-                    listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score);
-                }
+                listBoxLevels.Items.Add(xml);
             }
+            listBoxLevels.SetSelected(0, true);
+
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
             goBack.Location = new System.Drawing.Point(0, 210);
@@ -1113,6 +1075,226 @@ namespace WindesHeim_Game
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
             alignPanel.Anchor = AnchorStyles.None;
+        }
+    }
+
+    public class ModelEditorSelect : Model
+    {
+        public ListBox listBoxLevels;
+        public Button goBack;
+        public Button editLevel;
+        public Button newLevel;
+        private Label labelLevels;
+        private Label labelLevelPreview;
+        public Panel alignPanel;
+        public Panel gamePanel;
+
+        private ControllerEditorSelect editorSelectController;
+
+        public ModelEditorSelect(ControllerEditorSelect controller) : base(controller)
+        {
+            this.editorSelectController = controller;
+        }
+
+        public override void ControlsInit(Form gameWindow)
+        {
+            alignPanel = new Panel();
+            alignPanel.AutoSize = true;
+
+            gamePanel = new Panel();
+            gamePanel.Location = new System.Drawing.Point(210, 40);
+            gamePanel.Size = new System.Drawing.Size(845, 475);
+            gamePanel.BackColor = Color.DarkGray;
+            gamePanel.Paint += editorSelectController.OnPreviewPaint;
+
+            listBoxLevels = new ListBox();
+            listBoxLevels.Size = new System.Drawing.Size(200, 475);
+            listBoxLevels.Location = new System.Drawing.Point(0, 40);
+
+            XMLParser.LoadAllLevels();
+            foreach (XMLParser xml in XMLParser.Levels)
+            {
+                listBoxLevels.Items.Add(xml);
+            }
+
+            listBoxLevels.SelectedIndexChanged += editorSelectController.level_Select;
+            listBoxLevels.SetSelected(0, true);
+
+            labelLevels = new Label();
+            labelLevels.Text = "Levels";
+            labelLevels.Font = new Font("Arial", 20);
+            labelLevels.Location = new System.Drawing.Point(0, 0);
+            labelLevels.Size = new System.Drawing.Size(200, 30);
+            labelLevels.TextAlign = ContentAlignment.MiddleCenter;
+
+            labelLevelPreview = new Label();
+            labelLevelPreview.Text = "Level Preview";
+            labelLevelPreview.Font = new Font("Arial", 20);
+            labelLevelPreview.Location = new System.Drawing.Point(210, 0);
+            labelLevelPreview.Size = new System.Drawing.Size(845, 30);
+            labelLevelPreview.TextAlign = ContentAlignment.MiddleCenter;
+
+            goBack = new Button();
+            goBack.Size = new System.Drawing.Size(200, 25);
+            goBack.Location = new System.Drawing.Point(0, 525);
+            goBack.Text = "Go Back";
+            goBack.Click += editorSelectController.goBack_Click;
+
+            editLevel = new Button();
+            editLevel.Size = new System.Drawing.Size(422, 25);
+            editLevel.Location = new System.Drawing.Point(210, 525);
+            editLevel.Text = "Edit Level";
+            editLevel.Click += editorSelectController.editLevel_Click;
+
+            newLevel = new Button();
+            newLevel.Size = new System.Drawing.Size(422, 25);
+            newLevel.Location = new System.Drawing.Point(632, 525);
+            newLevel.Text = "New Level";
+            newLevel.Click += editorSelectController.newLevel_Click;
+
+            gameWindow.Controls.Add(alignPanel);
+            alignPanel.Controls.Add(labelLevels);
+            alignPanel.Controls.Add(labelLevelPreview);
+            alignPanel.Controls.Add(goBack);
+            alignPanel.Controls.Add(editLevel);
+            alignPanel.Controls.Add(newLevel);
+            alignPanel.Controls.Add(listBoxLevels);
+            alignPanel.Controls.Add(gamePanel);
+            alignPanel.Location = new Point(
+                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
+            alignPanel.Anchor = AnchorStyles.None;
+
+        }
+    }
+
+    public class ModelEditor : Model
+    {
+        public ListBox listBoxLevels;
+        public Button goBack;
+        public Button playLevel;
+        public Button undoButton;
+        public Button clearButton;
+        public Panel alignPanel;
+        public Panel gamePanel;
+        public PictureBox staticObstacle;
+        public PictureBox explodingObstacle;
+        public PictureBox movingExplodingObstacle;
+        public PictureBox slowingObstacle;
+        private Label dragDropLabel;
+
+
+        //XML Gegevens van level worden hierin meeggegeven
+        public static XMLParser level;
+
+        private ControllerEditor editorController;
+
+        public ModelEditor(ControllerEditor controller) : base(controller)
+        {
+            this.editorController = controller;
+        }
+
+        public override void ControlsInit(Form gameWindow)
+        {
+            dragDropLabel = new Label();
+            dragDropLabel.Text = "Drag en drop";
+            dragDropLabel.Font = new Font("Arial", 12);
+            dragDropLabel.Location = new System.Drawing.Point(920, 50);
+            dragDropLabel.Size = new System.Drawing.Size(200, 30);
+
+            gamePanel = new Panel();
+            gamePanel.Location = new System.Drawing.Point(0, 0);
+            gamePanel.Size = new System.Drawing.Size(845, 475);
+            gamePanel.BackColor = Color.DarkGray;
+            gamePanel.Paint += new PaintEventHandler(editorController.GamePanel_Paint);
+
+            goBack = new Button();
+            goBack.Size = new System.Drawing.Size(200, 25);
+            goBack.Location = new System.Drawing.Point(0, 525);
+            goBack.Text = "Go Back";
+            goBack.Click += editorController.goBack_Click;
+
+            playLevel = new Button();
+            playLevel.Size = new System.Drawing.Size(422, 25);
+            playLevel.Location = new System.Drawing.Point(210, 525);
+            playLevel.Text = "Test Level";
+            playLevel.Click += editorController.playLevel_Click;
+
+            undoButton = new Button();
+            undoButton.Size = new System.Drawing.Size(100, 25);
+            undoButton.Location = new System.Drawing.Point(920, 287);
+            undoButton.Text = "Undo";
+            undoButton.Click += editorController.undoLastChange_Click;
+
+            clearButton = new Button();
+            clearButton.Size = new System.Drawing.Size(100, 25);
+            clearButton.Location = new System.Drawing.Point(920, 337);
+            clearButton.Text = "Clear";
+            clearButton.Click += editorController.clearAll_Click;
+
+            staticObstacle = new PictureBox();
+            //staticObstacle.AllowDrop = true;
+            staticObstacle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            staticObstacle.Image = Resources.IconTC;
+            staticObstacle.Location = new System.Drawing.Point(920, 87);
+            staticObstacle.Name = "staticObstacle";
+            staticObstacle.Size = new System.Drawing.Size(40, 40);
+            staticObstacle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            staticObstacle.TabIndex = 999;
+            staticObstacle.TabStop = false;
+            staticObstacle.MouseDown += editorController.updateMousePosition;
+            staticObstacle.MouseMove += editorController.updateDragPosition;
+            staticObstacle.MouseUp += editorController.StaticObstacle_MouseUp;
+
+            explodingObstacle = new PictureBox();
+            explodingObstacle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            explodingObstacle.Image = Resources.IconCar;
+            explodingObstacle.Location = new System.Drawing.Point(920, 137);
+            explodingObstacle.Name = "explodingObstacle";
+            explodingObstacle.Size = new System.Drawing.Size(40, 40);
+            explodingObstacle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            explodingObstacle.TabIndex = 999;
+            explodingObstacle.TabStop = false;
+            explodingObstacle.MouseDown += editorController.updateMousePosition;
+            explodingObstacle.MouseMove += editorController.updateDragPosition;
+            explodingObstacle.MouseUp += editorController.ExplodingObstacle_MouseUp;
+
+            movingExplodingObstacle = new PictureBox();
+            movingExplodingObstacle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            movingExplodingObstacle.Image = Resources.IconBike;
+            movingExplodingObstacle.Location = new System.Drawing.Point(920, 187);
+            movingExplodingObstacle.Name = "movingExplodingObstacle";
+            movingExplodingObstacle.Size = new System.Drawing.Size(40, 40);
+            movingExplodingObstacle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            movingExplodingObstacle.TabIndex = 999;
+            movingExplodingObstacle.TabStop = false;
+            movingExplodingObstacle.MouseDown += editorController.updateMousePosition;
+            movingExplodingObstacle.MouseMove += editorController.updateDragPosition;
+            movingExplodingObstacle.MouseUp += editorController.MovingExplodingObstacle_MouseUp;
+
+            slowingObstacle = new PictureBox();
+            slowingObstacle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            slowingObstacle.Image = Resources.IconES;
+            slowingObstacle.Location = new System.Drawing.Point(920, 237);
+            slowingObstacle.Name = "slowingObstacle";
+            slowingObstacle.Size = new System.Drawing.Size(40, 40);
+            slowingObstacle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            slowingObstacle.TabIndex = 999;
+            slowingObstacle.TabStop = false;
+            slowingObstacle.MouseDown += editorController.updateMousePosition;
+            slowingObstacle.MouseMove += editorController.updateDragPosition;
+            slowingObstacle.MouseUp += editorController.SlowingObstacle_MouseUp;
+
+            gameWindow.Controls.Add(staticObstacle);
+            gameWindow.Controls.Add(explodingObstacle);
+            gameWindow.Controls.Add(movingExplodingObstacle);
+            gameWindow.Controls.Add(slowingObstacle);
+            gameWindow.Controls.Add(gamePanel);
+            gameWindow.Controls.Add(goBack);
+            gameWindow.Controls.Add(playLevel);
+            gameWindow.Controls.Add(undoButton);
+            gameWindow.Controls.Add(clearButton);
+            gameWindow.Controls.Add(dragDropLabel);
         }
     }
 }

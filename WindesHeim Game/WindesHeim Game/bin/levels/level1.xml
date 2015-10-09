@@ -13,21 +13,31 @@
           </object>
           <object>
                <type>MovingExplodingObstacle</type>
-               <x>175</x>
+               <x>275</x>
                <y>300</y>
 			   <height>40</height>
 			   <width>40</width>
           </object>
+          
           <object>
-               <type>StaticObstacle</type>
-               <x>125</x>
+               <type>SlowingObstacle</type>
+               <x>150</x>
                <y>200</y>
 			   <height>40</height>
 			   <width>40</width>
           </object>
-          <object>
+		  
+		  <object>
                <type>SlowingObstacle</type>
-               <x>150</x>
+               <x>250</x>
+               <y>200</y>
+			   <height>40</height>
+			   <width>40</width>
+          </object>
+		  
+		  <object>
+               <type>SlowingObstacle</type>
+               <x>350</x>
                <y>200</y>
 			   <height>40</height>
 			   <width>40</width>

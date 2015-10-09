@@ -11,23 +11,14 @@ namespace WindesHeim_Game
     public class GameObject
     {
         private Point location;
-        private string imageURL;
+        private Bitmap objectImage;
         private int height;
         private int width;
 
         private int collisionX = 0;
         private int collisionY = 0;
-
-        
-        public int collisionSize;
        
-        public GameObject(Point location, string imageURL, int height, int width)
-        {
-            this.imageURL = imageURL;
-            this.location = location;
-            this.height = height;
-            this.width = width;
-        }
+        public int collisionSize;
 
         public GameObject(Point location, int height, int width)
         {
@@ -42,10 +33,11 @@ namespace WindesHeim_Game
             set { location = value; }
         }
 
-        public string ImageURL {
-            get { return imageURL; }
-            set { imageURL = value; }
+        public Bitmap ObjectImage {
+            get { return objectImage; }
+            set { objectImage = value; }
         }
+
         public int Height
         {
             get { return height; }
@@ -69,26 +61,14 @@ namespace WindesHeim_Game
             set { collisionY = value; }
         }
 
-        //protected double GetDistance(Point q) {
+        public double GetDistance(Point q) {
+            double a = Location.X  - q.X;
+            double b = Location.Y - q.Y;
+            double distance = Math.Sqrt(a * a + b * b);
+            return distance;
+        }
 
-        //    double a = Location.X  - q.X;
-        //    double b = Location.Y - q.Y;
-        //    double distance = Math.Sqrt(a * a + b * b);
-        //    return distance;
-        //}
-
-        //public bool CollidesWith(GameObject gameObject) {
-
-        //    if (GetDistance(gameObject.Location) < collisionSize) {
-        //        return true;
-
-        //    }
-        //    else {
-        //        return false;
-        //    }
-        //}
-
-        public bool YoranColission(GameObject gameObject)
+        public bool CollidesWith(GameObject gameObject)
         {
             if((this.location.X > (gameObject.location.X - gameObject.CollisionX)) && (this.location.X < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
                 && (this.location.Y > (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
@@ -102,13 +82,48 @@ namespace WindesHeim_Game
             {
                 return true;
             }
-
             return false;
         }
 
-     
+        public void ProcessCollision(GameObject gameObject) {
+            string side = "none";
 
-       public void FadeSmall()
+            if (this.location.Y == gameObject.Location.Y + Height
+                && (this.Location.X <= gameObject.Location.X && this.Location.X + this.Width >= gameObject.Location.X
+                || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
+                side = "top";
+                Location = new Point(Location.X, Location.Y + 1);
+                //ProcessCollision(gameObject);
+            }
+
+            if(this.Location.Y + this.Height == gameObject.Location.Y
+                && (this.Location.X + this.Width >= gameObject.Location.X && this.Location.X <= gameObject.Location.X
+                || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
+                side = "bottom";
+                Location = new Point(Location.X, Location.Y - 1);
+                //ProcessCollision(gameObject);
+            }
+
+            if(this.location.X == gameObject.Location.X + gameObject.Width
+                && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
+                || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
+                side = "left";
+                Location = new Point(Location.X + 1, Location.Y);
+                //ProcessCollision(gameObject);
+            }
+
+            if (this.Location.X + this.Width == gameObject.Location.X
+                && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
+                || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
+                Location = new Point(Location.X - 1, Location.Y);
+                //ProcessCollision(gameObject);
+                side = "right";
+            }
+        }
+
+
+
+        public void FadeSmall()
         {
             this.Height+=2;
             this.Width+=2;
