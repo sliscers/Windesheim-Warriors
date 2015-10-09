@@ -59,3 +59,4 @@ F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\Windes
 F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
 F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe
 F:\Schoolprojecten\WindesheimWarriors\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.pdb
+C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csprojResolveAssemblyReference.cache
