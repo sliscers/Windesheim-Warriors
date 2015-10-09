@@ -19,3 +19,12 @@ C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warr
 C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
 C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
 C:\Users\Thijs van Dam\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
+D:\Windows\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.config
+D:\Windows\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe
+D:\Windows\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.pdb
+D:\Windows\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csprojResolveAssemblyReference.cache
+D:\Windows\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.GameWindow.resources
+D:\Windows\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.Properties.Resources.resources
+D:\Windows\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
+D:\Windows\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
+D:\Windows\Documents\Visual Studio 2015\Projects\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb

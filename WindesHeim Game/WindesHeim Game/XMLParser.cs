@@ -86,7 +86,12 @@ namespace WindesHeim_Game
                 }
                 else if (gameObject is MovingExplodingObstacle)
                 {
-                    returnList.Add(new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                    MovingExplodingObstacle castedGameObject = (MovingExplodingObstacle)gameObject;
+
+                    MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width);
+                    moe.MovingSpeed = castedGameObject.MovingSpeed;
+
+                    returnList.Add(moe);
                 }
                 else if (gameObject is StaticObstacle)
                 {
@@ -94,7 +99,13 @@ namespace WindesHeim_Game
                 }
                 else if (gameObject is SlowingObstacle)
                 {
-                    returnList.Add(new SlowingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width));
+                    SlowingObstacle castedGameObject = (SlowingObstacle)gameObject;
+
+                    SlowingObstacle slowingObstacle = new SlowingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width);
+                    slowingObstacle.MovingSpeed = castedGameObject.MovingSpeed;
+                    slowingObstacle.SlowingSpeed = castedGameObject.SlowingSpeed;
+
+                    returnList.Add(slowingObstacle);
                 }
             }
             return returnList;
@@ -152,7 +163,7 @@ namespace WindesHeim_Game
                             Width = Int32.Parse(r.Element("width").Value),
                             //If statements voor dynamische gegevens in xml <object>
                             Movingspeed = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("movingspeed").Value): 0,
-                            Slowdown = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("slowdown").Value): 0
+                            Slowdown = (r.Element("slowdown") != null) ? Int32.Parse(r.Element("slowdown").Value): 0
                        };
             //Voegt de gameproperties toe aan de variable gameProperties
             foreach (var property in lproperties)
@@ -184,7 +195,10 @@ namespace WindesHeim_Game
                         break;
 
                         case "MovingExplodingObstacle":
-                            gameObjects.Add(new MovingExplodingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width));
+                            MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width);
+                            moe.MovingSpeed = gameObject.Movingspeed;
+
+                            gameObjects.Add(moe);
                         break;
 
                         case "StaticObstacle":
@@ -193,7 +207,8 @@ namespace WindesHeim_Game
 
                         case "SlowingObstacle":
                             SlowingObstacle sb = new SlowingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width);
-                            //sb.MovingSpeed = 10;                                                
+                            sb.MovingSpeed = gameObject.Movingspeed;
+                            sb.SlowingSpeed = gameObject.Slowdown;
 
                             gameObjects.Add(sb);
                         break;
