@@ -298,7 +298,8 @@ namespace WindesHeim_Game
             gameWindow.KeyUp += gameController.OnKeyUp;
 
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
-            graphicsPanel.BackColor = Color.LightGray;
+            graphicsPanel.BackColor = Color.White;
+            graphicsPanel.BorderStyle = BorderStyle.FixedSingle;
             graphicsPanel.Location = new Point(0, 0);
             graphicsPanel.Size = new Size(845, 475);
             graphicsPanel.Paint += gameController.OnPaintEvent;
@@ -899,12 +900,11 @@ namespace WindesHeim_Game
     public class ModelLevelSelect : Model
     {
         public ListBox listBoxLevels;
-        public Button goBack;
-        public Button playLevel;
-        private Label labelLevels;
-        private Label labelLevelPreview;
+        public PictureBox goBack;
+        public PictureBox playLevel;
         public Panel alignPanel;
         public Panel gamePanel;
+        private Panel backgroundImage;
 
         private ControllerLevelSelect levelSelectController;
 
@@ -917,16 +917,23 @@ namespace WindesHeim_Game
         {
             alignPanel = new Panel();
             alignPanel.AutoSize = true;
+            alignPanel.BackColor = Color.Transparent;
+
+            backgroundImage = new Panel();
+            backgroundImage.Location = new System.Drawing.Point(0, 0);
+            backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
+            backgroundImage.BackgroundImage = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\otherBackground.png");
 
             gamePanel = new Panel();
-            gamePanel.Location = new System.Drawing.Point(210, 40);
+            gamePanel.Location = new System.Drawing.Point(210, 0);
             gamePanel.Size = new System.Drawing.Size(845, 475);
-            gamePanel.BackColor = Color.DarkGray;
+            gamePanel.BackColor = Color.White;
+            gamePanel.BorderStyle = BorderStyle.FixedSingle;
             gamePanel.Paint += levelSelectController.OnPreviewPaint;
 
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 475);
-            listBoxLevels.Location = new System.Drawing.Point(0, 40);
+            listBoxLevels.Location = new System.Drawing.Point(0, 0);
 
             XMLParser.LoadAllLevels();
             foreach (XMLParser xml in XMLParser.Levels)
@@ -935,44 +942,30 @@ namespace WindesHeim_Game
             }
             listBoxLevels.SelectedIndexChanged += levelSelectController.level_Select;
             listBoxLevels.SetSelected(0, true);
-
-            labelLevels = new Label();
-            labelLevels.Text = "Levels";
-            labelLevels.Font = new Font("Arial", 20);
-            labelLevels.Location = new System.Drawing.Point(0, 0);
-            labelLevels.Size = new System.Drawing.Size(200, 30);
-            labelLevels.TextAlign = ContentAlignment.MiddleCenter;
-
-            labelLevelPreview = new Label();
-            labelLevelPreview.Text = "Level Preview";
-            labelLevelPreview.Font = new Font("Arial", 20);
-            labelLevelPreview.Location = new System.Drawing.Point(210, 0);
-            labelLevelPreview.Size = new System.Drawing.Size(845, 30);
-            labelLevelPreview.TextAlign = ContentAlignment.MiddleCenter;
-
-            goBack = new Button();
-            goBack.Size = new System.Drawing.Size(200, 25);
-            goBack.Location = new System.Drawing.Point(0, 525);
+            
+            goBack = new PictureBox();
+            goBack.Size = new System.Drawing.Size(200, 44);
+            goBack.Location = new System.Drawing.Point(0, 482);
             goBack.Text = "Go Back";
+            goBack.BackgroundImage = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\goBack.png");
             goBack.Click += levelSelectController.goBack_Click;
 
-            playLevel = new Button();
-            playLevel.Size = new System.Drawing.Size(845, 25);
-            playLevel.Location = new System.Drawing.Point(210, 525);
+            playLevel = new PictureBox();
+            playLevel.Size = new System.Drawing.Size(200, 44);
+            playLevel.Location = new System.Drawing.Point(210, 480);
             playLevel.Text = "Play Level";
+            playLevel.BackgroundImage = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\playLevel.png");
             playLevel.Click += levelSelectController.playLevel_Click;
 
-            gameWindow.Controls.Add(alignPanel);
-            alignPanel.Controls.Add(labelLevels);
-            alignPanel.Controls.Add(labelLevelPreview);
+            gameWindow.Controls.Add(backgroundImage);
+            backgroundImage.Controls.Add(alignPanel);
             alignPanel.Controls.Add(goBack);
             alignPanel.Controls.Add(playLevel);
             alignPanel.Controls.Add(listBoxLevels);
             alignPanel.Controls.Add(gamePanel);
             alignPanel.Location = new Point(
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
-                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
-            alignPanel.Anchor = AnchorStyles.None;
+                125);
 
         }
     }
@@ -1036,20 +1029,18 @@ namespace WindesHeim_Game
             alignPanel.Location = new Point(
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
-            alignPanel.Anchor = AnchorStyles.None;
         }
     }
 
     public class ModelEditorSelect : Model
     {
         public ListBox listBoxLevels;
-        public Button goBack;
-        public Button editLevel;
-        public Button newLevel;
-        private Label labelLevels;
-        private Label labelLevelPreview;
+        public PictureBox goBack;
+        public PictureBox editLevel;
+        public PictureBox newLevel;
         public Panel alignPanel;
         public Panel gamePanel;
+        private Panel backgroundImage;
 
         private ControllerEditorSelect editorSelectController;
 
@@ -1062,16 +1053,23 @@ namespace WindesHeim_Game
         {
             alignPanel = new Panel();
             alignPanel.AutoSize = true;
+            alignPanel.BackColor = Color.Transparent;
+
+            backgroundImage = new Panel();
+            backgroundImage.Location = new System.Drawing.Point(0, 0);
+            backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
+            backgroundImage.BackgroundImage = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\otherBackground.png");
 
             gamePanel = new Panel();
-            gamePanel.Location = new System.Drawing.Point(210, 40);
+            gamePanel.Location = new System.Drawing.Point(210, 0);
             gamePanel.Size = new System.Drawing.Size(845, 475);
-            gamePanel.BackColor = Color.DarkGray;
+            gamePanel.BackColor = Color.White;
+            gamePanel.BorderStyle = BorderStyle.FixedSingle;
             gamePanel.Paint += editorSelectController.OnPreviewPaint;
 
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 475);
-            listBoxLevels.Location = new System.Drawing.Point(0, 40);
+            listBoxLevels.Location = new System.Drawing.Point(0, 0);
 
             XMLParser.LoadAllLevels();
             foreach (XMLParser xml in XMLParser.Levels)
@@ -1082,41 +1080,29 @@ namespace WindesHeim_Game
             listBoxLevels.SelectedIndexChanged += editorSelectController.level_Select;
             listBoxLevels.SetSelected(0, true);
 
-            labelLevels = new Label();
-            labelLevels.Text = "Levels";
-            labelLevels.Font = new Font("Arial", 20);
-            labelLevels.Location = new System.Drawing.Point(0, 0);
-            labelLevels.Size = new System.Drawing.Size(200, 30);
-            labelLevels.TextAlign = ContentAlignment.MiddleCenter;
-
-            labelLevelPreview = new Label();
-            labelLevelPreview.Text = "Level Preview";
-            labelLevelPreview.Font = new Font("Arial", 20);
-            labelLevelPreview.Location = new System.Drawing.Point(210, 0);
-            labelLevelPreview.Size = new System.Drawing.Size(845, 30);
-            labelLevelPreview.TextAlign = ContentAlignment.MiddleCenter;
-
-            goBack = new Button();
-            goBack.Size = new System.Drawing.Size(200, 25);
-            goBack.Location = new System.Drawing.Point(0, 525);
+            goBack = new PictureBox();
+            goBack.Size = new System.Drawing.Size(200, 44);
+            goBack.Location = new System.Drawing.Point(0, 480);
             goBack.Text = "Go Back";
+            goBack.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\goBack.png");
             goBack.Click += editorSelectController.goBack_Click;
 
-            editLevel = new Button();
-            editLevel.Size = new System.Drawing.Size(422, 25);
-            editLevel.Location = new System.Drawing.Point(210, 525);
+            editLevel = new PictureBox();
+            editLevel.Size = new System.Drawing.Size(200, 44);
+            editLevel.Location = new System.Drawing.Point(210, 480);
             editLevel.Text = "Edit Level";
+            editLevel.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\editLevel.png");
             editLevel.Click += editorSelectController.editLevel_Click;
 
-            newLevel = new Button();
-            newLevel.Size = new System.Drawing.Size(422, 25);
-            newLevel.Location = new System.Drawing.Point(632, 525);
+            newLevel = new PictureBox();
+            newLevel.Size = new System.Drawing.Size(200, 44);
+            newLevel.Location = new System.Drawing.Point(420, 480);
             newLevel.Text = "New Level";
+            newLevel.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\newLevel.png");
             newLevel.Click += editorSelectController.newLevel_Click;
 
-            gameWindow.Controls.Add(alignPanel);
-            alignPanel.Controls.Add(labelLevels);
-            alignPanel.Controls.Add(labelLevelPreview);
+            gameWindow.Controls.Add(backgroundImage);
+            backgroundImage.Controls.Add(alignPanel);
             alignPanel.Controls.Add(goBack);
             alignPanel.Controls.Add(editLevel);
             alignPanel.Controls.Add(newLevel);
@@ -1125,7 +1111,6 @@ namespace WindesHeim_Game
             alignPanel.Location = new Point(
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
-            alignPanel.Anchor = AnchorStyles.None;
 
         }
     }

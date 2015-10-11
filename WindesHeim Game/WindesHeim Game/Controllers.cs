@@ -20,12 +20,14 @@ namespace WindesHeim_Game
         }
         public virtual void RunController()
         {
+            gameWindow.Controls.Clear();
+            
             ScreenInit();
+            gameWindow.Focus();
         }
 
         public virtual void ScreenInit()
         {
-            gameWindow.Controls.Clear();
             model.ControlsInit(gameWindow);
         }
 
@@ -678,13 +680,6 @@ namespace WindesHeim_Game
         public void playLevel_Click(object sender, EventArgs e)
         {
             ModelGame.level = currentSelectedLevel;
-            
-
-            //Workaround om focus conflict met windows forms en buttons op te lossen
-            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.playLevel);
-            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.goBack);
-            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.listBoxLevels);
-
             gameWindow.setController(ScreenStates.game);
         }
 
