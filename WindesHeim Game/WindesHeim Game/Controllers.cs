@@ -1065,7 +1065,8 @@ namespace WindesHeim_Game
         public void MouseDown(object sender, MouseEventArgs e) {
             if(e.Button == MouseButtons.Left) {
                 foreach (GameObject gameObject in gameObjects) {
-                    GameObject tempGameObject = new GameObject(e.Location, 40, 40);
+                    GameObject tempGameObject = new GameObject(new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y), 40, 40);
+                    Console.WriteLine(tempGameObject.Location);
                     if (gameObject.CollidesWith(tempGameObject)) {
                         objectDragging = gameObject;
                     }
@@ -1075,14 +1076,14 @@ namespace WindesHeim_Game
 
         public void ObjectMouseDrag(object sender, MouseEventArgs e) {
             if(objectDragging != null) {
-                objectDragging.Location = e.Location;
+                objectDragging.Location = new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y);
                 modelEditor.gamePanel.Invalidate();
             }
         }
 
         public void MouseUp(object sender, MouseEventArgs e) {
             if(objectDragging != null) {
-                objectDragging.Location = e.Location;
+                objectDragging.Location = new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y);
                 objectDragging = null;
                 modelEditor.gamePanel.Invalidate();
             }
