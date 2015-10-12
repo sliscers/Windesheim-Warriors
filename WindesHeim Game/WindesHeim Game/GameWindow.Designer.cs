@@ -98,7 +98,7 @@ namespace WindesHeim_Game
                     highscores.RunController();
                     break;
                 case ScreenStates.highscoreInput:
-                    //highscoreInput.score = game.score;
+                    highscoreInput.score = game.score;
                     this.state = ScreenStates.highscoreInput;
                     
                     highscoreInput.RunController();

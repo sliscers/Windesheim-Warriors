@@ -94,12 +94,12 @@ namespace WindesHeim_Game
     {
         private ControllerMenu menuController;
 
-        private PictureBox play;
-        private PictureBox editor;
-        private PictureBox highscore;
-        private PictureBox tempPlay;
-        private Panel menuPanel;
-        private Panel backgroundImage;
+        private PictureBox play = new PictureBox();
+        private PictureBox editor = new PictureBox();
+        private PictureBox highscore = new PictureBox();
+        private PictureBox tempPlay = new PictureBox();
+        private Panel menuPanel = new Panel();
+        private Panel backgroundImage = new Panel();
 
         public ModelMenu(ControllerMenu controller) : base(controller)
         {
@@ -108,12 +108,7 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            play = new PictureBox();
-            editor = new PictureBox();
-            highscore = new PictureBox();
-            tempPlay = new PictureBox();
-
-            backgroundImage = new Panel();
+            
             backgroundImage.Size = gameWindow.Size;
             backgroundImage.BackgroundImage = Resources.menuBackground;
 
@@ -134,8 +129,7 @@ namespace WindesHeim_Game
             highscore.Size = new System.Drawing.Size(304, 44);
             highscore.TabIndex = 2;
             highscore.Click += new EventHandler(menuController.highscore_Click);
-
-            menuPanel = new Panel();
+            
             menuPanel.AutoSize = true;
             menuPanel.BackColor = Color.Transparent;
 
@@ -904,12 +898,12 @@ namespace WindesHeim_Game
 
     public class ModelLevelSelect : Model
     {
-        public ListBox listBoxLevels;
-        public PictureBox goBack;
-        public PictureBox playLevel;
-        public Panel alignPanel;
-        public Panel gamePanel;
-        private Panel backgroundImage;
+        public ListBox listBoxLevels = new ListBox();
+        public PictureBox goBack = new PictureBox();
+        public PictureBox playLevel = new PictureBox();
+        public Panel alignPanel = new Panel();
+        public Panel gamePanel = new Panel();
+        private Panel backgroundImage = new Panel();
 
         private ControllerLevelSelect levelSelectController;
 
@@ -920,7 +914,6 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            alignPanel = new Panel();
             alignPanel.AutoSize = true;
             alignPanel.BackColor = Color.Transparent;
 
@@ -929,14 +922,12 @@ namespace WindesHeim_Game
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
             backgroundImage.BackgroundImage = Resources.menuBackground;
 
-            gamePanel = new Panel();
             gamePanel.Location = new System.Drawing.Point(210, 0);
             gamePanel.Size = new System.Drawing.Size(845, 475);
             gamePanel.BackColor = Color.White;
             gamePanel.BorderStyle = BorderStyle.FixedSingle;
             gamePanel.Paint += levelSelectController.OnPreviewPaint;
 
-            listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 475);
             listBoxLevels.Location = new System.Drawing.Point(0, 0);
 
@@ -977,11 +968,11 @@ namespace WindesHeim_Game
 
     public class ModelHighscores : Model
     {
-        private ListBox listBoxLevels;
-        private PictureBox goBack;
-        private Panel alignPanel;
-        public ListBox listBoxHighscores;
-        private Panel backgroundImage;
+        private ListBox listBoxLevels = new ListBox();
+        private PictureBox goBack = new PictureBox();
+        private Panel alignPanel = new Panel();
+        public ListBox listBoxHighscores = new ListBox();
+        private Panel backgroundImage = new Panel();
 
         private List<XMLParser> levels = new List<XMLParser>();
 
@@ -994,20 +985,16 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            alignPanel = new Panel();
             alignPanel.AutoSize = true;
             alignPanel.BackColor = Color.Transparent;
-
-            backgroundImage = new Panel();
+          
             backgroundImage.Size = gameWindow.Size;
             backgroundImage.BackgroundImage = Resources.menuBackground;
-
-            listBoxLevels = new ListBox();
+            
             listBoxLevels.Size = new System.Drawing.Size(200, 200);
             listBoxLevels.Location = new System.Drawing.Point(0, 0);
             listBoxLevels.SelectedIndexChanged += highscoresController.level_Select;
-
-            listBoxHighscores = new ListBox();
+            
             listBoxHighscores.Size = new System.Drawing.Size(200, 200);
             listBoxHighscores.Location = new System.Drawing.Point(200, 0);
 
@@ -1018,8 +1005,7 @@ namespace WindesHeim_Game
                 listBoxLevels.Items.Add(xml);
             }
             listBoxLevels.SetSelected(0, true);
-
-            goBack = new PictureBox();
+            
             goBack.Size = new System.Drawing.Size(200, 44);
             goBack.Text = "Go Back";
             goBack.BackgroundImage = Resources.goBack;
@@ -1042,13 +1028,13 @@ namespace WindesHeim_Game
 
     public class ModelEditorSelect : Model
     {
-        public ListBox listBoxLevels;
-        public PictureBox goBack;
-        public PictureBox editLevel;
-        public PictureBox newLevel;
-        public Panel alignPanel;
-        public Panel gamePanel;
-        private Panel backgroundImage;
+        public ListBox listBoxLevels = new ListBox();
+        public PictureBox goBack = new PictureBox();
+        public PictureBox editLevel = new PictureBox();
+        public PictureBox newLevel = new PictureBox();
+        public Panel alignPanel = new Panel();
+        public Panel gamePanel = new Panel();
+        private Panel backgroundImage = new Panel();
 
         private ControllerEditorSelect editorSelectController;
 
@@ -1059,23 +1045,19 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            alignPanel = new Panel();
             alignPanel.AutoSize = true;
             alignPanel.BackColor = Color.Transparent;
-
-            backgroundImage = new Panel();
+            
             backgroundImage.Location = new System.Drawing.Point(0, 0);
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
             backgroundImage.BackgroundImage = Resources.menuBackground;
-
-            gamePanel = new Panel();
+            
             gamePanel.Location = new System.Drawing.Point(210, 0);
             gamePanel.Size = new System.Drawing.Size(845, 475);
             gamePanel.BackColor = Color.White;
             gamePanel.BorderStyle = BorderStyle.FixedSingle;
             gamePanel.Paint += editorSelectController.OnPreviewPaint;
-
-            listBoxLevels = new ListBox();
+            
             listBoxLevels.Size = new System.Drawing.Size(200, 475);
             listBoxLevels.Location = new System.Drawing.Point(0, 0);
 
@@ -1089,22 +1071,19 @@ namespace WindesHeim_Game
 
             listBoxLevels.SelectedIndexChanged += editorSelectController.level_Select;
             listBoxLevels.SetSelected(0, true);
-
-            goBack = new PictureBox();
+            
             goBack.Size = new System.Drawing.Size(200, 44);
             goBack.Location = new System.Drawing.Point(0, 480);
             goBack.Text = "Go Back";
             goBack.Image = Resources.goBack;
             goBack.Click += editorSelectController.goBack_Click;
-
-            editLevel = new PictureBox();
+            
             editLevel.Size = new System.Drawing.Size(200, 44);
             editLevel.Location = new System.Drawing.Point(210, 480);
             editLevel.Text = "Edit Level";
             editLevel.Image = Resources.editLevel;
             editLevel.Click += editorSelectController.editLevel_Click;
-
-            newLevel = new PictureBox();
+            
             newLevel.Size = new System.Drawing.Size(200, 44);
             newLevel.Location = new System.Drawing.Point(420, 480);
             newLevel.Text = "New Level";
@@ -1127,19 +1106,19 @@ namespace WindesHeim_Game
 
     public class ModelEditor : Model
     {
-        public Button goBack;
-        public Button saveLevel;
-        public Button testLevel;
-        public Button undoButton;
-        public Button clearButton;
-        public Panel alignPanel;
-        private Panel backgroundImage;
-        public PictureBox gamePanel;
-        public PictureBox staticObstacle;
-        public PictureBox explodingObstacle;
-        public PictureBox movingExplodingObstacle;
-        public PictureBox slowingObstacle;
-        private Label dragDropLabel;
+        public Button goBack = new Button();
+        public Button saveLevel = new Button();
+        public Button testLevel = new Button();
+        public Button undoButton = new Button();
+        public Button clearButton = new Button();
+        public Panel alignPanel = new Panel();
+        private Panel backgroundImage = new Panel();
+        public PictureBox gamePanel = new PictureBox();
+        public PictureBox staticObstacle = new PictureBox();
+        public PictureBox explodingObstacle = new PictureBox();
+        public PictureBox movingExplodingObstacle = new PictureBox();
+        public PictureBox slowingObstacle = new PictureBox();
+        private Label dragDropLabel = new Label();
 
         public int widthDragDropPanel = 210;
 
@@ -1156,22 +1135,18 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            alignPanel = new Panel();
             alignPanel.AutoSize = true;
             alignPanel.BackColor = Color.Transparent;
-
-            backgroundImage = new Panel();
+            
             backgroundImage.Location = new System.Drawing.Point(0, 0);
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
             backgroundImage.BackgroundImage = Resources.menuBackground;
-
-            dragDropLabel = new Label();
+            
             dragDropLabel.Text = "Drag en drop";
             dragDropLabel.Font = new Font("Arial", 12);
             dragDropLabel.Location = new System.Drawing.Point(10, 50);
             dragDropLabel.Size = new System.Drawing.Size(200, 30);
-
-            gamePanel = new PictureBox();
+            
             gamePanel.Location = new System.Drawing.Point(0, 0); // 210
             gamePanel.Size = new System.Drawing.Size(845 + widthDragDropPanel, 475);
             gamePanel.BackColor = Color.White;
@@ -1181,38 +1156,32 @@ namespace WindesHeim_Game
             gamePanel.MouseUp += editorController.MouseUp;
             gamePanel.BorderStyle = BorderStyle.FixedSingle;
 
-
-            goBack = new Button();
+            
             goBack.Size = new System.Drawing.Size(200, 25);
             goBack.Location = new System.Drawing.Point(0, 525);
             goBack.Text = "Go Back";
             goBack.Click += editorController.goBack_Click;
-
-            testLevel = new Button();
+            
             testLevel.Size = new System.Drawing.Size(200, 25);
             testLevel.Location = new System.Drawing.Point(210, 525);
             testLevel.Text = "Test Level";
             testLevel.Click += editorController.testLevel_Click;
-
-            saveLevel = new Button();
+            
             saveLevel.Size = new System.Drawing.Size(200, 25);
             saveLevel.Location = new System.Drawing.Point(420, 525);
             saveLevel.Text = "Save Level";
             saveLevel.Click += editorController.saveLevel_Click;
-
-            undoButton = new Button();
+            
             undoButton.Size = new System.Drawing.Size(100, 25);
             undoButton.Location = new System.Drawing.Point(920, 287);
             undoButton.Text = "Undo";
             undoButton.Click += editorController.undoLastChange_Click;
-
-            clearButton = new Button();
+            
             clearButton.Size = new System.Drawing.Size(100, 25);
             clearButton.Location = new System.Drawing.Point(920, 337);
             clearButton.Text = "Clear";
             clearButton.Click += editorController.clearAll_Click;
-
-            staticObstacle = new PictureBox();
+            
             //staticObstacle.AllowDrop = true;
             staticObstacle.BackgroundImageLayout = ImageLayout.None;
             staticObstacle.Image = Resources.IconTC;
@@ -1225,8 +1194,7 @@ namespace WindesHeim_Game
             staticObstacle.MouseDown += editorController.updateMousePosition;
             staticObstacle.MouseMove += editorController.updateDragPosition;
             staticObstacle.MouseUp += editorController.StaticObstacle_MouseUp;
-
-            explodingObstacle = new PictureBox();
+            
             explodingObstacle.BackgroundImageLayout = ImageLayout.None;
             explodingObstacle.Image = Resources.IconCar;
             explodingObstacle.Location = new System.Drawing.Point(10, 110);
@@ -1238,8 +1206,7 @@ namespace WindesHeim_Game
             explodingObstacle.MouseDown += editorController.updateMousePosition;
             explodingObstacle.MouseMove += editorController.updateDragPosition;
             explodingObstacle.MouseUp += editorController.ExplodingObstacle_MouseUp;
-
-            movingExplodingObstacle = new PictureBox();
+            
             movingExplodingObstacle.BackgroundImageLayout = ImageLayout.None;
             movingExplodingObstacle.Image = Resources.IconBike;
             movingExplodingObstacle.Location = new System.Drawing.Point(10, 160);
@@ -1252,7 +1219,6 @@ namespace WindesHeim_Game
             movingExplodingObstacle.MouseMove += editorController.updateDragPosition;
             movingExplodingObstacle.MouseUp += editorController.MovingExplodingObstacle_MouseUp;
             
-            slowingObstacle = new PictureBox();
             slowingObstacle.BackgroundImageLayout = ImageLayout.None;
             slowingObstacle.Image = Resources.IconES;
             slowingObstacle.Location = new System.Drawing.Point(10, 210);
@@ -1289,11 +1255,11 @@ namespace WindesHeim_Game
     }
     public class ModelHighscoreInput : Model
     {
-        public ListBox listBoxLevels;
-        public PictureBox goBack;
-        public Panel alignPanel;
-        public Panel gamePanel;
-        private Panel backgroundImage;
+        public ListBox listBoxLevels = new ListBox();
+        public PictureBox goBack = new PictureBox();
+        public Panel alignPanel = new Panel();
+        public Panel gamePanel = new Panel();
+        private Panel backgroundImage = new Panel();
         private Label score = new Label();
         private Label place = new Label();
         private TextBox name = new TextBox();
@@ -1307,22 +1273,18 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            alignPanel = new Panel();
             alignPanel.AutoSize = true;
             alignPanel.BackColor = Color.Transparent;
-
-            backgroundImage = new Panel();
+            
             backgroundImage.Location = new System.Drawing.Point(0, 0);
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
             backgroundImage.BackgroundImage = Resources.menuBackground;
-
-            gamePanel = new Panel();
+            
             gamePanel.Location = new System.Drawing.Point(0, 0);
             gamePanel.Size = new System.Drawing.Size(400, 200);
             gamePanel.BackColor = Color.White;
             gamePanel.BorderStyle = BorderStyle.FixedSingle;
-
-            goBack = new PictureBox();
+            
             goBack.Size = new System.Drawing.Size(200, 44);
             goBack.Text = "Go Back";
             goBack.BackgroundImage = Resources.goBack;
