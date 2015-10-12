@@ -494,7 +494,6 @@ namespace WindesHeim_Game
                     Checkpoint gameObstacle = (Checkpoint)gameObject;
                     if (mg.player.CollidesWith(gameObstacle) && !gameObstacle.Start)
                     {
-                        score = 0;
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         if (editor)
