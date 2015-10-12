@@ -86,7 +86,8 @@ namespace WindesHeim_Game
         }
 
         public void ProcessCollision(GameObject gameObject) {
-            
+
+
 
             if (this.location.Y == gameObject.Location.Y + Height
                 && (this.Location.X <= gameObject.Location.X && this.Location.X + this.Width >= gameObject.Location.X

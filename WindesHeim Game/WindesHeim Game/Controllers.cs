@@ -369,7 +369,13 @@ namespace WindesHeim_Game
                 {
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
 
+                    Point currentLocation = gameObstacle.Location;
+                    Console.WriteLine(currentLocation.ToString());
+
                     gameObstacle.ChasePlayer(mg.player);
+
+                    Console.WriteLine(gameObstacle.Location.ToString());
+
 
                     // Loop door alle objecten op het veld
                     foreach (GameObject potentialCollision in safeListArray)
@@ -379,6 +385,13 @@ namespace WindesHeim_Game
                         {
                             gameObject.ProcessCollision(potentialCollision);
                         }
+                    }
+                    Console.WriteLine(gameObstacle.Location.ToString());
+
+
+                    if (currentLocation.Equals(gameObstacle.Location))
+                    {
+                        Console.WriteLine("Ik sta stil");
                     }
 
                     if (gameObstacle.CollidesWith(mg.player))
