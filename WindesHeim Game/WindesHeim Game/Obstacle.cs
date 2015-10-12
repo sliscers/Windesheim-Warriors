@@ -19,6 +19,11 @@ namespace WindesHeim_Game {
             
         }
 
+        public int MovingSpeed {
+            get { return movingSpeed; }
+            set { movingSpeed = value; }
+        }
+
         public string Name
         {
             get { return name; }
@@ -35,11 +40,6 @@ namespace WindesHeim_Game {
         {
             get { return panelIcon; }
             set { panelIcon = value; }
-        }
-
-        public int MovingSpeed {
-            get { return movingSpeed; }
-            set { movingSpeed = value; }
         }
 
         public void ChasePlayer(Player player) {

@@ -229,4 +229,31 @@
   <data name="CARHORN" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\CARHORN.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="closeButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\closeButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="editLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\editLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="editorButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\editorButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="goBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\goBack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="highscoresButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\highscoresButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="menuBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\menuBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="newLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\newLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\playButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\playLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

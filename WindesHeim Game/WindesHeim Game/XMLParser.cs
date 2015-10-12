@@ -91,6 +91,7 @@ namespace WindesHeim_Game
                     MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width);
                     moe.MovingSpeed = castedGameObject.MovingSpeed;
 
+
                     returnList.Add(moe);
                 }
                 else if (gameObject is StaticObstacle)
