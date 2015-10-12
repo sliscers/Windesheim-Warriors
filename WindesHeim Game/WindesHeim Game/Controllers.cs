@@ -502,7 +502,7 @@ namespace WindesHeim_Game
                             gameWindow.setController(ScreenStates.editor);
                         }
                         else{
-                            gameWindow.setController(ScreenStates.menu);
+                            gameWindow.setController(ScreenStates.highscoreInput);
                         }
                     }
                 }
