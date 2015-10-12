@@ -70,14 +70,14 @@ namespace WindesHeim_Game
 
         public bool CollidesWith(GameObject gameObject)
         {
-            if((this.location.X > (gameObject.location.X - gameObject.CollisionX)) && (this.location.X < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
-                && (this.location.Y > (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
-                || ((this.location.X + this.Width) > (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
-                && (this.location.Y > (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
-                || (this.location.X > (gameObject.location.X - gameObject.CollisionX)) && (this.location.X < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
-                && ((this.location.Y + this.Height) > (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
-                || ((this.location.X + this.Width) > (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
-                && ((this.location.Y + this.Height) > (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+            if((this.location.X >= (gameObject.location.X - gameObject.CollisionX)) && (this.location.X <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && (this.location.Y >= (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                || ((this.location.X + this.Width) >= (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && (this.location.Y >= (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                || (this.location.X >= (gameObject.location.X - gameObject.CollisionX)) && (this.location.X <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && ((this.location.Y + this.Height) >= (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                || ((this.location.X + this.Width) >= (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && ((this.location.Y + this.Height) >= (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
                 )
             {
                 return true;

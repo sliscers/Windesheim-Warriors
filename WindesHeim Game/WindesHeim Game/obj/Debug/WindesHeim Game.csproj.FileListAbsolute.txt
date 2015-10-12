@@ -37,3 +37,4 @@ C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesH
 C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
 C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
 C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
+C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll

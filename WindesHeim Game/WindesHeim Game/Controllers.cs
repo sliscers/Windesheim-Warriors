@@ -435,10 +435,6 @@ namespace WindesHeim_Game
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
                         mg.player.ObjectImage = Resources.Player;
                     }
-
-                   
-
-
                 }
 
                 if (gameObject is StaticObstacle)
