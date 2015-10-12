@@ -152,7 +152,7 @@ namespace WindesHeim_Game
                             Width = Int32.Parse(r.Element("width").Value),
                             //If statements voor dynamische gegevens in xml <object>
                             Movingspeed = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("movingspeed").Value): 0,
-                            Slowdown = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("slowdown").Value): 0
+                            Slowdown = (r.Element("slowdown") != null) ? Int32.Parse(r.Element("slowdown").Value): 0
                        };
             //Voegt de gameproperties toe aan de variable gameProperties
             foreach (var property in lproperties)
@@ -193,7 +193,7 @@ namespace WindesHeim_Game
 
                         case "SlowingObstacle":
                             SlowingObstacle sb = new SlowingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width);
-                            //sb.MovingSpeed = 10;                                                
+                            sb.MovingSpeed = 30;                                               
 
                             gameObjects.Add(sb);
                         break;

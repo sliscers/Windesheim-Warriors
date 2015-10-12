@@ -25,6 +25,7 @@
                <y>200</y>
 			   <height>40</height>
 			   <width>40</width>
+			   <movingspeed>5</movingspeed>
           </object>
 		  
 		  <object>
