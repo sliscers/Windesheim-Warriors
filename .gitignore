@@ -1,8 +1,14 @@
-WindesHeim Game/WindesHeim Game/bin/Debug
-WindesHeim Game/WindesHeim Game/bin/Release
+WindesHeim Game/WindesHeim Game/bin/Debug/
+WindesHeim Game/WindesHeim Game/bin/Release/
 WindesHeim Game/WindesHeim Game/obj/
 WindesHeim Game/WindesHeim Game/Debug/
 WindesHeim Game/WindesHeim Game/Release/
+WindesHeim Game/.vs/
+
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
 #INSTRUCTIES
 #Je hoeft niks te doen

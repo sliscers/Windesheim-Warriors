@@ -182,9 +182,6 @@
     <value>..\resources\Right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="soundEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\soundEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="soundEdited1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\soundEdited1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="soundEditedOnHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -199,7 +196,64 @@
   <data name="Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\Up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="IconESEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconESEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconTCEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconTCEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EXPLODE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\EXPLODE.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="IconSP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconSP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="IconWIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\IconWIN.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\resources\iconwin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DownOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\DownOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LeftOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\LeftOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RightOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\RightOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UpOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\UpOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconWINico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconWINico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARHORN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\CARHORN.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="closeButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\closeButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="editLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\editLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="editorButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\editorButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="goBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\goBack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="highscoresButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\highscoresButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="menuBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\menuBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="newLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\newLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\playButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\playLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

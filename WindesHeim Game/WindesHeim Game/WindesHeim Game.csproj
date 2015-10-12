@@ -47,12 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checkpoint.cs" />
+    <Compile Include="Controllers.cs" />
     <Compile Include="ExplodingObstacle.cs" />
     <Compile Include="Explosion.cs" />
+    <Compile Include="Models.cs" />
     <Compile Include="MovingExplodingObstacle.cs" />
     <Compile Include="GameObject.cs" />
-    <Compile Include="Models.cs" />
-    <Compile Include="Controllers.cs" />
     <Compile Include="GameWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +95,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\closeButton.png" />
+    <Content Include="resources\editLevel.png" />
+    <None Include="resources\editorButton.png" />
+    <None Include="resources\highscoresButton.png" />
+    <Content Include="resources\newLevel.png" />
+    <None Include="resources\playButton.png" />
+    <Content Include="resources\playLevel.png" />
+    <None Include="resources\UpOnClick.png" />
+    <None Include="resources\RightOnClick.png" />
     <None Include="resources\Up.png" />
     <None Include="resources\soundEditedOnHover.png" />
     <None Include="resources\soundEdited1.png" />
@@ -106,10 +115,16 @@
     <None Include="resources\carEdited.png" />
     <None Include="resources\ConceptTransparentBackgroundSmall.png" />
     <None Include="resources\Down.png" />
+    <None Include="resources\EXPLODE.wav" />
+    <None Include="resources\DownOnClick.png" />
+    <None Include="resources\CARHORN.wav" />
     <Content Include="resources\explosion.png" />
+    <Content Include="resources\goBack.png" />
     <Content Include="resources\IconBike.png" />
     <Content Include="resources\IconCar.png" />
     <Content Include="resources\IconES.png" />
+    <None Include="resources\IconESEdited.png" />
+    <None Include="resources\IconSP.png" />
     <Content Include="resources\IconTC.png" />
     <None Include="resources\Left.png" />
     <None Include="resources\menuEdited.png" />
@@ -117,8 +132,10 @@
     <None Include="resources\muteEdited.png" />
     <None Include="resources\muteEditedOnHover.png" />
     <None Include="resources\IconWIN.png" />
-    <None Include="resources\IconWIN.ico" />
+    <None Include="resources\IconTCEdited.png" />
+    <None Include="resources\LeftOnClick.png" />
     <Content Include="resources\menuBackground.png" />
+    <Content Include="resources\otherBackground.png" />
     <Content Include="resources\Player.png" />
     <None Include="resources\playerEdited.png" />
     <None Include="resources\playerEdited1.png" />

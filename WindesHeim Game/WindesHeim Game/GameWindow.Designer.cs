@@ -20,6 +20,9 @@ namespace WindesHeim_Game
         private ControllerGame game;
         private ControllerLevelSelect levelSelect;
         private ControllerHighscores highscores;
+        private ControllerEditorSelect editorSelect;
+        private ControllerEditor editor;
+
 
         private ScreenStates state = ScreenStates.menu;
         private System.ComponentModel.IContainer components = null;
@@ -39,6 +42,9 @@ namespace WindesHeim_Game
             game = new ControllerGame(this);
             levelSelect = new ControllerLevelSelect(this);
             highscores = new ControllerHighscores(this);
+            editorSelect = new ControllerEditorSelect(this);
+            editor = new ControllerEditor(this);
+
 
 
             this.SuspendLayout();
@@ -52,7 +58,7 @@ namespace WindesHeim_Game
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
-            this.Icon = global::WindesHeim_Game.Properties.Resources.IconWIN;
+            this.Icon = global::WindesHeim_Game.Properties.Resources.IconWINico;
             this.ResumeLayout(false);
 
             this.setController(ScreenStates.menu);
@@ -64,7 +70,6 @@ namespace WindesHeim_Game
             switch (state)
             {
                 case ScreenStates.menu:
-                    game.TimerStop();
                     this.state = ScreenStates.menu;
                     menu.RunController();
                     break;
@@ -73,18 +78,19 @@ namespace WindesHeim_Game
                     levelSelect.RunController();
                     break;
                 case ScreenStates.game:
-                    game.TimerStart();
                     this.state = ScreenStates.game;
                     game.RunController();
+                    game.TimerStart();
                     break;
                 case ScreenStates.editorSelect:
                     this.state = ScreenStates.editorSelect;
+                    editorSelect.RunController();
                     break;
                 case ScreenStates.editor:
                     this.state = ScreenStates.editor;
+                    editor.RunController();
                     break;
                 case ScreenStates.highscore:
-                    game.TimerStop();
                     this.state = ScreenStates.highscore;
                     highscores.RunController();
                     break;

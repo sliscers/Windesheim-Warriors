@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Timers;
+using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game
 {
@@ -16,8 +17,7 @@ namespace WindesHeim_Game
 
         public Player(Point location, int height, int width) : base (location, height, width)
         {
-            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png";
-            
+            base.ObjectImage = Resources.Player;
         }
 
         public int Speed
