@@ -79,6 +79,8 @@ namespace WindesHeim_Game
         private bool pressedDown = false;
         private bool pressedSpeed = false;
 
+        public int score = 0;
+
         // Voor de views
         private Obstacle closestObstacle = null;
         private Obstacle nextClosestObstacle = null;
@@ -93,6 +95,7 @@ namespace WindesHeim_Game
             timer.Stop();
 
             // Reset het veld
+            score = 0;
             mg.player.Location = new Point(0, 0);
             UpdatePlayerPosition();
             mg.InitializeField();
@@ -123,9 +126,16 @@ namespace WindesHeim_Game
             ProcessObstacles();
             MuteSound();
             ModelGame mg = (ModelGame)model;
+            countFix(mg);
             mg.graphicsPanel.Invalidate();
             GetClosestObstacle();
             UpdateObstacleLabels(closestObstacle, nextClosestObstacle);
+        }
+
+        private void countFix(ModelGame mg)
+        {
+            score++;
+            mg.score.Text = score.ToString();
         }
 
 
@@ -396,6 +406,7 @@ namespace WindesHeim_Game
 
                     if (gameObstacle.CollidesWith(mg.player))
                     {
+                        score = 0;
                         mg.player.Location = new Point(0, 0);
                         UpdatePlayerPosition();
                         mg.InitializeField();
@@ -445,6 +456,7 @@ namespace WindesHeim_Game
 
                     if (mg.player.CollidesWith(gameObstacle))
                     {
+                        score = 0;
                         mg.player.Location = new Point(0, 0);
                         UpdatePlayerPosition();
                         mg.InitializeField();
@@ -482,6 +494,7 @@ namespace WindesHeim_Game
                     Checkpoint gameObstacle = (Checkpoint)gameObject;
                     if (mg.player.CollidesWith(gameObstacle) && !gameObstacle.Start)
                     {
+                        score = 0;
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
                         if (editor)
@@ -572,7 +585,7 @@ namespace WindesHeim_Game
                     if (difference.TotalSeconds > 1.2)
                     {
                         mg.GameObjects.Remove(gameObject);
-                        mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#DEDEDE");
+                        mg.graphicsPanel.BackColor = Color.White;
                     }
                 }
             }
