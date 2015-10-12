@@ -932,6 +932,7 @@ namespace WindesHeim_Game
         {   
             if(level == null)
             {
+                //Als New level
                 String dialog = showPropertyDialog("Set properties for Level");
                 if (dialog != "")
                 {
@@ -946,6 +947,7 @@ namespace WindesHeim_Game
             }
             else 
             {
+                // Als Edit level
                 level.WriteXML(level.gameProperties, gameObjects, level.gameHighscores);
             }        
         }
