@@ -71,7 +71,7 @@ namespace WindesHeim_Game
         
         // Timer voor de gameloop
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        
+
         // Initialiseren van de buttons
         private bool pressedLeft = false;
         private bool pressedRight = false;
@@ -369,30 +369,47 @@ namespace WindesHeim_Game
                 {
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
 
-                    Point currentLocation = gameObstacle.Location;
-                    Console.WriteLine(currentLocation.ToString());
+                    //Opslaan van huidige locatie in variable om vervolgens te vergelijken
+                    Point currentLocation = gameObstacle.Location;                    
 
-                    gameObstacle.ChasePlayer(mg.player);
-
-                    Console.WriteLine(gameObstacle.Location.ToString());
-
-
+                    gameObstacle.ChasePlayer(mg.player);                    
+                    
                     // Loop door alle objecten op het veld
                     foreach (GameObject potentialCollision in safeListArray)
                     {
                         // We willen niet onszelf checken, en we willen alleen collision voor StaticObstacles en ExplodingObstacles
                         if (gameObject != potentialCollision && (potentialCollision is StaticObstacle || potentialCollision is ExplodingObstacle))
                         {
-                            gameObject.ProcessCollision(potentialCollision);
+                            string returnDirection = gameObject.ProcessCollision(potentialCollision);
+                            //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
+                            if (currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
+                            {
+                                gameObstacle.SmartMovingEnabled = true;
+                                gameObstacle.SmartmovingDirection = returnDirection;
+                                //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                                gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
+                            }
                         }
                     }
-                    Console.WriteLine(gameObstacle.Location.ToString());
 
-
-                    if (currentLocation.Equals(gameObstacle.Location))
+                    if (gameObstacle.IsSmart)
                     {
-                        Console.WriteLine("Ik sta stil");
+                        //Controleert als het object nog steeds slim moet zijn
+                        if (gameObstacle.SmartmovingTime >= DateTime.Now)
+                        {
+                            //Probeert weg te komen van stilstaant object
+                            //Console.WriteLine("Ik probeer weg te komen");
+                            gameObstacle.TryToEscape();
+                        }
+                        else
+                        {
+                            gameObstacle.SmartMovingEnabled = false;
+                            gameObstacle.SmartmovingDirection = ""; // Reset direction voor smart movement
+                            //Console.WriteLine("Datetime is verlopen");
+                        }
                     }
+
+
 
                     if (gameObstacle.CollidesWith(mg.player))
                     {
@@ -824,6 +841,7 @@ namespace WindesHeim_Game
 
         public void newLevel_Click(object sender, EventArgs e)
         {
+            ModelEditor.level = null;
             gameWindow.setController(ScreenStates.editor);
         }
     }
@@ -835,10 +853,6 @@ namespace WindesHeim_Game
         private ModelEditor modelEditor;
 
         private List<GameObject> gameObjects = new List<GameObject>();
-
-        private Graphics g;
-
-        private Graphics gamePanelGraphics;
 
         private Point MouseDownLocation = new Point(20, 20);
         private bool isDragging = false;
@@ -857,6 +871,7 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.editorSelect);
             level = null;
+            gameObjects.Clear();
         }
 
         public void testLevel_Click(object sender, EventArgs e)

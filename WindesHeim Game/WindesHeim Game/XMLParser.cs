@@ -181,6 +181,7 @@ namespace WindesHeim_Game
                             //If statements voor dynamische gegevens in xml <object>
                             Movingspeed = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("movingspeed").Value): 0,
                             Slowdown = (r.Element("slowingspeed") != null) ? Int32.Parse(r.Element("slowingspeed").Value): 0,
+                            Smart = (r.Element("smart") != null) ? bool.Parse(r.Element("smart").Value) : false,
                             Image = (r.Element("image") != null) ? r.Element("image").Value : ""
                        };
             //Voegt de gameproperties toe aan de variable gameProperties
@@ -215,7 +216,7 @@ namespace WindesHeim_Game
                         case "MovingExplodingObstacle":
                             MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width);
                             moe.MovingSpeed = gameObject.Movingspeed;
-
+                            moe.IsSmart = gameObject.Smart;
                             gameObjects.Add(moe);
                         break;
 
@@ -227,7 +228,7 @@ namespace WindesHeim_Game
                             SlowingObstacle sb = new SlowingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width);
                             sb.MovingSpeed = gameObject.Movingspeed;
                             sb.SlowingSpeed = gameObject.Slowdown;
-
+                            sb.IsSmart = gameObject.Smart;
                             gameObjects.Add(sb);
                         break;
                 }
@@ -283,6 +284,10 @@ namespace WindesHeim_Game
                     xmlWriter.WriteStartElement("movingspeed");
                     xmlWriter.WriteValue(((MovingExplodingObstacle)gameObject).MovingSpeed); //Movingspeed
                     xmlWriter.WriteEndElement();
+
+                    xmlWriter.WriteStartElement("smart");
+                    xmlWriter.WriteValue(((MovingExplodingObstacle)gameObject).IsSmart); //Movingspeed
+                    xmlWriter.WriteEndElement();
                 }
                 else if (gameObject is StaticObstacle)
                 {
@@ -298,6 +303,10 @@ namespace WindesHeim_Game
 
                     xmlWriter.WriteStartElement("slowingspeed");
                     xmlWriter.WriteValue(((SlowingObstacle)gameObject).SlowingSpeed); //Movingspeed
+                    xmlWriter.WriteEndElement();
+
+                    xmlWriter.WriteStartElement("smart");
+                    xmlWriter.WriteValue(((SlowingObstacle)gameObject).IsSmart); //Movingspeed
                     xmlWriter.WriteEndElement();
                 }
                 xmlWriter.WriteStartElement("type");
