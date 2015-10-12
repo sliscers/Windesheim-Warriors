@@ -1061,7 +1061,7 @@ namespace WindesHeim_Game
                 else if (returnValues[1] == "Slow")
                     sb.SlowingSpeed = 2;
                 else if (returnValues[1] == "Normal")
-                    sb.SlowingSpeed = 3;
+                    sb.SlowingSpeed = 4;
 
                 gameObjects.Add(sb);
                 modelEditor.gamePanel.Invalidate();
