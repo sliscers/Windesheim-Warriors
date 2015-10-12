@@ -853,6 +853,7 @@ namespace WindesHeim_Game
             if (level != null)
             { 
                 ModelGame.level = level;
+                ModelEditor.level = level;
                 ControllerGame.editor = true;
                 gameWindow.setController(ScreenStates.game);
             }
