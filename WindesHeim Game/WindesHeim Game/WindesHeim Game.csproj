@@ -95,8 +95,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\closeButton.png" />
     <Content Include="resources\editLevel.png" />
+    <None Include="resources\editorButton.png" />
+    <None Include="resources\highscoresButton.png" />
     <Content Include="resources\newLevel.png" />
+    <None Include="resources\playButton.png" />
     <Content Include="resources\playLevel.png" />
     <None Include="resources\UpOnClick.png" />
     <None Include="resources\RightOnClick.png" />
