@@ -983,21 +983,21 @@ namespace WindesHeim_Game
 
         public void StaticObstacle_MouseUp(object sender, MouseEventArgs e)
         {
-            modelEditor.staticObstacle.Location = new System.Drawing.Point(10, 10);
+            modelEditor.staticObstacle.Location = new System.Drawing.Point(10, 60);
             gameObjects.Add(new StaticObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
             modelEditor.gamePanel.Invalidate();
         }
 
         public void ExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
-            modelEditor.explodingObstacle.Location = new System.Drawing.Point(10, 60);
+            modelEditor.explodingObstacle.Location = new System.Drawing.Point(10, 110);
             gameObjects.Add(new ExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
             modelEditor.gamePanel.Invalidate();
         }
 
         public void MovingExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
-            modelEditor.movingExplodingObstacle.Location = new System.Drawing.Point(10, 110);
+            modelEditor.movingExplodingObstacle.Location = new System.Drawing.Point(10, 160);
             String dialog = ShowDialog("SlowingObstacle", "Set properties for Moving Obstacle");
             if(dialog != "")
             {
@@ -1011,7 +1011,7 @@ namespace WindesHeim_Game
 
         public void SlowingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
-            modelEditor.slowingObstacle.Location = new System.Drawing.Point(10, 160);
+            modelEditor.slowingObstacle.Location = new System.Drawing.Point(10, 210);
             String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
             if (dialog != "")
             {
@@ -1065,11 +1065,13 @@ namespace WindesHeim_Game
         public void MouseDown(object sender, MouseEventArgs e) {
             if(e.Button == MouseButtons.Left) {
                 foreach (GameObject gameObject in gameObjects) {
-                    GameObject tempGameObject = new GameObject(new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y), 40, 40);
-                    Console.WriteLine(tempGameObject.Location);
-                    if (gameObject.CollidesWith(tempGameObject)) {
-                        objectDragging = gameObject;
-                    }
+                    if(!(gameObject is Checkpoint)) {
+                        GameObject tempGameObject = new GameObject(new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y), 40, 40);
+                        Console.WriteLine(tempGameObject.Location);
+                        if (gameObject.CollidesWith(tempGameObject)) {
+                            objectDragging = gameObject;
+                        }
+                    }                   
                 }
             }       
         }
@@ -1127,6 +1129,17 @@ namespace WindesHeim_Game
             }
 
             g.FillRectangle(new SolidBrush(Color.LightGray), new Rectangle(new Point(0, 0), new Size(modelEditor.widthDragDropPanel, 475)));
+
+            Font drawFont = new Font("Arial", 16);
+            SolidBrush drawBrush = new SolidBrush(Color.Black);
+
+            g.DrawString("Drag en drop", drawFont, drawBrush, new Point(10, 10));
+
+            drawFont = new Font("Arial", 8);
+            g.DrawString("Static obstacle", drawFont, drawBrush, new Point(60, 70));
+            g.DrawString("Exploding obstacle", drawFont, drawBrush, new Point(60, 120));
+            g.DrawString("Moving exploding obstacle", drawFont, drawBrush, new Point(60, 170));
+            g.DrawString("Slowing obstacle", drawFont, drawBrush, new Point(60, 220));
         }
     }
 }
