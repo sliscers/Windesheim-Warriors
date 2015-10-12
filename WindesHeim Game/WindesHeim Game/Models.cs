@@ -1115,7 +1115,6 @@ namespace WindesHeim_Game
 
     public class ModelEditor : Model
     {
-        public ListBox listBoxLevels;
         public Button goBack;
         public Button saveLevel;
         public Button testLevel;
@@ -1157,7 +1156,7 @@ namespace WindesHeim_Game
             dragDropLabel = new Label();
             dragDropLabel.Text = "Drag en drop";
             dragDropLabel.Font = new Font("Arial", 12);
-            dragDropLabel.Location = new System.Drawing.Point(920, 50);
+            dragDropLabel.Location = new System.Drawing.Point(10, 50);
             dragDropLabel.Size = new System.Drawing.Size(200, 30);
 
             gamePanel = new PictureBox();
@@ -1170,9 +1169,6 @@ namespace WindesHeim_Game
             gamePanel.MouseUp += editorController.MouseUp;
             gamePanel.BorderStyle = BorderStyle.FixedSingle;
 
-            listBoxLevels = new ListBox();
-            listBoxLevels.Size = new System.Drawing.Size(200, 475);
-            listBoxLevels.Location = new System.Drawing.Point(0, 0);
 
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
@@ -1208,7 +1204,7 @@ namespace WindesHeim_Game
             //staticObstacle.AllowDrop = true;
             staticObstacle.BackgroundImageLayout = ImageLayout.None;
             staticObstacle.Image = Resources.IconTC;
-            staticObstacle.Location = new System.Drawing.Point(10, 10);
+            staticObstacle.Location = new System.Drawing.Point(10, 60);
             staticObstacle.Name = "staticObstacle";
             staticObstacle.Size = new System.Drawing.Size(40, 40);
             staticObstacle.SizeMode = PictureBoxSizeMode.Zoom;
@@ -1221,7 +1217,7 @@ namespace WindesHeim_Game
             explodingObstacle = new PictureBox();
             explodingObstacle.BackgroundImageLayout = ImageLayout.None;
             explodingObstacle.Image = Resources.IconCar;
-            explodingObstacle.Location = new System.Drawing.Point(10, 60);
+            explodingObstacle.Location = new System.Drawing.Point(10, 110);
             explodingObstacle.Name = "explodingObstacle";
             explodingObstacle.Size = new System.Drawing.Size(40, 40);
             explodingObstacle.SizeMode = PictureBoxSizeMode.Zoom;
@@ -1234,7 +1230,7 @@ namespace WindesHeim_Game
             movingExplodingObstacle = new PictureBox();
             movingExplodingObstacle.BackgroundImageLayout = ImageLayout.None;
             movingExplodingObstacle.Image = Resources.IconBike;
-            movingExplodingObstacle.Location = new System.Drawing.Point(10, 110);
+            movingExplodingObstacle.Location = new System.Drawing.Point(10, 160);
             movingExplodingObstacle.Name = "movingExplodingObstacle";
             movingExplodingObstacle.Size = new System.Drawing.Size(40, 40);
             movingExplodingObstacle.SizeMode = PictureBoxSizeMode.Zoom;
@@ -1247,7 +1243,7 @@ namespace WindesHeim_Game
             slowingObstacle = new PictureBox();
             slowingObstacle.BackgroundImageLayout = ImageLayout.None;
             slowingObstacle.Image = Resources.IconES;
-            slowingObstacle.Location = new System.Drawing.Point(10, 160);
+            slowingObstacle.Location = new System.Drawing.Point(10, 210);
             slowingObstacle.Name = "slowingObstacle";
             slowingObstacle.Size = new System.Drawing.Size(40, 40);
             slowingObstacle.SizeMode = PictureBoxSizeMode.Zoom;
