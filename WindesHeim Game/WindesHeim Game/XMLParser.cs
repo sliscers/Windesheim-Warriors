@@ -117,27 +117,36 @@ namespace WindesHeim_Game
         public static void LoadAllLevels()
         {
             Levels.Clear();
-            string[] fileEntries = Directory.GetFiles("../levels/");
-            foreach (string file in fileEntries)
+            String dirPath = "../levels/";
+                string[] fileEntries = Directory.GetFiles(dirPath);
+                foreach (string file in fileEntries)
+                {
+                    if (File.Exists(file))
+                    {
+                        if (isXML(file))
+                        {
+                            XMLParser xml = new XMLParser(file);
+                            xml.ReadXML();
+                            Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+                        }
+                    }
+                }
+        }
+        private static bool isXML(string file)
+        {
+            try { XDocument doc = XDocument.Load(file); }
+            catch (Exception e)
             {
-                XMLParser xml = new XMLParser(file);
-                xml.ReadXML();
-                Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+                return false;
             }
+            return true;
         }
 
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
         public void ReadXML()
         {
 
-            XDocument doc = new XDocument();
-            //Laad het XML bestand in een document object
-            try
-            {
-                doc = XDocument.Load(this.path);
-            }catch (Exception e){
-                //tODO
-            }           
+            XDocument doc = XDocument.Load(this.path);    
 
             //Initieert de variablen
             gameHighscores = new List<GameHighscores>();

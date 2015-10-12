@@ -83,6 +83,8 @@ namespace WindesHeim_Game
         private Obstacle closestObstacle = null;
         private Obstacle nextClosestObstacle = null;
 
+        //Test level in editor
+        public static bool editor = false;
 
         public void RestartClicked(object sender, MouseEventArgs e)
         {
@@ -104,6 +106,7 @@ namespace WindesHeim_Game
             mg.InitializeField();
             gameWindow.setController(ScreenStates.menu);
 
+            timer.Stop();
         }
 
         public ControllerGame(GameWindow form) : base(form)
@@ -472,7 +475,13 @@ namespace WindesHeim_Game
                     {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
-                        gameWindow.setController(ScreenStates.menu);
+                        if (editor)
+                        {
+                            gameWindow.setController(ScreenStates.editor);
+                        }
+                        else{
+                            gameWindow.setController(ScreenStates.menu);
+                        }
                     }
                 }
 
@@ -664,11 +673,8 @@ namespace WindesHeim_Game
         {
             timer.Stop();
         }
-
-      
-        
-
     }
+
     public class ControllerLevelSelect : Controller
     {
         private XMLParser currentSelectedLevel;
@@ -773,7 +779,7 @@ namespace WindesHeim_Game
         }
         public void goBack_Click(object sender, EventArgs e)
         {
-            gameWindow.setController(ScreenStates.menu);
+            gameWindow.setController(ScreenStates.menu);            
         }
         public void level_Select(object sender, EventArgs e)
         {
@@ -841,6 +847,7 @@ namespace WindesHeim_Game
         public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.editorSelect);
+            level = null;
         }
 
         public void testLevel_Click(object sender, EventArgs e)
@@ -850,6 +857,7 @@ namespace WindesHeim_Game
             if (level != null)
             { 
                 ModelGame.level = level;
+                ControllerGame.editor = true;
                 gameWindow.setController(ScreenStates.game);
             }
         }
@@ -868,7 +876,7 @@ namespace WindesHeim_Game
                     level.WriteXML(gameProperties,gameObjects);
                 }
             }
-
+            level = null;
         }
 
         private String showPropertyDialog(string dialogTitle)
@@ -904,11 +912,7 @@ namespace WindesHeim_Game
         {
             base.RunController();
             level = ModelEditor.level;
-            if (level == null) //New Level aanmaken
-            {
-
-            }
-            else
+            if (level != null) //if null = New Level aanmaken
             { //Bestaand level bewerken
                 gameObjects = level.getCleanGameObjects();
             }
