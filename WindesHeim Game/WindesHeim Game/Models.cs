@@ -1122,12 +1122,15 @@ namespace WindesHeim_Game
         public Button undoButton;
         public Button clearButton;
         public Panel alignPanel;
-        public Panel gamePanel;
+        private Panel backgroundImage;
+        public PictureBox gamePanel;
         public PictureBox staticObstacle;
         public PictureBox explodingObstacle;
         public PictureBox movingExplodingObstacle;
         public PictureBox slowingObstacle;
         private Label dragDropLabel;
+
+        public int widthDragDropPanel = 210;
 
 
         //XML Gegevens van level worden hierin meeggegeven
@@ -1142,17 +1145,34 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
+            alignPanel = new Panel();
+            alignPanel.AutoSize = true;
+            alignPanel.BackColor = Color.Transparent;
+
+            backgroundImage = new Panel();
+            backgroundImage.Location = new System.Drawing.Point(0, 0);
+            backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
+            backgroundImage.BackgroundImage = Resources.menuBackground;
+
             dragDropLabel = new Label();
             dragDropLabel.Text = "Drag en drop";
             dragDropLabel.Font = new Font("Arial", 12);
             dragDropLabel.Location = new System.Drawing.Point(920, 50);
             dragDropLabel.Size = new System.Drawing.Size(200, 30);
 
-            gamePanel = new Panel();
-            gamePanel.Location = new System.Drawing.Point(0, 0);
-            gamePanel.Size = new System.Drawing.Size(845, 475);
-            gamePanel.BackColor = Color.DarkGray;
+            gamePanel = new PictureBox();
+            gamePanel.Location = new System.Drawing.Point(0, 0); // 210
+            gamePanel.Size = new System.Drawing.Size(845 + widthDragDropPanel, 475);
+            gamePanel.BackColor = Color.White;
             gamePanel.Paint += new PaintEventHandler(editorController.GamePanel_Paint);
+            gamePanel.MouseDown += editorController.MouseDown;
+            gamePanel.MouseMove += editorController.ObjectMouseDrag;
+            gamePanel.MouseUp += editorController.MouseUp;
+            gamePanel.BorderStyle = BorderStyle.FixedSingle;
+
+            listBoxLevels = new ListBox();
+            listBoxLevels.Size = new System.Drawing.Size(200, 475);
+            listBoxLevels.Location = new System.Drawing.Point(0, 0);
 
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
@@ -1188,7 +1208,7 @@ namespace WindesHeim_Game
             //staticObstacle.AllowDrop = true;
             staticObstacle.BackgroundImageLayout = ImageLayout.None;
             staticObstacle.Image = Resources.IconTC;
-            staticObstacle.Location = new System.Drawing.Point(920, 87);
+            staticObstacle.Location = new System.Drawing.Point(10, 10);
             staticObstacle.Name = "staticObstacle";
             staticObstacle.Size = new System.Drawing.Size(40, 40);
             staticObstacle.SizeMode = PictureBoxSizeMode.Zoom;
@@ -1201,7 +1221,7 @@ namespace WindesHeim_Game
             explodingObstacle = new PictureBox();
             explodingObstacle.BackgroundImageLayout = ImageLayout.None;
             explodingObstacle.Image = Resources.IconCar;
-            explodingObstacle.Location = new System.Drawing.Point(920, 137);
+            explodingObstacle.Location = new System.Drawing.Point(10, 60);
             explodingObstacle.Name = "explodingObstacle";
             explodingObstacle.Size = new System.Drawing.Size(40, 40);
             explodingObstacle.SizeMode = PictureBoxSizeMode.Zoom;
@@ -1214,7 +1234,7 @@ namespace WindesHeim_Game
             movingExplodingObstacle = new PictureBox();
             movingExplodingObstacle.BackgroundImageLayout = ImageLayout.None;
             movingExplodingObstacle.Image = Resources.IconBike;
-            movingExplodingObstacle.Location = new System.Drawing.Point(920, 187);
+            movingExplodingObstacle.Location = new System.Drawing.Point(10, 110);
             movingExplodingObstacle.Name = "movingExplodingObstacle";
             movingExplodingObstacle.Size = new System.Drawing.Size(40, 40);
             movingExplodingObstacle.SizeMode = PictureBoxSizeMode.Zoom;
@@ -1223,11 +1243,11 @@ namespace WindesHeim_Game
             movingExplodingObstacle.MouseDown += editorController.updateMousePosition;
             movingExplodingObstacle.MouseMove += editorController.updateDragPosition;
             movingExplodingObstacle.MouseUp += editorController.MovingExplodingObstacle_MouseUp;
-
+            
             slowingObstacle = new PictureBox();
             slowingObstacle.BackgroundImageLayout = ImageLayout.None;
             slowingObstacle.Image = Resources.IconES;
-            slowingObstacle.Location = new System.Drawing.Point(920, 237);
+            slowingObstacle.Location = new System.Drawing.Point(10, 160);
             slowingObstacle.Name = "slowingObstacle";
             slowingObstacle.Size = new System.Drawing.Size(40, 40);
             slowingObstacle.SizeMode = PictureBoxSizeMode.Zoom;
@@ -1237,17 +1257,26 @@ namespace WindesHeim_Game
             slowingObstacle.MouseMove += editorController.updateDragPosition;
             slowingObstacle.MouseUp += editorController.SlowingObstacle_MouseUp;
 
-            gameWindow.Controls.Add(staticObstacle);
-            gameWindow.Controls.Add(explodingObstacle);
-            gameWindow.Controls.Add(movingExplodingObstacle);
-            gameWindow.Controls.Add(slowingObstacle);
-            gameWindow.Controls.Add(gamePanel);
-            gameWindow.Controls.Add(goBack);
-            gameWindow.Controls.Add(saveLevel);
-            gameWindow.Controls.Add(testLevel);
-            gameWindow.Controls.Add(undoButton);
-            gameWindow.Controls.Add(clearButton);
-            gameWindow.Controls.Add(dragDropLabel);
+            gameWindow.Controls.Add(backgroundImage);
+            backgroundImage.Controls.Add(alignPanel);
+            alignPanel.Controls.Add(gamePanel);
+
+            gamePanel.Controls.Add(staticObstacle);
+            gamePanel.Controls.Add(explodingObstacle);
+            gamePanel.Controls.Add(movingExplodingObstacle);
+            gamePanel.Controls.Add(slowingObstacle);
+
+            alignPanel.Controls.Add(gamePanel);
+            alignPanel.Controls.Add(goBack);
+            alignPanel.Controls.Add(saveLevel);
+            alignPanel.Controls.Add(testLevel);
+            alignPanel.Controls.Add(undoButton);
+            alignPanel.Controls.Add(clearButton);
+            alignPanel.Controls.Add(dragDropLabel);
+
+            alignPanel.Location = new Point(
+                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
         }
     }
 }
