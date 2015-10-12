@@ -1071,7 +1071,8 @@ namespace WindesHeim_Game
             XMLParser.LoadAllLevels();
             foreach (XMLParser xml in XMLParser.Levels)
             {
-                listBoxLevels.Items.Add(xml);
+                if(xml != null)
+                    listBoxLevels.Items.Add(xml);
             }
 
             listBoxLevels.SelectedIndexChanged += editorSelectController.level_Select;
@@ -1116,7 +1117,8 @@ namespace WindesHeim_Game
     {
         public ListBox listBoxLevels;
         public Button goBack;
-        public Button playLevel;
+        public Button saveLevel;
+        public Button testLevel;
         public Button undoButton;
         public Button clearButton;
         public Panel alignPanel;
@@ -1158,11 +1160,17 @@ namespace WindesHeim_Game
             goBack.Text = "Go Back";
             goBack.Click += editorController.goBack_Click;
 
-            playLevel = new Button();
-            playLevel.Size = new System.Drawing.Size(422, 25);
-            playLevel.Location = new System.Drawing.Point(210, 525);
-            playLevel.Text = "Test Level";
-            playLevel.Click += editorController.playLevel_Click;
+            testLevel = new Button();
+            testLevel.Size = new System.Drawing.Size(200, 25);
+            testLevel.Location = new System.Drawing.Point(210, 525);
+            testLevel.Text = "Test Level";
+            testLevel.Click += editorController.testLevel_Click;
+
+            saveLevel = new Button();
+            saveLevel.Size = new System.Drawing.Size(200, 25);
+            saveLevel.Location = new System.Drawing.Point(420, 525);
+            saveLevel.Text = "Save Level";
+            saveLevel.Click += editorController.saveLevel_Click;
 
             undoButton = new Button();
             undoButton.Size = new System.Drawing.Size(100, 25);
@@ -1235,7 +1243,8 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(slowingObstacle);
             gameWindow.Controls.Add(gamePanel);
             gameWindow.Controls.Add(goBack);
-            gameWindow.Controls.Add(playLevel);
+            gameWindow.Controls.Add(saveLevel);
+            gameWindow.Controls.Add(testLevel);
             gameWindow.Controls.Add(undoButton);
             gameWindow.Controls.Add(clearButton);
             gameWindow.Controls.Add(dragDropLabel);

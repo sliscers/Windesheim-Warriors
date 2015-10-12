@@ -829,6 +829,8 @@ namespace WindesHeim_Game
         private bool isDragging = false;
         public int mouseX = 0;
         public int mouseY = 0;
+        private int defaultSize = 40;
+        private int defaultSpeed = 0;
 
         public ControllerEditor(GameWindow form) : base(form)
         {
@@ -841,20 +843,61 @@ namespace WindesHeim_Game
             gameWindow.setController(ScreenStates.editorSelect);
         }
 
-        public void playLevel_Click(object sender, EventArgs e)
+        public void testLevel_Click(object sender, EventArgs e)
         {
-            level = new XMLParser("test");
+            level = new XMLParser();
             level.gameObjects = gameObjects;
-            if (level == null)
-            {
-                Console.WriteLine("error, level is null");
-            }
-            else
-            {
+            if (level != null)
+            { 
                 ModelGame.level = level;
                 gameWindow.setController(ScreenStates.game);
             }
+        }
 
+        public void saveLevel_Click(object sender, EventArgs e)
+        {            
+            String dialog = showPropertyDialog("Set properties for Level");
+            if (dialog != "")
+            {
+                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                Console.Write(dialog.ToString());
+                GameProperties gameProperties = new GameProperties(returnValues[0].ToString(), returnValues[1].ToString());
+                level = new XMLParser("../levels/" + returnValues[0] + ".xml");
+                if (level != null)
+                {
+                    level.WriteXML(gameProperties,gameObjects);
+                }
+            }
+
+        }
+
+        private String showPropertyDialog(string dialogTitle)
+        {
+            prompt = new Form();
+            prompt.Width = 250;
+            prompt.Height = 210;
+            //prompt.AutoSize = true;
+            prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+            prompt.Text = "Save Level";
+            prompt.StartPosition = FormStartPosition.CenterScreen;
+
+            Label textLabelName = new Label() { Left = 10, Top = 20, Text = "Level name:" };
+            TextBox textBoxName = new TextBox() { Left = 110, Top = 18, Width = 100 };
+            Label textLabelDifficulty = new Label() { Left = 10, Top = 50, Text = "Level difficulty" };
+            TextBox textBoxDifficulty = new TextBox() { Left = 110, Top = 48, Width = 100 };
+
+            Button cancel = new Button() { Text = "Cancel", Left = 10, Width = 100, Top = 140, DialogResult = DialogResult.Cancel };
+            Button confirmation = new Button() { Text = "Save", Left = 110, Width = 100, Top = 140, DialogResult = DialogResult.OK };
+            prompt.Controls.Add(textLabelName);
+            prompt.Controls.Add(textBoxName);
+            prompt.Controls.Add(textLabelDifficulty);
+            prompt.Controls.Add(textBoxDifficulty);
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(cancel);
+            prompt.AcceptButton = confirmation;
+            prompt.CancelButton = cancel;
+
+            return prompt.ShowDialog() == DialogResult.OK ? textBoxName.Text + "|" + textBoxDifficulty.Text : "";
         }
 
         public override void RunController()
@@ -873,8 +916,8 @@ namespace WindesHeim_Game
             updatePreview();
         }
         private Form prompt;
-        private Label textLabelSize;
-        private TextBox textBoxSize;
+        //private Label textLabelSize;
+        //private TextBox textBoxSize;
         private Label textLabelSlowingSpeed;
         private TextBox textBoxSlowingSpeed;
         private Label textLabelSmart;
@@ -882,7 +925,7 @@ namespace WindesHeim_Game
         private Label textLabelMovingSpeed;
         private TextBox textBoxMovingSpeed;
 
-        public Form ShowDialog(string type, string dialogTitle)
+        public String ShowDialog(string type, string dialogTitle)
         {
             prompt = new Form();
             prompt.Width = 250;
@@ -892,20 +935,21 @@ namespace WindesHeim_Game
             prompt.Text = dialogTitle;
             prompt.StartPosition = FormStartPosition.CenterScreen;
 
-            textLabelSize = new Label() { Left = 10, Top = 20, Text = "Size (default = 40):" };
-            textBoxSize = new TextBox() { Left = 110, Top = 18, Width = 100 };
-            int size = 40;
-            textBoxSize.Text = size.ToString();
+            //textLabelSize = new Label() { Left = 10, Top = 20, Text = "Size (default = 40):" };
+            //textBoxSize = new TextBox() { Left = 110, Top = 18, Width = 100 };
+            //int size = 40;
+            //textBoxSize.Text = size.ToString();
 
-            if(type == "ExplodingObstacle") {
+            if (type == "ExplodingObstacle") {
 
             }
             if(type == "MovingExplodingObstacle" || type == "SlowingObstacle")
             {
-                 textLabelSlowingSpeed = new Label() { Left = 10, Top = 50, Text = "Size (default = ?):" };
-                 textBoxSlowingSpeed = new TextBox() { Left = 110, Top = 48, Width = 100 };
-                 textLabelSmart = new Label() { Left = 10, Top = 80, Text = "Smart folowing (default = off):" };         
-                 checkBoxSmart = new CheckBox() { Left = 110, Top = 78, Width = 100 };
+                textLabelMovingSpeed = new Label() { Left = 10, Top = 50, Text = "Movingspeed (default = 0):" };
+                textBoxMovingSpeed = new TextBox() { Left = 110, Top = 48, Width = 100 };
+                textBoxMovingSpeed.Text = defaultSpeed.ToString();
+                textLabelSmart = new Label() { Left = 10, Top = 80, Text = "Smart following (default = off):" };         
+                checkBoxSmart = new CheckBox() { Left = 110, Top = 78, Width = 100 };
                 prompt.Controls.Add(textLabelSlowingSpeed);
                 prompt.Controls.Add(textBoxSlowingSpeed);
                 prompt.Controls.Add(textLabelSmart);
@@ -913,8 +957,9 @@ namespace WindesHeim_Game
             }
             if (type == "SlowingObstacle")
             {
-                 textLabelMovingSpeed = new Label() { Left = 10, Top = 110, Text = "Size (default = ?):" };
-                 textBoxMovingSpeed = new TextBox() { Left = 110, Top = 108, Width = 100 };
+                textLabelSlowingSpeed = new Label() { Left = 10, Top = 110, Text = "Slowingspeed (default = 0):" };
+                textBoxSlowingSpeed = new TextBox() { Left = 110, Top = 108, Width = 100 };
+                textBoxSlowingSpeed.Text = defaultSpeed.ToString();
                 prompt.Controls.Add(textLabelMovingSpeed);
                 prompt.Controls.Add(textBoxMovingSpeed);
             }
@@ -926,46 +971,57 @@ namespace WindesHeim_Game
             Button cancel = new Button() { Text = "Cancel", Left = 10, Width = 100, Top = 140, DialogResult = DialogResult.Cancel };
             Button confirmation = new Button() { Text = "Save", Left = 110, Width = 100, Top = 140, DialogResult = DialogResult.OK };
             confirmation.Click += (sender, e) => { prompt.Close(); };
-            prompt.Controls.Add(textLabelSize);
+            //prompt.Controls.Add(textLabelSize);
             prompt.Controls.Add(confirmation);
             prompt.Controls.Add(cancel);
-            prompt.Controls.Add(textBoxSize);
+            //prompt.Controls.Add(textBoxSize);
             prompt.AcceptButton = confirmation;
             prompt.CancelButton = cancel;
 
-            return prompt;
+            return prompt.ShowDialog() == DialogResult.OK ? textBoxMovingSpeed.Text + "|" + textBoxSlowingSpeed.Text + "|" + checkBoxSmart.CheckState : "";
         }
 
         public void StaticObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.staticObstacle.Location = new System.Drawing.Point(920, 77);
-            ShowDialog("SlowingObstacle", "Set properties for Static Obstacle");
-            gameObjects.Add(new StaticObstacle(new Point(mouseX, mouseY), 40, 40));
+            gameObjects.Add(new StaticObstacle(new Point(mouseX, mouseY), defaultSize, defaultSize));
             updatePreview();
         }
 
         public void ExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.explodingObstacle.Location = new System.Drawing.Point(920, 137);
-            ShowDialog("SlowingObstacle", "Set properties for Exploding Obstacle");
-            gameObjects.Add(new ExplodingObstacle(new Point(mouseX, mouseY), 40, 40));
+            gameObjects.Add(new ExplodingObstacle(new Point(mouseX, mouseY), defaultSize, defaultSize));
             updatePreview();
         }
 
         public void MovingExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.movingExplodingObstacle.Location = new System.Drawing.Point(920, 187);
-            ShowDialog("SlowingObstacle", "Set properties for Moving Obstacle");
-            gameObjects.Add(new MovingExplodingObstacle(new Point(mouseX, mouseY), Int32.Parse(textBoxSize.Text), Int32.Parse(textBoxSize.Text)));
-            updatePreview();
+            String dialog = ShowDialog("SlowingObstacle", "Set properties for Moving Obstacle");
+            if(dialog != "")
+            {
+                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(mouseX, mouseY), defaultSize, defaultSize);
+                moe.MovingSpeed = Int32.Parse(returnValues[0]);
+                gameObjects.Add(moe);
+                updatePreview();
+            }
         }
 
         public void SlowingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.slowingObstacle.Location = new System.Drawing.Point(920, 237);
-            ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
-            gameObjects.Add(new SlowingObstacle(new Point(mouseX, mouseY), 40, 40));
-            updatePreview();
+            String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
+            if (dialog != "")
+            {
+                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                SlowingObstacle sb = new SlowingObstacle(new Point(mouseX, mouseY), defaultSize, defaultSize);
+                sb.MovingSpeed = Int32.Parse(returnValues[0]);
+                sb.SlowingSpeed = Int32.Parse(returnValues[1]);
+                gameObjects.Add(sb);
+                updatePreview();
+            }
         }
 
         public void updateDragPosition(object sender, MouseEventArgs e)
