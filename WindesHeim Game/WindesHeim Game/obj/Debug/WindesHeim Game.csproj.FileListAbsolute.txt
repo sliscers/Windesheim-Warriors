@@ -50,3 +50,4 @@ C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warr
 C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.GameWindow.resources
 C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim_Game.Properties.Resources.resources
 C:\Users\Gerrit\Dropbox\Software Engineering Jaar 2 (15-16)\KBS1\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
+C:\Users\Sliscers\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csprojResolveAssemblyReference.cache
