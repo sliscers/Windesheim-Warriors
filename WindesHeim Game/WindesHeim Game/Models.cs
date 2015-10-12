@@ -1115,7 +1115,7 @@ namespace WindesHeim_Game
 
     public class ModelEditor : Model
     {
-        public Button goBack;
+        public PictureBox goBack;
         public Button saveLevel;
         public Button testLevel;
         public Button undoButton;
@@ -1170,10 +1170,11 @@ namespace WindesHeim_Game
             gamePanel.BorderStyle = BorderStyle.FixedSingle;
 
 
-            goBack = new Button();
-            goBack.Size = new System.Drawing.Size(200, 25);
+            goBack = new PictureBox();
+            goBack.Size = new System.Drawing.Size(200, 44);
             goBack.Location = new System.Drawing.Point(0, 525);
             goBack.Text = "Go Back";
+            goBack.Image = Resources.goBack;
             goBack.Click += editorController.goBack_Click;
 
             testLevel = new Button();
