@@ -58,7 +58,7 @@ namespace WindesHeim_Game
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
-            //this.Icon = global::WindesHeim_Game.Properties.Resources.IconWIN;
+            this.Icon = global::WindesHeim_Game.Properties.Resources.IconWINico;
             this.ResumeLayout(false);
 
             this.setController(ScreenStates.menu);
@@ -70,7 +70,6 @@ namespace WindesHeim_Game
             switch (state)
             {
                 case ScreenStates.menu:
-                    game.TimerStop();
                     this.state = ScreenStates.menu;
                     menu.RunController();
                     break;
@@ -79,9 +78,9 @@ namespace WindesHeim_Game
                     levelSelect.RunController();
                     break;
                 case ScreenStates.game:
-                    game.TimerStart();
                     this.state = ScreenStates.game;
                     game.RunController();
+                    game.TimerStart();
                     break;
                 case ScreenStates.editorSelect:
                     this.state = ScreenStates.editorSelect;
@@ -92,7 +91,6 @@ namespace WindesHeim_Game
                     editor.RunController();
                     break;
                 case ScreenStates.highscore:
-                    game.TimerStop();
                     this.state = ScreenStates.highscore;
                     highscores.RunController();
                     break;

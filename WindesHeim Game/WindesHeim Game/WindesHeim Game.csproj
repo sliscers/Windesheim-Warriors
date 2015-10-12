@@ -96,6 +96,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\closeButton.png" />
+    <Content Include="resources\editLevel.png" />
+    <None Include="resources\editorButton.png" />
+    <None Include="resources\highscoresButton.png" />
+    <Content Include="resources\newLevel.png" />
+    <None Include="resources\playButton.png" />
+    <Content Include="resources\playLevel.png" />
     <None Include="resources\UpOnClick.png" />
     <None Include="resources\RightOnClick.png" />
     <None Include="resources\Up.png" />
@@ -111,7 +118,9 @@
     <None Include="resources\Down.png" />
     <None Include="resources\EXPLODE.wav" />
     <None Include="resources\DownOnClick.png" />
+    <None Include="resources\CARHORN.wav" />
     <Content Include="resources\explosion.png" />
+    <Content Include="resources\goBack.png" />
     <Content Include="resources\IconBike.png" />
     <Content Include="resources\IconCar.png" />
     <Content Include="resources\IconES.png" />
@@ -127,6 +136,7 @@
     <None Include="resources\IconTCEdited.png" />
     <None Include="resources\LeftOnClick.png" />
     <Content Include="resources\menuBackground.png" />
+    <Content Include="resources\otherBackground.png" />
     <Content Include="resources\Player.png" />
     <None Include="resources\playerEdited.png" />
     <None Include="resources\playerEdited1.png" />
