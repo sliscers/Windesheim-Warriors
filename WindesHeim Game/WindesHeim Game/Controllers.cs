@@ -79,6 +79,9 @@ namespace WindesHeim_Game
         private bool pressedDown = false;
         private bool pressedSpeed = false;
 
+        //Score
+        public int score = 0;
+
         // Voor de views
         private Obstacle closestObstacle = null;
         private Obstacle nextClosestObstacle = null;
@@ -91,6 +94,7 @@ namespace WindesHeim_Game
             timer.Stop();
 
             // Reset het veld
+            score = 0;
             mg.player.Location = new Point(0, 0);
             UpdatePlayerPosition();
             mg.InitializeField();
@@ -116,13 +120,22 @@ namespace WindesHeim_Game
         private void GameLoop(object sender, EventArgs e)
         {
             // Alle functionaliteiten binnen deze loop vallen binnen de game
+            ModelGame mg = (ModelGame)model;
+            updateScore(mg);
             ProcessUserInput();
             ProcessObstacles();
             MuteSound();
-            ModelGame mg = (ModelGame)model;
+            
             mg.graphicsPanel.Invalidate();
             GetClosestObstacle();
             UpdateObstacleLabels(closestObstacle, nextClosestObstacle);
+        }
+
+        public void updateScore(ModelGame mg)
+        {
+            score++;
+            mg.score.Text = score.ToString();
+            
         }
 
 
@@ -385,6 +398,7 @@ namespace WindesHeim_Game
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
                         mg.player.ObjectImage = Resources.Player;
+                        score = 0;
                     }
                 }
 
@@ -434,6 +448,7 @@ namespace WindesHeim_Game
                         mg.InitializeField();
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
                         mg.player.ObjectImage = Resources.Player;
+                        score = 0;
                     }
 
                    
@@ -472,7 +487,8 @@ namespace WindesHeim_Game
                     {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
-                        gameWindow.setController(ScreenStates.menu);
+                        timer.Stop();
+                        gameWindow.setController(ScreenStates.highscoreInput);
                     }
                 }
 
@@ -494,7 +510,7 @@ namespace WindesHeim_Game
                     switch (animationTimer)
                     {
                         case 1:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
+                            mg.graphicsPanel.BackColor = Color.White;
                             gameObject.FadeSmall();
                             if (!mute)
                             {
@@ -543,7 +559,7 @@ namespace WindesHeim_Game
                             gameObject.FadeSmall();
                             break;
                         case 12:
-                            mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#E0CBCB");
+                            mg.graphicsPanel.BackColor = Color.White;
                             gameObject.FadeSmall();
                             break;
                     }
@@ -554,7 +570,7 @@ namespace WindesHeim_Game
                     if (difference.TotalSeconds > 1.2)
                     {
                         mg.GameObjects.Remove(gameObject);
-                        mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#DEDEDE");
+                        mg.graphicsPanel.BackColor = Color.White;
                     }
                 }
             }
@@ -566,6 +582,7 @@ namespace WindesHeim_Game
             base.RunController();
             ModelGame mg = (ModelGame)model;
             mg.InitializeField();
+            score = 0;
         }
 
         public void OnPaintEvent(object sender, PaintEventArgs pe)
@@ -982,7 +999,26 @@ namespace WindesHeim_Game
             gamePanelGraphics = modelEditor.gamePanel.CreateGraphics();            
         }
 
-      
+    }
 
+    public class ControllerHighscoreInput : Controller
+    {
+        public int score;
+        private ModelHighscoreInput modelEditorSelect;
+
+        public ControllerHighscoreInput(GameWindow form) : base(form)
+        {
+            model = new ModelHighscoreInput(this);
+            modelEditorSelect = (ModelHighscoreInput)model;
+        }
+
+        public override void RunController()
+        {
+            base.RunController();
+        }
+        public void Continue_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.menu);
+        }
     }
 }
