@@ -438,10 +438,6 @@ namespace WindesHeim_Game
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
                         mg.player.ObjectImage = Resources.Player;
                     }
-
-                   
-
-
                 }
 
                 if (gameObject is StaticObstacle)
@@ -829,7 +825,7 @@ namespace WindesHeim_Game
 
         private Graphics g;
 
-        Graphics gamePanelGraphics;
+        private Graphics gamePanelGraphics;
 
         private Point MouseDownLocation = new Point(20, 20);
         private bool isDragging = false;
@@ -917,7 +913,7 @@ namespace WindesHeim_Game
                 gameObjects = level.getCleanGameObjects();
             }
 
-            updatePreview();
+            modelEditor.gamePanel.Invalidate();
         }
         private Form prompt;
         //private Label textLabelSize;
@@ -987,44 +983,44 @@ namespace WindesHeim_Game
 
         public void StaticObstacle_MouseUp(object sender, MouseEventArgs e)
         {
-            modelEditor.staticObstacle.Location = new System.Drawing.Point(920, 77);
-            gameObjects.Add(new StaticObstacle(new Point(mouseX, mouseY), defaultSize, defaultSize));
-            updatePreview();
+            modelEditor.staticObstacle.Location = new System.Drawing.Point(10, 10);
+            gameObjects.Add(new StaticObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
+            modelEditor.gamePanel.Invalidate();
         }
 
         public void ExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
-            modelEditor.explodingObstacle.Location = new System.Drawing.Point(920, 137);
-            gameObjects.Add(new ExplodingObstacle(new Point(mouseX, mouseY), defaultSize, defaultSize));
-            updatePreview();
+            modelEditor.explodingObstacle.Location = new System.Drawing.Point(10, 60);
+            gameObjects.Add(new ExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
+            modelEditor.gamePanel.Invalidate();
         }
 
         public void MovingExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
-            modelEditor.movingExplodingObstacle.Location = new System.Drawing.Point(920, 187);
+            modelEditor.movingExplodingObstacle.Location = new System.Drawing.Point(10, 110);
             String dialog = ShowDialog("SlowingObstacle", "Set properties for Moving Obstacle");
             if(dialog != "")
             {
                 string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(mouseX, mouseY), defaultSize, defaultSize);
+                MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
                 moe.MovingSpeed = Int32.Parse(returnValues[0]);
                 gameObjects.Add(moe);
-                updatePreview();
+                modelEditor.gamePanel.Invalidate();
             }
         }
 
         public void SlowingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
-            modelEditor.slowingObstacle.Location = new System.Drawing.Point(920, 237);
+            modelEditor.slowingObstacle.Location = new System.Drawing.Point(10, 160);
             String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
             if (dialog != "")
             {
                 string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                SlowingObstacle sb = new SlowingObstacle(new Point(mouseX, mouseY), defaultSize, defaultSize);
+                SlowingObstacle sb = new SlowingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
                 sb.MovingSpeed = Int32.Parse(returnValues[0]);
                 sb.SlowingSpeed = Int32.Parse(returnValues[1]);
                 gameObjects.Add(sb);
-                updatePreview();
+                modelEditor.gamePanel.Invalidate();
             }
         }
 
@@ -1064,6 +1060,34 @@ namespace WindesHeim_Game
 
         }
 
+        private GameObject objectDragging = null;
+
+        public void MouseDown(object sender, MouseEventArgs e) {
+            if(e.Button == MouseButtons.Left) {
+                foreach (GameObject gameObject in gameObjects) {
+                    GameObject tempGameObject = new GameObject(e.Location, 40, 40);
+                    if (gameObject.CollidesWith(tempGameObject)) {
+                        objectDragging = gameObject;
+                    }
+                }
+            }       
+        }
+
+        public void ObjectMouseDrag(object sender, MouseEventArgs e) {
+            if(objectDragging != null) {
+                objectDragging.Location = e.Location;
+                modelEditor.gamePanel.Invalidate();
+            }
+        }
+
+        public void MouseUp(object sender, MouseEventArgs e) {
+            if(objectDragging != null) {
+                objectDragging.Location = e.Location;
+                objectDragging = null;
+                modelEditor.gamePanel.Invalidate();
+            }
+        }
+
         public void updateMousePosition(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
@@ -1078,7 +1102,7 @@ namespace WindesHeim_Game
             if (gameObjects.Count != 0)
             {                
                 gameObjects.RemoveAt(gameObjects.Count - 1);
-                updatePreview();
+                modelEditor.gamePanel.Invalidate();
             }
         }
 
@@ -1087,29 +1111,21 @@ namespace WindesHeim_Game
             if (gameObjects.Count != 0)
             {
                 gameObjects.Clear();
-                updatePreview();
-            }
-        }
-
-        public void updatePreview()
-        {
-            modelEditor.gamePanel.Refresh();
-            gamePanelGraphics.DrawImage(new Bitmap(Resources.IconWIN), 750, 400, 80, 80);
-            gamePanelGraphics.DrawImage(new Bitmap(Resources.IconSP), 5, -5, 80, 80);
-            foreach (GameObject gameObject in gameObjects)
-            {
-                gamePanelGraphics.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                modelEditor.gamePanel.Invalidate();
             }
         }
 
         public void GamePanel_Paint(object sender, PaintEventArgs e)
         {
-            var p = sender as Panel;
-            g = e.Graphics;
-            gamePanelGraphics = modelEditor.gamePanel.CreateGraphics();            
+            Graphics g = e.Graphics;
+
+            g.DrawImage(new Bitmap(Resources.IconWIN), 750 + modelEditor.widthDragDropPanel, 400, 80, 80);
+            g.DrawImage(new Bitmap(Resources.IconSP), 5 + modelEditor.widthDragDropPanel, -5, 80, 80);
+            foreach (GameObject gameObject in gameObjects) {
+                g.DrawImage(gameObject.ObjectImage, gameObject.Location.X + modelEditor.widthDragDropPanel, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+            }
+
+            g.FillRectangle(new SolidBrush(Color.LightGray), new Rectangle(new Point(0, 0), new Size(210, 475)));
         }
-
-      
-
     }
 }
