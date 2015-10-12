@@ -853,7 +853,6 @@ namespace WindesHeim_Game
         public int mouseX = 0;
         public int mouseY = 0;
         private int defaultSize = 40;
-        private int defaultSpeed = 0;
 
         public ControllerEditor(GameWindow form) : base(form)
         {
@@ -956,7 +955,11 @@ namespace WindesHeim_Game
             prompt.Text = dialogTitle;
             prompt.StartPosition = FormStartPosition.CenterScreen;
 
-            if(type == "MovingExplodingObstacle" || type == "SlowingObstacle")
+            textBoxSlowingSpeed = new ComboBox() { Left = 110, Top = 88, Width = 100 };
+            textBoxSlowingSpeed.Items.AddRange(new string[] { "Freeze the player", "Very slow", "Slow", "Normal" });
+            textBoxSlowingSpeed.SelectedIndex = 2;
+
+            if (type == "MovingExplodingObstacle" || type == "SlowingObstacle")
             {
                 textLabelMovingSpeed = new Label() { Left = 10, Top = 30, Text = "Obstacle speed" };
                 prompt.Controls.Add(textLabelMovingSpeed);
@@ -978,9 +981,7 @@ namespace WindesHeim_Game
                 textLabelSlowingSpeed = new Label() { Left = 10, Top = 90, Text = "Player speed \nupon collision" };
                 textLabelSlowingSpeed.Size = new Size(textLabelSlowingSpeed.Width, textLabelSlowingSpeed.Height + 20);
                 prompt.Controls.Add(textLabelSlowingSpeed);
-
-                textBoxSlowingSpeed = new ComboBox() { Left = 110, Top = 88, Width = 100 };
-                textBoxSlowingSpeed.Items.AddRange(new string[] { "Freeze the player", "Very slow", "Slow", "Normal"  });
+            
                 textBoxSlowingSpeed.SelectedIndex = 2;                    
                 prompt.Controls.Add(textBoxSlowingSpeed);
             }

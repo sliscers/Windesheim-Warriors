@@ -118,11 +118,32 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ufonts_com_sheriff_roman" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\ufonts.com_sheriff-roman.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ufonts_com_transitfront_negativ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\ufonts.com_transitfront-negativ.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EXPLODE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\EXPLODE.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="IconWINico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconWINico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARHORN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\CARHORN.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="bikeEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\bikeEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="carEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\carEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARHORN1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\carhorn.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="closeButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\closeButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ConceptTransparentBackgroundSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\ConceptTransparentBackgroundSmall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -130,8 +151,26 @@
   <data name="Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\Down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DownOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\DownOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="editLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\editLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="editorButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\editorButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EXPLODE1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\explode.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="explosion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\explosion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="goBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\goBack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="highscoresButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\highscoresButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="IconBike" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\IconBike.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,11 +181,32 @@
   <data name="IconES" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\IconES.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="IconESEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconESEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconSP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconSP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="IconTC" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\IconTC.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="IconTCEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconTCEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconWIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\IconWIN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconWINico1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\iconwinico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\Left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LeftOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\LeftOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="menuBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\menuBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="menuEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\menuEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,6 +220,12 @@
   <data name="muteEditedOnHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\muteEditedOnHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="newLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\newLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\playButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Player" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\Player.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -172,6 +238,9 @@
   <data name="PlayerLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\PlayerLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="playLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\playLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="restartEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\restartEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -181,79 +250,28 @@
   <data name="Right" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\Right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RightOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\RightOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="soundEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\soundEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="soundEdited1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\soundEdited1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="soundEditedOnHover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\soundEditedOnHover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ufonts_com_sheriff_roman" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ufonts_com_sheriff_roman1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\ufonts.com_sheriff-roman.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ufonts_com_transitfront_negativ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ufonts_com_transitfront_negativ1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\ufonts.com_transitfront-negativ.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\Up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="IconESEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\IconESEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="IconTCEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\IconTCEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EXPLODE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\EXPLODE.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="IconSP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\IconSP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="IconWIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\iconwin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DownOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\DownOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LeftOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\LeftOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RightOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\RightOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="UpOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\UpOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="IconWINico" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\IconWINico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CARHORN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\CARHORN.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="closeButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\closeButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="editLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\editLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="editorButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\editorButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="goBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\goBack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="highscoresButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\highscoresButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="menuBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\menuBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="newLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\newLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="playButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\playButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="playLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\playLevel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
