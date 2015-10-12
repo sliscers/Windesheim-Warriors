@@ -436,6 +436,9 @@ namespace WindesHeim_Game
                 {
                     SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
 
+                    //Opslaan van huidige locatie in variable om vervolgens te vergelijken
+                    Point currentLocation = gameObstacle.Location;
+
                     gameObstacle.ChasePlayer(mg.player);
 
                     // Loop door alle objecten op het veld
@@ -444,7 +447,32 @@ namespace WindesHeim_Game
                         // We willen niet onszelf checken, maar we willen we collision op alles
                         if (gameObject != potentialCollision)
                         {
-                            gameObject.ProcessCollision(potentialCollision);
+                            string returnDirection = gameObject.ProcessCollision(potentialCollision);
+                            //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
+                            if (currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
+                            {
+                                gameObstacle.SmartMovingEnabled = true;
+                                gameObstacle.SmartmovingDirection = returnDirection;
+                                //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                                gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
+                            }
+                        }
+                    }
+
+                    if (gameObstacle.IsSmart)
+                    {
+                        //Controleert als het object nog steeds slim moet zijn
+                        if (gameObstacle.SmartmovingTime >= DateTime.Now)
+                        {
+                            //Probeert weg te komen van stilstaant object
+                            //Console.WriteLine("Ik probeer weg te komen");
+                            gameObstacle.TryToEscape();
+                        }
+                        else
+                        {
+                            gameObstacle.SmartMovingEnabled = false;
+                            gameObstacle.SmartmovingDirection = ""; // Reset direction voor smart movement
+                            //Console.WriteLine("Datetime is verlopen");
                         }
                     }
 
@@ -508,6 +536,7 @@ namespace WindesHeim_Game
                 }
                 if (gameObject is Checkpoint)
                 {
+                    //End Game
                     Checkpoint gameObstacle = (Checkpoint)gameObject;
                     if (mg.player.CollidesWith(gameObstacle) && !gameObstacle.Start)
                     {
@@ -515,11 +544,12 @@ namespace WindesHeim_Game
                         mg.InitializeField();
                         if (editor)
                         {
-                            gameWindow.setController(ScreenStates.editor);
+                            gameWindow.setController(ScreenStates.editor);                            
                         }
                         else{
                             gameWindow.setController(ScreenStates.highscoreInput);
                         }
+                        TimerStop();
                     }
                 }
 
@@ -787,7 +817,7 @@ namespace WindesHeim_Game
             int i = 0;
 
             // Laat alle highscores zien
-            foreach (GameHighscores highscore in currentSelectedLevel.gameHighscores)
+            foreach (GameHighscore highscore in currentSelectedLevel.gameHighscores)
             {
                 i++;
                 char[] a = highscore.name.ToCharArray();
@@ -899,20 +929,25 @@ namespace WindesHeim_Game
         }
 
         public void saveLevel_Click(object sender, EventArgs e)
-        {            
-            String dialog = showPropertyDialog("Set properties for Level");
-            if (dialog != "")
+        {   
+            if(level == null)
             {
-                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                Console.Write(dialog.ToString());
-                GameProperties gameProperties = new GameProperties(returnValues[0].ToString(), returnValues[1].ToString());
-                level = new XMLParser("../levels/" + returnValues[0] + ".xml");
-                if (level != null)
+                String dialog = showPropertyDialog("Set properties for Level");
+                if (dialog != "")
                 {
-                    level.WriteXML(gameProperties,gameObjects);
+                    string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                    GameProperties gameProperties = new GameProperties(returnValues[0].ToString(), returnValues[1].ToString());
+                    level = new XMLParser("../levels/" + returnValues[0] + ".xml");
+                    if (level != null)
+                    {
+                        level.WriteXML(gameProperties, gameObjects);
+                    }
                 }
             }
-            level = null;
+            else 
+            {
+                level.WriteXML(level.gameProperties, gameObjects, level.gameHighscores);
+            }        
         }
 
         private String showPropertyDialog(string dialogTitle)
@@ -1014,7 +1049,6 @@ namespace WindesHeim_Game
             //prompt.Controls.Add(textBoxSize);
             prompt.AcceptButton = confirmation;
             prompt.CancelButton = cancel;
-
             return prompt.ShowDialog() == DialogResult.OK ? textBoxMovingSpeed.SelectedItem.ToString() + "|" + textBoxSlowingSpeed.SelectedItem.ToString() + "|" + checkBoxSmart.CheckState : "";
         }
 
@@ -1050,6 +1084,11 @@ namespace WindesHeim_Game
                 else if (returnValues[0] == "Unmöglich")
                     moe.MovingSpeed = 3;
 
+                if(returnValues[2] == "Unchecked")
+                    moe.IsSmart = false;
+                else
+                    moe.IsSmart = true;
+
                 gameObjects.Add(moe);
                 modelEditor.gamePanel.Invalidate();
             }
@@ -1081,6 +1120,11 @@ namespace WindesHeim_Game
                     sb.SlowingSpeed = 2;
                 else if (returnValues[1] == "Normal")
                     sb.SlowingSpeed = 4;
+
+                if (returnValues[2] == "Unchecked")
+                    sb.IsSmart = false;
+                else
+                    sb.IsSmart = true;
 
                 gameObjects.Add(sb);
                 modelEditor.gamePanel.Invalidate();
@@ -1209,16 +1253,17 @@ namespace WindesHeim_Game
     {
         public int score;
 
-        private ModelHighscoreInput modelEditorSelect;
+        private ModelHighscoreInput modelHighscoreInput;
 
         public ControllerHighscoreInput(GameWindow form) : base(form)
         {
             this.model = new ModelHighscoreInput(this);
-            modelEditorSelect = (ModelHighscoreInput)model;
+            modelHighscoreInput = (ModelHighscoreInput)model;
         }
 
         public void Continue_Click(object sender, EventArgs e)
         {
+            ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(),score));
             gameWindow.setController(ScreenStates.menu);
         }
     }

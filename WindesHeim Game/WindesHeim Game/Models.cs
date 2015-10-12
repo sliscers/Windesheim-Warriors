@@ -1290,20 +1290,19 @@ namespace WindesHeim_Game
     }
     public class ModelHighscoreInput : Model
     {
-        public ListBox listBoxLevels;
         public PictureBox goBack;
         public Panel alignPanel;
         public Panel gamePanel;
         private Panel backgroundImage;
         private Label score = new Label();
         private Label place = new Label();
-        private TextBox name = new TextBox();
+        public TextBox name = new TextBox();
 
-        private ControllerHighscoreInput levelSelectController;
+        private ControllerHighscoreInput highscoreInputController;
 
         public ModelHighscoreInput(ControllerHighscoreInput controller) : base(controller)
         {
-            this.levelSelectController = controller;
+            this.highscoreInputController = controller;
         }
 
         public override void ControlsInit(Form gameWindow)
@@ -1327,14 +1326,13 @@ namespace WindesHeim_Game
             goBack.Size = new System.Drawing.Size(200, 44);
             goBack.Text = "Go Back";
             goBack.BackgroundImage = Resources.goBack;
-            goBack.Click += new EventHandler(levelSelectController.Continue_Click);
+            goBack.Click += new EventHandler(highscoreInputController.Continue_Click);
 
-            name.Text = "Your Name";
+            name = new TextBox();
             name.TextAlign = HorizontalAlignment.Center;
-            name.GotFocus += new EventHandler(RemoveText);
 
             score.AutoSize = true;
-            score.Text = "SCORE:" + levelSelectController.score;
+            score.Text = "SCORE:" + highscoreInputController.score;
             score.Font = new Font("Arial", 20);
 
             place.AutoSize = true;
@@ -1344,7 +1342,6 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(backgroundImage);
             backgroundImage.Controls.Add(alignPanel);
             alignPanel.Controls.Add(goBack);
-            alignPanel.Controls.Add(listBoxLevels);
             alignPanel.Controls.Add(gamePanel);
             gamePanel.Controls.Add(score);
             gamePanel.Controls.Add(place);
@@ -1356,10 +1353,6 @@ namespace WindesHeim_Game
             score.Location = new System.Drawing.Point((gamePanel.Width / 2 - score.Size.Width / 2), 0);
             place.Location = new System.Drawing.Point((gamePanel.Width / 2 - place.Size.Width / 2), 40);
             name.Location = new System.Drawing.Point((gamePanel.Width / 2 - name.Size.Width / 2), 80);
-        }
-        public void RemoveText(object sender, EventArgs e)
-        {
-            name.Text = "";
         }
     }
 }
