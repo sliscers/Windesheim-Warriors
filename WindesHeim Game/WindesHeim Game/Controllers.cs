@@ -20,12 +20,14 @@ namespace WindesHeim_Game
         }
         public virtual void RunController()
         {
+            gameWindow.Controls.Clear();
+            
             ScreenInit();
+            gameWindow.Focus();
         }
 
         public virtual void ScreenInit()
         {
-            gameWindow.Controls.Clear();
             model.ControlsInit(gameWindow);
         }
 
@@ -66,16 +68,18 @@ namespace WindesHeim_Game
     {
         public Boolean mute = false;
         System.Media.SoundPlayer player = new System.Media.SoundPlayer(Resources.EXPLODE);
+        
         // Timer voor de gameloop
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         
-        
-
+        // Initialiseren van de buttons
         private bool pressedLeft = false;
         private bool pressedRight = false;
         private bool pressedUp = false;
         private bool pressedDown = false;
         private bool pressedSpeed = false;
+
+        // Voor de views
         private Obstacle closestObstacle = null;
         private Obstacle nextClosestObstacle = null;
 
@@ -83,8 +87,10 @@ namespace WindesHeim_Game
         public void RestartClicked(object sender, MouseEventArgs e)
         {
             ModelGame mg = (ModelGame)model;
+            // Stop de game loop
             timer.Stop();
 
+            // Reset het veld
             mg.player.Location = new Point(0, 0);
             UpdatePlayerPosition();
             mg.InitializeField();
@@ -93,8 +99,8 @@ namespace WindesHeim_Game
 
         public void MenuClicked(object sender, MouseEventArgs e)
         {
+            // Reset veld en ga terug naar menu
             ModelGame mg = (ModelGame)model;
-            mg.player.Location = new Point(0, 0);
             mg.InitializeField();
             gameWindow.setController(ScreenStates.menu);
 
@@ -105,12 +111,11 @@ namespace WindesHeim_Game
             this.model = new ModelGame(this);
             timer.Tick += new EventHandler(GameLoop);
             timer.Interval = 16;
-
         }
 
         private void GameLoop(object sender, EventArgs e)
         {
-            
+            // Alle functionaliteiten binnen deze loop vallen binnen de game
             ProcessUserInput();
             ProcessObstacles();
             MuteSound();
@@ -124,8 +129,7 @@ namespace WindesHeim_Game
         public void MuteSound()
         {
             if (mute)
-            {
-               
+            { 
                 player.Stop();
             }
         }
@@ -186,11 +190,13 @@ namespace WindesHeim_Game
         {
             ModelGame mg = (ModelGame)model;
 
+            // Sprint controller
             if (mg.player.SpeedCooldown > 0)
             {
                 mg.player.SpeedCooldown--;
             }
 
+            // Speler laten sprinten
             if (pressedSpeed && (mg.player.SpeedCooldown == 0))
             {
                 mg.player.Speed = mg.player.OriginalSpeed * 2;
@@ -198,6 +204,8 @@ namespace WindesHeim_Game
                 mg.player.SpeedDuration++;
 
             }
+
+            // Speler heeft lang genoeg gesprint
             if (mg.player.SpeedDuration > 50)
             {
                 mg.player.SpeedDuration = 0;
@@ -205,6 +213,7 @@ namespace WindesHeim_Game
                 mg.player.SpeedCooldown = 200;
             }
 
+            // Afhandelen van control input
             if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height)
             {
 
@@ -267,6 +276,7 @@ namespace WindesHeim_Game
 
         private void UpdatePlayerPosition()
         {
+            // Update labels
             ModelGame mg = (ModelGame)model;
             mg.lblCharacterPosX.Text = mg.player.Location.X.ToString();
             mg.lblCharacterPosY.Text = mg.player.Location.Y.ToString();
@@ -274,6 +284,7 @@ namespace WindesHeim_Game
 
         private void UpdatePlayerSpeed(string speed)
         {
+            // Update labels
             ModelGame mg = (ModelGame)model;
             if (mg.lblCharacterSpeed != null)
             {
@@ -479,7 +490,7 @@ namespace WindesHeim_Game
                     int animationTimer = Convert.ToInt32(animationTimerTen);
                     //Console.WriteLine(animationTimer);
 
-
+                    // Explosie animatie
                     switch (animationTimer)
                     {
                         case 1:
@@ -562,7 +573,7 @@ namespace WindesHeim_Game
             Graphics g = pe.Graphics;
             ModelGame mg = (ModelGame)model;
 
-            // Teken andere gameobjects
+            // Teken alle gameobjects
             foreach (GameObject gameObject in mg.GameObjects)
             {
                 if (gameObject is Checkpoint)
@@ -678,13 +689,6 @@ namespace WindesHeim_Game
         public void playLevel_Click(object sender, EventArgs e)
         {
             ModelGame.level = currentSelectedLevel;
-            
-
-            //Workaround om focus conflict met windows forms en buttons op te lossen
-            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.playLevel);
-            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.goBack);
-            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.listBoxLevels);
-
             gameWindow.setController(ScreenStates.game);
         }
 
@@ -737,6 +741,8 @@ namespace WindesHeim_Game
 
             modelHighscores.listBoxHighscores.Items.Clear();
             int i = 0;
+
+            // Laat alle highscores zien
             foreach (GameHighscores highscore in currentSelectedLevel.gameHighscores)
             {
                 i++;

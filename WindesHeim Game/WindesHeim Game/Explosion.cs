@@ -23,7 +23,5 @@ namespace WindesHeim_Game {
         {
             get { return timeStamp; }
         }
-
-       
     }
 }
