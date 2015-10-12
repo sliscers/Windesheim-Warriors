@@ -10,6 +10,8 @@ namespace WindesHeim_Game {
 
     class SlowingObstacle : Obstacle {
 
+        private int slowingSpeed;
+
         public SlowingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ObjectImage = Resources.IconES;
@@ -19,6 +21,14 @@ namespace WindesHeim_Game {
             base.CollisionX = 10;
             base.CollisionY = 10;
             base.PanelIcon = global::WindesHeim_Game.Properties.Resources.IconESEdited;
+
+            // Standaard player nieuwe speed is 2
+            this.slowingSpeed = 2;
+        }
+
+        public int SlowingSpeed {
+            get { return slowingSpeed; }
+            set { slowingSpeed = value; }
         }
 
 

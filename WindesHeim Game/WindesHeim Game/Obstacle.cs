@@ -42,6 +42,11 @@ namespace WindesHeim_Game {
             set { panelIcon = value; }
         }
 
+        public int MovingSpeed {
+            get { return movingSpeed; }
+            set { movingSpeed = value; }
+        }
+
         public void ChasePlayer(Player player) {
             if (Location.X >= player.Location.X)
                 Location = new Point(Location.X - 1 - movingSpeed, Location.Y);

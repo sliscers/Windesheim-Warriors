@@ -17,6 +17,7 @@
                <y>300</y>
 			   <height>40</height>
 			   <width>40</width>
+			   <movingspeed>0</movingspeed>
           </object>
           
           <object>
@@ -25,7 +26,7 @@
                <y>200</y>
 			   <height>40</height>
 			   <width>40</width>
-			   <movingspeed>5</movingspeed>
+			   <slowdown>2</slowdown>
           </object>
 		  
 		  <object>
@@ -34,6 +35,7 @@
                <y>200</y>
 			   <height>40</height>
 			   <width>40</width>
+			   <slowdown>2</slowdown>
           </object>
 		  
 		  <object>
@@ -42,6 +44,7 @@
                <y>200</y>
 			   <height>40</height>
 			   <width>40</width>
+			   <slowdown>2</slowdown>
           </object>
      </items>
      <highscores>

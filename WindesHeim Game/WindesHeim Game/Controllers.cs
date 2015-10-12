@@ -20,12 +20,14 @@ namespace WindesHeim_Game
         }
         public virtual void RunController()
         {
+            gameWindow.Controls.Clear();
+            
             ScreenInit();
+            gameWindow.Focus();
         }
 
         public virtual void ScreenInit()
         {
-            gameWindow.Controls.Clear();
             model.ControlsInit(gameWindow);
         }
 
@@ -64,23 +66,27 @@ namespace WindesHeim_Game
 
     public class ControllerGame : Controller
     {
+        public Boolean mute = false;
+        System.Media.SoundPlayer player = new System.Media.SoundPlayer(Resources.EXPLODE);
         // Timer voor de gameloop
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        
+        
 
         private bool pressedLeft = false;
         private bool pressedRight = false;
         private bool pressedUp = false;
         private bool pressedDown = false;
         private bool pressedSpeed = false;
-        private int counter;
         private Obstacle closestObstacle = null;
         private Obstacle nextClosestObstacle = null;
+
 
         public void RestartClicked(object sender, MouseEventArgs e)
         {
             ModelGame mg = (ModelGame)model;
             timer.Stop();
-          
+
             mg.player.Location = new Point(0, 0);
             UpdatePlayerPosition();
             mg.InitializeField();
@@ -89,7 +95,9 @@ namespace WindesHeim_Game
 
         public void MenuClicked(object sender, MouseEventArgs e)
         {
-           
+            ModelGame mg = (ModelGame)model;
+            mg.player.Location = new Point(0, 0);
+            mg.InitializeField();
             gameWindow.setController(ScreenStates.menu);
 
         }
@@ -104,12 +112,76 @@ namespace WindesHeim_Game
 
         private void GameLoop(object sender, EventArgs e)
         {
+            
             ProcessUserInput();
             ProcessObstacles();
+            MuteSound();
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
             GetClosestObstacle();
             UpdateObstacleLabels(closestObstacle, nextClosestObstacle);
+        }
+
+
+        public void MuteSound()
+        {
+            if (mute)
+            {
+               
+                player.Stop();
+            }
+        }
+
+
+
+
+        public void pbIconSound_Click(object sender, EventArgs e)
+        {
+            ModelGame mg = (ModelGame)model;
+
+            if (mute)
+            {
+                mg.pbIconSound.BackgroundImage = Resources.soundEditedOnHover;
+                mute = false;
+
+            }
+            else
+            {
+                mg.pbIconSound.BackgroundImage = Resources.muteEditedOnHover;
+                mute = true;
+            }
+        }
+
+
+        public void SoundHoverLeave(object sender, EventArgs e)
+        {
+            ModelGame mg = (ModelGame)model;
+            if (mute)
+            {
+                mg.pbIconSound.BackgroundImage = Resources.muteEdited;
+
+
+            }
+            else
+            {
+                mg.pbIconSound.BackgroundImage = Resources.soundEdited;
+
+            }
+        }
+
+        public void SoundHoverEnter(object sender, EventArgs e)
+        {
+            ModelGame mg = (ModelGame)model;
+            if (mute)
+            {
+                mg.pbIconSound.BackgroundImage = Resources.muteEditedOnHover;
+
+            }
+            else
+            {
+                mg.pbIconSound.BackgroundImage = Resources.soundEditedOnHover;
+
+            }
         }
 
         private void ProcessUserInput()
@@ -137,23 +209,60 @@ namespace WindesHeim_Game
 
             if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
                 UpdatePlayerPosition();
             }
             if (pressedUp && mg.player.Location.Y >= mg.graphicsPanel.Location.Y)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
                 UpdatePlayerPosition();
             }
             if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
                 UpdatePlayerPosition();
             }
             if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width)
             {
+
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
                 UpdatePlayerPosition();
+            }
+
+            if (pressedRight)
+            {
+                mg.btnRight.BackgroundImage = Resources.RightOnClick;
+            }
+            if (pressedLeft)
+            {
+                mg.btnLeft.BackgroundImage = Resources.LeftOnClick;
+            }
+            if (pressedUp)
+            {
+                mg.btnUp.BackgroundImage = Resources.UpOnClick;
+            }
+            if (pressedDown)
+            {
+                mg.btnDown.BackgroundImage = Resources.DownOnClick;
+            }
+            if (pressedRight == false)
+            {
+                mg.btnRight.BackgroundImage = Resources.Right;
+            }
+            if (pressedLeft == false)
+            {
+                mg.btnLeft.BackgroundImage = Resources.Left;
+            }
+            if (pressedUp == false)
+            {
+                mg.btnUp.BackgroundImage = Resources.Up;
+            }
+            if (pressedDown == false)
+            {
+                mg.btnDown.BackgroundImage = Resources.Down;
             }
 
         }
@@ -235,7 +344,7 @@ namespace WindesHeim_Game
         private void ProcessObstacles()
         {
             ModelGame mg = (ModelGame)model;
-
+            
             // We moeten een 2e array maken om door heen te loopen
             // Er is kans dat we de array door lopen en ook tegelijkertijd een explosie toevoegen
             // We voegen dan als het ware iets toe en lezen tegelijk, dit mag niet
@@ -288,7 +397,7 @@ namespace WindesHeim_Game
 
                     if (mg.player.CollidesWith(gameObstacle))
                     {
-                        mg.player.Speed = mg.player.OriginalSpeed / 2;
+                        mg.player.Speed = gameObstacle.SlowingSpeed;
                         UpdatePlayerSpeed("Langzaam");
                     }
                     else
@@ -317,6 +426,8 @@ namespace WindesHeim_Game
                         mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
                         mg.player.ObjectImage = Resources.Player;
                     }
+
+                   
 
 
                 }
@@ -376,8 +487,11 @@ namespace WindesHeim_Game
                         case 1:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FF0000");
                             gameObject.FadeSmall();
-                            System.Media.SoundPlayer player = new System.Media.SoundPlayer(Resources.EXPLODE);
-                            player.Play();
+                            if (!mute)
+                            {
+                                
+                                player.Play();
+                            }
                             break;
                         case 2:
                             mg.graphicsPanel.BackColor = ColorTranslator.FromHtml("#FC1212");
@@ -490,12 +604,12 @@ namespace WindesHeim_Game
             if (e.KeyCode == Keys.A)
             {
                 pressedLeft = true;
-                mg.player.ObjectImage = Resources.PlayerLeft;
+                    mg.player.ObjectImage = Resources.PlayerLeft;
             }
             if (e.KeyCode == Keys.D)
             {
                 pressedRight = true;
-                mg.player.ObjectImage = Resources.Player;
+                    mg.player.ObjectImage = Resources.Player;
             }
             if (e.KeyCode == Keys.Space)
             {
@@ -541,8 +655,11 @@ namespace WindesHeim_Game
         {
             timer.Stop();
         }
-    }
 
+      
+        
+
+    }
     public class ControllerLevelSelect : Controller
     {
         private XMLParser currentSelectedLevel;
@@ -564,12 +681,6 @@ namespace WindesHeim_Game
         {
             ModelGame.level = currentSelectedLevel;
             gameWindow.setController(ScreenStates.game);
-
-            //Workaround om focus conflict met windows forms en buttons op te lossen
-            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.playLevel);
-            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.goBack);
-            modelLevelSelect.alignPanel.Controls.Remove(modelLevelSelect.listBoxLevels);
-
         }
 
         public void level_Select(object sender, EventArgs e)

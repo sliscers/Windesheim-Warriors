@@ -95,6 +95,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resources\editLevel.png" />
+    <Content Include="resources\newLevel.png" />
+    <Content Include="resources\playLevel.png" />
+    <None Include="resources\UpOnClick.png" />
+    <None Include="resources\RightOnClick.png" />
     <None Include="resources\Up.png" />
     <None Include="resources\soundEditedOnHover.png" />
     <None Include="resources\soundEdited1.png" />
@@ -107,7 +112,10 @@
     <None Include="resources\ConceptTransparentBackgroundSmall.png" />
     <None Include="resources\Down.png" />
     <None Include="resources\EXPLODE.wav" />
+    <None Include="resources\DownOnClick.png" />
+    <None Include="resources\CARHORN.wav" />
     <Content Include="resources\explosion.png" />
+    <Content Include="resources\goBack.png" />
     <Content Include="resources\IconBike.png" />
     <Content Include="resources\IconCar.png" />
     <Content Include="resources\IconES.png" />
@@ -121,7 +129,9 @@
     <None Include="resources\muteEditedOnHover.png" />
     <None Include="resources\IconWIN.png" />
     <None Include="resources\IconTCEdited.png" />
+    <None Include="resources\LeftOnClick.png" />
     <Content Include="resources\menuBackground.png" />
+    <Content Include="resources\otherBackground.png" />
     <Content Include="resources\Player.png" />
     <None Include="resources\playerEdited.png" />
     <None Include="resources\playerEdited1.png" />
