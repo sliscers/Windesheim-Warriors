@@ -759,7 +759,7 @@ namespace WindesHeim_Game
 
         public void playLevel_Click(object sender, EventArgs e)
         {
-            level = new XMLParser("haha test");
+            level = new XMLParser("test");
             level.gameObjects = gameObjects;
             if (level == null)
             {
@@ -788,10 +788,74 @@ namespace WindesHeim_Game
 
             updatePreview();
         }
+        private Form prompt;
+        private Label textLabelSize;
+        private TextBox textBoxSize;
+        private Label textLabelSlowingSpeed;
+        private TextBox textBoxSlowingSpeed;
+        private Label textLabelSmart;
+        private CheckBox checkBoxSmart;
+        private Label textLabelMovingSpeed;
+        private TextBox textBoxMovingSpeed;
+
+        public Form ShowDialog(string type, string dialogTitle)
+        {
+            prompt = new Form();
+            prompt.Width = 250;
+            prompt.Height = 210;
+            //prompt.AutoSize = true;
+            prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+            prompt.Text = dialogTitle;
+            prompt.StartPosition = FormStartPosition.CenterScreen;
+
+            textLabelSize = new Label() { Left = 10, Top = 20, Text = "Size (default = 40):" };
+            textBoxSize = new TextBox() { Left = 110, Top = 18, Width = 100 };
+            int size = 40;
+            textBoxSize.Text = size.ToString();
+
+            if(type == "ExplodingObstacle") {
+
+            }
+            if(type == "MovingExplodingObstacle" || type == "SlowingObstacle")
+            {
+                 textLabelSlowingSpeed = new Label() { Left = 10, Top = 50, Text = "Size (default = ?):" };
+                 textBoxSlowingSpeed = new TextBox() { Left = 110, Top = 48, Width = 100 };
+                 textLabelSmart = new Label() { Left = 10, Top = 80, Text = "Smart folowing (default = off):" };         
+                 checkBoxSmart = new CheckBox() { Left = 110, Top = 78, Width = 100 };
+                prompt.Controls.Add(textLabelSlowingSpeed);
+                prompt.Controls.Add(textBoxSlowingSpeed);
+                prompt.Controls.Add(textLabelSmart);
+                prompt.Controls.Add(checkBoxSmart);
+            }
+            if (type == "SlowingObstacle")
+            {
+                 textLabelMovingSpeed = new Label() { Left = 10, Top = 110, Text = "Size (default = ?):" };
+                 textBoxMovingSpeed = new TextBox() { Left = 110, Top = 108, Width = 100 };
+                prompt.Controls.Add(textLabelMovingSpeed);
+                prompt.Controls.Add(textBoxMovingSpeed);
+            }
+            if(type == "StaticObstacle")
+            {
+
+            }
+
+            Button cancel = new Button() { Text = "Cancel", Left = 10, Width = 100, Top = 140, DialogResult = DialogResult.Cancel };
+            Button confirmation = new Button() { Text = "Save", Left = 110, Width = 100, Top = 140, DialogResult = DialogResult.OK };
+            confirmation.Click += (sender, e) => { prompt.Close(); };
+            prompt.Controls.Add(textLabelSize);
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(cancel);
+            prompt.Controls.Add(textBoxSize);
+            prompt.AcceptButton = confirmation;
+            prompt.CancelButton = cancel;
+
+            return prompt;
+        }
 
         public void StaticObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.staticObstacle.Location = new System.Drawing.Point(920, 77);
+            ShowDialog("SlowingObstacle", "Set properties for Static Obstacle");
             gameObjects.Add(new StaticObstacle(new Point(mouseX, mouseY), 40, 40));
             updatePreview();
         }
@@ -799,6 +863,7 @@ namespace WindesHeim_Game
         public void ExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.explodingObstacle.Location = new System.Drawing.Point(920, 137);
+            ShowDialog("SlowingObstacle", "Set properties for Exploding Obstacle");
             gameObjects.Add(new ExplodingObstacle(new Point(mouseX, mouseY), 40, 40));
             updatePreview();
         }
@@ -806,13 +871,15 @@ namespace WindesHeim_Game
         public void MovingExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.movingExplodingObstacle.Location = new System.Drawing.Point(920, 187);
-            gameObjects.Add(new MovingExplodingObstacle(new Point(mouseX, mouseY), 40, 40));
+            ShowDialog("SlowingObstacle", "Set properties for Moving Obstacle");
+            gameObjects.Add(new MovingExplodingObstacle(new Point(mouseX, mouseY), Int32.Parse(textBoxSize.Text), Int32.Parse(textBoxSize.Text)));
             updatePreview();
         }
 
         public void SlowingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.slowingObstacle.Location = new System.Drawing.Point(920, 237);
+            ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
             gameObjects.Add(new SlowingObstacle(new Point(mouseX, mouseY), 40, 40));
             updatePreview();
         }

@@ -152,8 +152,9 @@ namespace WindesHeim_Game
                             Width = Int32.Parse(r.Element("width").Value),
                             //If statements voor dynamische gegevens in xml <object>
                             Movingspeed = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("movingspeed").Value): 0,
-                            Slowdown = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("slowdown").Value): 0
-                       };
+                            Slowdown = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("slowdown").Value): 0,
+                            Image = (r.Element("image") != null) ? r.Element("image").Value : ""
+                        };
             //Voegt de gameproperties toe aan de variable gameProperties
             foreach (var property in lproperties)
             {
