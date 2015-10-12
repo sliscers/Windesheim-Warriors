@@ -60,7 +60,7 @@ namespace WindesHeim_Game
         //Lijst met ingeladen levels
         public static List<XMLParser> Levels { get; set; } = new List<XMLParser>();
 
-        public XMLParser(String path)
+        public XMLParser(String path = "")
         {
             this.path = path;
         }
@@ -129,8 +129,15 @@ namespace WindesHeim_Game
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
         public void ReadXML()
         {
+
+            XDocument doc = new XDocument();
             //Laad het XML bestand in een document object
-            XDocument doc = XDocument.Load(this.path);
+            try
+            {
+                doc = XDocument.Load(this.path);
+            }catch (Exception e){
+                //tODO
+            }           
 
             //Initieert de variablen
             gameHighscores = new List<GameHighscores>();
@@ -164,7 +171,8 @@ namespace WindesHeim_Game
                             Width = Int32.Parse(r.Element("width").Value),
                             //If statements voor dynamische gegevens in xml <object>
                             Movingspeed = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("movingspeed").Value): 0,
-                            Slowdown = (r.Element("slowdown") != null) ? Int32.Parse(r.Element("slowdown").Value): 0
+                            Slowdown = (r.Element("slowingspeed") != null) ? Int32.Parse(r.Element("slowingspeed").Value): 0,
+                            Image = (r.Element("image") != null) ? r.Element("image").Value : ""
                        };
             //Voegt de gameproperties toe aan de variable gameProperties
             foreach (var property in lproperties)
@@ -221,7 +229,7 @@ namespace WindesHeim_Game
 
         //Deze functie schrijft een XML file weg
         //Geef hier de gameproperties mee in het objecdt GameProperties, vervolgens een List met GameObjects daarna eenzelfde lijst voor Highscores
-        public void WriteXML(GameProperties gameProperties, List<GameObject> gameObjects, List<GameHighscores> gameHighscores)
+        public void WriteXML(GameProperties gameProperties, List<GameObject> gameObjects, List<GameHighscores> gameHighscores = null)
         {
             //Instellingen voor XML voor een juiste opmaak
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -262,6 +270,10 @@ namespace WindesHeim_Game
                 else if (gameObject is MovingExplodingObstacle)
                 {
                     gameObjectType = "MovingExplodingObstacle";
+
+                    xmlWriter.WriteStartElement("movingspeed");
+                    xmlWriter.WriteValue(((MovingExplodingObstacle)gameObject).MovingSpeed); //Movingspeed
+                    xmlWriter.WriteEndElement();
                 }
                 else if (gameObject is StaticObstacle)
                 {
@@ -270,25 +282,33 @@ namespace WindesHeim_Game
                 else if (gameObject is SlowingObstacle)
                 {
                     gameObjectType = "SlowingObstacle";
+
+                    xmlWriter.WriteStartElement("movingspeed");
+                    xmlWriter.WriteValue(((SlowingObstacle)gameObject).MovingSpeed); //Movingspeed
+                    xmlWriter.WriteEndElement();
+
+                    xmlWriter.WriteStartElement("slowingspeed");
+                    xmlWriter.WriteValue(((SlowingObstacle)gameObject).SlowingSpeed); //Movingspeed
+                    xmlWriter.WriteEndElement();
                 }
                 xmlWriter.WriteStartElement("type");
                 xmlWriter.WriteValue(gameObjectType); //Type
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteStartElement("x");
-                xmlWriter.WriteValue(gameObject); //X positie
+                xmlWriter.WriteValue(gameObject.Location.X); //X positie
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteStartElement("y"); 
-                xmlWriter.WriteValue(gameObject); //Y positie
+                xmlWriter.WriteValue(gameObject.Location.Y); //Y positie
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteStartElement("height");
-                xmlWriter.WriteValue(gameObject); //Hoogte
+                xmlWriter.WriteValue(gameObject.Height); //Hoogte
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteStartElement("width");
-                xmlWriter.WriteValue(gameObject); //Breedte
+                xmlWriter.WriteValue(gameObject.Width); //Breedte
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteEndElement();
@@ -296,29 +316,31 @@ namespace WindesHeim_Game
 
             xmlWriter.WriteEndElement();
 
-            xmlWriter.WriteStartElement("highscores");
-
-            foreach(GameHighscores gameHighscore in gameHighscores)
+            if (gameHighscores != null)
             {
-                xmlWriter.WriteStartElement("highscore");
+                xmlWriter.WriteStartElement("highscores");
 
-                xmlWriter.WriteStartElement("name");
-                xmlWriter.WriteValue(gameHighscore.name); //Name
+                foreach (GameHighscores gameHighscore in gameHighscores)
+                {
+                    xmlWriter.WriteStartElement("highscore");
+
+                    xmlWriter.WriteStartElement("name");
+                    xmlWriter.WriteValue(gameHighscore.name); //Name
+                    xmlWriter.WriteEndElement();
+
+                    xmlWriter.WriteStartElement("datetime");
+                    xmlWriter.WriteValue(DateTime.Now); //DateTime
+                    xmlWriter.WriteEndElement();
+
+                    xmlWriter.WriteStartElement("score");
+                    xmlWriter.WriteValue(gameHighscore.score); //Score
+                    xmlWriter.WriteEndElement();
+
+                    xmlWriter.WriteEndElement();
+                }
+
                 xmlWriter.WriteEndElement();
-
-                xmlWriter.WriteStartElement("datetime");
-                xmlWriter.WriteValue(DateTime.Now); //DateTime
-                xmlWriter.WriteEndElement();
-
-                xmlWriter.WriteStartElement("score");
-                xmlWriter.WriteValue(gameHighscore.score); //Score
-                xmlWriter.WriteEndElement();
-
-                xmlWriter.WriteEndElement();
-            }                      
-
-            xmlWriter.WriteEndElement();
-
+            }
             xmlWriter.WriteEndDocument();
             xmlWriter.Close(); //Sluiten van XMLWriter, dit is ook het moment dat het bestand wordt weggeschreven
         }
