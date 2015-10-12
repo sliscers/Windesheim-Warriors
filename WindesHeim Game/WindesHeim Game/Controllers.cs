@@ -981,8 +981,7 @@ namespace WindesHeim_Game
 
                 textBoxSlowingSpeed = new ComboBox() { Left = 110, Top = 88, Width = 100 };
                 textBoxSlowingSpeed.Items.AddRange(new string[] { "Freeze the player", "Very slow", "Slow", "Normal"  });
-                textBoxSlowingSpeed.SelectedIndex = 2;
-                        
+                textBoxSlowingSpeed.SelectedIndex = 2;                    
                 prompt.Controls.Add(textBoxSlowingSpeed);
             }
 
