@@ -545,7 +545,7 @@ namespace WindesHeim_Game
                         timer.Stop();
                         if (editor)
                         {
-                            gameWindow.setController(ScreenStates.editor);                            
+                            gameWindow.setController(ScreenStates.editor);                                                    
                         }
                         else{
                             gameWindow.setController(ScreenStates.highscoreInput);
@@ -637,7 +637,6 @@ namespace WindesHeim_Game
                 }
             }
         }
-
 
         public override void RunController()
         {

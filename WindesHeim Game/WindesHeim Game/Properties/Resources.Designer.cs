@@ -121,6 +121,16 @@ namespace WindesHeim_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap continueBtn {
+            get {
+                object obj = ResourceManager.GetObject("continueBtn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Down {
             get {
                 object obj = ResourceManager.GetObject("Down", resourceCulture);
@@ -489,6 +499,16 @@ namespace WindesHeim_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap saveLevel {
+            get {
+                object obj = ResourceManager.GetObject("saveLevel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap soundEdited {
             get {
                 object obj = ResourceManager.GetObject("soundEdited", resourceCulture);
@@ -512,6 +532,26 @@ namespace WindesHeim_Game.Properties {
         internal static System.Drawing.Bitmap soundEditedOnHover {
             get {
                 object obj = ResourceManager.GetObject("soundEditedOnHover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap testLevel {
+            get {
+                object obj = ResourceManager.GetObject("testLevel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tryAgain {
+            get {
+                object obj = ResourceManager.GetObject("tryAgain", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
