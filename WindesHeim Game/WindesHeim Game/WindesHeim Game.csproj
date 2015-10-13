@@ -148,6 +148,12 @@
     <None Include="resources\closeButton.png" />
     <None Include="resources\CARHORN.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\continue.png" />
+    <Content Include="resources\saveLevel.png" />
+    <Content Include="resources\testLevel.png" />
+    <Content Include="resources\tryAgain.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
