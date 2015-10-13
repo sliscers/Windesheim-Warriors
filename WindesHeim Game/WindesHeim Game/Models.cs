@@ -927,7 +927,7 @@ namespace WindesHeim_Game
             backgroundImage = new Panel();
             backgroundImage.Location = new System.Drawing.Point(0, 0);
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
-            backgroundImage.BackgroundImage = Resources.menuBackground;
+            backgroundImage.BackgroundImage = Resources.otherScreen;
 
             gamePanel = new Panel();
             gamePanel.Location = new System.Drawing.Point(210, 0);
@@ -1000,7 +1000,7 @@ namespace WindesHeim_Game
 
             backgroundImage = new Panel();
             backgroundImage.Size = gameWindow.Size;
-            backgroundImage.BackgroundImage = Resources.menuBackground;
+            backgroundImage.BackgroundImage = Resources.otherScreen;
 
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 200);
@@ -1066,7 +1066,7 @@ namespace WindesHeim_Game
             backgroundImage = new Panel();
             backgroundImage.Location = new System.Drawing.Point(0, 0);
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
-            backgroundImage.BackgroundImage = Resources.menuBackground;
+            backgroundImage.BackgroundImage = Resources.otherScreen;
 
             gamePanel = new Panel();
             gamePanel.Location = new System.Drawing.Point(210, 0);
@@ -1128,8 +1128,8 @@ namespace WindesHeim_Game
     public class ModelEditor : Model
     {
         public PictureBox goBack;
-        public Button saveLevel;
-        public Button testLevel;
+        public PictureBox saveLevel;
+        public PictureBox testLevel;
         public Button undoButton;
         public Button clearButton;
         public Panel alignPanel;
@@ -1163,7 +1163,7 @@ namespace WindesHeim_Game
             backgroundImage = new Panel();
             backgroundImage.Location = new System.Drawing.Point(0, 0);
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
-            backgroundImage.BackgroundImage = Resources.menuBackground;
+            backgroundImage.BackgroundImage = Resources.otherScreen;
 
             dragDropLabel = new Label();
             dragDropLabel.Text = "Drag en drop";
@@ -1189,27 +1189,30 @@ namespace WindesHeim_Game
             goBack.Image = Resources.goBack;
             goBack.Click += editorController.goBack_Click;
 
-            testLevel = new Button();
-            testLevel.Size = new System.Drawing.Size(200, 25);
+            testLevel = new PictureBox();
+            testLevel.Size = new System.Drawing.Size(200, 44);
             testLevel.Location = new System.Drawing.Point(210, 525);
             testLevel.Text = "Test Level";
+            testLevel.Image = Resources.testLevel;
             testLevel.Click += editorController.testLevel_Click;
 
-            saveLevel = new Button();
-            saveLevel.Size = new System.Drawing.Size(200, 25);
+            saveLevel = new PictureBox();
+            saveLevel.Size = new System.Drawing.Size(200, 44);
             saveLevel.Location = new System.Drawing.Point(420, 525);
             saveLevel.Text = "Save Level";
+            saveLevel.Image = Resources.saveLevel;
             saveLevel.Click += editorController.saveLevel_Click;
 
             undoButton = new Button();
             undoButton.Size = new System.Drawing.Size(100, 25);
-            undoButton.Location = new System.Drawing.Point(920, 287);
+            undoButton.Location = new System.Drawing.Point(10, 300);
             undoButton.Text = "Undo";
             undoButton.Click += editorController.undoLastChange_Click;
+            undoButton.TabIndex = 999;
 
             clearButton = new Button();
             clearButton.Size = new System.Drawing.Size(100, 25);
-            clearButton.Location = new System.Drawing.Point(920, 337);
+            clearButton.Location = new System.Drawing.Point(10, 330);
             clearButton.Text = "Clear";
             clearButton.Click += editorController.clearAll_Click;
 
@@ -1275,12 +1278,13 @@ namespace WindesHeim_Game
             gamePanel.Controls.Add(movingExplodingObstacle);
             gamePanel.Controls.Add(slowingObstacle);
 
+            gamePanel.Controls.Add(undoButton);
+            gamePanel.Controls.Add(clearButton);
+
             alignPanel.Controls.Add(gamePanel);
             alignPanel.Controls.Add(goBack);
             alignPanel.Controls.Add(saveLevel);
             alignPanel.Controls.Add(testLevel);
-            alignPanel.Controls.Add(undoButton);
-            alignPanel.Controls.Add(clearButton);
             alignPanel.Controls.Add(dragDropLabel);
 
             alignPanel.Location = new Point(
@@ -1290,7 +1294,8 @@ namespace WindesHeim_Game
     }
     public class ModelHighscoreInput : Model
     {
-        public PictureBox goBack;
+        public PictureBox continueBtn;
+        public PictureBox tryAgain;
         public Panel alignPanel;
         public Panel gamePanel;
         private Panel backgroundImage;
@@ -1316,43 +1321,49 @@ namespace WindesHeim_Game
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
             backgroundImage.BackgroundImage = Resources.menuBackground;
 
-            gamePanel = new Panel();
-            gamePanel.Location = new System.Drawing.Point(0, 0);
-            gamePanel.Size = new System.Drawing.Size(400, 200);
-            gamePanel.BackColor = Color.White;
-            gamePanel.BorderStyle = BorderStyle.FixedSingle;
+            continueBtn = new PictureBox();
+            continueBtn.Size = new System.Drawing.Size(200, 44);
+            continueBtn.Text = "Continue";
+            continueBtn.BackgroundImage = Resources.continueBtn;
+            continueBtn.Click += new EventHandler(highscoreInputController.Continue_Click);
 
-            goBack = new PictureBox();
-            goBack.Size = new System.Drawing.Size(200, 44);
-            goBack.Text = "Go Back";
-            goBack.BackgroundImage = Resources.goBack;
-            goBack.Click += new EventHandler(highscoreInputController.Continue_Click);
+            tryAgain = new PictureBox();
+            tryAgain.Size = new System.Drawing.Size(200, 44);
+            tryAgain.Text = "Try again";
+            tryAgain.BackgroundImage = Resources.tryAgain;
+            tryAgain.Click += new EventHandler(highscoreInputController.TryAgain_Click);
 
             name = new TextBox();
+            name.Text = Environment.UserName;
+            name.Location = new System.Drawing.Point(0, 0);
             name.TextAlign = HorizontalAlignment.Center;
+            name.KeyDown += highscoreInputController.KeyDownText;
 
             score.AutoSize = true;
             score.Text = "SCORE:" + highscoreInputController.score;
             score.Font = new Font("Arial", 20);
 
+            highscoreInputController.GetPlace();
+
             place.AutoSize = true;
-            place.Text = "PLACE:";
+            place.Text = "PLACE: " + highscoreInputController.place;
             place.Font = new Font("Arial", 20);
 
             gameWindow.Controls.Add(backgroundImage);
             backgroundImage.Controls.Add(alignPanel);
-            alignPanel.Controls.Add(goBack);
-            alignPanel.Controls.Add(gamePanel);
-            gamePanel.Controls.Add(score);
-            gamePanel.Controls.Add(place);
-            gamePanel.Controls.Add(name);
+            alignPanel.Controls.Add(continueBtn);
+            alignPanel.Controls.Add(tryAgain);
+            alignPanel.Controls.Add(score);
+            alignPanel.Controls.Add(place);
+            alignPanel.Controls.Add(name);
             alignPanel.Location = new Point(
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
-            goBack.Location = new System.Drawing.Point((alignPanel.Width / 2 - goBack.Size.Width / 2), gamePanel.Size.Height + 10);
-            score.Location = new System.Drawing.Point((gamePanel.Width / 2 - score.Size.Width / 2), 0);
-            place.Location = new System.Drawing.Point((gamePanel.Width / 2 - place.Size.Width / 2), 40);
-            name.Location = new System.Drawing.Point((gamePanel.Width / 2 - name.Size.Width / 2), 80);
+            continueBtn.Location = new System.Drawing.Point((alignPanel.Width / 2 - continueBtn.Size.Width / 2), alignPanel.Size.Height + 10);
+            tryAgain.Location = new System.Drawing.Point((alignPanel.Width / 2 - tryAgain.Size.Width / 2), alignPanel.Size.Height + 10);
+            score.Location = new System.Drawing.Point((alignPanel.Width / 2 - score.Size.Width / 2), 0);
+            place.Location = new System.Drawing.Point((alignPanel.Width / 2 - place.Size.Width / 2), 40);
+            name.Location = new System.Drawing.Point((alignPanel.Width / 2 - name.Size.Width / 2), 80);
         }
     }
 }

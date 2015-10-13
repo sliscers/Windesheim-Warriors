@@ -118,20 +118,28 @@ namespace WindesHeim_Game
         public static void LoadAllLevels()
         {
             Levels.Clear();
-            String dirPath = "../levels/";
-                string[] fileEntries = Directory.GetFiles(dirPath);
-                foreach (string file in fileEntries)
+            string dirPath = "";
+
+            if (System.Diagnostics.Debugger.IsAttached) {
+                dirPath = "../levels/";
+            }
+            else {
+                dirPath = AppDomain.CurrentDomain.BaseDirectory + "/levels/";
+            }
+
+            string[] fileEntries = Directory.GetFiles(dirPath);
+            foreach (string file in fileEntries)
+            {
+                if (File.Exists(file))
                 {
-                    if (File.Exists(file))
+                    if (isXML(file))
                     {
-                        if (isXML(file))
-                        {
-                            XMLParser xml = new XMLParser(file);
-                            xml.ReadXML();
-                            Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
-                        }
+                        XMLParser xml = new XMLParser(file);
+                        xml.ReadXML();
+                        Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
                     }
                 }
+            }
         }
         private static bool isXML(string file)
         {
@@ -145,17 +153,38 @@ namespace WindesHeim_Game
 
         public void AddHighscore(GameHighscore highscore)
         {
-            XDocument xmlDoc = XDocument.Load(this.path);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(this.path);
 
-            xmlDoc.Element("highscores").Add(
-                new XElement("highscore", 
-                    new XElement("name", highscore.name),
-                    new XElement("datetime", highscore.dateTime), 
-                    new XElement("score", highscore.score)
-                )
-            );
+            XmlNode root = doc.DocumentElement;
 
-            xmlDoc.Save(this.path);
+            if (doc.SelectSingleNode("//highscores") == null)
+            {
+                XmlElement highScoresElement = doc.CreateElement("highscores");
+                root.AppendChild(highScoresElement);                
+            }
+
+            XmlNode highscores = doc.SelectSingleNode("//highscores");
+
+            XmlElement highScoreElement = doc.CreateElement("highscore");
+
+            XmlElement nameElement = doc.CreateElement("name");
+            nameElement.InnerText = highscore.name;
+
+            XmlElement datetimeElement = doc.CreateElement("datetime");
+            datetimeElement.InnerText = highscore.dateTime.ToString();
+
+            XmlElement scoreElement = doc.CreateElement("score");
+            scoreElement.InnerText = highscore.score.ToString();
+
+            highScoreElement.AppendChild(nameElement);
+            highScoreElement.AppendChild(datetimeElement);
+            highScoreElement.AppendChild(scoreElement);
+
+            //Add the node to the document.            
+            highscores.AppendChild(highScoreElement);            
+
+            doc.Save(this.path);
         }
 
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
