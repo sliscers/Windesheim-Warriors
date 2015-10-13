@@ -697,6 +697,7 @@ namespace WindesHeim_Game
         public override void RunController()
         {
             base.RunController();
+            score = 0;
             ModelGame mg = (ModelGame)model;
             mg.InitializeField();
         }
