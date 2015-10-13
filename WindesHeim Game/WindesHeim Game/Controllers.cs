@@ -542,6 +542,7 @@ namespace WindesHeim_Game
                     {
                         mg.player.Location = new Point(0, 0);
                         mg.InitializeField();
+                        timer.Stop();
                         if (editor)
                         {
                             gameWindow.setController(ScreenStates.editor);                            
