@@ -1038,33 +1038,35 @@ namespace WindesHeim_Game
         public void SlowingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.slowingObstacle.Location = new System.Drawing.Point(10, 210);
-            String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
-            if (dialog != "")
-            {
-                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                SlowingObstacle sb = new SlowingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
+            if((mouseX - modelEditor.widthDragDropPanel) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
+                && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
+                String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
+                if (dialog != "") {
+                    string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                    SlowingObstacle sb = new SlowingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
 
-                if (returnValues[0] == "Slow")
-                    sb.MovingSpeed = 0;
-                else if (returnValues[0] == "Moderate")
-                    sb.MovingSpeed = 1;
-                else if (returnValues[0] == "Fast")
-                    sb.MovingSpeed = 2;
-                else if (returnValues[0] == "Unmöglich")
-                    sb.MovingSpeed = 3;
+                    if (returnValues[0] == "Slow")
+                        sb.MovingSpeed = 0;
+                    else if (returnValues[0] == "Moderate")
+                        sb.MovingSpeed = 1;
+                    else if (returnValues[0] == "Fast")
+                        sb.MovingSpeed = 2;
+                    else if (returnValues[0] == "Unmöglich")
+                        sb.MovingSpeed = 3;
 
-                if (returnValues[1] == "Freeze the player")
-                    sb.SlowingSpeed = 0;
-                else if (returnValues[1] == "Very slow")
-                    sb.SlowingSpeed = 1;
-                else if (returnValues[1] == "Slow")
-                    sb.SlowingSpeed = 2;
-                else if (returnValues[1] == "Normal")
-                    sb.SlowingSpeed = 3;
+                    if (returnValues[1] == "Freeze the player")
+                        sb.SlowingSpeed = 0;
+                    else if (returnValues[1] == "Very slow")
+                        sb.SlowingSpeed = 1;
+                    else if (returnValues[1] == "Slow")
+                        sb.SlowingSpeed = 2;
+                    else if (returnValues[1] == "Normal")
+                        sb.SlowingSpeed = 3;
 
-                gameObjects.Add(sb);
-                modelEditor.gamePanel.Invalidate();
-            }
+                    gameObjects.Add(sb);
+                    modelEditor.gamePanel.Invalidate();
+                }
+            }          
         }
 
         public void updateDragPosition(object sender, MouseEventArgs e)
