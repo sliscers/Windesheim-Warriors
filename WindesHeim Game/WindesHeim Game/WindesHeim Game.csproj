@@ -124,7 +124,6 @@
     <None Include="resources\muteEdited.png" />
     <None Include="resources\menuEditedOnHover.png" />
     <None Include="resources\menuEdited.png" />
-    <None Include="resources\menuBackground.png" />
     <None Include="resources\LeftOnClick.png" />
     <None Include="resources\Left.png" />
     <None Include="resources\IconWINico.ico" />
@@ -150,6 +149,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\continue.png" />
+    <None Include="resources\otherScreen.png" />
+    <None Include="resources\menuBackground.png" />
     <Content Include="resources\saveLevel.png" />
     <Content Include="resources\testLevel.png" />
     <Content Include="resources\tryAgain.png" />
