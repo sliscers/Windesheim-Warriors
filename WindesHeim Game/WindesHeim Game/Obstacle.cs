@@ -90,7 +90,7 @@ namespace WindesHeim_Game {
             if (this.Location.Y == gameObject.Location.Y + Height
                 && (this.Location.X <= gameObject.Location.X && this.Location.X + this.Width >= gameObject.Location.X
                 || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-                if(!SmartMovingEnabled)
+
                     Location = new Point(Location.X, Location.Y + 1);
                 //ProcessCollision(gameObject);
                 hitpoint = "up";
@@ -99,7 +99,7 @@ namespace WindesHeim_Game {
             if (this.Location.Y + this.Height == gameObject.Location.Y
                 && (this.Location.X + this.Width >= gameObject.Location.X && this.Location.X <= gameObject.Location.X
                 || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-                if (!SmartMovingEnabled)
+
                     Location = new Point(Location.X, Location.Y - 1);
                 //ProcessCollision(gameObject);
                 hitpoint = "down";
@@ -108,7 +108,7 @@ namespace WindesHeim_Game {
             if (this.Location.X == gameObject.Location.X + gameObject.Width
                 && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
                 || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
-                if (!SmartMovingEnabled)
+
                     Location = new Point(Location.X + 1, Location.Y);
                 //ProcessCollision(gameObject);
                 hitpoint = "left";
@@ -117,7 +117,7 @@ namespace WindesHeim_Game {
             if (this.Location.X + this.Width == gameObject.Location.X
                 && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
                 || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
-                if (!SmartMovingEnabled)
+
                     Location = new Point(Location.X - 1, Location.Y);
                 //ProcessCollision(gameObject);
                 hitpoint = "right";
