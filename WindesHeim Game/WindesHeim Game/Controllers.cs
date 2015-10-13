@@ -410,7 +410,7 @@ namespace WindesHeim_Game
                         {
                             string returnDirection = gameObject.ProcessCollision(potentialCollision);
                             //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
-                            if (currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
+                            if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
                             {
                                 gameObstacle.SmartMovingEnabled = true;
                                 gameObstacle.SmartmovingDirection = returnDirection;
@@ -467,7 +467,7 @@ namespace WindesHeim_Game
                         {
                             string returnDirection = gameObject.ProcessCollision(potentialCollision);
                             //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
-                            if (currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
+                            if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
                             {
                                 gameObstacle.SmartMovingEnabled = true;
                                 gameObstacle.SmartmovingDirection = returnDirection;
@@ -1367,6 +1367,7 @@ namespace WindesHeim_Game
 
         public void TryAgain_Click(object sender, EventArgs e)
         {
+            ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(), score));
             gameWindow.setController(ScreenStates.game);
         }
     }
