@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using WindesHeim_Game.Properties;
@@ -50,7 +51,23 @@ namespace WindesHeim_Game
         }
         public void play_Click(object sender, EventArgs e)
         {
-            gameWindow.setController(ScreenStates.gameSelect);
+            bool error = false;
+
+            if (!System.Diagnostics.Debugger.IsAttached) {
+                if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "/levels/")) {
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "/levels/");
+                }
+
+                int fileCount = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/levels/", "*.xml", SearchOption.AllDirectories).Length;
+
+                if (fileCount == 0) {
+                    string xmlString = Resources.level1;
+                    File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + "/levels/level1.xml", Encoding.UTF8.GetBytes(Resources.level1));
+                }
+            }
+
+            if(!error)
+                gameWindow.setController(ScreenStates.gameSelect);
         }
         public void editor_Click(object sender, EventArgs e)
         {
@@ -941,7 +958,14 @@ namespace WindesHeim_Game
                 {
                     string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
                     GameProperties gameProperties = new GameProperties(returnValues[0].ToString(), returnValues[1].ToString());
-                    level = new XMLParser("../levels/" + returnValues[0] + ".xml");
+
+                    if (System.Diagnostics.Debugger.IsAttached) {
+                        level = new XMLParser("../levels/" + returnValues[0] + ".xml");
+                    }
+                    else {
+                        level = new XMLParser(AppDomain.CurrentDomain.BaseDirectory + "/levels/" + returnValues[0] + ".xml");
+                    }
+                  
                     if (level != null)
                     {
                         level.WriteXML(gameProperties, gameObjects);

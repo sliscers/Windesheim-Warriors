@@ -118,20 +118,28 @@ namespace WindesHeim_Game
         public static void LoadAllLevels()
         {
             Levels.Clear();
-            String dirPath = "../levels/";
-                string[] fileEntries = Directory.GetFiles(dirPath);
-                foreach (string file in fileEntries)
+            string dirPath = "";
+
+            if (System.Diagnostics.Debugger.IsAttached) {
+                dirPath = "../levels/";
+            }
+            else {
+                dirPath = AppDomain.CurrentDomain.BaseDirectory + "/levels/";
+            }
+
+            string[] fileEntries = Directory.GetFiles(dirPath);
+            foreach (string file in fileEntries)
+            {
+                if (File.Exists(file))
                 {
-                    if (File.Exists(file))
+                    if (isXML(file))
                     {
-                        if (isXML(file))
-                        {
-                            XMLParser xml = new XMLParser(file);
-                            xml.ReadXML();
-                            Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
-                        }
+                        XMLParser xml = new XMLParser(file);
+                        xml.ReadXML();
+                        Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
                     }
                 }
+            }
         }
         private static bool isXML(string file)
         {
