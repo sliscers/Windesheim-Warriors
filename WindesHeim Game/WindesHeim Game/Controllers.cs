@@ -1086,29 +1086,29 @@ namespace WindesHeim_Game
 
             if ((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
                 && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
-            String dialog = ShowDialog("MovingExplodingObstacle", "Set properties for Moving Obstacle");
-                if (dialog != "") {
-                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
+                String dialog = ShowDialog("MovingExplodingObstacle", "Set properties for Moving Obstacle");
+                    if (dialog != "") {
+                    string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                    MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
 
-                    if (returnValues[0] == "Slow")
-                    moe.MovingSpeed = 0;
-                else if (returnValues[0] == "Moderate")
-                    moe.MovingSpeed = 1;
-                else if (returnValues[0] == "Fast")
-                    moe.MovingSpeed = 2;
-                else if (returnValues[0] == "Unmöglich")
-                    moe.MovingSpeed = 3;
+                        if (returnValues[0] == "Slow")
+                        moe.MovingSpeed = 0;
+                    else if (returnValues[0] == "Moderate")
+                        moe.MovingSpeed = 1;
+                    else if (returnValues[0] == "Fast")
+                        moe.MovingSpeed = 2;
+                    else if (returnValues[0] == "Unmöglich")
+                        moe.MovingSpeed = 3;
 
-                    if (returnValues[2] == "Unchecked")
-                    moe.IsSmart = false;
-                else
-                    moe.IsSmart = true;
+                        if (returnValues[2] == "Unchecked")
+                        moe.IsSmart = false;
+                    else
+                        moe.IsSmart = true;
 
-                gameObjects.Add(moe);
-                modelEditor.gamePanel.Invalidate();
+                    gameObjects.Add(moe);
+                    modelEditor.gamePanel.Invalidate();
+                }
             }
-        }
         }
 
         public void SlowingObstacle_MouseUp(object sender, MouseEventArgs e)
@@ -1117,39 +1117,39 @@ namespace WindesHeim_Game
 
             if((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
                 && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
-            String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
+                String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
 
-                if (dialog != "") {
-                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                SlowingObstacle sb = new SlowingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
+                    if (dialog != "") {
+                    string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                    SlowingObstacle sb = new SlowingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
 
-                if (returnValues[0] == "Slow")
-                    sb.MovingSpeed = 0;
-                else if (returnValues[0] == "Moderate")
-                    sb.MovingSpeed = 1;
-                else if (returnValues[0] == "Fast")
-                    sb.MovingSpeed = 2;
-                else if (returnValues[0] == "Unmöglich")
-                    sb.MovingSpeed = 3;
+                    if (returnValues[0] == "Slow")
+                        sb.MovingSpeed = 0;
+                    else if (returnValues[0] == "Moderate")
+                        sb.MovingSpeed = 1;
+                    else if (returnValues[0] == "Fast")
+                        sb.MovingSpeed = 2;
+                    else if (returnValues[0] == "Unmöglich")
+                        sb.MovingSpeed = 3;
 
-                if (returnValues[1] == "Freeze the player")
-                    sb.SlowingSpeed = 0;
-                else if (returnValues[1] == "Very slow")
-                    sb.SlowingSpeed = 1;
-                else if (returnValues[1] == "Slow")
-                    sb.SlowingSpeed = 2;
-                else if (returnValues[1] == "Normal")
-                    sb.SlowingSpeed = 4;
+                    if (returnValues[1] == "Freeze the player")
+                        sb.SlowingSpeed = 0;
+                    else if (returnValues[1] == "Very slow")
+                        sb.SlowingSpeed = 1;
+                    else if (returnValues[1] == "Slow")
+                        sb.SlowingSpeed = 2;
+                    else if (returnValues[1] == "Normal")
+                        sb.SlowingSpeed = 4;
 
-                if (returnValues[2] == "Unchecked")
-                    sb.IsSmart = false;
-                else
-                    sb.IsSmart = true;
+                    if (returnValues[2] == "Unchecked")
+                        sb.IsSmart = false;
+                    else
+                        sb.IsSmart = true;
 
-                gameObjects.Add(sb);
-                modelEditor.gamePanel.Invalidate();
+                    gameObjects.Add(sb);
+                    modelEditor.gamePanel.Invalidate();
+                }
             }
-        }
         }
 
         public void updateDragPosition(object sender, MouseEventArgs e)

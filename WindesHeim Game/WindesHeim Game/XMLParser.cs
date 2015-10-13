@@ -145,38 +145,38 @@ namespace WindesHeim_Game
 
         public void AddHighscore(GameHighscore highscore)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(this.path);
-            XDocument xml = XDocument.Load(this.path);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(this.path);
 
-            if (xmlDoc.SelectSingleNode("//highscores") == null)
-            {
-               // XmlNode root = xmlDoc.SelectSingleNode("//level");
-                //XmlNode items = xmlDoc.SelectSingleNode("//items");
+            XmlNode root = doc.DocumentElement;
 
-                //XmlNode xmlRecordNo = xmlDoc.CreateNode(XmlNodeType.Element, "highscores", null);
-                //root.InsertAfter(xmlRecordNo, items);
-                
-                xml.Element("items").AddAfterSelf(new XElement("highscores",
-                    new XElement("highscore",
-                        new XElement("name", highscore.name),
-                        new XElement("datetime", highscore.dateTime),
-                        new XElement("score", highscore.score)
-                )));
-            }
-            else
+            if (doc.SelectSingleNode("//highscores") == null)
             {
-                xml.Element("highscores").Add(
-                    new XElement("highscore", 
-                        new XElement("name", highscore.name),
-                        new XElement("datetime", highscore.dateTime), 
-                        new XElement("score", highscore.score)
-                    )
-                );
+                XmlElement highScoresElement = doc.CreateElement("highscores");
+                root.AppendChild(highScoresElement);                
             }
 
+            XmlNode highscores = doc.SelectSingleNode("//highscores");
 
-            xml.Save(this.path);
+            XmlElement highScoreElement = doc.CreateElement("highscore");
+
+            XmlElement nameElement = doc.CreateElement("name");
+            nameElement.InnerText = highscore.name;
+
+            XmlElement datetimeElement = doc.CreateElement("datetime");
+            datetimeElement.InnerText = highscore.dateTime.ToString();
+
+            XmlElement scoreElement = doc.CreateElement("score");
+            scoreElement.InnerText = highscore.score.ToString();
+
+            highScoreElement.AppendChild(nameElement);
+            highScoreElement.AppendChild(datetimeElement);
+            highScoreElement.AppendChild(scoreElement);
+
+            //Add the node to the document.            
+            highscores.AppendChild(highScoreElement);            
+
+            doc.Save(this.path);
         }
 
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
