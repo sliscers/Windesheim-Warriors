@@ -1314,9 +1314,14 @@ namespace WindesHeim_Game
         }
 
         public void Continue_Click(object sender, EventArgs e)
-        {
-            ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(),score));
-            gameWindow.setController(ScreenStates.menu);
+        {         
+            if(modelHighscoreInput.name.Text.Length == 0) {
+                DialogResult dr = MessageBox.Show("Graag uw naam opgeven", "Error", MessageBoxButtons.OK);
+            }
+            else {
+                ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(), score));
+                gameWindow.setController(ScreenStates.menu);
+            }     
         }
 
         public void GetPlace()
