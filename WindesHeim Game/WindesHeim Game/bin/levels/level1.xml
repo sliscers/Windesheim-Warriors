@@ -71,5 +71,10 @@
       <datetime>13-10-2015 14:54:15</datetime>
       <score>150</score>
     </highscore>
+    <highscore>
+      <name>Kevin de Korte</name>
+      <datetime>13-10-2015 15:23:03</datetime>
+      <score>175</score>
+    </highscore>
   </highscores>
 </level>
