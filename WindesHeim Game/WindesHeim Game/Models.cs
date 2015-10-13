@@ -927,7 +927,7 @@ namespace WindesHeim_Game
             backgroundImage = new Panel();
             backgroundImage.Location = new System.Drawing.Point(0, 0);
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
-            backgroundImage.BackgroundImage = Resources.menuBackground;
+            backgroundImage.BackgroundImage = Resources.otherScreen;
 
             gamePanel = new Panel();
             gamePanel.Location = new System.Drawing.Point(210, 0);
@@ -1000,7 +1000,7 @@ namespace WindesHeim_Game
 
             backgroundImage = new Panel();
             backgroundImage.Size = gameWindow.Size;
-            backgroundImage.BackgroundImage = Resources.menuBackground;
+            backgroundImage.BackgroundImage = Resources.otherScreen;
 
             listBoxLevels = new ListBox();
             listBoxLevels.Size = new System.Drawing.Size(200, 200);
@@ -1066,7 +1066,7 @@ namespace WindesHeim_Game
             backgroundImage = new Panel();
             backgroundImage.Location = new System.Drawing.Point(0, 0);
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
-            backgroundImage.BackgroundImage = Resources.menuBackground;
+            backgroundImage.BackgroundImage = Resources.otherScreen;
 
             gamePanel = new Panel();
             gamePanel.Location = new System.Drawing.Point(210, 0);
@@ -1163,7 +1163,7 @@ namespace WindesHeim_Game
             backgroundImage = new Panel();
             backgroundImage.Location = new System.Drawing.Point(0, 0);
             backgroundImage.Size = new System.Drawing.Size(gameWindow.Width, gameWindow.Height);
-            backgroundImage.BackgroundImage = Resources.menuBackground;
+            backgroundImage.BackgroundImage = Resources.otherScreen;
 
             dragDropLabel = new Label();
             dragDropLabel.Text = "Drag en drop";
@@ -1323,13 +1323,13 @@ namespace WindesHeim_Game
 
             continueBtn = new PictureBox();
             continueBtn.Size = new System.Drawing.Size(200, 44);
-            continueBtn.Text = "Go Back";
+            continueBtn.Text = "Continue";
             continueBtn.BackgroundImage = Resources.continueBtn;
             continueBtn.Click += new EventHandler(highscoreInputController.Continue_Click);
 
             tryAgain = new PictureBox();
             tryAgain.Size = new System.Drawing.Size(200, 44);
-            tryAgain.Text = "Go Back";
+            tryAgain.Text = "Try again";
             tryAgain.BackgroundImage = Resources.tryAgain;
             tryAgain.Click += new EventHandler(highscoreInputController.Continue_Click);
 
@@ -1342,8 +1342,10 @@ namespace WindesHeim_Game
             score.Text = "SCORE:" + highscoreInputController.score;
             score.Font = new Font("Arial", 20);
 
+            highscoreInputController.GetPlace();
+
             place.AutoSize = true;
-            place.Text = "PLACE:";
+            place.Text = "PLACE: " + highscoreInputController.place;
             place.Font = new Font("Arial", 20);
 
             gameWindow.Controls.Add(backgroundImage);

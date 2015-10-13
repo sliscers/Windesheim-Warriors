@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using WindesHeim_Game.Properties;
@@ -1278,6 +1279,7 @@ namespace WindesHeim_Game
     public class ControllerHighscoreInput : Controller
     {
         public int score;
+        public int place;
 
         private ModelHighscoreInput modelHighscoreInput;
 
@@ -1291,6 +1293,29 @@ namespace WindesHeim_Game
         {
             ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(),score));
             gameWindow.setController(ScreenStates.menu);
+        }
+
+        public void GetPlace()
+        {            
+            int i = 0;
+            List<GameHighscore> tempHighscores = new List<GameHighscore>();
+            foreach (GameHighscore highscore in ModelGame.level.gameHighscores)
+            {
+                tempHighscores.Add(highscore);
+            }
+            GameHighscore tempHighscore = new GameHighscore("tempHighscore", DateTime.Now.ToString(), score);
+            tempHighscores.Add(tempHighscore);
+            tempHighscores = tempHighscores.OrderBy(highscore => highscore.score).ToList();
+
+            i = 0;
+            foreach (GameHighscore highscore in tempHighscores)
+            {
+                i++;
+                if (highscore.Equals(tempHighscore))
+                {
+                    place = i;
+                }
+            }
         }
 
         public void KeyDownText(object sender, KeyEventArgs e) {
