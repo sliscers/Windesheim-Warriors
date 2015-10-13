@@ -425,16 +425,16 @@ namespace WindesHeim_Game
                                 //Console.WriteLine(string.Join("|", lastFive.ToArray()));
 
                                 if (lastDirection.Contains("left")) {
-                                    gameObject.Location = new Point(gameObject.Location.X + gameObstacle.MovingSpeed, gameObject.Location.Y);
+                                    gameObject.Location = new Point(gameObject.Location.X + gameObstacle.MovingSpeed + 1, gameObject.Location.Y);
                                 }
                                 if (lastDirection.Contains("right")) {
-                                    gameObject.Location = new Point(gameObject.Location.X - gameObstacle.MovingSpeed, gameObject.Location.Y);
+                                    gameObject.Location = new Point(gameObject.Location.X - gameObstacle.MovingSpeed - 1, gameObject.Location.Y);
                                 }
                                 if (lastDirection.Contains("up")) {
-                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y + gameObstacle.MovingSpeed);
+                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y + gameObstacle.MovingSpeed + 1);
                                 }
                                 if (lastDirection.Contains("down")) {
-                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y - gameObstacle.MovingSpeed);
+                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y - gameObstacle.MovingSpeed - 1);
                                 }
                             }
                         }
