@@ -763,6 +763,7 @@ namespace WindesHeim_Game
         public void playLevel_Click(object sender, EventArgs e)
         {
             ModelGame.level = currentSelectedLevel;
+            ControllerGame.editor = false;
             gameWindow.setController(ScreenStates.game);
         }
 
@@ -830,6 +831,8 @@ namespace WindesHeim_Game
                 }
             }
         }
+
+
     }
 
     public class ControllerEditorSelect : Controller
@@ -1288,6 +1291,29 @@ namespace WindesHeim_Game
         {
             ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(),score));
             gameWindow.setController(ScreenStates.menu);
+        }
+
+        public void KeyDownText(object sender, KeyEventArgs e) {
+            TextBox textBox = sender as TextBox;
+            char character = (char)e.KeyCode;
+
+            if ((character >= 'A' && character <= 'Z') || (character >= 'a' && character <= 'z')) {
+                textBox.Text += e.KeyCode.ToString().ToUpper();
+                textBox.SelectionStart = textBox.Text.Length;
+                textBox.SelectionLength = 0;
+            }
+            else if(e.KeyCode == Keys.Back) {
+                if (textBox.Text.Length > 0) {
+                    textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
+                    textBox.SelectionStart = textBox.Text.Length;
+                    textBox.SelectionLength = 0;
+                }
+            }
+            else if(e.KeyCode == Keys.Space) {
+                textBox.Text += " ";
+                textBox.SelectionStart = textBox.Text.Length;
+                textBox.SelectionLength = 0;
+            }
         }
     }
 }

@@ -1336,6 +1336,7 @@ namespace WindesHeim_Game
             name = new TextBox();
             name.Location = new System.Drawing.Point(0, 0);
             name.TextAlign = HorizontalAlignment.Center;
+            name.KeyDown += highscoreInputController.KeyDownText;
 
             score.AutoSize = true;
             score.Text = "SCORE:" + highscoreInputController.score;
