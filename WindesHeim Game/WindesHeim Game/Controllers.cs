@@ -71,7 +71,7 @@ namespace WindesHeim_Game
         
         // Timer voor de gameloop
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        
+
         // Initialiseren van de buttons
         private bool pressedLeft = false;
         private bool pressedRight = false;
@@ -380,10 +380,10 @@ namespace WindesHeim_Game
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
 
                     //Opslaan van huidige locatie in variable om vervolgens te vergelijken
-                    Point currentLocation = gameObstacle.Location;
+                    Point currentLocation = gameObstacle.Location;                    
 
-                    gameObstacle.ChasePlayer(mg.player);
-
+                    gameObstacle.ChasePlayer(mg.player);                    
+                    
                     // Loop door alle objecten op het veld
                     foreach (GameObject potentialCollision in safeListArray)
                     {
@@ -398,8 +398,8 @@ namespace WindesHeim_Game
                                 gameObstacle.SmartmovingDirection = returnDirection;
                                 //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
                                 gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
+                            }
                         }
-                    }
                     }
 
                     if (gameObstacle.IsSmart)
@@ -545,7 +545,7 @@ namespace WindesHeim_Game
                         timer.Stop();
                         if (editor)
                         {
-                            gameWindow.setController(ScreenStates.editor);
+                            gameWindow.setController(ScreenStates.editor);                            
                         }
                         else{
                             gameWindow.setController(ScreenStates.highscoreInput);
@@ -637,7 +637,6 @@ namespace WindesHeim_Game
                 }
             }
         }
-
 
         public override void RunController()
         {
@@ -933,27 +932,27 @@ namespace WindesHeim_Game
         }
 
         public void saveLevel_Click(object sender, EventArgs e)
-        {            
+        {   
             if(level == null)
             {
                 //Als New level
-            String dialog = showPropertyDialog("Set properties for Level");
-            if (dialog != "")
-            {
-                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                GameProperties gameProperties = new GameProperties(returnValues[0].ToString(), returnValues[1].ToString());
-                level = new XMLParser("../levels/" + returnValues[0] + ".xml");
-                if (level != null)
+                String dialog = showPropertyDialog("Set properties for Level");
+                if (dialog != "")
                 {
+                    string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                    GameProperties gameProperties = new GameProperties(returnValues[0].ToString(), returnValues[1].ToString());
+                    level = new XMLParser("../levels/" + returnValues[0] + ".xml");
+                    if (level != null)
+                    {
                         level.WriteXML(gameProperties, gameObjects);
                     }
                 }
-                }
+            }
             else 
             {
                 // Als Edit level
                 level.WriteXML(level.gameProperties, gameObjects, level.gameHighscores);
-            }
+            }        
         }
 
         private String showPropertyDialog(string dialogTitle)
@@ -1041,7 +1040,7 @@ namespace WindesHeim_Game
                 textLabelSlowingSpeed = new Label() { Left = 10, Top = 90, Text = "Player speed \nupon collision" };
                 textLabelSlowingSpeed.Size = new Size(textLabelSlowingSpeed.Width, textLabelSlowingSpeed.Height + 20);
                 prompt.Controls.Add(textLabelSlowingSpeed);
-
+            
                 textBoxSlowingSpeed.SelectedIndex = 2;                    
                 prompt.Controls.Add(textBoxSlowingSpeed);
             }
@@ -1064,9 +1063,9 @@ namespace WindesHeim_Game
 
             if ((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
                 && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
-                    gameObjects.Add(new StaticObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
-                    modelEditor.gamePanel.Invalidate();
-            }            
+            gameObjects.Add(new StaticObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
+            modelEditor.gamePanel.Invalidate();
+        }
         }
 
         public void ExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
@@ -1075,10 +1074,10 @@ namespace WindesHeim_Game
 
             if ((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
                 && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
-                    gameObjects.Add(new ExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
-                    modelEditor.gamePanel.Invalidate();
-            }
-                
+            gameObjects.Add(new ExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
+            modelEditor.gamePanel.Invalidate();
+        }
+
         }
 
         public void MovingExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
@@ -1087,29 +1086,29 @@ namespace WindesHeim_Game
 
             if ((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
                 && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
-                String dialog = ShowDialog("MovingExplodingObstacle", "Set properties for Moving Obstacle");
+            String dialog = ShowDialog("MovingExplodingObstacle", "Set properties for Moving Obstacle");
                 if (dialog != "") {
-                    string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                    MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
+                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
 
                     if (returnValues[0] == "Slow")
-                        moe.MovingSpeed = 0;
-                    else if (returnValues[0] == "Moderate")
-                        moe.MovingSpeed = 1;
-                    else if (returnValues[0] == "Fast")
-                        moe.MovingSpeed = 2;
-                    else if (returnValues[0] == "Unmöglich")
-                        moe.MovingSpeed = 3;
+                    moe.MovingSpeed = 0;
+                else if (returnValues[0] == "Moderate")
+                    moe.MovingSpeed = 1;
+                else if (returnValues[0] == "Fast")
+                    moe.MovingSpeed = 2;
+                else if (returnValues[0] == "Unmöglich")
+                    moe.MovingSpeed = 3;
 
                     if (returnValues[2] == "Unchecked")
-                        moe.IsSmart = false;
-                    else
-                        moe.IsSmart = true;
+                    moe.IsSmart = false;
+                else
+                    moe.IsSmart = true;
 
-                    gameObjects.Add(moe);
-                    modelEditor.gamePanel.Invalidate();
-                }
+                gameObjects.Add(moe);
+                modelEditor.gamePanel.Invalidate();
             }
+        }
         }
 
         public void SlowingObstacle_MouseUp(object sender, MouseEventArgs e)
@@ -1118,39 +1117,39 @@ namespace WindesHeim_Game
 
             if((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
                 && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
-                String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
+            String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
 
                 if (dialog != "") {
-                    string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                    SlowingObstacle sb = new SlowingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
+                string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
+                SlowingObstacle sb = new SlowingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
 
-                    if (returnValues[0] == "Slow")
-                        sb.MovingSpeed = 0;
-                    else if (returnValues[0] == "Moderate")
-                        sb.MovingSpeed = 1;
-                    else if (returnValues[0] == "Fast")
-                        sb.MovingSpeed = 2;
-                    else if (returnValues[0] == "Unmöglich")
-                        sb.MovingSpeed = 3;
+                if (returnValues[0] == "Slow")
+                    sb.MovingSpeed = 0;
+                else if (returnValues[0] == "Moderate")
+                    sb.MovingSpeed = 1;
+                else if (returnValues[0] == "Fast")
+                    sb.MovingSpeed = 2;
+                else if (returnValues[0] == "Unmöglich")
+                    sb.MovingSpeed = 3;
 
-                    if (returnValues[1] == "Freeze the player")
-                        sb.SlowingSpeed = 0;
-                    else if (returnValues[1] == "Very slow")
-                        sb.SlowingSpeed = 1;
-                    else if (returnValues[1] == "Slow")
-                        sb.SlowingSpeed = 2;
-                    else if (returnValues[1] == "Normal")
-                        sb.SlowingSpeed = 4;
+                if (returnValues[1] == "Freeze the player")
+                    sb.SlowingSpeed = 0;
+                else if (returnValues[1] == "Very slow")
+                    sb.SlowingSpeed = 1;
+                else if (returnValues[1] == "Slow")
+                    sb.SlowingSpeed = 2;
+                else if (returnValues[1] == "Normal")
+                    sb.SlowingSpeed = 4;
 
-                    if (returnValues[2] == "Unchecked")
-                        sb.IsSmart = false;
-                    else
-                        sb.IsSmart = true;
+                if (returnValues[2] == "Unchecked")
+                    sb.IsSmart = false;
+                else
+                    sb.IsSmart = true;
 
-                    gameObjects.Add(sb);
-                    modelEditor.gamePanel.Invalidate();
-                }
+                gameObjects.Add(sb);
+                modelEditor.gamePanel.Invalidate();
             }
+        }
         }
 
         public void updateDragPosition(object sender, MouseEventArgs e)

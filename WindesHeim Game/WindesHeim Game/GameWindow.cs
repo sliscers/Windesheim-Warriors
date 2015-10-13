@@ -21,7 +21,6 @@ namespace WindesHeim_Game
 
         private void GameWindow_KeyPress(object sender, KeyPressEventArgs e) {
             e.Handled = true;
-            Console.WriteLine("hallo");
         }
     }
 }
