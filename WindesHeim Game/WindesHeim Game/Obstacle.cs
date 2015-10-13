@@ -85,15 +85,16 @@ namespace WindesHeim_Game {
 
         public void TryToEscape()
         {
-            Console.WriteLine((Location.X + Height) + "::" + (Location.Y + Height));
-            if ((Location.X + Height) >= 840)
+            Console.WriteLine((Location.X) + "::" + (Location.Y));
+            if ((Location.X) >= 800)
             {                
-                smartmovingDirection = "left";
+                smartmovingDirection = "right";
             }
-            if ((Location.Y + Height) >= 470)
+            if ((Location.Y) >= 430)
             {
-                smartmovingDirection = "up";
+                smartmovingDirection = "down";
             }
+            Console.WriteLine(smartmovingDirection);
             switch (smartmovingDirection)
                 {
                     case "up": //Als collision aan de bovenkant, beweeg naar beneden
