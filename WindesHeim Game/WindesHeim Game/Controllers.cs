@@ -1364,6 +1364,11 @@ namespace WindesHeim_Game
                 textBox.SelectionLength = 0;
             }
         }
+
+        public void TryAgain_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.game);
+        }
     }
 }
 

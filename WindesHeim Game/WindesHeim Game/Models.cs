@@ -1331,9 +1331,10 @@ namespace WindesHeim_Game
             tryAgain.Size = new System.Drawing.Size(200, 44);
             tryAgain.Text = "Try again";
             tryAgain.BackgroundImage = Resources.tryAgain;
-            tryAgain.Click += new EventHandler(highscoreInputController.Continue_Click);
+            tryAgain.Click += new EventHandler(highscoreInputController.TryAgain_Click);
 
             name = new TextBox();
+            name.Text = Environment.UserName;
             name.Location = new System.Drawing.Point(0, 0);
             name.TextAlign = HorizontalAlignment.Center;
             name.KeyDown += highscoreInputController.KeyDownText;
