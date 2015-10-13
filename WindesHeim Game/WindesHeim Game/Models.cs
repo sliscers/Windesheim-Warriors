@@ -1329,7 +1329,9 @@ namespace WindesHeim_Game
             goBack.Click += new EventHandler(highscoreInputController.Continue_Click);
 
             name = new TextBox();
-            name.TextAlign = HorizontalAlignment.Center;
+            //name.TextAlign = HorizontalAlignment.Center;
+            name.Enabled = true;
+            name.ReadOnly = false;
 
             score.AutoSize = true;
             score.Text = "SCORE:" + highscoreInputController.score;
