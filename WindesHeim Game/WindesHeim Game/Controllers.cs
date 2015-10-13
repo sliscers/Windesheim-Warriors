@@ -124,6 +124,7 @@ namespace WindesHeim_Game
         {
             // Reset veld en ga terug naar menu
             ModelGame mg = (ModelGame)model;
+            score = 0;
             mg.InitializeField();
             gameWindow.setController(ScreenStates.menu);
 
@@ -421,10 +422,11 @@ namespace WindesHeim_Game
                             if (gameObject.CollidesWith(potentialCollision)) {
                                 string lastDirection = gameObstacle.HistoryMovement[gameObstacle.HistoryMovement.Count - 1];
 
-                                if (lastDirection.Contains("left")) {
+                                if (lastDirection.Contains("left")) { 
                                     gameObject.Location = new Point(gameObject.Location.X + gameObstacle.MovingSpeed + 2, gameObject.Location.Y);
                                 }
                                 if (lastDirection.Contains("right")) {
+
                                     gameObject.Location = new Point(gameObject.Location.X - gameObstacle.MovingSpeed - 2, gameObject.Location.Y);
                                 }
                                 if (lastDirection.Contains("up")) {
@@ -1319,7 +1321,7 @@ namespace WindesHeim_Game
 
             foreach (GameObject gameObject in gameObjects) {
                 g.DrawImage(gameObject.ObjectImage, gameObject.Location.X + modelEditor.widthDragDropPanel, gameObject.Location.Y, gameObject.Width, gameObject.Height);
-                g.DrawRectangle(new Pen(Color.FromArgb(255, 0, 70, 133)), new Rectangle(new Point(gameObject.Location.X + modelEditor.widthDragDropPanel, gameObject.Location.Y), new Size(gameObject.Width, gameObject.Height)));
+                g.DrawRectangle(new Pen(Color.FromArgb(255, 0, 70, 133)), new Rectangle(new Point(gameObject.Location.X + modelEditor.widthDragDropPanel - gameObject.CollisionX, gameObject.Location.Y - gameObject.CollisionY), new Size(gameObject.Width + gameObject.CollisionX * 2, gameObject.Height + gameObject.CollisionY * 2)));
             }
 
             g.FillRectangle(new SolidBrush(Color.LightGray), new Rectangle(new Point(0, 0), new Size(modelEditor.widthDragDropPanel, 475)));
