@@ -17,7 +17,7 @@ namespace WindesHeim_Game {
             base.CollisionY = 0;
             base.Name = "Auto";
             base.Description = "Ontploft bij aanraking";
-            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.carEdited;
+            base.PanelIcon = Resources.carEdited;
         }
 
 
