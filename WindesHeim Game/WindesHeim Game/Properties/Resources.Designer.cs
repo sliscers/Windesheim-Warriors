@@ -90,11 +90,40 @@ namespace WindesHeim_Game.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream CARHORN1 {
+            get {
+                return ResourceManager.GetStream("CARHORN1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap closeButton {
+            get {
+                object obj = ResourceManager.GetObject("closeButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap ConceptTransparentBackgroundSmall {
             get {
                 object obj = ResourceManager.GetObject("ConceptTransparentBackgroundSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap continueBtn {
+            get {
+                object obj = ResourceManager.GetObject("continueBtn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -120,6 +149,26 @@ namespace WindesHeim_Game.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap editLevel {
+            get {
+                object obj = ResourceManager.GetObject("editLevel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap editorButton {
+            get {
+                object obj = ResourceManager.GetObject("editorButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream EXPLODE {
@@ -129,11 +178,40 @@ namespace WindesHeim_Game.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream EXPLODE1 {
+            get {
+                return ResourceManager.GetStream("EXPLODE1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap explosion {
             get {
                 object obj = ResourceManager.GetObject("explosion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap goBack {
+            get {
+                object obj = ResourceManager.GetObject("goBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap highscoresButton {
+            get {
+                object obj = ResourceManager.GetObject("highscoresButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -229,6 +307,16 @@ namespace WindesHeim_Game.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon IconWINico1 {
+            get {
+                object obj = ResourceManager.GetObject("IconWINico1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Left {
@@ -244,6 +332,47 @@ namespace WindesHeim_Game.Properties {
         internal static System.Drawing.Bitmap LeftOnClick {
             get {
                 object obj = ResourceManager.GetObject("LeftOnClick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;level&gt;
+        ///  &lt;properties&gt;
+        ///    &lt;title&gt;Level 1&lt;/title&gt;
+        ///    &lt;difficulty&gt;hard&lt;/difficulty&gt;
+        ///  &lt;/properties&gt;
+        ///  &lt;items&gt;
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;ExplodingObstacle&lt;/type&gt;
+        ///      &lt;x&gt;175&lt;/x&gt;
+        ///      &lt;y&gt;175&lt;/y&gt;
+        ///      &lt;height&gt;40&lt;/height&gt;
+        ///      &lt;width&gt;40&lt;/width&gt;
+        ///    &lt;/object&gt;
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;MovingExplodingObstacle&lt;/type&gt;
+        ///      &lt;x&gt;275&lt;/x&gt;
+        ///      &lt;y&gt;300&lt;/y&gt;
+        ///      &lt;height&gt;40&lt;/height&gt;
+        ///      &lt;width&gt;40&lt;/width&gt;
+        ///      &lt;movingspeed&gt;0&lt;/movingspeed&gt;
+        ///    &lt;/object&gt;
+        ///     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string level1 {
+            get {
+                return ResourceManager.GetString("level1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap menuBackground {
+            get {
+                object obj = ResourceManager.GetObject("menuBackground", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -291,6 +420,36 @@ namespace WindesHeim_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap newLevel {
+            get {
+                object obj = ResourceManager.GetObject("newLevel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap otherScreen {
+            get {
+                object obj = ResourceManager.GetObject("otherScreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap playButton {
+            get {
+                object obj = ResourceManager.GetObject("playButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Player {
             get {
                 object obj = ResourceManager.GetObject("Player", resourceCulture);
@@ -324,6 +483,16 @@ namespace WindesHeim_Game.Properties {
         internal static System.Drawing.Bitmap PlayerLeft {
             get {
                 object obj = ResourceManager.GetObject("PlayerLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap playLevel {
+            get {
+                object obj = ResourceManager.GetObject("playLevel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -371,6 +540,16 @@ namespace WindesHeim_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap saveLevel {
+            get {
+                object obj = ResourceManager.GetObject("saveLevel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap soundEdited {
             get {
                 object obj = ResourceManager.GetObject("soundEdited", resourceCulture);
@@ -381,9 +560,39 @@ namespace WindesHeim_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap soundEdited1 {
+            get {
+                object obj = ResourceManager.GetObject("soundEdited1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap soundEditedOnHover {
             get {
                 object obj = ResourceManager.GetObject("soundEditedOnHover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap testLevel {
+            get {
+                object obj = ResourceManager.GetObject("testLevel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tryAgain {
+            get {
+                object obj = ResourceManager.GetObject("tryAgain", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -401,9 +610,29 @@ namespace WindesHeim_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] ufonts_com_sheriff_roman1 {
+            get {
+                object obj = ResourceManager.GetObject("ufonts_com_sheriff_roman1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] ufonts_com_transitfront_negativ {
             get {
                 object obj = ResourceManager.GetObject("ufonts_com_transitfront_negativ", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ufonts_com_transitfront_negativ1 {
+            get {
+                object obj = ResourceManager.GetObject("ufonts_com_transitfront_negativ1", resourceCulture);
                 return ((byte[])(obj));
             }
         }

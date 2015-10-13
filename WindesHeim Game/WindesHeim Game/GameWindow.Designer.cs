@@ -11,7 +11,8 @@ namespace WindesHeim_Game
         game,
         editorSelect,
         editor,
-        highscore
+        highscore,
+        highscoreInput
     }
 
     partial class GameWindow
@@ -22,6 +23,7 @@ namespace WindesHeim_Game
         private ControllerHighscores highscores;
         private ControllerEditorSelect editorSelect;
         private ControllerEditor editor;
+        private ControllerHighscoreInput highscoreInput;
 
 
         private ScreenStates state = ScreenStates.menu;
@@ -38,6 +40,7 @@ namespace WindesHeim_Game
 
         private void InitializeComponent()
         {
+            highscoreInput = new ControllerHighscoreInput(this);
             menu = new ControllerMenu(this);
             game = new ControllerGame(this);
             levelSelect = new ControllerLevelSelect(this);
@@ -93,6 +96,12 @@ namespace WindesHeim_Game
                 case ScreenStates.highscore:
                     this.state = ScreenStates.highscore;
                     highscores.RunController();
+                    break;
+                case ScreenStates.highscoreInput:
+                    highscoreInput.score = game.score;
+                    this.state = ScreenStates.highscoreInput;
+                    
+                    highscoreInput.RunController();
                     break;
                 default:
                     this.state = ScreenStates.menu;

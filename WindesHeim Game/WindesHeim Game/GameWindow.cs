@@ -15,6 +15,12 @@ namespace WindesHeim_Game
         public GameWindow()
         {
             InitializeComponent();
+            this.KeyPreview = true;            
+            KeyPress += GameWindow_KeyPress;
+        }
+
+        private void GameWindow_KeyPress(object sender, KeyPressEventArgs e) {
+            e.Handled = true;
         }
     }
 }
