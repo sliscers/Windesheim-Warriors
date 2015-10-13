@@ -147,6 +147,10 @@ namespace WindesHeim_Game
         {
             XDocument xmlDoc = XDocument.Load(this.path);
 
+            if(xmlDoc.Element("highscores") == null)
+            {
+                xmlDoc.Element("highscores").Add();
+            }
             xmlDoc.Element("highscores").Add(
                 new XElement("highscore", 
                     new XElement("name", highscore.name),
