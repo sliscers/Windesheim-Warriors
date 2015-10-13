@@ -18,10 +18,17 @@ namespace WindesHeim_Game {
         private DateTime smartmovingTime;
         private bool isSmart = true;
 
+        private List<string> historyMovement = new List<string>();
+
         public Obstacle(Point location, int height, int width) : base (location, height, width)
         {
             
         }
+
+        public List<string> HistoryMovement {
+            get { return historyMovement; }
+        }
+
         public string SmartmovingDirection
         {
             get { return smartmovingDirection; }
@@ -70,17 +77,31 @@ namespace WindesHeim_Game {
         }
 
         public void ChasePlayer(Player player) {
-            if (Location.X >= player.Location.X)
+            string directionString = "";
+
+            if (Location.X >= player.Location.X) {
                 Location = new Point(Location.X - 1 - movingSpeed, Location.Y);
+                directionString += "left";
+            }
 
-            if (Location.X <= player.Location.X)
+            if (Location.X <= player.Location.X) {
                 Location = new Point(Location.X + 1 + movingSpeed, Location.Y);
+                directionString += "right";
+            }
 
-            if (Location.Y >= player.Location.Y)
+
+            if (Location.Y >= player.Location.Y) {
                 Location = new Point(Location.X, Location.Y - 1 - movingSpeed);
+                directionString += "down";
+            }
 
-            if (Location.Y <= player.Location.Y)
+            if (Location.Y <= player.Location.Y) {
                 Location = new Point(Location.X, Location.Y + 1 + movingSpeed);
+                directionString += "up";      
+            }
+
+            historyMovement.Add(directionString);
+            //Console.WriteLine(string.Join("|", historyMovement.ToArray()));
         }
 
         public string ProcessCollision(GameObject gameObject) {
@@ -122,6 +143,7 @@ namespace WindesHeim_Game {
                 //ProcessCollision(gameObject);
                 hitpoint = "right";
             }
+
             return hitpoint;
         }
 

@@ -417,6 +417,26 @@ namespace WindesHeim_Game
                                 //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
                                 gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
                             }
+
+                            if (gameObject.CollidesWith(potentialCollision)) {
+                                string lastDirection = gameObstacle.HistoryMovement[gameObstacle.HistoryMovement.Count - 1];
+
+                                //List<string> lastFive = gameObstacle.HistoryMovement.Skip(gameObstacle.HistoryMovement.Count - 5).ToList();
+                                //Console.WriteLine(string.Join("|", lastFive.ToArray()));
+
+                                if (lastDirection.Contains("left")) {
+                                    gameObject.Location = new Point(gameObject.Location.X + gameObstacle.MovingSpeed + 1, gameObject.Location.Y);
+                                }
+                                if (lastDirection.Contains("right")) {
+                                    gameObject.Location = new Point(gameObject.Location.X - gameObstacle.MovingSpeed - 1, gameObject.Location.Y);
+                                }
+                                if (lastDirection.Contains("up")) {
+                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y + gameObstacle.MovingSpeed + 1);
+                                }
+                                if (lastDirection.Contains("down")) {
+                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y - gameObstacle.MovingSpeed - 1);
+                                }
+                            }
                         }
                     }
 
