@@ -408,7 +408,7 @@ namespace WindesHeim_Game
                         // We willen niet onszelf checken, en we willen alleen collision voor StaticObstacles en ExplodingObstacles
                         if (gameObject != potentialCollision && (potentialCollision is StaticObstacle || potentialCollision is ExplodingObstacle))
                         {
-                            string returnDirection = gameObject.ProcessCollision(potentialCollision);
+                            string returnDirection = gameObstacle.ProcessCollision(potentialCollision);
                             //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
                             if (currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
                             {
@@ -465,7 +465,7 @@ namespace WindesHeim_Game
                         // We willen niet onszelf checken, maar we willen we collision op alles
                         if (gameObject != potentialCollision)
                         {
-                            string returnDirection = gameObject.ProcessCollision(potentialCollision);
+                            string returnDirection = gameObstacle.ProcessCollision(potentialCollision);
                             //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
                             if (currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
                             {
