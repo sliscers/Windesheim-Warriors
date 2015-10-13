@@ -1205,13 +1205,14 @@ namespace WindesHeim_Game
 
             undoButton = new Button();
             undoButton.Size = new System.Drawing.Size(100, 25);
-            undoButton.Location = new System.Drawing.Point(920, 287);
+            undoButton.Location = new System.Drawing.Point(10, 300);
             undoButton.Text = "Undo";
             undoButton.Click += editorController.undoLastChange_Click;
+            undoButton.TabIndex = 999;
 
             clearButton = new Button();
             clearButton.Size = new System.Drawing.Size(100, 25);
-            clearButton.Location = new System.Drawing.Point(920, 337);
+            clearButton.Location = new System.Drawing.Point(10, 330);
             clearButton.Text = "Clear";
             clearButton.Click += editorController.clearAll_Click;
 
@@ -1277,12 +1278,13 @@ namespace WindesHeim_Game
             gamePanel.Controls.Add(movingExplodingObstacle);
             gamePanel.Controls.Add(slowingObstacle);
 
+            gamePanel.Controls.Add(undoButton);
+            gamePanel.Controls.Add(clearButton);
+
             alignPanel.Controls.Add(gamePanel);
             alignPanel.Controls.Add(goBack);
             alignPanel.Controls.Add(saveLevel);
             alignPanel.Controls.Add(testLevel);
-            alignPanel.Controls.Add(undoButton);
-            alignPanel.Controls.Add(clearButton);
             alignPanel.Controls.Add(dragDropLabel);
 
             alignPanel.Location = new Point(
@@ -1333,7 +1335,7 @@ namespace WindesHeim_Game
 
             name = new TextBox();
             name.Location = new System.Drawing.Point(0, 0);
-            //name.TextAlign = HorizontalAlignment.Center;
+            name.TextAlign = HorizontalAlignment.Center;
 
             score.AutoSize = true;
             score.Text = "SCORE:" + highscoreInputController.score;
@@ -1343,21 +1345,21 @@ namespace WindesHeim_Game
             place.Text = "PLACE:";
             place.Font = new Font("Arial", 20);
 
-            //gameWindow.Controls.Add(backgroundImage);
-            //backgroundImage.Controls.Add(alignPanel);
-            //alignPanel.Controls.Add(continueBtn);
-           // alignPanel.Controls.Add(tryAgain);
-            //alignPanel.Controls.Add(score);
-            //alignPanel.Controls.Add(place);
-            gameWindow.Controls.Add(name);
-            //alignPanel.Location = new Point(
-            //    (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
-             //   (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
-            //continueBtn.Location = new System.Drawing.Point((alignPanel.Width / 2 - continueBtn.Size.Width / 2), alignPanel.Size.Height + 10);
-            //tryAgain.Location = new System.Drawing.Point((alignPanel.Width / 2 - tryAgain.Size.Width / 2), alignPanel.Size.Height + 10);
-            //score.Location = new System.Drawing.Point((alignPanel.Width / 2 - score.Size.Width / 2), 0);
-            //place.Location = new System.Drawing.Point((alignPanel.Width / 2 - place.Size.Width / 2), 40);
-            //name.Location = new System.Drawing.Point((alignPanel.Width / 2 - name.Size.Width / 2), 80);
+            gameWindow.Controls.Add(backgroundImage);
+            backgroundImage.Controls.Add(alignPanel);
+            alignPanel.Controls.Add(continueBtn);
+            alignPanel.Controls.Add(tryAgain);
+            alignPanel.Controls.Add(score);
+            alignPanel.Controls.Add(place);
+            alignPanel.Controls.Add(name);
+            alignPanel.Location = new Point(
+                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
+            continueBtn.Location = new System.Drawing.Point((alignPanel.Width / 2 - continueBtn.Size.Width / 2), alignPanel.Size.Height + 10);
+            tryAgain.Location = new System.Drawing.Point((alignPanel.Width / 2 - tryAgain.Size.Width / 2), alignPanel.Size.Height + 10);
+            score.Location = new System.Drawing.Point((alignPanel.Width / 2 - score.Size.Width / 2), 0);
+            place.Location = new System.Drawing.Point((alignPanel.Width / 2 - place.Size.Width / 2), 40);
+            name.Location = new System.Drawing.Point((alignPanel.Width / 2 - name.Size.Width / 2), 80);
         }
     }
 }

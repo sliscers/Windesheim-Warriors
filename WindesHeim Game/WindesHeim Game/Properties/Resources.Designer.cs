@@ -399,6 +399,16 @@ namespace WindesHeim_Game.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap otherScreen {
+            get {
+                object obj = ResourceManager.GetObject("otherScreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap playButton {
             get {
                 object obj = ResourceManager.GetObject("playButton", resourceCulture);

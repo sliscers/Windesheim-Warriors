@@ -545,7 +545,7 @@ namespace WindesHeim_Game
                         timer.Stop();
                         if (editor)
                         {
-                            gameWindow.setController(ScreenStates.editor);                                                    
+                            gameWindow.setController(ScreenStates.editor);                            
                         }
                         else{
                             gameWindow.setController(ScreenStates.highscoreInput);
@@ -1057,27 +1057,38 @@ namespace WindesHeim_Game
         public void StaticObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.staticObstacle.Location = new System.Drawing.Point(10, 60);
+
+            if ((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
+                && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
             gameObjects.Add(new StaticObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
             modelEditor.gamePanel.Invalidate();
+        }
         }
 
         public void ExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.explodingObstacle.Location = new System.Drawing.Point(10, 110);
+
+            if ((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
+                && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
             gameObjects.Add(new ExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
             modelEditor.gamePanel.Invalidate();
+        }
+
         }
 
         public void MovingExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.movingExplodingObstacle.Location = new System.Drawing.Point(10, 160);
+
+            if ((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
+                && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
             String dialog = ShowDialog("MovingExplodingObstacle", "Set properties for Moving Obstacle");
-            if(dialog != "")
-            {
+                if (dialog != "") {
                 string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
                 MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
 
-                if(returnValues[0] == "Slow")
+                    if (returnValues[0] == "Slow")
                     moe.MovingSpeed = 0;
                 else if (returnValues[0] == "Moderate")
                     moe.MovingSpeed = 1;
@@ -1086,7 +1097,7 @@ namespace WindesHeim_Game
                 else if (returnValues[0] == "Unmöglich")
                     moe.MovingSpeed = 3;
 
-                if(returnValues[2] == "Unchecked")
+                    if (returnValues[2] == "Unchecked")
                     moe.IsSmart = false;
                 else
                     moe.IsSmart = true;
@@ -1095,13 +1106,17 @@ namespace WindesHeim_Game
                 modelEditor.gamePanel.Invalidate();
             }
         }
+        }
 
         public void SlowingObstacle_MouseUp(object sender, MouseEventArgs e)
         {
             modelEditor.slowingObstacle.Location = new System.Drawing.Point(10, 210);
+
+            if((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
+                && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height) {
             String dialog = ShowDialog("SlowingObstacle", "Set properties for Slowing Obstacle");
-            if (dialog != "")
-            {
+
+                if (dialog != "") {
                 string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
                 SlowingObstacle sb = new SlowingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize);
 
@@ -1131,6 +1146,7 @@ namespace WindesHeim_Game
                 gameObjects.Add(sb);
                 modelEditor.gamePanel.Invalidate();
             }
+        }
         }
 
         public void updateDragPosition(object sender, MouseEventArgs e)
@@ -1232,9 +1248,14 @@ namespace WindesHeim_Game
             Graphics g = e.Graphics;
 
             g.DrawImage(new Bitmap(Resources.IconWIN), 750 + modelEditor.widthDragDropPanel, 400, 80, 80);
+            g.DrawRectangle(new Pen(Color.FromArgb(255, 0, 70, 133)), new Rectangle(new Point(750 + modelEditor.widthDragDropPanel, 400), new Size(80, 80)));
+
             g.DrawImage(new Bitmap(Resources.IconSP), 5 + modelEditor.widthDragDropPanel, -5, 80, 80);
+            g.DrawRectangle(new Pen(Color.FromArgb(255, 0, 70, 133)), new Rectangle(new Point(5 + modelEditor.widthDragDropPanel, -5), new Size(80, 80)));
+
             foreach (GameObject gameObject in gameObjects) {
                 g.DrawImage(gameObject.ObjectImage, gameObject.Location.X + modelEditor.widthDragDropPanel, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                g.DrawRectangle(new Pen(Color.FromArgb(255, 0, 70, 133)), new Rectangle(new Point(gameObject.Location.X + modelEditor.widthDragDropPanel, gameObject.Location.Y), new Size(gameObject.Width, gameObject.Height)));
             }
 
             g.FillRectangle(new SolidBrush(Color.LightGray), new Rectangle(new Point(0, 0), new Size(modelEditor.widthDragDropPanel, 475)));

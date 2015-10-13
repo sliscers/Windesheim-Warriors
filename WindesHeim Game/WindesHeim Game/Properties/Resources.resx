@@ -205,9 +205,6 @@
   <data name="LeftOnClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\LeftOnClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="menuBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\menuBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="menuEdited" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\menuEdited.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -285,5 +282,11 @@
   </data>
   <data name="tryAgain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\tryagain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="menuBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\menuBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="otherScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\otherScreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
