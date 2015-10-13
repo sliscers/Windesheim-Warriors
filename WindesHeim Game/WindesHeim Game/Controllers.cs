@@ -1298,7 +1298,7 @@ namespace WindesHeim_Game
             char character = (char)e.KeyCode;
 
             if ((character >= 'A' && character <= 'Z') || (character >= 'a' && character <= 'z')) {
-                textBox.Text += e.KeyCode.ToString().ToLower();
+                textBox.Text += e.KeyCode.ToString().ToUpper();
                 textBox.SelectionStart = textBox.Text.Length;
                 textBox.SelectionLength = 0;
             }
