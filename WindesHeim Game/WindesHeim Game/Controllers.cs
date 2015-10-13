@@ -486,6 +486,7 @@ namespace WindesHeim_Game
                         if (gameObject != potentialCollision)
                         {
                             string returnDirection = gameObstacle.ProcessCollision(potentialCollision);
+
                             //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
                             if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
                             {
