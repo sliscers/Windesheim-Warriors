@@ -83,7 +83,6 @@ namespace WindesHeim_Game {
                 Location = new Point(Location.X - 1 - movingSpeed, Location.Y);
                 directionString += "left";
             }
-
             if (Location.X <= player.Location.X) {
                 Location = new Point(Location.X + 1 + movingSpeed, Location.Y);
                 directionString += "right";
@@ -92,15 +91,21 @@ namespace WindesHeim_Game {
 
             if (Location.Y >= player.Location.Y) {
                 Location = new Point(Location.X, Location.Y - 1 - movingSpeed);
-                directionString += "down";
+                directionString += "up";
             }
-
-            if (Location.Y <= player.Location.Y) {
+            else if (Location.Y <= player.Location.Y) {
                 Location = new Point(Location.X, Location.Y + 1 + movingSpeed);
-                directionString += "up";      
+                directionString += "down";      
+            }
+            else {
+                directionString += "hello";
             }
 
             historyMovement.Add(directionString);
+
+            if (historyMovement.Count > 10)
+                historyMovement.RemoveAt(10);
+
             //Console.WriteLine(string.Join("|", historyMovement.ToArray()));
         }
 
