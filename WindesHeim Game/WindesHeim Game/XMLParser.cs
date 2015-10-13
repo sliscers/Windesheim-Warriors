@@ -145,21 +145,38 @@ namespace WindesHeim_Game
 
         public void AddHighscore(GameHighscore highscore)
         {
-            XDocument xmlDoc = XDocument.Load(this.path);
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(this.path);
+            XDocument xml = XDocument.Load(this.path);
 
-            if(xmlDoc.Element("highscores") == null)
+            if (xmlDoc.SelectSingleNode("//highscores") == null)
             {
-                xmlDoc.Element("highscores").Add();
-            }
-            xmlDoc.Element("highscores").Add(
-                new XElement("highscore", 
-                    new XElement("name", highscore.name),
-                    new XElement("datetime", highscore.dateTime), 
-                    new XElement("score", highscore.score)
-                )
-            );
+               // XmlNode root = xmlDoc.SelectSingleNode("//level");
+                //XmlNode items = xmlDoc.SelectSingleNode("//items");
 
-            xmlDoc.Save(this.path);
+                //XmlNode xmlRecordNo = xmlDoc.CreateNode(XmlNodeType.Element, "highscores", null);
+                //root.InsertAfter(xmlRecordNo, items);
+                
+                xml.Element("items").AddAfterSelf(new XElement("highscores",
+                    new XElement("highscore",
+                        new XElement("name", highscore.name),
+                        new XElement("datetime", highscore.dateTime),
+                        new XElement("score", highscore.score)
+                )));
+            }
+            else
+            {
+                xml.Element("highscores").Add(
+                    new XElement("highscore", 
+                        new XElement("name", highscore.name),
+                        new XElement("datetime", highscore.dateTime), 
+                        new XElement("score", highscore.score)
+                    )
+                );
+            }
+
+
+            xml.Save(this.path);
         }
 
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
