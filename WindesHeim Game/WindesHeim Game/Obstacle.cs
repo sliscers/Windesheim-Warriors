@@ -76,77 +76,62 @@ namespace WindesHeim_Game {
             set { panelIcon = value; }
         }
 
-        public void ChasePlayer(Player player) {
-            string directionString = "";
-
-            if (Location.X >= player.Location.X) {
-                Location = new Point(Location.X - 1 - movingSpeed, Location.Y);
-                directionString += "left";
-            }
-            if (Location.X <= player.Location.X) {
-                Location = new Point(Location.X + 1 + movingSpeed, Location.Y);
-                directionString += "right";
-            }
-
-
-            if (Location.Y >= player.Location.Y) {
-                Location = new Point(Location.X, Location.Y - 1 - movingSpeed);
-                directionString += "up";
-            }
-            if (Location.Y <= player.Location.Y) {
-                Location = new Point(Location.X, Location.Y + 1 + movingSpeed);
-                directionString += "down";      
-            }
-
-            historyMovement.Add(directionString);
-
-            if (historyMovement.Count > 10)
-                historyMovement.RemoveAt(10);
-
-            //Console.WriteLine(string.Join("|", historyMovement.ToArray()));
-        }
-
-        public string ProcessCollision(GameObject gameObject) {
-
+        public string ProcessCollision(List<GameObject> safeListArray, string axis) {
             string hitpoint = "";
 
-            if (this.Location.Y == gameObject.Location.Y + Height
-                && (this.Location.X <= gameObject.Location.X && this.Location.X + this.Width >= gameObject.Location.X
-                || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-
-                    Location = new Point(Location.X, Location.Y + 1);
-                //ProcessCollision(gameObject);
-                hitpoint = "up";
+            if (axis == "x") {
+                foreach (GameObject potentialCollision in safeListArray) {
+                    if (this != potentialCollision) {
+                        if (this.CollidesWith(potentialCollision)) {
+                            if (this.CollisionRectangle.Left < potentialCollision.CollisionRectangle.Left) {
+                                this.Location = new Point(this.Location.X - 1 - this.movingSpeed, this.Location.Y);
+                                hitpoint = "left";
+                            }
+                            else if (this.CollisionRectangle.Right > potentialCollision.CollisionRectangle.Right) {
+                                this.Location = new Point(this.Location.X + 1 + this.movingSpeed, this.Location.Y);
+                                hitpoint = "right";
+                            }
+                        }
+                    }
+                }
             }
-
-            if (this.Location.Y + this.Height == gameObject.Location.Y
-                && (this.Location.X + this.Width >= gameObject.Location.X && this.Location.X <= gameObject.Location.X
-                || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-
-                    Location = new Point(Location.X, Location.Y - 1);
-                //ProcessCollision(gameObject);
-                hitpoint = "down";
-            }
-
-            if (this.Location.X == gameObject.Location.X + gameObject.Width
-                && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
-                || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
-
-                    Location = new Point(Location.X + 1, Location.Y);
-                //ProcessCollision(gameObject);
-                hitpoint = "left";
-            }
-
-            if (this.Location.X + this.Width == gameObject.Location.X
-                && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
-                || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
-
-                    Location = new Point(Location.X - 1, Location.Y);
-                //ProcessCollision(gameObject);
-                hitpoint = "right";
+            else if (axis == "y") {
+                foreach (GameObject potentialCollision in safeListArray) {
+                    if (this != potentialCollision) {
+                        if (this.CollidesWith(potentialCollision)) {
+                            if (this.CollisionRectangle.Bottom > potentialCollision.CollisionRectangle.Bottom) {
+                                this.Location = new Point(this.Location.X, this.Location.Y + 1 + this.movingSpeed);
+                                hitpoint = "up";
+                            }
+                            else if (this.CollisionRectangle.Top < potentialCollision.CollisionRectangle.Top) {
+                                this.Location = new Point(this.Location.X, this.Location.Y - 1 - this.movingSpeed);
+                                hitpoint = "down";
+                            }
+                        }
+                    }
+                }
             }
 
             return hitpoint;
+        }
+
+        public void ChasePlayer(Player player, string axis) {
+            if(axis == "x") {
+                if (Location.X >= player.Location.X) {
+                    Location = new Point(Location.X - 1 - movingSpeed, Location.Y);
+                }
+                if (Location.X <= player.Location.X) {
+                    Location = new Point(Location.X + 1 + movingSpeed, Location.Y);
+                }
+            }
+            else if(axis == "y") {
+                if (Location.Y >= player.Location.Y) {
+                    Location = new Point(Location.X, Location.Y - 1 - movingSpeed);
+                }
+                if (Location.Y <= player.Location.Y) {
+                    Location = new Point(Location.X, Location.Y + 1 + movingSpeed);
+                }
+            }
         }
 
         public void TryToEscape()

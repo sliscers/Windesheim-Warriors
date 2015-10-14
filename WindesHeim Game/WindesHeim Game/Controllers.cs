@@ -399,45 +399,35 @@ namespace WindesHeim_Game
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
 
                     //Opslaan van huidige locatie in variable om vervolgens te vergelijken
-                    Point currentLocation = gameObstacle.Location;                    
+                    Point currentLocation = gameObstacle.Location;
 
-                    gameObstacle.ChasePlayer(mg.player);                    
-                    
-                    // Loop door alle objecten op het veld
-                    foreach (GameObject potentialCollision in safeListArray)
-                    {
-                        // We willen niet onszelf checken, en we willen alleen collision voor StaticObstacles en ExplodingObstacles
-                        if (gameObject != potentialCollision && (potentialCollision is StaticObstacle || potentialCollision is ExplodingObstacle))
-                        {
-                            string returnDirection = gameObstacle.ProcessCollision(potentialCollision);
-                            //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
-                            if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
-                            {
-                                gameObstacle.SmartMovingEnabled = true;
-                                gameObstacle.SmartmovingDirection = returnDirection;
-                                //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
-                                gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
-                            }
+                    gameObstacle.ChasePlayer(mg.player, "x");
+                    string returnDirection = gameObstacle.ProcessCollision(safeListArray, "x");
 
-                            if (gameObject.CollidesWith(potentialCollision)) {
-                                string lastDirection = gameObstacle.HistoryMovement[gameObstacle.HistoryMovement.Count - 1];
+                    if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "") {
+                        gameObstacle.SmartMovingEnabled = true;
+                        gameObstacle.SmartmovingDirection = returnDirection;
+                        //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                        gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
+                    }
 
-                                if (lastDirection.Contains("left")) { 
-                                    gameObject.Location = new Point(gameObject.Location.X + gameObstacle.MovingSpeed + 2, gameObject.Location.Y);
-                                }
-                                if (lastDirection.Contains("right")) {
+                    gameObstacle.ChasePlayer(mg.player, "y");
+                    returnDirection = gameObstacle.ProcessCollision(safeListArray, "y");
 
-                                    gameObject.Location = new Point(gameObject.Location.X - gameObstacle.MovingSpeed - 2, gameObject.Location.Y);
-                                }
-                                if (lastDirection.Contains("up")) {
-                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y + gameObstacle.MovingSpeed + 2);
-                                }
-                                if (lastDirection.Contains("down")) {
-                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y - gameObstacle.MovingSpeed - 2);
-                                }
-                                Console.WriteLine(lastDirection);
-                            }
-                        }
+                    if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "") {
+                        gameObstacle.SmartMovingEnabled = true;
+                        gameObstacle.SmartmovingDirection = returnDirection;
+                        //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                        gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
+                    }
+
+                    if (gameObstacle.CollidesWith(mg.player)) {
+                        score = 0;
+                        mg.player.Location = new Point(0, 0);
+                        UpdatePlayerPosition();
+                        mg.InitializeField();
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
+                        mg.player.ObjectImage = Resources.Player;
                     }
 
                     if (gameObstacle.IsSmart)
@@ -456,18 +446,6 @@ namespace WindesHeim_Game
                             //Console.WriteLine("Datetime is verlopen");
                         }
                     }
-
-
-
-                    if (gameObstacle.CollidesWith(mg.player))
-                    {
-                        score = 0;
-                        mg.player.Location = new Point(0, 0);
-                        UpdatePlayerPosition();
-                        mg.InitializeField();
-                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ObjectImage = Resources.Player;
-                    }
                 }
 
                 if (gameObject is SlowingObstacle)
@@ -477,42 +455,24 @@ namespace WindesHeim_Game
                     //Opslaan van huidige locatie in variable om vervolgens te vergelijken
                     Point currentLocation = gameObstacle.Location;
 
-                    gameObstacle.ChasePlayer(mg.player);
+                    gameObstacle.ChasePlayer(mg.player, "x");
+                    string returnDirection = gameObstacle.ProcessCollision(safeListArray, "x");
 
-                    // Loop door alle objecten op het veld
-                    foreach (GameObject potentialCollision in safeListArray)
-                    {
-                        // We willen niet onszelf checken, maar we willen we collision op alles
-                        if (gameObject != potentialCollision)
-                        {
-                            string returnDirection = gameObstacle.ProcessCollision(potentialCollision);
+                    if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "") {
+                        gameObstacle.SmartMovingEnabled = true;
+                        gameObstacle.SmartmovingDirection = returnDirection;
+                        //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                        gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
+                    }
 
-                            //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
-                            if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
-                            {
-                                gameObstacle.SmartMovingEnabled = true;
-                                gameObstacle.SmartmovingDirection = returnDirection;
-                                //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
-                                gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
-                            }
+                    gameObstacle.ChasePlayer(mg.player, "y");
+                    returnDirection = gameObstacle.ProcessCollision(safeListArray, "y");
 
-                            if (gameObject.CollidesWith(potentialCollision)) {
-                                string lastDirection = gameObstacle.HistoryMovement[gameObstacle.HistoryMovement.Count - 1];
-
-                                if (lastDirection.Contains("left")) {
-                                    gameObject.Location = new Point(gameObject.Location.X + gameObstacle.MovingSpeed, gameObject.Location.Y);
-                                }
-                                if (lastDirection.Contains("right")) {
-                                    gameObject.Location = new Point(gameObject.Location.X - gameObstacle.MovingSpeed, gameObject.Location.Y);
-                                }
-                                if (lastDirection.Contains("up")) {
-                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y + gameObstacle.MovingSpeed);
-                                }
-                                if (lastDirection.Contains("down")) {
-                                    gameObject.Location = new Point(gameObject.Location.X, gameObject.Location.Y - gameObstacle.MovingSpeed);
-                                }
-                            }
-                        }
+                    if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "") {
+                        gameObstacle.SmartMovingEnabled = true;
+                        gameObstacle.SmartmovingDirection = returnDirection;
+                        //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                        gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
                     }
 
                     if (gameObstacle.IsSmart)
@@ -724,7 +684,6 @@ namespace WindesHeim_Game
                 {
                     g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
-
                 //g.DrawRectangle(new Pen(Color.Red), new Rectangle(gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height));
 
             }

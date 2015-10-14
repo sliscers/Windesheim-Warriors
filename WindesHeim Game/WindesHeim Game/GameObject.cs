@@ -68,9 +68,16 @@ namespace WindesHeim_Game
             return distance;
         }
 
+        public Rectangle CollisionRectangle {
+            get {
+                Rectangle collisionRectangle = new Rectangle(new Point(this.location.X - this.collisionX, this.location.Y - this.collisionY), new Size(this.width + this.collisionX*2, this.height + this.collisionY*2));
+                return collisionRectangle;
+            }
+        }
+
         public bool CollidesWith(GameObject gameObject)
         {
-            if((this.location.X >= (gameObject.location.X - gameObject.CollisionX)) && (this.location.X <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+            /*if((this.location.X >= (gameObject.location.X - gameObject.CollisionX)) && (this.location.X <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
                 && (this.location.Y >= (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
                 || ((this.location.X + this.Width) >= (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
                 && (this.location.Y >= (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
@@ -80,6 +87,11 @@ namespace WindesHeim_Game
                 && ((this.location.Y + this.Height) >= (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
                 )
             {
+                return true;
+            }
+            return false;*/
+
+            if(CollisionRectangle.IntersectsWith(gameObject.CollisionRectangle)) {
                 return true;
             }
             return false;
