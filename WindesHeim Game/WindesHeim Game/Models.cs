@@ -372,7 +372,7 @@ namespace WindesHeim_Game
             lblObstacleName1.Name = "lblObstacleName1";
             lblObstacleName1.Size = new System.Drawing.Size(75, 13);
             lblObstacleName1.TabIndex = 3;
-            lblObstacleName1.Text = "Obstakelnaam";
+            lblObstacleName1.Text = "Obstaclename";
 
             //Label Obstacle Properties 1
             lblObstacleProps1.AutoSize = true;
@@ -381,7 +381,7 @@ namespace WindesHeim_Game
             lblObstacleProps1.Name = "lblObstacleProps1";
             lblObstacleProps1.Size = new System.Drawing.Size(81, 13);
             lblObstacleProps1.TabIndex = 4;
-            lblObstacleProps1.Text = "Eigenschappen";
+            lblObstacleProps1.Text = "Properties";
 
             //Label Obstacle Postition X Title 1
             lblObstaclePosXTitle1.AutoSize = true;
@@ -391,7 +391,7 @@ namespace WindesHeim_Game
             lblObstaclePosXTitle1.Name = "lblObstaclePosXTitle1";
             lblObstaclePosXTitle1.Size = new System.Drawing.Size(71, 18);
             lblObstaclePosXTitle1.TabIndex = 6;
-            lblObstaclePosXTitle1.Text = "Positie X:";
+            lblObstaclePosXTitle1.Text = "Position X:";
 
             //Label Obstacle Position X 1
             lblObstaclePosX1.AutoSize = true;
@@ -411,7 +411,7 @@ namespace WindesHeim_Game
             lblObstaclePosYTitle1.Name = "lblObstaclePosYTitle1";
             lblObstaclePosYTitle1.Size = new System.Drawing.Size(70, 18);
             lblObstaclePosYTitle1.TabIndex = 7;
-            lblObstaclePosYTitle1.Text = "Positie Y:";
+            lblObstaclePosYTitle1.Text = "Position Y:";
 
             //Label Obstacle Position Y 1
             lblObstaclePosY1.AutoSize = true;
@@ -431,7 +431,7 @@ namespace WindesHeim_Game
             lblObstacleDescTitle1.Name = "lblObstacleDescTitle1";
             lblObstacleDescTitle1.Size = new System.Drawing.Size(64, 13);
             lblObstacleDescTitle1.TabIndex = 10;
-            lblObstacleDescTitle1.Text = "Beschrijving";
+            lblObstacleDescTitle1.Text = "Description";
 
             //Label Obstacle Description 1
             lblObstacleDesc1.AutoSize = true;
@@ -442,7 +442,7 @@ namespace WindesHeim_Game
             lblObstacleDesc1.Name = "lblObstacleDesc1";
             lblObstacleDesc1.Size = new System.Drawing.Size(85, 18);
             lblObstacleDesc1.TabIndex = 15;
-            lblObstacleDesc1.Text = "beschrijving";
+            lblObstacleDesc1.Text = "Description";
 
             //Panel Obstacle 2 
             pnlObstacle2.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -484,7 +484,7 @@ namespace WindesHeim_Game
             lblObstacleName2.Name = "lblObstacleName2";
             lblObstacleName2.Size = new System.Drawing.Size(75, 13);
             lblObstacleName2.TabIndex = 3;
-            lblObstacleName2.Text = "Obstakelnaam";
+            lblObstacleName2.Text = "Obstaclename";
 
             //Label Obstacle Properties 2
             lblObstacleProps2.AutoSize = true;
@@ -493,7 +493,7 @@ namespace WindesHeim_Game
             lblObstacleProps2.Name = "lblObstacleProps2";
             lblObstacleProps2.Size = new System.Drawing.Size(81, 13);
             lblObstacleProps2.TabIndex = 5;
-            lblObstacleProps2.Text = "Eigenschappen";
+            lblObstacleProps2.Text = "Properties";
 
             //Label Obstacle Postition X Title 2
             lblObstaclePosXTitle2.AutoSize = true;
@@ -503,7 +503,7 @@ namespace WindesHeim_Game
             lblObstaclePosXTitle2.Name = "lblObstaclePosXTitle2";
             lblObstaclePosXTitle2.Size = new System.Drawing.Size(71, 18);
             lblObstaclePosXTitle2.TabIndex = 10;
-            lblObstaclePosXTitle2.Text = "Positie X:";
+            lblObstaclePosXTitle2.Text = "Position X:";
 
             //Label Obstacle Position X 2
             lblObstaclePosX2.AutoSize = true;
@@ -523,7 +523,7 @@ namespace WindesHeim_Game
             lblObstaclePosYTitle2.Name = "lblObstaclePosYTitle2";
             lblObstaclePosYTitle2.Size = new System.Drawing.Size(70, 18);
             lblObstaclePosYTitle2.TabIndex = 11;
-            lblObstaclePosYTitle2.Text = "Positie Y:";
+            lblObstaclePosYTitle2.Text = "Position Y:";
 
             //Label Obstacle Position Y 2
             lblObstaclePosY2.AutoSize = true;
@@ -543,7 +543,7 @@ namespace WindesHeim_Game
             lblObstacleDescTitle2.Name = "lblObstacleDescTitle2";
             lblObstacleDescTitle2.Size = new System.Drawing.Size(64, 13);
             lblObstacleDescTitle2.TabIndex = 11;
-            lblObstacleDescTitle2.Text = "Beschrijving";
+            lblObstacleDescTitle2.Text = "Description";
 
             //Label Obstacle Description 2
             lblObstacleDesc2.AutoSize = true;
@@ -554,7 +554,7 @@ namespace WindesHeim_Game
             lblObstacleDesc2.Name = "lblObstacleDesc2";
             lblObstacleDesc2.Size = new System.Drawing.Size(85, 18);
             lblObstacleDesc2.TabIndex = 14;
-            lblObstacleDesc2.Text = "beschrijving";
+            lblObstacleDesc2.Text = "Description";
             //STOP OBSTACLE PANEL
 
 
@@ -633,7 +633,7 @@ namespace WindesHeim_Game
             lblCharacterName.Name = "lblCharacterName";
             lblCharacterName.Size = new System.Drawing.Size(63, 13);
             lblCharacterName.TabIndex = 3;
-            lblCharacterName.Text = "Spelernaam";
+            lblCharacterName.Text = "Player";
 
             //Label Character Properties
             lblCharacterProps.AutoSize = true;
@@ -642,7 +642,7 @@ namespace WindesHeim_Game
             lblCharacterProps.Name = "lblCharacterProps";
             lblCharacterProps.Size = new System.Drawing.Size(81, 13);
             lblCharacterProps.TabIndex = 4;
-            lblCharacterProps.Text = "Eigenschappen";
+            lblCharacterProps.Text = "Properties";
 
             //Label Character Position X Title
             lblCharacterPosXTitle.AutoSize = true;
@@ -652,7 +652,7 @@ namespace WindesHeim_Game
             lblCharacterPosXTitle.Name = "lblCharacterPosXTitle";
             lblCharacterPosXTitle.Size = new System.Drawing.Size(71, 18);
             lblCharacterPosXTitle.TabIndex = 6;
-            lblCharacterPosXTitle.Text = "Positie X:";
+            lblCharacterPosXTitle.Text = "Position X:";
 
             //Label Character Position X
             lblCharacterPosX.AutoSize = true;
@@ -670,7 +670,7 @@ namespace WindesHeim_Game
             lblCharacterPosYTitle.Name = "lblCharacterPosYTitle";
             lblCharacterPosYTitle.Size = new System.Drawing.Size(70, 18);
             lblCharacterPosYTitle.TabIndex = 7;
-            lblCharacterPosYTitle.Text = "Positie Y:";
+            lblCharacterPosYTitle.Text = "Position Y:";
 
             //Label Character Position Y
             lblCharacterPosY.AutoSize = true;
@@ -690,7 +690,7 @@ namespace WindesHeim_Game
             lblCharacterSpeedTitle.Name = "lblCharacterSpeedTitle";
             lblCharacterSpeedTitle.Size = new System.Drawing.Size(68, 18);
             lblCharacterSpeedTitle.TabIndex = 10;
-            lblCharacterSpeedTitle.Text = "Snelheid:";
+            lblCharacterSpeedTitle.Text = "Speed:";
 
             //Label Character Speed
             lblCharacterSpeed.AutoSize = true;
@@ -822,7 +822,7 @@ namespace WindesHeim_Game
 
             graphicsPanel.Controls.Add(score);
 
-            // Voeg hieronder de overige panels toe, zoals objectbeschrijvingen etc.
+            // Voeg hieronder de overige panels toe, zoals objectDescriptionen etc.
             gameWindow.Controls.Add(graphicsPanel);
             gameWindow.Controls.Add(obstaclePanel);
             gameWindow.Controls.Add(characterPanel);
