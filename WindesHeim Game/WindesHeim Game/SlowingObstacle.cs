@@ -16,8 +16,8 @@ namespace WindesHeim_Game {
         {
             base.ObjectImage = Resources.IconES;
            
-            base.Name = "Eerstejaars studenten";
-            base.Description = "Volgt character en vertraagt";
+            base.Name = "Freshmen";
+            base.Description = "Follows character and slows down \nwhen nearby";
             base.CollisionX = 10;
             base.CollisionY = 10;
             base.PanelIcon = Resources.IconESEdited;
@@ -30,7 +30,5 @@ namespace WindesHeim_Game {
             get { return slowingSpeed; }
             set { slowingSpeed = value; }
         }
-
-
     }
 }
