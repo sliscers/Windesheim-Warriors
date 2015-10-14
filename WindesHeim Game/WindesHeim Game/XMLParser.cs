@@ -16,7 +16,7 @@ namespace WindesHeim_Game
     //Console.Write(level1.gameProperties.title);
     //Voorbeeld om highscores te doorlopen
     //level1.ReadXML();
-    //foreach(GameHighscores highscore in level1.gameHighscores)
+    //foreach(GameHighscore highscore in level1.gameHighscores)
     //{
     //    Console.Write(highscore.name + " " + highscore.score);
     //}
@@ -34,14 +34,14 @@ namespace WindesHeim_Game
         }
     }
 
-    public struct GameHighscores
+    public struct GameHighscore
     {
         //Hier worden de Highscores in opgeslagen en vervolgens gebruikt in een List
         public string name;
         public DateTime dateTime;
         public int score;
 
-        public GameHighscores(string name, string dateTime, int score)
+        public GameHighscore(string name, string dateTime, int score)
         {
             this.name = name;
             this.dateTime = Convert.ToDateTime(dateTime); //Converteerd Datetime.now (string) weer terug naar Datetime (DateTime)
@@ -52,10 +52,10 @@ namespace WindesHeim_Game
     public class XMLParser
     {
         //Vastleggen van te gebruiken variablen.
-        private String path;
+        private string path;
         public GameProperties gameProperties;
         public List<GameObject> gameObjects;
-        public List<GameHighscores> gameHighscores;
+        public List<GameHighscore> gameHighscores;
 
         //Lijst met ingeladen levels
         public static List<XMLParser> Levels { get; set; } = new List<XMLParser>();
@@ -90,7 +90,7 @@ namespace WindesHeim_Game
 
                     MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width);
                     moe.MovingSpeed = castedGameObject.MovingSpeed;
-
+                    moe.IsSmart = ((MovingExplodingObstacle)gameObject).IsSmart;
 
                     returnList.Add(moe);
                 }
@@ -105,6 +105,7 @@ namespace WindesHeim_Game
                     SlowingObstacle slowingObstacle = new SlowingObstacle(new Point(gameObject.Location.X, gameObject.Location.Y), gameObject.Height, gameObject.Width);
                     slowingObstacle.MovingSpeed = castedGameObject.MovingSpeed;
                     slowingObstacle.SlowingSpeed = castedGameObject.SlowingSpeed;
+                    slowingObstacle.IsSmart = ((SlowingObstacle)gameObject).IsSmart;                  
 
                     returnList.Add(slowingObstacle);
                 }
@@ -117,30 +118,83 @@ namespace WindesHeim_Game
         public static void LoadAllLevels()
         {
             Levels.Clear();
-            string[] fileEntries = Directory.GetFiles("../levels/");
+            string dirPath = "";
+
+            if (System.Diagnostics.Debugger.IsAttached) {
+                dirPath = "../levels/";
+            }
+            else {
+                dirPath = AppDomain.CurrentDomain.BaseDirectory + "/levels/";
+            }
+
+            string[] fileEntries = Directory.GetFiles(dirPath);
             foreach (string file in fileEntries)
             {
-                XMLParser xml = new XMLParser(file);
-                xml.ReadXML();
-                Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+                if (File.Exists(file))
+                {
+                    if (isXML(file))
+                    {
+                        XMLParser xml = new XMLParser(file);
+                        xml.ReadXML();
+                        Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+                    }
+                }
             }
+        }
+        private static bool isXML(string file)
+        {
+            try { XDocument doc = XDocument.Load(file); }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void AddHighscore(GameHighscore highscore)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(this.path);
+
+            XmlNode root = doc.DocumentElement;
+
+            if (doc.SelectSingleNode("//highscores") == null)
+            {
+                XmlElement highScoresElement = doc.CreateElement("highscores");
+                root.AppendChild(highScoresElement);                
+            }
+
+            XmlNode highscores = doc.SelectSingleNode("//highscores");
+
+            XmlElement highScoreElement = doc.CreateElement("highscore");
+
+            XmlElement nameElement = doc.CreateElement("name");
+            nameElement.InnerText = highscore.name;
+
+            XmlElement datetimeElement = doc.CreateElement("datetime");
+            datetimeElement.InnerText = highscore.dateTime.ToString();
+
+            XmlElement scoreElement = doc.CreateElement("score");
+            scoreElement.InnerText = highscore.score.ToString();
+
+            highScoreElement.AppendChild(nameElement);
+            highScoreElement.AppendChild(datetimeElement);
+            highScoreElement.AppendChild(scoreElement);
+
+            //Add the node to the document.            
+            highscores.AppendChild(highScoreElement);            
+
+            doc.Save(this.path);
         }
 
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
         public void ReadXML()
         {
 
-            XDocument doc = new XDocument();
-            //Laad het XML bestand in een document object
-            try
-            {
-                doc = XDocument.Load(this.path);
-            }catch (Exception e){
-                //tODO
-            }           
+            XDocument doc = XDocument.Load(this.path);    
 
             //Initieert de variablen
-            gameHighscores = new List<GameHighscores>();
+            gameHighscores = new List<GameHighscore>();
             gameObjects = new List<GameObject>();
 
             //Voert query uit op het XML document om de properties te laden in een var
@@ -172,6 +226,7 @@ namespace WindesHeim_Game
                             //If statements voor dynamische gegevens in xml <object>
                             Movingspeed = (r.Element("movingspeed") != null) ? Int32.Parse(r.Element("movingspeed").Value): 0,
                             Slowdown = (r.Element("slowingspeed") != null) ? Int32.Parse(r.Element("slowingspeed").Value): 0,
+                            Smart = (r.Element("smart") != null) ? bool.Parse(r.Element("smart").Value) : false,
                             Image = (r.Element("image") != null) ? r.Element("image").Value : ""
                        };
             //Voegt de gameproperties toe aan de variable gameProperties
@@ -184,7 +239,7 @@ namespace WindesHeim_Game
             highscores.OrderBy(o => o.Score);
             foreach (var highscore in highscores)
             {
-                gameHighscores.Add(new GameHighscores(highscore.Name, highscore.DateTime, highscore.Score));
+                gameHighscores.Add(new GameHighscore(highscore.Name, highscore.DateTime, highscore.Score));
             }
             //Sorteert highscores op volgorde van behaalde score
             gameHighscores = gameHighscores.OrderBy(highscore => highscore.score).ToList();
@@ -206,7 +261,7 @@ namespace WindesHeim_Game
                         case "MovingExplodingObstacle":
                             MovingExplodingObstacle moe = new MovingExplodingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width);
                             moe.MovingSpeed = gameObject.Movingspeed;
-
+                            moe.IsSmart = gameObject.Smart;
                             gameObjects.Add(moe);
                         break;
 
@@ -218,7 +273,7 @@ namespace WindesHeim_Game
                             SlowingObstacle sb = new SlowingObstacle(new Point(gameObject.X, gameObject.Y), gameObject.Height, gameObject.Width);
                             sb.MovingSpeed = gameObject.Movingspeed;
                             sb.SlowingSpeed = gameObject.Slowdown;
-
+                            sb.IsSmart = gameObject.Smart;
                             gameObjects.Add(sb);
                         break;
                 }
@@ -229,7 +284,7 @@ namespace WindesHeim_Game
 
         //Deze functie schrijft een XML file weg
         //Geef hier de gameproperties mee in het objecdt GameProperties, vervolgens een List met GameObjects daarna eenzelfde lijst voor Highscores
-        public void WriteXML(GameProperties gameProperties, List<GameObject> gameObjects, List<GameHighscores> gameHighscores = null)
+        public void WriteXML(GameProperties gameProperties, List<GameObject> gameObjects, List<GameHighscore> gameHighscores = null)
         {
             //Instellingen voor XML voor een juiste opmaak
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -274,6 +329,10 @@ namespace WindesHeim_Game
                     xmlWriter.WriteStartElement("movingspeed");
                     xmlWriter.WriteValue(((MovingExplodingObstacle)gameObject).MovingSpeed); //Movingspeed
                     xmlWriter.WriteEndElement();
+
+                    xmlWriter.WriteStartElement("smart");
+                    xmlWriter.WriteValue(((MovingExplodingObstacle)gameObject).IsSmart); //Movingspeed
+                    xmlWriter.WriteEndElement();
                 }
                 else if (gameObject is StaticObstacle)
                 {
@@ -289,6 +348,10 @@ namespace WindesHeim_Game
 
                     xmlWriter.WriteStartElement("slowingspeed");
                     xmlWriter.WriteValue(((SlowingObstacle)gameObject).SlowingSpeed); //Movingspeed
+                    xmlWriter.WriteEndElement();
+
+                    xmlWriter.WriteStartElement("smart");
+                    xmlWriter.WriteValue(((SlowingObstacle)gameObject).IsSmart); //Movingspeed
                     xmlWriter.WriteEndElement();
                 }
                 xmlWriter.WriteStartElement("type");
@@ -320,7 +383,7 @@ namespace WindesHeim_Game
             {
                 xmlWriter.WriteStartElement("highscores");
 
-                foreach (GameHighscores gameHighscore in gameHighscores)
+                foreach (GameHighscore gameHighscore in gameHighscores)
                 {
                     xmlWriter.WriteStartElement("highscore");
 
@@ -329,7 +392,7 @@ namespace WindesHeim_Game
                     xmlWriter.WriteEndElement();
 
                     xmlWriter.WriteStartElement("datetime");
-                    xmlWriter.WriteValue(DateTime.Now); //DateTime
+                    xmlWriter.WriteValue(gameHighscore.dateTime); //DateTime
                     xmlWriter.WriteEndElement();
 
                     xmlWriter.WriteStartElement("score");

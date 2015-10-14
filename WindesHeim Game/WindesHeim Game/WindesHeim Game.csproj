@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -63,23 +64,23 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SlowingObstacle.cs" />
     <Compile Include="StaticObstacle.cs" />
+    <Compile Include="Tests.cs" />
     <Compile Include="XMLParser.cs" />
     <EmbeddedResource Include="GameWindow.resx">
       <DependentUpon>GameWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="ClassDiagram4.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,51 +97,64 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\closeButton.png" />
-    <Content Include="resources\editLevel.png" />
-    <None Include="resources\editorButton.png" />
-    <None Include="resources\highscoresButton.png" />
-    <Content Include="resources\newLevel.png" />
-    <None Include="resources\playButton.png" />
-    <Content Include="resources\playLevel.png" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\carEdited.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\bikeEdited.png" />
     <None Include="resources\UpOnClick.png" />
-    <None Include="resources\RightOnClick.png" />
     <None Include="resources\Up.png" />
     <None Include="resources\soundEditedOnHover.png" />
     <None Include="resources\soundEdited1.png" />
     <None Include="resources\soundEdited.png" />
+    <None Include="resources\RightOnClick.png" />
     <None Include="resources\Right.png" />
     <None Include="resources\restartEditedOnHover.png" />
     <None Include="resources\restartEdited.png" />
-    <None Include="resources\bikeEdited.png" />
-    <None Include="resources\carEdited.png" />
-    <None Include="resources\ConceptTransparentBackgroundSmall.png" />
-    <None Include="resources\Down.png" />
-    <None Include="resources\EXPLODE.wav" />
-    <None Include="resources\DownOnClick.png" />
-    <None Include="resources\CARHORN.wav" />
-    <Content Include="resources\explosion.png" />
-    <Content Include="resources\goBack.png" />
-    <Content Include="resources\IconBike.png" />
-    <Content Include="resources\IconCar.png" />
-    <Content Include="resources\IconES.png" />
-    <None Include="resources\IconESEdited.png" />
-    <None Include="resources\IconSP.png" />
-    <Content Include="resources\IconTC.png" />
-    <None Include="resources\Left.png" />
-    <None Include="resources\menuEdited.png" />
-    <None Include="resources\menuEditedOnHover.png" />
-    <None Include="resources\muteEdited.png" />
+    <None Include="resources\playLevel.png" />
+    <None Include="resources\PlayerLeft.png" />
+    <None Include="resources\playerEdited1.png" />
+    <None Include="resources\playerEdited.png" />
+    <None Include="resources\Player.png" />
+    <None Include="resources\playButton.png" />
+    <None Include="resources\newLevel.png" />
     <None Include="resources\muteEditedOnHover.png" />
+    <None Include="resources\muteEdited.png" />
+    <None Include="resources\menuEditedOnHover.png" />
+    <None Include="resources\menuEdited.png" />
+    <None Include="resources\LeftOnClick.png" />
+    <None Include="resources\Left.png" />
+    <None Include="resources\IconWINico.ico" />
     <None Include="resources\IconWIN.png" />
     <None Include="resources\IconTCEdited.png" />
-    <None Include="resources\LeftOnClick.png" />
-    <Content Include="resources\menuBackground.png" />
-    <Content Include="resources\otherBackground.png" />
-    <Content Include="resources\Player.png" />
-    <None Include="resources\playerEdited.png" />
-    <None Include="resources\playerEdited1.png" />
-    <Content Include="resources\PlayerLeft.png" />
+    <None Include="resources\IconTC.png" />
+    <None Include="resources\IconSP.png" />
+    <None Include="resources\IconESEdited.png" />
+    <None Include="resources\IconES.png" />
+    <None Include="resources\IconCar.png" />
+    <None Include="resources\IconBike.png" />
+    <None Include="resources\highscoresButton.png" />
+    <None Include="resources\goBack.png" />
+    <None Include="resources\explosion.png" />
+    <None Include="resources\EXPLODE.wav" />
+    <None Include="resources\editorButton.png" />
+    <None Include="resources\editLevel.png" />
+    <None Include="resources\DownOnClick.png" />
+    <None Include="resources\Down.png" />
+    <None Include="resources\ConceptTransparentBackgroundSmall.png" />
+    <None Include="resources\closeButton.png" />
+    <None Include="resources\CARHORN.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\continue.png" />
+    <None Include="resources\otherScreen.png" />
+    <None Include="resources\menuBackground.png" />
+    <Content Include="resources\level1.xml" />
+    <Content Include="resources\saveLevel.png" />
+    <Content Include="resources\testLevel.png" />
+    <Content Include="resources\tryAgain.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

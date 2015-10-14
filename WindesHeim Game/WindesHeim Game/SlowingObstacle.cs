@@ -20,7 +20,7 @@ namespace WindesHeim_Game {
             base.Description = "Volgt character en vertraagt";
             base.CollisionX = 10;
             base.CollisionY = 10;
-            base.PanelIcon = global::WindesHeim_Game.Properties.Resources.IconESEdited;
+            base.PanelIcon = Resources.IconESEdited;
 
             // Standaard player nieuwe speed is 2
             this.slowingSpeed = 2;

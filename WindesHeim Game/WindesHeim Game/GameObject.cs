@@ -70,59 +70,20 @@ namespace WindesHeim_Game
 
         public bool CollidesWith(GameObject gameObject)
         {
-            if((this.location.X > (gameObject.location.X - gameObject.CollisionX)) && (this.location.X < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
-                && (this.location.Y > (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
-                || ((this.location.X + this.Width) > (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
-                && (this.location.Y > (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
-                || (this.location.X > (gameObject.location.X - gameObject.CollisionX)) && (this.location.X < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
-                && ((this.location.Y + this.Height) > (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
-                || ((this.location.X + this.Width) > (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) < (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
-                && ((this.location.Y + this.Height) > (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) < (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+            if((this.location.X >= (gameObject.location.X - gameObject.CollisionX)) && (this.location.X <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && (this.location.Y >= (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                || ((this.location.X + this.Width) >= (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && (this.location.Y >= (gameObject.location.Y - gameObject.CollisionY)) && (this.location.Y <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                || (this.location.X >= (gameObject.location.X - gameObject.CollisionX)) && (this.location.X <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && ((this.location.Y + this.Height) >= (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
+                || ((this.location.X + this.Width) >= (gameObject.location.X - gameObject.CollisionX)) && ((this.location.X + this.Width) <= (gameObject.location.X + gameObject.Width + gameObject.CollisionX))
+                && ((this.location.Y + this.Height) >= (gameObject.location.Y - gameObject.CollisionY)) && ((this.location.Y + this.Height) <= (gameObject.location.Y + gameObject.Height + gameObject.CollisionY))
                 )
             {
                 return true;
             }
             return false;
         }
-
-      
-
-        public void ProcessCollision(GameObject gameObject) {
-            
-
-            if (this.location.Y == gameObject.Location.Y + Height
-                && (this.Location.X <= gameObject.Location.X && this.Location.X + this.Width >= gameObject.Location.X
-                || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-               Location = new Point(Location.X, Location.Y + 1);
-                //ProcessCollision(gameObject);
-            }
-
-            if(this.Location.Y + this.Height == gameObject.Location.Y
-                && (this.Location.X + this.Width >= gameObject.Location.X && this.Location.X <= gameObject.Location.X
-                || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-               
-                Location = new Point(Location.X, Location.Y - 1);
-                //ProcessCollision(gameObject);
-            }
-
-            if(this.location.X == gameObject.Location.X + gameObject.Width
-                && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
-                || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
-                
-                Location = new Point(Location.X + 1, Location.Y);
-                //ProcessCollision(gameObject);
-            }
-
-            if (this.Location.X + this.Width == gameObject.Location.X
-                && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
-                || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
-                Location = new Point(Location.X - 1, Location.Y);
-                //ProcessCollision(gameObject);
-             
-            }
-        }
-
-
 
         public void FadeSmall()
         {
