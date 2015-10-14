@@ -960,7 +960,7 @@ namespace WindesHeim_Game
             playLevel.BackgroundImage = Resources.playLevel;
             playLevel.Click += levelSelectController.playLevel_Click;
 
-            gameWindow.Controls.Add(backgroundImage);
+            
             backgroundImage.Controls.Add(alignPanel);
             alignPanel.Controls.Add(goBack);
             alignPanel.Controls.Add(playLevel);
@@ -969,7 +969,7 @@ namespace WindesHeim_Game
             alignPanel.Location = new Point(
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 125);
-
+            gameWindow.Controls.Add(backgroundImage);
         }
     }
 

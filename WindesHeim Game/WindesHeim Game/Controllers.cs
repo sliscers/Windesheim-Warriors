@@ -391,6 +391,8 @@ namespace WindesHeim_Game
             // We voegen dan als het ware iets toe en lezen tegelijk, dit mag niet
             List<GameObject> safeListArray = new List<GameObject>(mg.GameObjects);
 
+            SlowingObstacle slowedDownObstacle = null;
+
             // Loop door alle obstacles objecten en roep methode aan
             foreach (GameObject gameObject in safeListArray)
             {
@@ -491,24 +493,21 @@ namespace WindesHeim_Game
                             //Console.WriteLine("Datetime is verlopen");
                         }
                     }
-
+            
                     if (mg.player.CollidesWith(gameObstacle))
                     {
-                        mg.player.Speed = gameObstacle.SlowingSpeed;
+                        slowedDownObstacle = gameObstacle;
+                        if(gameObstacle.SlowingSpeed < slowedDownObstacle.SlowingSpeed) {
+                            slowedDownObstacle.SlowingSpeed = gameObstacle.SlowingSpeed;
+                        }
+                    }
+
+                    if (mg.player.Speed == mg.player.OriginalSpeed / 2)
                         UpdatePlayerSpeed("Slow");
-                    }
-                    else
-                    {
-                        mg.player.Speed = mg.player.OriginalSpeed;
-                        if (pressedSpeed && (mg.player.SpeedCooldown == 0))
-                        {
-                            UpdatePlayerSpeed("Fast");
-                        }
-                        else
-                        {
-                            UpdatePlayerSpeed("Normal");
-                        }
-                    }
+                    else if (mg.player.Speed == mg.player.OriginalSpeed)
+                        UpdatePlayerSpeed("Normal");
+                    else if (mg.player.Speed == mg.player.OriginalSpeed * 2)
+                        UpdatePlayerSpeed("Fast");
                 }
 
                 if (gameObject is ExplodingObstacle)
@@ -651,6 +650,10 @@ namespace WindesHeim_Game
                         mg.graphicsPanel.BackColor = Color.White;
                     }
                 }
+            }
+
+            if(slowedDownObstacle != null) {
+                mg.player.Speed = slowedDownObstacle.SlowingSpeed;
             }
         }
 
@@ -1234,6 +1237,14 @@ namespace WindesHeim_Game
         public void MouseUp(object sender, MouseEventArgs e) {
             if(objectDragging != null) {
                 objectDragging.Location = new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y);
+
+                if (e.Location.X < (modelEditor.gamePanel.Location.X + modelEditor.widthDragDropPanel) || e.Location.X > (modelEditor.gamePanel.Location.X + modelEditor.gamePanel.Width)) {
+                    gameObjects.Remove(objectDragging);
+                }
+                if(e.Location.Y < modelEditor.gamePanel.Location.Y || e.Location.Y > modelEditor.gamePanel.Height) {
+                    gameObjects.Remove(objectDragging);
+                }
+
                 objectDragging = null;
                 modelEditor.gamePanel.Invalidate();
             }
