@@ -139,7 +139,8 @@ namespace WindesHeim_Game
             menuPanel.AutoSize = true;
             menuPanel.BackColor = Color.Transparent;
 
-
+            backgroundImage.Controls.Add(menuPanel);
+            gameWindow.Controls.Add(backgroundImage);
             menuPanel.Controls.Add(play);
             menuPanel.Controls.Add(editor);
             menuPanel.Controls.Add(highscore);
@@ -147,9 +148,6 @@ namespace WindesHeim_Game
 
             System.Console.WriteLine(gameWindow.Width);
             menuPanel.Location = new Point((gameWindow.Width / 2 - menuPanel.Size.Width / 2), (gameWindow.Height / 2 - menuPanel.Size.Height / 2));
-            menuPanel.Anchor = AnchorStyles.None;
-            this.backgroundImage.Controls.Add(menuPanel);
-            gameWindow.Controls.Add(backgroundImage);
         }
     }
 
