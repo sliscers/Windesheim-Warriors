@@ -495,18 +495,18 @@ namespace WindesHeim_Game
                     if (mg.player.CollidesWith(gameObstacle))
                     {
                         mg.player.Speed = gameObstacle.SlowingSpeed;
-                        UpdatePlayerSpeed("Langzaam");
+                        UpdatePlayerSpeed("Slow");
                     }
                     else
                     {
                         mg.player.Speed = mg.player.OriginalSpeed;
                         if (pressedSpeed && (mg.player.SpeedCooldown == 0))
                         {
-                            UpdatePlayerSpeed("Snel");
+                            UpdatePlayerSpeed("Fast");
                         }
                         else
                         {
-                            UpdatePlayerSpeed("Normaal");
+                            UpdatePlayerSpeed("Normal");
                         }
                     }
                 }
@@ -560,7 +560,7 @@ namespace WindesHeim_Game
                         mg.InitializeField();
                         timer.Stop();
                         if (editor)
-                        {
+                        {                            
                             gameWindow.setController(ScreenStates.editor);                            
                         }
                         else{
@@ -744,10 +744,7 @@ namespace WindesHeim_Game
             {
                 pressedSpeed = false;
                 mg.player.Speed = 5;
-
             }
-
-
         }
         public void TimerStart()
         {
@@ -941,7 +938,6 @@ namespace WindesHeim_Game
             if (level != null)
             { 
                 ModelGame.level = level;
-                ModelEditor.level = level;
                 ControllerGame.editor = true;
                 gameWindow.setController(ScreenStates.game);
             }
@@ -1009,6 +1005,7 @@ namespace WindesHeim_Game
 
         public override void RunController()
         {
+            ModelGame.level = null;
             base.RunController();
             level = ModelEditor.level;
             if (level != null) //if null = New Level aanmaken

@@ -16,8 +16,8 @@ namespace WindesHeim_Game {
             base.collisionSize = 50;
             base.CollisionX = 0;
             base.CollisionY = -2;
-            base.Name = "Fietser";
-            base.Description = "Volgt character en ontploft";
+            base.Name = "Cyclist";
+            base.Description = "Follows character and detonates on collision";
             base.PanelIcon = Resources.bikeEdited;
         }
     }
