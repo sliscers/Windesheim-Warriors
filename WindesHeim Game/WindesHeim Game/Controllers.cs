@@ -647,7 +647,7 @@ namespace WindesHeim_Game
                     if (difference.TotalSeconds > 1.2)
                     {
                         mg.GameObjects.Remove(gameObject);
-                        mg.graphicsPanel.BackColor = Color.White;
+                        mg.graphicsPanel.BackColor = System.Drawing.SystemColors.ControlLight;
                     }
                 }
             }
@@ -967,6 +967,7 @@ namespace WindesHeim_Game
                     if (level != null)
                     {
                         level.WriteXML(gameProperties, gameObjects);
+                        //modelEditor.levelTitleLabel.Text = level.gameProperties.title;
                     }
                 }
             }
@@ -974,6 +975,7 @@ namespace WindesHeim_Game
             {
                 // Als Edit level
                 level.WriteXML(level.gameProperties, gameObjects, level.gameHighscores);
+                MessageBox.Show("Saved changes to " + level.gameProperties.title);
             }        
         }
 
@@ -1013,6 +1015,7 @@ namespace WindesHeim_Game
             level = ModelEditor.level;
             if (level != null) //if null = New Level aanmaken
             { //Bestaand level bewerken
+                //modelEditor.levelTitleLabel.Text = level.gameProperties.title;
                 gameObjects = level.getCleanGameObjects();
             }
 
@@ -1297,13 +1300,19 @@ namespace WindesHeim_Game
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
 
-            g.DrawString("Drag en drop", drawFont, drawBrush, new Point(10, 10));
+            g.DrawString("Drag and drop", drawFont, drawBrush, new Point(10, 10));
+            if(level != null)
+            g.DrawString(level.gameProperties.title, drawFont, drawBrush, new Point(((modelEditor.gamePanel.Width + modelEditor.widthDragDropPanel / 2) / 2), 0));
 
             drawFont = new Font("Arial", 8);
             g.DrawString("Static obstacle", drawFont, drawBrush, new Point(60, 70));
             g.DrawString("Exploding obstacle", drawFont, drawBrush, new Point(60, 120));
             g.DrawString("Moving exploding obstacle", drawFont, drawBrush, new Point(60, 170));
             g.DrawString("Slowing obstacle", drawFont, drawBrush, new Point(60, 220));
+
+            g.DrawString("Undo last", drawFont, drawBrush, new Point(60, 315));
+            g.DrawString("Clear level", drawFont, drawBrush, new Point(60, 365));
+
         }
     }
     public class ControllerHighscoreInput : Controller
