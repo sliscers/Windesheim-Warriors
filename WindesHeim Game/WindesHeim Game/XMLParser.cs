@@ -118,20 +118,28 @@ namespace WindesHeim_Game
         public static void LoadAllLevels()
         {
             Levels.Clear();
-            String dirPath = "../levels/";
-                string[] fileEntries = Directory.GetFiles(dirPath);
-                foreach (string file in fileEntries)
+            string dirPath = "";
+
+            if (System.Diagnostics.Debugger.IsAttached) {
+                dirPath = "../levels/";
+            }
+            else {
+                dirPath = AppDomain.CurrentDomain.BaseDirectory + "/levels/";
+            }
+
+            string[] fileEntries = Directory.GetFiles(dirPath);
+            foreach (string file in fileEntries)
+            {
+                if (File.Exists(file))
                 {
-                    if (File.Exists(file))
+                    if (isXML(file))
                     {
-                        if (isXML(file))
-                        {
-                            XMLParser xml = new XMLParser(file);
-                            xml.ReadXML();
-                            Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
-                        }
+                        XMLParser xml = new XMLParser(file);
+                        xml.ReadXML();
+                        Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
                     }
                 }
+            }
         }
         private static bool isXML(string file)
         {
@@ -148,7 +156,15 @@ namespace WindesHeim_Game
             XmlDocument doc = new XmlDocument();
             doc.Load(this.path);
 
-            XmlNode root = doc.SelectSingleNode("//highscores");
+            XmlNode root = doc.DocumentElement;
+
+            if (doc.SelectSingleNode("//highscores") == null)
+            {
+                XmlElement highScoresElement = doc.CreateElement("highscores");
+                root.AppendChild(highScoresElement);                
+            }
+
+            XmlNode highscores = doc.SelectSingleNode("//highscores");
 
             XmlElement highScoreElement = doc.CreateElement("highscore");
 
@@ -165,8 +181,8 @@ namespace WindesHeim_Game
             highScoreElement.AppendChild(datetimeElement);
             highScoreElement.AppendChild(scoreElement);
 
-            //Add the node to the document.
-            root.AppendChild(highScoreElement);
+            //Add the node to the document.            
+            highscores.AppendChild(highScoreElement);            
 
             doc.Save(this.path);
         }

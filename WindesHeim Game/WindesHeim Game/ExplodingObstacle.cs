@@ -14,7 +14,7 @@ namespace WindesHeim_Game {
         {
             base.ObjectImage = Resources.IconCar;
             base.CollisionX = 0;
-            base.CollisionY = 0;
+            base.CollisionY = -8;
             base.Name = "Auto";
             base.Description = "Ontploft bij aanraking";
             base.PanelIcon = Resources.carEdited;
