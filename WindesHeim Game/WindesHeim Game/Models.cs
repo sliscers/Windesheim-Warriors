@@ -328,7 +328,7 @@ namespace WindesHeim_Game
             lblObstacles.Name = "lblObstacles";
             lblObstacles.Size = new System.Drawing.Size(54, 13);
             lblObstacles.TabIndex = 0;
-            lblObstacles.Text = "Obstakels";
+            lblObstacles.Text = "Obstacles";
 
             //Panel Obstacle 1
             pnlObstacle1.BackColor = System.Drawing.SystemColors.ControlLight;

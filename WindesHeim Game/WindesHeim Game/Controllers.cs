@@ -785,10 +785,7 @@ namespace WindesHeim_Game
             {
                 pressedSpeed = false;
                 mg.player.Speed = 5;
-
             }
-
-
         }
         public void TimerStart()
         {
