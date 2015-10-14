@@ -37,3 +37,5 @@ C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesH
 C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
 C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
 C:\Users\Kevin de Korte\Source\Repos\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
+C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.CodeAnalysisLog.xml
+C:\Users\Marten\Documents\GitHub\Windesheim-Warriors2\WindesHeim Game\WindesHeim Game\bin\Debug\WindesHeim Game.exe.lastcodeanalysissucceeded
