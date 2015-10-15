@@ -49,7 +49,7 @@ namespace WindesHeim_Game {
                 foreach (GameObject gameObject in safeListArray) {
                     if (gameObject is MovingExplodingObstacle) {
                         MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
-                        gameObstacle.ChasePlayer(player);
+                        //gameObstacle.ChasePlayer(player);
 
                         if (gameObstacle.CollidesWith(player)) {
                             int widthOfPlayerObject = player.Location.X + player.Width;
@@ -84,7 +84,7 @@ namespace WindesHeim_Game {
                 foreach (GameObject gameObject in safeListArray) {
                     if (gameObject is SlowingObstacle) {
                         SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
-                        gameObstacle.ChasePlayer(player);
+                        //gameObstacle.ChasePlayer(player);
 
                         if (gameObstacle.CollidesWith(player)) {
 

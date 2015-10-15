@@ -18,10 +18,17 @@ namespace WindesHeim_Game {
         private DateTime smartmovingTime;
         private bool isSmart = true;
 
+        private List<string> historyMovement = new List<string>();
+
         public Obstacle(Point location, int height, int width) : base (location, height, width)
         {
             
         }
+
+        public List<string> HistoryMovement {
+            get { return historyMovement; }
+        }
+
         public string SmartmovingDirection
         {
             get { return smartmovingDirection; }
@@ -69,18 +76,62 @@ namespace WindesHeim_Game {
             set { panelIcon = value; }
         }
 
-        public void ChasePlayer(Player player) {
-            if (Location.X >= player.Location.X)
-                Location = new Point(Location.X - 1 - movingSpeed, Location.Y);
+        public string ProcessCollision(List<GameObject> safeListArray, string axis) {
+            string hitpoint = "";
 
-            if (Location.X <= player.Location.X)
-                Location = new Point(Location.X + 1 + movingSpeed, Location.Y);
+            if (axis == "x") {
+                foreach (GameObject potentialCollision in safeListArray) {
+                    if (this != potentialCollision) {
+                        if (this.CollidesWith(potentialCollision)) {
+                            if (this.CollisionRectangle.Left < potentialCollision.CollisionRectangle.Left) {
+                                this.Location = new Point(this.Location.X - 1 - this.movingSpeed, this.Location.Y);
+                                hitpoint = "left";
+                            }
+                            else if (this.CollisionRectangle.Right > potentialCollision.CollisionRectangle.Right) {
+                                this.Location = new Point(this.Location.X + 1 + this.movingSpeed, this.Location.Y);
+                                hitpoint = "right";
+                            }
+                        }
+                    }
+                }
+            }
+            else if (axis == "y") {
+                foreach (GameObject potentialCollision in safeListArray) {
+                    if (this != potentialCollision) {
+                        if (this.CollidesWith(potentialCollision)) {
+                            if (this.CollisionRectangle.Bottom > potentialCollision.CollisionRectangle.Bottom) {
+                                this.Location = new Point(this.Location.X, this.Location.Y + 1 + this.movingSpeed);
+                                hitpoint = "up";
+                            }
+                            else if (this.CollisionRectangle.Top < potentialCollision.CollisionRectangle.Top) {
+                                this.Location = new Point(this.Location.X, this.Location.Y - 1 - this.movingSpeed);
+                                hitpoint = "down";
+                            }
+                        }
+                    }
+                }
+            }
 
-            if (Location.Y >= player.Location.Y)
-                Location = new Point(Location.X, Location.Y - 1 - movingSpeed);
+            return hitpoint;
+        }
 
-            if (Location.Y <= player.Location.Y)
-                Location = new Point(Location.X, Location.Y + 1 + movingSpeed);
+        public void ChasePlayer(Player player, string axis) {
+            if(axis == "x") {
+                if (Location.X >= player.Location.X) {
+                    Location = new Point(Location.X - 1 - movingSpeed, Location.Y);
+                }
+                if (Location.X <= player.Location.X) {
+                    Location = new Point(Location.X + 1 + movingSpeed, Location.Y);
+                }
+            }
+            else if(axis == "y") {
+                if (Location.Y >= player.Location.Y) {
+                    Location = new Point(Location.X, Location.Y - 1 - movingSpeed);
+                }
+                if (Location.Y <= player.Location.Y) {
+                    Location = new Point(Location.X, Location.Y + 1 + movingSpeed);
+                }
+            }
         }
 
         public void TryToEscape()

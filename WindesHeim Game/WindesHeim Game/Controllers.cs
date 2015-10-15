@@ -124,6 +124,7 @@ namespace WindesHeim_Game
         {
             // Reset veld en ga terug naar menu
             ModelGame mg = (ModelGame)model;
+            score = 0;
             mg.InitializeField();
             gameWindow.setController(ScreenStates.menu);
 
@@ -390,6 +391,8 @@ namespace WindesHeim_Game
             // We voegen dan als het ware iets toe en lezen tegelijk, dit mag niet
             List<GameObject> safeListArray = new List<GameObject>(mg.GameObjects);
 
+            SlowingObstacle slowedDownObstacle = null;
+
             // Loop door alle obstacles objecten en roep methode aan
             foreach (GameObject gameObject in safeListArray)
             {
@@ -398,26 +401,35 @@ namespace WindesHeim_Game
                     MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
 
                     //Opslaan van huidige locatie in variable om vervolgens te vergelijken
-                    Point currentLocation = gameObstacle.Location;                    
+                    Point currentLocation = gameObstacle.Location;
 
-                    gameObstacle.ChasePlayer(mg.player);                    
-                    
-                    // Loop door alle objecten op het veld
-                    foreach (GameObject potentialCollision in safeListArray)
-                    {
-                        // We willen niet onszelf checken, en we willen alleen collision voor StaticObstacles en ExplodingObstacles
-                        if (gameObject != potentialCollision && (potentialCollision is StaticObstacle || potentialCollision is ExplodingObstacle))
-                        {
-                            string returnDirection = gameObject.ProcessCollision(potentialCollision);
-                            //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
-                            if (currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
-                            {
-                                gameObstacle.SmartMovingEnabled = true;
-                                gameObstacle.SmartmovingDirection = returnDirection;
-                                //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
-                                gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
-                            }
-                        }
+                    gameObstacle.ChasePlayer(mg.player, "x");
+                    string returnDirection = gameObstacle.ProcessCollision(safeListArray, "x");
+
+                    if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "") {
+                        gameObstacle.SmartMovingEnabled = true;
+                        gameObstacle.SmartmovingDirection = returnDirection;
+                        //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                        gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
+                    }
+
+                    gameObstacle.ChasePlayer(mg.player, "y");
+                    returnDirection = gameObstacle.ProcessCollision(safeListArray, "y");
+
+                    if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "") {
+                        gameObstacle.SmartMovingEnabled = true;
+                        gameObstacle.SmartmovingDirection = returnDirection;
+                        //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                        gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
+                    }
+
+                    if (gameObstacle.CollidesWith(mg.player)) {
+                        score = 0;
+                        mg.player.Location = new Point(0, 0);
+                        UpdatePlayerPosition();
+                        mg.InitializeField();
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
+                        mg.player.ObjectImage = Resources.Player;
                     }
 
                     if (gameObstacle.IsSmart)
@@ -435,18 +447,6 @@ namespace WindesHeim_Game
                             gameObstacle.SmartmovingDirection = ""; // Reset direction voor smart movement
                             //Console.WriteLine("Datetime is verlopen");
                         }
-                    }
-
-
-
-                    if (gameObstacle.CollidesWith(mg.player))
-                    {
-                        score = 0;
-                        mg.player.Location = new Point(0, 0);
-                        UpdatePlayerPosition();
-                        mg.InitializeField();
-                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 10, 10));
-                        mg.player.ObjectImage = Resources.Player;
                     }
                 }
 
@@ -457,24 +457,24 @@ namespace WindesHeim_Game
                     //Opslaan van huidige locatie in variable om vervolgens te vergelijken
                     Point currentLocation = gameObstacle.Location;
 
-                    gameObstacle.ChasePlayer(mg.player);
+                    gameObstacle.ChasePlayer(mg.player, "x");
+                    string returnDirection = gameObstacle.ProcessCollision(safeListArray, "x");
 
-                    // Loop door alle objecten op het veld
-                    foreach (GameObject potentialCollision in safeListArray)
-                    {
-                        // We willen niet onszelf checken, maar we willen we collision op alles
-                        if (gameObject != potentialCollision)
-                        {
-                            string returnDirection = gameObject.ProcessCollision(potentialCollision);
-                            //Vergelijk als de locaties gelijk zijn, in andere woorden het moving object stilstaat
-                            if (currentLocation.Equals(gameObstacle.Location) && returnDirection != "")
-                            {
-                                gameObstacle.SmartMovingEnabled = true;
-                                gameObstacle.SmartmovingDirection = returnDirection;
-                                //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
-                                gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
-                            }
-                        }
+                    if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "") {
+                        gameObstacle.SmartMovingEnabled = true;
+                        gameObstacle.SmartmovingDirection = returnDirection;
+                        //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                        gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
+                    }
+
+                    gameObstacle.ChasePlayer(mg.player, "y");
+                    returnDirection = gameObstacle.ProcessCollision(safeListArray, "y");
+
+                    if (gameObstacle.IsSmart && currentLocation.Equals(gameObstacle.Location) && returnDirection != "") {
+                        gameObstacle.SmartMovingEnabled = true;
+                        gameObstacle.SmartmovingDirection = returnDirection;
+                        //x aantal seconden loopt deze functie om te proberen weg te komen van het obstacel, daarna vervolgt het moving object het achtervolgen van de player
+                        gameObstacle.SmartmovingTime = DateTime.Now.AddMilliseconds(2500);
                     }
 
                     if (gameObstacle.IsSmart)
@@ -493,24 +493,21 @@ namespace WindesHeim_Game
                             //Console.WriteLine("Datetime is verlopen");
                         }
                     }
-
+            
                     if (mg.player.CollidesWith(gameObstacle))
                     {
-                        mg.player.Speed = gameObstacle.SlowingSpeed;
-                        UpdatePlayerSpeed("Langzaam");
-                    }
-                    else
-                    {
-                        mg.player.Speed = mg.player.OriginalSpeed;
-                        if (pressedSpeed && (mg.player.SpeedCooldown == 0))
-                        {
-                            UpdatePlayerSpeed("Snel");
-                        }
-                        else
-                        {
-                            UpdatePlayerSpeed("Normaal");
+                        slowedDownObstacle = gameObstacle;
+                        if(gameObstacle.SlowingSpeed < slowedDownObstacle.SlowingSpeed) {
+                            slowedDownObstacle.SlowingSpeed = gameObstacle.SlowingSpeed;
                         }
                     }
+
+                    if (mg.player.Speed == mg.player.OriginalSpeed / 2)
+                        UpdatePlayerSpeed("Slow");
+                    else if (mg.player.Speed == mg.player.OriginalSpeed)
+                        UpdatePlayerSpeed("Normal");
+                    else if (mg.player.Speed == mg.player.OriginalSpeed * 2)
+                        UpdatePlayerSpeed("Fast");
                 }
 
                 if (gameObject is ExplodingObstacle)
@@ -562,7 +559,7 @@ namespace WindesHeim_Game
                         mg.InitializeField();
                         timer.Stop();
                         if (editor)
-                        {
+                        {                            
                             gameWindow.setController(ScreenStates.editor);                            
                         }
                         else{
@@ -650,15 +647,20 @@ namespace WindesHeim_Game
                     if (difference.TotalSeconds > 1.2)
                     {
                         mg.GameObjects.Remove(gameObject);
-                        mg.graphicsPanel.BackColor = Color.White;
+                        mg.graphicsPanel.BackColor = System.Drawing.SystemColors.ControlLight;
                     }
                 }
+            }
+
+            if(slowedDownObstacle != null) {
+                mg.player.Speed = slowedDownObstacle.SlowingSpeed;
             }
         }
 
         public override void RunController()
         {
             base.RunController();
+            score = 0;
             ModelGame mg = (ModelGame)model;
             mg.InitializeField();
         }
@@ -685,7 +687,6 @@ namespace WindesHeim_Game
                 {
                     g.DrawImage(gameObject.ObjectImage, gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
-
                 //g.DrawRectangle(new Pen(Color.Red), new Rectangle(gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height));
 
             }
@@ -746,10 +747,7 @@ namespace WindesHeim_Game
             {
                 pressedSpeed = false;
                 mg.player.Speed = 5;
-
             }
-
-
         }
         public void TimerStart()
         {
@@ -943,7 +941,6 @@ namespace WindesHeim_Game
             if (level != null)
             { 
                 ModelGame.level = level;
-                ModelEditor.level = level;
                 ControllerGame.editor = true;
                 gameWindow.setController(ScreenStates.game);
             }
@@ -970,6 +967,7 @@ namespace WindesHeim_Game
                     if (level != null)
                     {
                         level.WriteXML(gameProperties, gameObjects);
+                        //modelEditor.levelTitleLabel.Text = level.gameProperties.title;
                     }
                 }
             }
@@ -977,6 +975,7 @@ namespace WindesHeim_Game
             {
                 // Als Edit level
                 level.WriteXML(level.gameProperties, gameObjects, level.gameHighscores);
+                MessageBox.Show("Saved changes to " + level.gameProperties.title);
             }        
         }
 
@@ -1011,10 +1010,12 @@ namespace WindesHeim_Game
 
         public override void RunController()
         {
+            ModelGame.level = null;
             base.RunController();
             level = ModelEditor.level;
             if (level != null) //if null = New Level aanmaken
             { //Bestaand level bewerken
+                //modelEditor.levelTitleLabel.Text = level.gameProperties.title;
                 gameObjects = level.getCleanGameObjects();
             }
 
@@ -1239,6 +1240,14 @@ namespace WindesHeim_Game
         public void MouseUp(object sender, MouseEventArgs e) {
             if(objectDragging != null) {
                 objectDragging.Location = new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y);
+
+                if (e.Location.X < (modelEditor.gamePanel.Location.X + modelEditor.widthDragDropPanel) || e.Location.X > (modelEditor.gamePanel.Location.X + modelEditor.gamePanel.Width)) {
+                    gameObjects.Remove(objectDragging);
+                }
+                if(e.Location.Y < modelEditor.gamePanel.Location.Y || e.Location.Y > modelEditor.gamePanel.Height) {
+                    gameObjects.Remove(objectDragging);
+                }
+
                 objectDragging = null;
                 modelEditor.gamePanel.Invalidate();
             }
@@ -1283,7 +1292,7 @@ namespace WindesHeim_Game
 
             foreach (GameObject gameObject in gameObjects) {
                 g.DrawImage(gameObject.ObjectImage, gameObject.Location.X + modelEditor.widthDragDropPanel, gameObject.Location.Y, gameObject.Width, gameObject.Height);
-                g.DrawRectangle(new Pen(Color.FromArgb(255, 0, 70, 133)), new Rectangle(new Point(gameObject.Location.X + modelEditor.widthDragDropPanel, gameObject.Location.Y), new Size(gameObject.Width, gameObject.Height)));
+                g.DrawRectangle(new Pen(Color.FromArgb(255, 0, 70, 133)), new Rectangle(new Point(gameObject.Location.X + modelEditor.widthDragDropPanel - gameObject.CollisionX, gameObject.Location.Y - gameObject.CollisionY), new Size(gameObject.Width + gameObject.CollisionX * 2, gameObject.Height + gameObject.CollisionY * 2)));
             }
 
             g.FillRectangle(new SolidBrush(Color.LightGray), new Rectangle(new Point(0, 0), new Size(modelEditor.widthDragDropPanel, 475)));
@@ -1291,13 +1300,19 @@ namespace WindesHeim_Game
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
 
-            g.DrawString("Drag en drop", drawFont, drawBrush, new Point(10, 10));
+            g.DrawString("Drag and drop", drawFont, drawBrush, new Point(10, 10));
+            if(level != null)
+            g.DrawString(level.gameProperties.title, drawFont, drawBrush, new Point(((modelEditor.gamePanel.Width + modelEditor.widthDragDropPanel / 2) / 2), 0));
 
             drawFont = new Font("Arial", 8);
             g.DrawString("Static obstacle", drawFont, drawBrush, new Point(60, 70));
             g.DrawString("Exploding obstacle", drawFont, drawBrush, new Point(60, 120));
             g.DrawString("Moving exploding obstacle", drawFont, drawBrush, new Point(60, 170));
             g.DrawString("Slowing obstacle", drawFont, drawBrush, new Point(60, 220));
+
+            g.DrawString("Undo last", drawFont, drawBrush, new Point(60, 315));
+            g.DrawString("Clear level", drawFont, drawBrush, new Point(60, 365));
+
         }
     }
     public class ControllerHighscoreInput : Controller
@@ -1314,9 +1329,14 @@ namespace WindesHeim_Game
         }
 
         public void Continue_Click(object sender, EventArgs e)
-        {
-            ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(),score));
-            gameWindow.setController(ScreenStates.menu);
+        {         
+            if(modelHighscoreInput.name.Text.Length == 0) {
+                DialogResult dr = MessageBox.Show("Graag uw naam opgeven", "Error", MessageBoxButtons.OK);
+            }
+            else {
+                ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(), score));
+                gameWindow.setController(ScreenStates.menu);
+            }     
         }
 
         public void GetPlace()
@@ -1367,6 +1387,7 @@ namespace WindesHeim_Game
 
         public void TryAgain_Click(object sender, EventArgs e)
         {
+            ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(), score));
             gameWindow.setController(ScreenStates.game);
         }
     }

@@ -15,9 +15,10 @@ namespace WindesHeim_Game
         public StaticObstacle(Point location, int height, int width) : base(location, height, width)
         {
             base.ObjectImage = Resources.IconTC;
-
-            base.Name = "Verkeersregelaar";
-            base.Description = "Doet niets";
+            base.CollisionX = -6;
+            base.CollisionY = 0;
+            base.Name = "Traffic Controller";
+            base.Description = "Blocks the character";
             base.PanelIcon = Resources.IconTCEdited;
         }
     }

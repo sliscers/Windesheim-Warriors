@@ -13,6 +13,6 @@ namespace WindesHeim_Game
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new GameWindow());
-        }
+        } 
     }
 }
