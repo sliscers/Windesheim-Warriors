@@ -1100,10 +1100,6 @@ namespace WindesHeim_Game
             newLevel.Image = Resources.newLevel;
             newLevel.Click += editorSelectController.newLevel_Click;
 
-            alignPanel.Location = new Point(
-                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
-                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
-
             gameWindow.Controls.Add(backgroundImage);
             backgroundImage.Controls.Add(alignPanel);
             alignPanel.Controls.Add(goBack);
@@ -1111,6 +1107,10 @@ namespace WindesHeim_Game
             alignPanel.Controls.Add(newLevel);
             alignPanel.Controls.Add(listBoxLevels);
             alignPanel.Controls.Add(gamePanel);
+
+            alignPanel.Location = new Point(
+    (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+    (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
         }
     }
 
