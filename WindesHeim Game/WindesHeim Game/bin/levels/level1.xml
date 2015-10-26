@@ -1,18 +1,20 @@
-﻿<level>
+<level>
   <properties>
     <title>Level 1</title>
     <difficulty>hard</difficulty>
   </properties>
   <items>
     <object>
-      <type></type>
+      <type>
+      </type>
       <x>750</x>
       <y>400</y>
       <height>80</height>
       <width>80</width>
     </object>
     <object>
-      <type></type>
+      <type>
+      </type>
       <x>5</x>
       <y>-5</y>
       <height>80</height>
@@ -111,6 +113,6 @@
       <name>Kevin de Korte</name>
       <datetime>2015-10-13T15:23:03</datetime>
       <score>175</score>
-    </highscore> 
+    </highscore>
   </highscores>
 </level>
