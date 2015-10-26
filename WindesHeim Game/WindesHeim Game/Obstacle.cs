@@ -5,27 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindesHeim_Game {
+namespace WindesHeim_Game
+{
 
-    public class Obstacle : GameObject 
+    public class Obstacle : GameObject
     {
         private string name;
         private string description;
         private Image panelIcon;
         private int movingSpeed;
-        private bool smartMovingEnabled;
-        private string smartmovingDirection;
+        private bool smartMovingEnabled = false;
+        private string smartmovingDirection = "";
         private DateTime smartmovingTime;
-        private bool isSmart = true;
+        private DateTime directionTime;
+        private bool isSmart = false;
 
         private List<string> historyMovement = new List<string>();
 
-        public Obstacle(Point location, int height, int width) : base (location, height, width)
+        public Obstacle(Point location, int height, int width) : base(location, height, width)
         {
-            
+
         }
 
-        public List<string> HistoryMovement {
+        public List<string> HistoryMovement
+        {
             get { return historyMovement; }
         }
 
@@ -41,6 +44,12 @@ namespace WindesHeim_Game {
             set { smartmovingTime = value; }
         }
 
+        public DateTime DirectionTime
+        {
+            get { return directionTime; }
+            set { directionTime = value; }
+        }
+
         public bool SmartMovingEnabled
         {
             get { return smartMovingEnabled; }
@@ -53,7 +62,8 @@ namespace WindesHeim_Game {
             set { isSmart = value; }
         }
 
-        public int MovingSpeed {
+        public int MovingSpeed
+        {
             get { return movingSpeed; }
             set { movingSpeed = value; }
         }
@@ -76,96 +86,157 @@ namespace WindesHeim_Game {
             set { panelIcon = value; }
         }
 
-        public void ChasePlayer(Player player) {
-            string directionString = "";
+        public void ProcessCollision(List<GameObject> safeListArray, string axis)
+        {
+            string[] directions = smartmovingDirection.Split(new string[] { "," }, StringSplitOptions.None);
 
-            if (Location.X >= player.Location.X) {
-                Location = new Point(Location.X - 1 - movingSpeed, Location.Y);
-                directionString += "left";
+            if (axis == "x")
+            {
+                foreach (GameObject potentialCollision in safeListArray)
+                {
+                    if (this != potentialCollision && !(potentialCollision is Checkpoint))
+                    {
+                        if (this.CollidesWith(potentialCollision))
+                        {                            
+                            if (this.CollisionRectangle.Left < potentialCollision.CollisionRectangle.Left)
+                            {
+                                if(!smartMovingEnabled)
+                                    this.Location = new Point(this.Location.X - 1 - this.movingSpeed, this.Location.Y); //left
+                                if (isSmart)
+                                    if (!smartmovingDirection.Contains("left"))
+                                        if (directions.Length > 2)
+                                            smartmovingDirection = "left";
+                                        else
+                                            smartmovingDirection += ",left";
+                                            directionTime = DateTime.Now.AddMilliseconds(500);
+                            }
+                            else if (this.CollisionRectangle.Right > potentialCollision.CollisionRectangle.Right)
+                            {
+                                if (!smartMovingEnabled)
+                                    this.Location = new Point(this.Location.X + 1 + this.movingSpeed, this.Location.Y); //right
+                                if (isSmart)
+                                    if (!smartmovingDirection.Contains("right"))
+                                        if (directions.Length > 2)
+                                            smartmovingDirection = "right";
+                                        else
+                                            smartmovingDirection += ",right";
+                                            directionTime = DateTime.Now.AddMilliseconds(500);
+                            }
+                        }
+                    }
+                }
             }
-            if (Location.X <= player.Location.X) {
-                Location = new Point(Location.X + 1 + movingSpeed, Location.Y);
-                directionString += "right";
+            else if (axis == "y")
+            {
+                foreach (GameObject potentialCollision in safeListArray)
+                {
+                    if (this != potentialCollision && !(potentialCollision is Checkpoint))
+                    {
+                        if (this.CollidesWith(potentialCollision))
+                        {
+                            if (this.CollisionRectangle.Bottom > potentialCollision.CollisionRectangle.Bottom)
+                            {
+                                if (!smartMovingEnabled)
+                                    this.Location = new Point(this.Location.X, this.Location.Y + 1 + this.movingSpeed); //down
+                                if (isSmart)
+                                    if (!smartmovingDirection.Contains("down"))
+                                        if (directions.Length > 2)
+                                            smartmovingDirection = "down";
+                                        else
+                                            smartmovingDirection += ",down";
+                                            directionTime = DateTime.Now.AddMilliseconds(500);
+                            }
+                            else if (this.CollisionRectangle.Top < potentialCollision.CollisionRectangle.Top)
+                            {
+                                if (!smartMovingEnabled)
+                                    this.Location = new Point(this.Location.X, this.Location.Y - 1 - this.movingSpeed); //up
+                                if (isSmart)
+                                    if (!smartmovingDirection.Contains("up"))
+                                        if (directions.Length > 2)
+                                            smartmovingDirection = "up";
+                                        else
+                                            smartmovingDirection += ",up";
+                                            directionTime = DateTime.Now.AddMilliseconds(500);
+                            }
+                        }
+                    }
+                }
             }
 
-
-            if (Location.Y >= player.Location.Y) {
-                Location = new Point(Location.X, Location.Y - 1 - movingSpeed);
-                directionString += "up";
-            }
-            if (Location.Y <= player.Location.Y) {
-                Location = new Point(Location.X, Location.Y + 1 + movingSpeed);
-                directionString += "down";      
-            }
-
-            historyMovement.Add(directionString);
-
-            if (historyMovement.Count > 10)
-                historyMovement.RemoveAt(10);
-
-            //Console.WriteLine(string.Join("|", historyMovement.ToArray()));
+            if (directionTime != default(DateTime) && isSmart && smartMovingEnabled)
+                if (directionTime <= DateTime.Now && directions.Length >= 2)
+                {
+                    directions = smartmovingDirection.Split(new string[] { "," }, StringSplitOptions.None);
+                    smartmovingDirection = "";
+                    foreach (string direction in directions)
+                    {
+                        if (!direction.Equals(directions[1]))
+                            smartmovingDirection += "," + direction;
+                    }
+                    directionTime = default(DateTime);
+                }
         }
 
-        public string ProcessCollision(GameObject gameObject) {
-
-            string hitpoint = "";
-
-            if (this.Location.Y == gameObject.Location.Y + Height
-                && (this.Location.X <= gameObject.Location.X && this.Location.X + this.Width >= gameObject.Location.X
-                || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-
-                    Location = new Point(Location.X, Location.Y + 1);
-                //ProcessCollision(gameObject);
-                hitpoint = "up";
+        public void ChasePlayer(Player player, string axis)
+        {
+            bool continueX = true;
+            bool continueY = true;
+            if (smartMovingEnabled)
+            {
+                if (smartmovingDirection.Contains("up") || smartmovingDirection.Contains("down"))
+                {
+                    continueY = false;
+                }
+                if (smartmovingDirection.Contains("left") || smartmovingDirection.Contains("right"))
+                {
+                    continueX = false;
+                }
             }
-
-            if (this.Location.Y + this.Height == gameObject.Location.Y
-                && (this.Location.X + this.Width >= gameObject.Location.X && this.Location.X <= gameObject.Location.X
-                || this.Location.X >= gameObject.Location.X && this.Location.X <= gameObject.Location.X + gameObject.Width)) {
-
-                    Location = new Point(Location.X, Location.Y - 1);
-                //ProcessCollision(gameObject);
-                hitpoint = "down";
+            if (axis == "x" && continueX)
+            {
+                    if (Location.X >= player.Location.X)
+                    {
+                            Location = new Point(Location.X - 1 - movingSpeed, Location.Y);
+                    }
+                    if (Location.X <= player.Location.X)
+                    {
+                            Location = new Point(Location.X + 1 + movingSpeed, Location.Y);
+                    }
             }
-
-            if (this.Location.X == gameObject.Location.X + gameObject.Width
-                && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
-                || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
-
-                    Location = new Point(Location.X + 1, Location.Y);
-                //ProcessCollision(gameObject);
-                hitpoint = "left";
+            else if (axis == "y" && continueY)
+            {
+                    if (Location.Y >= player.Location.Y)
+                    {
+                            Location = new Point(Location.X, Location.Y - 1 - movingSpeed);
+                    }
+                    if (Location.Y <= player.Location.Y)
+                    {                    
+                            Location = new Point(Location.X, Location.Y + 1 + movingSpeed);
+                    }
             }
-
-            if (this.Location.X + this.Width == gameObject.Location.X
-                && (this.Location.Y >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y + gameObject.Height
-                || this.Location.Y + this.Height >= gameObject.Location.Y && this.Location.Y <= gameObject.Location.Y)) {
-
-                    Location = new Point(Location.X - 1, Location.Y);
-                //ProcessCollision(gameObject);
-                hitpoint = "right";
-            }
-
-            return hitpoint;
         }
 
         public void TryToEscape()
         {
-            switch (smartmovingDirection)
+            string[] directions = smartmovingDirection.Split(new string[] { "," }, StringSplitOptions.None);            
+            foreach (string direction in directions)
+            {
+                switch (direction)
                 {
-                    case "up": //Als collision aan de bovenkant, beweeg naar beneden
-                    Location = new Point(Location.X, Location.Y + 2 + movingSpeed); //down
-                    break;
-                    case "down": //Als collision aan de onderkant, beweeg naar boven                      
-                    Location = new Point(Location.X, Location.Y - 2 - movingSpeed); //up
-                    break;
-                    case "left": //Als collision aan de linkerkant, beweeg naar rechts
-                    Location = new Point(Location.X + 2 + movingSpeed, Location.Y); //right
-                    break;
-                    case "right": //Als collision aan de rechterkant, beweeg naar links
-                    Location = new Point(Location.X - 2 - movingSpeed, Location.Y); //left
-                    break;
+                    case "down":
+                        Location = new Point(Location.X, Location.Y + 1 + movingSpeed); //down
+                        break;
+                    case "up":
+                        Location = new Point(Location.X, Location.Y - 1 - movingSpeed); //up
+                        break;
+                    case "right":
+                        Location = new Point(Location.X + 1 + movingSpeed, Location.Y); //right
+                        break;
+                    case "left":
+                        Location = new Point(Location.X - 1 - movingSpeed, Location.Y); //left
+                        break;
                 }
+            }
         }
     }
 }

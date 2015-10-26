@@ -148,7 +148,9 @@
     <None Include="resources\CARHORN.wav" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\clear.png" />
     <Content Include="resources\continue.png" />
+    <None Include="resources\undo.PNG" />
     <None Include="resources\otherScreen.png" />
     <None Include="resources\menuBackground.png" />
     <Content Include="resources\level1.xml" />

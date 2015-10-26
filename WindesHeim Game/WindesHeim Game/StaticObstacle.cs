@@ -17,8 +17,8 @@ namespace WindesHeim_Game
             base.ObjectImage = Resources.IconTC;
             base.CollisionX = -6;
             base.CollisionY = 0;
-            base.Name = "Verkeersregelaar";
-            base.Description = "Doet niets";
+            base.Name = "Traffic Controller";
+            base.Description = "Blocks the character";
             base.PanelIcon = Resources.IconTCEdited;
         }
     }
