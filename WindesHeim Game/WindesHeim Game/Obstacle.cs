@@ -92,6 +92,7 @@ namespace WindesHeim_Game
 
             if (axis == "x")
             {
+                //Doorloopt alle 
                 foreach (GameObject potentialCollision in safeListArray)
                 {
                     if (this != potentialCollision && !(potentialCollision is Checkpoint))

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using WindesHeim_Game.Properties;
+using System.Runtime.InteropServices;
 
 namespace WindesHeim_Game
 {
@@ -801,6 +802,7 @@ namespace WindesHeim_Game
             }
         }
     }
+
     public class ControllerHighscores : Controller
     {
         private XMLParser currentSelectedLevel;
@@ -816,14 +818,26 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.menu);
         }
+
+        [DllImport("user32.dll")]
+        private static extern int SendMessage(int hWnd, int wMsg, int wParam, ref int lParam);
+
+        private const int LB_SETTABSTOP = 0x192;
+
         public void level_Select(object sender, EventArgs e)
         {
             ListBox listBoxLevels = (ListBox)sender;
             currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
 
             modelHighscores.listBoxHighscores.Items.Clear();
-            int i = 0;
 
+            int[] ListBoxTabs = new int[] { 80, 240 };
+            int result;
+
+            result = SendMessage(modelHighscores.listBoxHighscores.Handle.ToInt32(), LB_SETTABSTOP, ListBoxTabs.Length, ref ListBoxTabs[0]);
+            modelHighscores.listBoxHighscores.Refresh();
+
+            int i = 0;
             // Laat alle highscores zien
             foreach (GameHighscore highscore in currentSelectedLevel.gameHighscores)
             {
@@ -831,7 +845,14 @@ namespace WindesHeim_Game
                 char[] a = highscore.name.ToCharArray();
                 a[0] = char.ToUpper(a[0]);
 
-                modelHighscores.listBoxHighscores.Items.Add(i + ". " + new string(a) + " score: " + highscore.score + " | " + highscore.dateTime.ToString("dd-MM-yy H:mm"));
+                string highscoreText = i + ". " + new string(a);
+                if (a.Length < 7)
+                    highscoreText += "\t";
+                highscoreText += "\tscore: " + highscore.score;
+                if (highscore.score.ToString().Length < 3)
+                    highscoreText += "\t";
+                highscoreText += "\t" + highscore.dateTime.ToString("dd-MM-yy H:mm");
+                modelHighscores.listBoxHighscores.Items.Add(highscoreText);
                 if (i == 0)
                 {
                     listBoxLevels.SetSelected(0, true);

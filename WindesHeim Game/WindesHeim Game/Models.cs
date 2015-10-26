@@ -996,9 +996,9 @@ namespace WindesHeim_Game
             listBoxLevels.SelectedIndexChanged += highscoresController.level_Select;
 
             listBoxHighscores = new ListBox();
-            listBoxHighscores.Size = new System.Drawing.Size(400, 200);
+            listBoxHighscores.Size = new System.Drawing.Size(400, 210);
             listBoxHighscores.Location = new System.Drawing.Point(210, 0);
-            listBoxHighscores.HorizontalScrollbar = true;
+            listBoxHighscores.Font = new Font("Arial", 12);
 
             XMLParser.LoadAllLevels();
             foreach (XMLParser xml in XMLParser.Levels)
