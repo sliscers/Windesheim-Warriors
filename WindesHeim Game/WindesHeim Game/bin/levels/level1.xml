@@ -1,18 +1,20 @@
-﻿<level>
+<level>
   <properties>
     <title>Level 1</title>
     <difficulty>hard</difficulty>
   </properties>
   <items>
     <object>
-      <type></type>
+      <type>
+      </type>
       <x>750</x>
       <y>400</y>
       <height>80</height>
       <width>80</width>
     </object>
     <object>
-      <type></type>
+      <type>
+      </type>
       <x>5</x>
       <y>-5</y>
       <height>80</height>
@@ -111,6 +113,41 @@
       <name>Kevin de Korte</name>
       <datetime>2015-10-13T15:23:03</datetime>
       <score>175</score>
+    </highscore>
+    <highscore>
+      <name>Thijs van Dam</name>
+      <datetime>10/15/2015 15:10:57</datetime>
+      <score>128</score>
+    </highscore>
+    <highscore>
+      <name>Thijs van Dam</name>
+      <datetime>10/21/2015 15:49:01</datetime>
+      <score>349</score>
+    </highscore>
+    <highscore>
+      <name>Thijs van Dam</name>
+      <datetime>10/21/2015 15:49:13</datetime>
+      <score>208</score>
+    </highscore>
+    <highscore>
+      <name>Thijs van Dam</name>
+      <datetime>10/21/2015 15:49:35</datetime>
+      <score>159</score>
+    </highscore>
+    <highscore>
+      <name>Thijs van Dam</name>
+      <datetime>10/26/2015 9:42:33</datetime>
+      <score>173</score>
+    </highscore>
+    <highscore>
+      <name>Thijs van Dam</name>
+      <datetime>10/26/2015 9:42:54</datetime>
+      <score>192</score>
+    </highscore>
+    <highscore>
+      <name>Thijs van Dam</name>
+      <datetime>10/26/2015 9:43:13</datetime>
+      <score>665</score>
     </highscore>
   </highscores>
 </level>
