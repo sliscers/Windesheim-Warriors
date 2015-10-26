@@ -819,23 +819,12 @@ namespace WindesHeim_Game
             gameWindow.setController(ScreenStates.menu);
         }
 
-        [DllImport("user32.dll")]
-        private static extern int SendMessage(int hWnd, int wMsg, int wParam, ref int lParam);
-
-        private const int LB_SETTABSTOP = 0x192;
-
         public void level_Select(object sender, EventArgs e)
         {
             ListBox listBoxLevels = (ListBox)sender;
             currentSelectedLevel = (XMLParser)listBoxLevels.SelectedItem;
 
             modelHighscores.listBoxHighscores.Items.Clear();
-
-            int[] ListBoxTabs = new int[] { 80, 240 };
-            int result;
-
-            result = SendMessage(modelHighscores.listBoxHighscores.Handle.ToInt32(), LB_SETTABSTOP, ListBoxTabs.Length, ref ListBoxTabs[0]);
-            modelHighscores.listBoxHighscores.Refresh();
 
             int i = 0;
             // Laat alle highscores zien
