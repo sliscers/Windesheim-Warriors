@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <level>
   <properties>
     <title>Level 1</title>
@@ -60,6 +60,11 @@
       <name>Kevin</name>
       <datetime>13-10-2015 12:49:23</datetime>
       <score>138</score>
+    </highscore>
+    <highscore>
+      <name>YORAN</name>
+      <datetime>26-10-2015 11:54:03</datetime>
+      <score>142</score>
     </highscore>
   </highscores>
 </level>
