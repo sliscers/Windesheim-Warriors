@@ -87,8 +87,7 @@ namespace WindesHeim_Game
         }
 
         public void ProcessCollision(List<GameObject> safeListArray, string axis)
-        {
-            string[] directions = smartmovingDirection.Split(new string[] { "," }, StringSplitOptions.None);
+        {           
 
             if (axis == "x")
             {
@@ -101,32 +100,20 @@ namespace WindesHeim_Game
                         {
                             if (this.CollisionRectangle.Left < potentialCollision.CollisionRectangle.Left)
                             {
-                                if (!(this is MovingExplodingObstacle && potentialCollision is SlowingObstacle))
+                                if (!((this is MovingExplodingObstacle && potentialCollision is SlowingObstacle) || (this is SlowingObstacle && potentialCollision is MovingExplodingObstacle)))
                                 {
                                     if (!smartMovingEnabled)
                                         this.Location = new Point(this.Location.X - 1 - this.movingSpeed, this.Location.Y); //left
-                                    if (isSmart)
-                                        if (!smartmovingDirection.Contains("left"))
-                                            if (directions.Length > 2)
-                                                smartmovingDirection = "left";
-                                            else
-                                                smartmovingDirection += ",left";
-                                    directionTime = DateTime.Now.AddMilliseconds(500);
+                                    SetDirections("left");
                                 }
                             }
                             else if (this.CollisionRectangle.Right > potentialCollision.CollisionRectangle.Right)
                             {
-                                if (!(this is MovingExplodingObstacle && potentialCollision is SlowingObstacle))
+                                if (!((this is MovingExplodingObstacle && potentialCollision is SlowingObstacle) || (this is SlowingObstacle && potentialCollision is MovingExplodingObstacle)))
                                 {
                                     if (!smartMovingEnabled)
                                         this.Location = new Point(this.Location.X + 1 + this.movingSpeed, this.Location.Y); //right
-                                    if (isSmart)
-                                        if (!smartmovingDirection.Contains("right"))
-                                            if (directions.Length > 2)
-                                                smartmovingDirection = "right";
-                                            else
-                                                smartmovingDirection += ",right";
-                                    directionTime = DateTime.Now.AddMilliseconds(500);
+                                    SetDirections("right");
                                 }
                             }
                         }
@@ -143,44 +130,31 @@ namespace WindesHeim_Game
                         {
                             if (this.CollisionRectangle.Bottom > potentialCollision.CollisionRectangle.Bottom)
                             {
-                                if (!(this is MovingExplodingObstacle && potentialCollision is SlowingObstacle))
+                                if (!((this is MovingExplodingObstacle && potentialCollision is SlowingObstacle) || (this is SlowingObstacle && potentialCollision is MovingExplodingObstacle)))
                                 {
                                     if (!smartMovingEnabled)
                                         this.Location = new Point(this.Location.X, this.Location.Y + 1 + this.movingSpeed); //down
-                                    if (isSmart)
-                                        if (!smartmovingDirection.Contains("down"))
-                                            if (directions.Length > 2)
-                                                smartmovingDirection = "down";
-                                            else
-                                                smartmovingDirection += ",down";
-                                    directionTime = DateTime.Now.AddMilliseconds(500);
+                                    SetDirections("down");
                                 }
                             }
                             else if (this.CollisionRectangle.Top < potentialCollision.CollisionRectangle.Top)
                             {
-                                if (!(this is MovingExplodingObstacle && potentialCollision is SlowingObstacle))
+                                if (!((this is MovingExplodingObstacle && potentialCollision is SlowingObstacle) || (this is SlowingObstacle && potentialCollision is MovingExplodingObstacle)))
                                 {
                                     if (!smartMovingEnabled)
                                         this.Location = new Point(this.Location.X, this.Location.Y - 1 - this.movingSpeed); //up
-                                    if (isSmart)
-                                        if (!smartmovingDirection.Contains("up"))
-                                            if (directions.Length > 2)
-                                                smartmovingDirection = "up";
-                                            else
-                                                smartmovingDirection += ",up";
-                                    directionTime = DateTime.Now.AddMilliseconds(500);
+                                    SetDirections("up");
                                 }
                             }
                         }
                     }
                 }
             }
-
+            string[] directions = smartmovingDirection.Split(new string[] { "," }, StringSplitOptions.None);
             if (directionTime != default(DateTime) && isSmart && smartMovingEnabled)
             {
                 if (directionTime <= DateTime.Now && directions.Length >= 2)
                 {
-                    directions = smartmovingDirection.Split(new string[] { "," }, StringSplitOptions.None);
                     smartmovingDirection = "";
                     foreach (string direction in directions)
                     {
@@ -190,6 +164,20 @@ namespace WindesHeim_Game
                     directionTime = default(DateTime);
                 }
             }
+        }
+
+        private void SetDirections(string direction)
+        {
+            string[] directions = smartmovingDirection.Split(new string[] { "," }, StringSplitOptions.None);
+            if (isSmart)
+                if (!smartmovingDirection.Contains(direction))
+                    if (directions.Length > 2)
+                        smartmovingDirection = direction;
+                    else
+                    {
+                        smartmovingDirection += "," + direction;
+                        directionTime = DateTime.Now.AddMilliseconds(500);
+                    }
         }
 
         public void ChasePlayer(Player player, string axis)

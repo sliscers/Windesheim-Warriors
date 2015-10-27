@@ -145,8 +145,6 @@ namespace WindesHeim_Game
             menuPanel.Controls.Add(editor);
             menuPanel.Controls.Add(highscore);
 
-
-            System.Console.WriteLine(gameWindow.Width);
             menuPanel.Location = new Point((gameWindow.Width / 2 - menuPanel.Size.Width / 2), (gameWindow.Height / 2 - menuPanel.Size.Height / 2));
         }
     }
@@ -1024,7 +1022,6 @@ namespace WindesHeim_Game
                 (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
                 (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
 
-
             goBack.Location = new System.Drawing.Point((alignPanel.Width / 2 - goBack.Size.Width / 2), listBoxLevels.Size.Height + 10);
         }
     }
@@ -1109,8 +1106,8 @@ namespace WindesHeim_Game
             alignPanel.Controls.Add(gamePanel);
 
             alignPanel.Location = new Point(
-    (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
-    (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
+                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
         }
     }
 
@@ -1162,7 +1159,6 @@ namespace WindesHeim_Game
             gamePanel.MouseMove += editorController.ObjectMouseDrag;
             gamePanel.MouseUp += editorController.MouseUp;
             gamePanel.BorderStyle = BorderStyle.FixedSingle;
-
 
             goBack = new PictureBox();
             goBack.Size = new System.Drawing.Size(200, 44);
@@ -1317,7 +1313,7 @@ namespace WindesHeim_Game
             tryAgain.Click += new EventHandler(highscoreInputController.TryAgain_Click);
 
             name = new TextBox();
-            name.Text = Environment.UserName;
+            name.Text = Environment.UserName.ToUpper();
             name.Location = new System.Drawing.Point(0, 0);
             name.TextAlign = HorizontalAlignment.Center;
             name.KeyDown += highscoreInputController.KeyDownText;

@@ -408,6 +408,7 @@ namespace WindesHeim_Game
                     Point currentLocation = new Point(gameObstacle.Location.X, gameObstacle.Location.Y);
 
                     gameObstacle.ChasePlayer(mg.player, "x");
+
                     gameObstacle.ProcessCollision(safeListArray, "x");
 
                     gameObstacle.ChasePlayer(mg.player, "y");
@@ -573,7 +574,6 @@ namespace WindesHeim_Game
 
                     double animationTimerTen = (difference.TotalMilliseconds / 100);
                     int animationTimer = Convert.ToInt32(animationTimerTen);
-                    //Console.WriteLine(animationTimer);
 
                     // Explosie animatie
                     switch (animationTimer)
@@ -791,6 +791,7 @@ namespace WindesHeim_Game
             // Teken preview
             if (currentSelectedLevel != null)
             {
+                g.DrawString(currentSelectedLevel.gameProperties.title, new Font("Arial", 16), new SolidBrush(Color.Black), new Point(((modelLevelSelect.gamePanel.Width - 50) / 2), 0));
                 List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
                 previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
                 previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
@@ -835,10 +836,12 @@ namespace WindesHeim_Game
                 a[0] = char.ToUpper(a[0]);
 
                 string highscoreText = i + ". " + new string(a);
-                if (a.Length < 7)
+                if (a.Length < 5) // Extra tab als naam kleiner dan 7 tekens
+                    highscoreText += "\t";
+                if (a.Length < 6 && new string(a).Contains((char)73))
                     highscoreText += "\t";
                 highscoreText += "\tscore: " + highscore.score;
-                if (highscore.score.ToString().Length < 3)
+                if (highscore.score.ToString().Length < 3) // Extra tab als score uit 2 of minder cijfers bestaat
                     highscoreText += "\t";
                 highscoreText += "\t" + highscore.dateTime.ToString("dd-MM-yy H:mm");
                 modelHighscores.listBoxHighscores.Items.Add(highscoreText);
@@ -848,8 +851,6 @@ namespace WindesHeim_Game
                 }
             }
         }
-
-
     }
 
     public class ControllerEditorSelect : Controller
@@ -880,10 +881,11 @@ namespace WindesHeim_Game
         public void OnPreviewPaint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-
+            
             // Teken preview
             if (currentSelectedLevel != null)
             {
+                g.DrawString(currentSelectedLevel.gameProperties.title, new Font("Arial", 16), new SolidBrush(Color.Black), new Point(((modelEditorSelect.gamePanel.Width - 50) / 2), 0));
                 List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
                 previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
                 previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
@@ -1012,16 +1014,24 @@ namespace WindesHeim_Game
         }
 
         public override void RunController()
-        {
-            ModelGame.level = null;
+        {            
             base.RunController();
-            level = ModelEditor.level;
-            if (level != null) //if null = New Level aanmaken
-            { //Bestaand level bewerken
-                //modelEditor.levelTitleLabel.Text = level.gameProperties.title;
-                gameObjects = level.getCleanGameObjects();
-            }
 
+            if (ModelGame.level != null && level != null)
+            {
+                gameObjects = ModelGame.level.getCleanGameObjects();
+            }
+            else
+            {
+                level = ModelEditor.level;
+                if (level != null) //if null = New Level aanmaken
+                { //Bestaand level bewerken
+                    //modelEditor.levelTitleLabel.Text = level.gameProperties.title;
+                    gameObjects = level.getCleanGameObjects();
+                }
+            }
+            
+            ModelGame.level = null;
             modelEditor.gamePanel.Invalidate();
         }
 
@@ -1234,7 +1244,6 @@ namespace WindesHeim_Game
                     if (!(gameObject is Checkpoint))
                     {
                         GameObject tempGameObject = new GameObject(new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y), 40, 40);
-                        Console.WriteLine(tempGameObject.Location);
                         if (gameObject.CollidesWith(tempGameObject))
                         {
                             objectDragging = gameObject;

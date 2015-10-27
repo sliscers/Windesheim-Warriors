@@ -9,8 +9,7 @@ using WindesHeim_Game.Properties;
 
 namespace WindesHeim_Game
 {
-    //Hoe te gebruiken:
-    //Voorbeeld initieren: 
+    //Hoe te gebruiken (voorbeeld): 
     //XMLParser level1 = new XMLParser("../levels/level1.xml"); //Geef hier het path naar het xml bestand mee
     //Voorbeeld voor titel: 
     //Console.Write(level1.gameProperties.title);
