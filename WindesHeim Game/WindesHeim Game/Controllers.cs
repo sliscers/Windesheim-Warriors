@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using WindesHeim_Game.Properties;
-using System.Runtime.InteropServices;
 
 namespace WindesHeim_Game
 {
@@ -836,14 +833,14 @@ namespace WindesHeim_Game
                 a[0] = char.ToUpper(a[0]);
 
                 string highscoreText = i + ". " + new string(a);
-                if (a.Length < 5) // Extra tab als naam kleiner dan 7 tekens
-                    highscoreText += "\t";
-                if (a.Length < 6 && new string(a).Contains((char)73))
-                    highscoreText += "\t";
+                if (a.Length < 5) // Extra spaties bij kleinere namen
+                    highscoreText += "    ";
+                if (a.Length < 6)
+                    highscoreText += "    ";
                 highscoreText += "\tscore: " + highscore.score;
-                if (highscore.score.ToString().Length < 3) // Extra tab als score uit 2 of minder cijfers bestaat
-                    highscoreText += "\t";
-                highscoreText += "\t" + highscore.dateTime.ToString("dd-MM-yy H:mm");
+                if (highscore.score.ToString().Length < 3) // Extra spaties als score uit 2 of minder cijfers bestaat
+                    highscoreText += "  ";
+                highscoreText += "    " + highscore.dateTime.ToString("dd-MM-yy H:mm");
                 modelHighscores.listBoxHighscores.Items.Add(highscoreText);
                 if (i == 0)
                 {
@@ -887,6 +884,7 @@ namespace WindesHeim_Game
             {
                 g.DrawString(currentSelectedLevel.gameProperties.title, new Font("Arial", 16), new SolidBrush(Color.Black), new Point(((modelEditorSelect.gamePanel.Width - 50) / 2), 0));
                 List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
+                //Start en eindpunt
                 previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
                 previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
 
@@ -933,18 +931,20 @@ namespace WindesHeim_Game
         public void goBack_Click(object sender, EventArgs e)
         {
             gameWindow.setController(ScreenStates.editorSelect);
+            // Opschonen
             level = null;
             gameObjects.Clear();
         }
 
         public void testLevel_Click(object sender, EventArgs e)
         {
+            // Maakt nieuw level aan
             level = new XMLParser();
             level.gameObjects = gameObjects;
             if (level != null)
             { 
                 ModelGame.level = level;
-                ControllerGame.editor = true;
+                ControllerGame.editor = true; // Laat Game controller weten dat we aan het testen zijn
                 gameWindow.setController(ScreenStates.game);
             }
         }
@@ -953,7 +953,7 @@ namespace WindesHeim_Game
         {   
             if (level == null)
             {
-                //Als New level
+                //Als nieuw level
                 String dialog = showPropertyDialog("Set properties for Level");
                 if (dialog != "")
                 {
@@ -962,7 +962,7 @@ namespace WindesHeim_Game
 
                     if (System.Diagnostics.Debugger.IsAttached)
                     {
-                    level = new XMLParser("../levels/" + returnValues[0] + ".xml");
+                        level = new XMLParser("../levels/" + returnValues[0] + ".xml");
                     }
                     else
                     {
@@ -986,10 +986,10 @@ namespace WindesHeim_Game
 
         private String showPropertyDialog(string dialogTitle)
         {
+            //Mesagebox om eigenschappen level te wijzigen
             prompt = new Form();
             prompt.Width = 250;
             prompt.Height = 210;
-            //prompt.AutoSize = true;
             prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
             prompt.Text = "Save Level";
             prompt.StartPosition = FormStartPosition.CenterScreen;
@@ -1018,15 +1018,14 @@ namespace WindesHeim_Game
             base.RunController();
 
             if (ModelGame.level != null && level != null)
-            {
+            { // Als bestaand level nog niet opgeslagen is maar terugkomt van de test
                 gameObjects = ModelGame.level.getCleanGameObjects();
             }
             else
             {
                 level = ModelEditor.level;
-                if (level != null) //if null = New Level aanmaken
-                { //Bestaand level bewerken
-                    //modelEditor.levelTitleLabel.Text = level.gameProperties.title;
+                if (level != null)
+                { // Bestaand level bewerken
                     gameObjects = level.getCleanGameObjects();
                 }
             }
@@ -1046,6 +1045,7 @@ namespace WindesHeim_Game
 
         public String ShowDialog(string type, string dialogTitle)
         {
+            // Eigenschappen van gameobject aanpassen, wordt getoond bij het droppen
             prompt = new Form();
             prompt.Width = 250;
             prompt.Height = 210;
@@ -1087,10 +1087,8 @@ namespace WindesHeim_Game
             Button cancel = new Button() { Text = "Cancel", Left = 10, Width = 100, Top = 140, DialogResult = DialogResult.Cancel };
             Button confirmation = new Button() { Text = "Save", Left = 110, Width = 100, Top = 140, DialogResult = DialogResult.OK };
             confirmation.Click += (sender, e) => { prompt.Close(); };
-            //prompt.Controls.Add(textLabelSize);
             prompt.Controls.Add(confirmation);
             prompt.Controls.Add(cancel);
-            //prompt.Controls.Add(textBoxSize);
             prompt.AcceptButton = confirmation;
             prompt.CancelButton = cancel;
             return prompt.ShowDialog() == DialogResult.OK ? textBoxMovingSpeed.SelectedItem.ToString() + "|" + textBoxSlowingSpeed.SelectedItem.ToString() + "|" + checkBoxSmart.CheckState : "";
@@ -1098,14 +1096,15 @@ namespace WindesHeim_Game
 
         public void StaticObstacle_MouseUp(object sender, MouseEventArgs e)
         {
+            // Loslaten van muisknop
             modelEditor.staticObstacle.Location = new System.Drawing.Point(10, 60);
 
             if ((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
                 && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height)
             {
-            gameObjects.Add(new StaticObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
-            modelEditor.gamePanel.Invalidate();
-        }
+                gameObjects.Add(new StaticObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
+                modelEditor.gamePanel.Invalidate();
+            }
         }
 
         public void ExplodingObstacle_MouseUp(object sender, MouseEventArgs e)
@@ -1115,9 +1114,9 @@ namespace WindesHeim_Game
             if ((mouseX) >= modelEditor.widthDragDropPanel && mouseX <= modelEditor.gamePanel.Width
                 && mouseY >= modelEditor.gamePanel.Location.Y && mouseY <= modelEditor.gamePanel.Height)
             {
-            gameObjects.Add(new ExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
-            modelEditor.gamePanel.Invalidate();
-        }
+                gameObjects.Add(new ExplodingObstacle(new Point(mouseX - modelEditor.widthDragDropPanel, mouseY), defaultSize, defaultSize));
+                modelEditor.gamePanel.Invalidate();
+            }
 
         }
 
@@ -1199,6 +1198,7 @@ namespace WindesHeim_Game
 
         public void updateDragPosition(object sender, MouseEventArgs e)
         {
+            //Tijdens het slepen van de muis
             if (e.Button == System.Windows.Forms.MouseButtons.Left && isDragging)
             {
                 if (sender.Equals(modelEditor.staticObstacle))
@@ -1230,13 +1230,13 @@ namespace WindesHeim_Game
                     modelEditor.slowingObstacle.Top = mouseY;                    
                 }
             }
-
         }
 
         private GameObject objectDragging = null;
 
         public void MouseDown(object sender, MouseEventArgs e)
         {
+            // Begin van drag and drop
             if (e.Button == MouseButtons.Left)
             {
                 foreach (GameObject gameObject in gameObjects)
@@ -1310,10 +1310,10 @@ namespace WindesHeim_Game
         public void GamePanel_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-
+            //Eindobject
             g.DrawImage(new Bitmap(Resources.IconWIN), 750 + modelEditor.widthDragDropPanel, 400, 80, 80);
             g.DrawRectangle(new Pen(Color.FromArgb(255, 0, 70, 133)), new Rectangle(new Point(750 + modelEditor.widthDragDropPanel, 400), new Size(80, 80)));
-
+            //Startobject
             g.DrawImage(new Bitmap(Resources.IconSP), 5 + modelEditor.widthDragDropPanel, -5, 80, 80);
             g.DrawRectangle(new Pen(Color.FromArgb(255, 0, 70, 133)), new Rectangle(new Point(5 + modelEditor.widthDragDropPanel, -5), new Size(80, 80)));
 
@@ -1329,8 +1329,9 @@ namespace WindesHeim_Game
             SolidBrush drawBrush = new SolidBrush(Color.Black);
 
             g.DrawString("Drag and drop", drawFont, drawBrush, new Point(10, 10));
+            //level naam
             if (level != null)
-            g.DrawString(level.gameProperties.title, drawFont, drawBrush, new Point(((modelEditor.gamePanel.Width + modelEditor.widthDragDropPanel / 2) / 2), 0));
+                g.DrawString(level.gameProperties.title, drawFont, drawBrush, new Point(((modelEditor.gamePanel.Width + modelEditor.widthDragDropPanel / 2) / 2), 0));
 
             drawFont = new Font("Arial", 8);
             g.DrawString("Static obstacle", drawFont, drawBrush, new Point(60, 70));
@@ -1360,7 +1361,7 @@ namespace WindesHeim_Game
         {         
             if (modelHighscoreInput.name.Text.Length == 0)
             {
-                DialogResult dr = MessageBox.Show("Graag uw naam opgeven", "Error", MessageBoxButtons.OK);
+                DialogResult dr = MessageBox.Show("Enter your name to continue", "Error", MessageBoxButtons.OK);
             }
             else
             {
@@ -1373,6 +1374,8 @@ namespace WindesHeim_Game
         {            
             int i = 0;
             List<GameHighscore> tempHighscores = new List<GameHighscore>();
+
+            // Vullen van highscorelijst
             foreach (GameHighscore highscore in ModelGame.level.gameHighscores)
             {
                 tempHighscores.Add(highscore);
@@ -1422,6 +1425,7 @@ namespace WindesHeim_Game
 
         public void TryAgain_Click(object sender, EventArgs e)
         {
+            //Voegt highscore toe 
             ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(), score));
             gameWindow.setController(ScreenStates.game);
         }
