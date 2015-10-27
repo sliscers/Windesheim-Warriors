@@ -66,7 +66,7 @@ namespace WindesHeim_Game
 
         public override string ToString()
         {
-            return gameProperties.title;
+            return gameProperties.title + " (" + gameProperties.difficulty +")";
         }
 
         public List<GameObject> getCleanGameObjects()
@@ -143,7 +143,7 @@ namespace WindesHeim_Game
         private static bool isXML(string file)
         {
             try { XDocument doc = XDocument.Load(file); }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -283,7 +283,7 @@ namespace WindesHeim_Game
 
         //Deze functie schrijft een XML file weg
         //Geef hier de gameproperties mee in het objecdt GameProperties, vervolgens een List met GameObjects daarna eenzelfde lijst voor Highscores
-        public void WriteXML(GameProperties gameProperties, List<GameObject> gameObjects, List<GameHighscore> gameHighscores = null)
+        public void WriteXML()
         {
             //Instellingen voor XML voor een juiste opmaak
             XmlWriterSettings settings = new XmlWriterSettings();

@@ -44,10 +44,6 @@ namespace WindesHeim_Game
             this.model = new ModelMenu(this);
         }
 
-        public void exit_Click(object sender, EventArgs e)
-        {
-            //Todo
-        }
         public void play_Click(object sender, EventArgs e)
         {
             bool error = false;
@@ -788,7 +784,7 @@ namespace WindesHeim_Game
             // Teken preview
             if (currentSelectedLevel != null)
             {
-                g.DrawString(currentSelectedLevel.gameProperties.title, new Font("Arial", 16), new SolidBrush(Color.Black), new Point(((modelLevelSelect.gamePanel.Width - 50) / 2), 0));
+                g.DrawString(currentSelectedLevel.gameProperties.title + " (" + currentSelectedLevel.gameProperties.difficulty + ")", new Font("Arial", 16), new SolidBrush(Color.Black), new Point(((modelLevelSelect.gamePanel.Width - 150) / 2), 0));
                 List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
                 previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
                 previewList.Add(new Checkpoint(new Point(5, -5), Resources.IconSP, 80, 80, true));
@@ -882,7 +878,7 @@ namespace WindesHeim_Game
             // Teken preview
             if (currentSelectedLevel != null)
             {
-                g.DrawString(currentSelectedLevel.gameProperties.title, new Font("Arial", 16), new SolidBrush(Color.Black), new Point(((modelEditorSelect.gamePanel.Width - 50) / 2), 0));
+                g.DrawString(currentSelectedLevel.gameProperties.title+ " (" + currentSelectedLevel.gameProperties.difficulty + ")", new Font("Arial", 16), new SolidBrush(Color.Black), new Point(((modelEditorSelect.gamePanel.Width - 150) / 2), 0));
                 List<GameObject> previewList = new List<GameObject>(currentSelectedLevel.gameObjects);
                 //Start en eindpunt
                 previewList.Add(new Checkpoint(new Point(750, 400), Resources.IconWIN, 80, 80, false));
@@ -927,6 +923,26 @@ namespace WindesHeim_Game
             this.model = new ModelEditor(this);
             this.modelEditor = (ModelEditor)model;
         }
+        public override void RunController()
+        {
+            base.RunController();
+
+            if (ModelGame.level != null && level != null)
+            { // Als bestaand level nog niet opgeslagen is maar terugkomt van de test
+                gameObjects = ModelGame.level.getCleanGameObjects();
+            }
+            else
+            {
+                level = ModelEditor.level;
+                if (level != null)
+                { // Bestaand level bewerken
+                    gameObjects = level.getCleanGameObjects();
+                }
+            }
+
+            ModelGame.level = null;
+            modelEditor.gamePanel.Invalidate();
+        }
 
         public void goBack_Click(object sender, EventArgs e)
         {
@@ -939,11 +955,11 @@ namespace WindesHeim_Game
         public void testLevel_Click(object sender, EventArgs e)
         {
             // Maakt nieuw level aan
-            level = new XMLParser();
-            level.gameObjects = gameObjects;
+            XMLParser tempLevel = new XMLParser();
+            tempLevel.gameObjects = gameObjects;
             if (level != null)
             { 
-                ModelGame.level = level;
+                ModelGame.level = tempLevel;
                 ControllerGame.editor = true; // Laat Game controller weten dat we aan het testen zijn
                 gameWindow.setController(ScreenStates.game);
             }
@@ -954,32 +970,34 @@ namespace WindesHeim_Game
             if (level == null)
             {
                 //Als nieuw level
-                String dialog = showPropertyDialog("Set properties for Level");
+                string dialog = showPropertyDialog("Set properties for Level");
                 if (dialog != "")
                 {
                     string[] returnValues = dialog.Split(new string[] { "|" }, StringSplitOptions.None);
-                    GameProperties gameProperties = new GameProperties(returnValues[0].ToString(), returnValues[1].ToString());
-
+                    string title = returnValues[0].ToString();
+                    string difficulty = returnValues[1].ToString();
+                    string file;
                     if (System.Diagnostics.Debugger.IsAttached)
-                    {
-                        level = new XMLParser("../levels/" + returnValues[0] + ".xml");
+                        file = "../levels/" + title + ".xml";
+                    else
+                        file = AppDomain.CurrentDomain.BaseDirectory + "/levels/" + title + ".xml";
+                    if (!File.Exists(file)) { 
+                        level = new XMLParser(file);
+                        GameProperties gameProperties = new GameProperties(title, difficulty);
+                        level.gameProperties = gameProperties;
+                        level.gameObjects = gameObjects;
+                        level.WriteXML();
+                        modelEditor.gamePanel.Invalidate();
                     }
                     else
-                    {
-                        level = new XMLParser(AppDomain.CurrentDomain.BaseDirectory + "/levels/" + returnValues[0] + ".xml");
-                    }
-                  
-                    if (level != null)
-                    {
-                        level.WriteXML(gameProperties, gameObjects);
-                        //modelEditor.levelTitleLabel.Text = level.gameProperties.title;
-                    }
+                        MessageBox.Show("Sorry, '" + title + "' already exist. Try again with another level name.");
                 }
             }
             else 
             {
                 // Als Edit level
-                level.WriteXML(level.gameProperties, gameObjects, level.gameHighscores);
+                level.gameObjects = gameObjects;
+                level.WriteXML();
                 MessageBox.Show("Saved changes to " + level.gameProperties.title);
             }        
         }
@@ -997,7 +1015,9 @@ namespace WindesHeim_Game
             Label textLabelName = new Label() { Left = 10, Top = 20, Text = "Level name:" };
             TextBox textBoxName = new TextBox() { Left = 110, Top = 18, Width = 100 };
             Label textLabelDifficulty = new Label() { Left = 10, Top = 50, Text = "Level difficulty" };
-            TextBox textBoxDifficulty = new TextBox() { Left = 110, Top = 48, Width = 100 };
+            ComboBox textBoxDifficulty = new ComboBox() { Left = 110, Top = 48, Width = 100 };
+            textBoxDifficulty.Items.AddRange(new string[] { "Easy", "Medium", "Hard", "Expert", "Unmöglich" });
+            textBoxDifficulty.SelectedIndex = 0;
 
             Button cancel = new Button() { Text = "Cancel", Left = 10, Width = 100, Top = 140, DialogResult = DialogResult.Cancel };
             Button confirmation = new Button() { Text = "Save", Left = 110, Width = 100, Top = 140, DialogResult = DialogResult.OK };
@@ -1011,27 +1031,6 @@ namespace WindesHeim_Game
             prompt.CancelButton = cancel;
 
             return prompt.ShowDialog() == DialogResult.OK ? textBoxName.Text + "|" + textBoxDifficulty.Text : "";
-        }
-
-        public override void RunController()
-        {            
-            base.RunController();
-
-            if (ModelGame.level != null && level != null)
-            { // Als bestaand level nog niet opgeslagen is maar terugkomt van de test
-                gameObjects = ModelGame.level.getCleanGameObjects();
-            }
-            else
-            {
-                level = ModelEditor.level;
-                if (level != null)
-                { // Bestaand level bewerken
-                    gameObjects = level.getCleanGameObjects();
-                }
-            }
-            
-            ModelGame.level = null;
-            modelEditor.gamePanel.Invalidate();
         }
 
         private Form prompt;
@@ -1257,7 +1256,7 @@ namespace WindesHeim_Game
         {
             if (objectDragging != null)
             {
-                objectDragging.Location = new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y);
+                objectDragging.Location = new Point(e.Location.X - modelEditor.widthDragDropPanel - (objectDragging.Width /2), e.Location.Y - (objectDragging.Height / 2));
                 modelEditor.gamePanel.Invalidate();
             }
         }
@@ -1266,7 +1265,7 @@ namespace WindesHeim_Game
         {
             if (objectDragging != null)
             {
-                objectDragging.Location = new Point(e.Location.X - modelEditor.widthDragDropPanel, e.Location.Y);
+                objectDragging.Location = new Point(e.Location.X - modelEditor.widthDragDropPanel - (objectDragging.Width / 2), e.Location.Y - (objectDragging.Height / 2));
 
                 if (e.Location.X < (modelEditor.gamePanel.Location.X + modelEditor.widthDragDropPanel) || e.Location.X > (modelEditor.gamePanel.Location.X + modelEditor.gamePanel.Width)) {
                     gameObjects.Remove(objectDragging);
@@ -1348,6 +1347,8 @@ namespace WindesHeim_Game
     {
         public int score;
         public int place;
+       
+        public static string playerName = Environment.UserName.ToUpper();
 
         private ModelHighscoreInput modelHighscoreInput;
 
@@ -1367,6 +1368,8 @@ namespace WindesHeim_Game
             {
                 ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(), score));
                 gameWindow.setController(ScreenStates.menu);
+                //Onthouden van de ingevoerde naam
+                playerName = modelHighscoreInput.name.Text;
             }     
         }
 
@@ -1428,6 +1431,8 @@ namespace WindesHeim_Game
             //Voegt highscore toe 
             ModelGame.level.AddHighscore(new GameHighscore(modelHighscoreInput.name.Text, DateTime.Now.ToString(), score));
             gameWindow.setController(ScreenStates.game);
+            //Onthouden van de ingevoerde naam
+            playerName = modelHighscoreInput.name.Text;
         }
     }
 }

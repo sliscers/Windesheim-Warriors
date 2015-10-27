@@ -1307,7 +1307,7 @@ namespace WindesHeim_Game
             tryAgain.Click += new EventHandler(highscoreInputController.TryAgain_Click);
 
             name = new TextBox();
-            name.Text = Environment.UserName.ToUpper();
+            name.Text = ControllerHighscoreInput.playerName;
             name.Location = new System.Drawing.Point(0, 0);
             name.TextAlign = HorizontalAlignment.Center;
             name.KeyDown += highscoreInputController.KeyDownText;
