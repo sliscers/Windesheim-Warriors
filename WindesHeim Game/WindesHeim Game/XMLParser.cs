@@ -115,7 +115,7 @@ namespace WindesHeim_Game
 
         //Laad alle levels en stopt deze in de static property Levels
         //Belangerijk om deze eerst aan te roepen voordat je de static property gebruikt via XMLParser.Levels
-        public static void LoadAllLevels()
+        public static bool LoadAllLevels()
         {
             Levels.Clear();
             string dirPath = "";
@@ -128,18 +128,22 @@ namespace WindesHeim_Game
             }
 
             string[] fileEntries = Directory.GetFiles(dirPath);
-            foreach (string file in fileEntries)
-            {
-                if (File.Exists(file))
+            try {
+                foreach (string file in fileEntries)
                 {
-                    if (isXML(file))
+                    if (File.Exists(file))
                     {
-                        XMLParser xml = new XMLParser(file);
-                        xml.ReadXML();
-                        Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+                        if (isXML(file))
+                        {
+                            XMLParser xml = new XMLParser(file);
+                            xml.ReadXML();
+                            Levels.Add(xml); //Ingeladen gegevens opslaan in lokale List voor hergebruik
+                        }
                     }
                 }
+                return true;
             }
+            catch { return false; }
         }
         private static bool isXML(string file)
         {
@@ -151,7 +155,7 @@ namespace WindesHeim_Game
             return true;
         }
 
-        public void AddHighscore(GameHighscore highscore)
+        public bool AddHighscore(GameHighscore highscore)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(this.path);
@@ -182,16 +186,24 @@ namespace WindesHeim_Game
             highScoreElement.AppendChild(scoreElement);
 
             //Add the node to the document.            
-            highscores.AppendChild(highScoreElement);            
-
-            doc.Save(this.path);
+            highscores.AppendChild(highScoreElement);
+            try { 
+                doc.Save(this.path);
+                return true;
+            }
+            catch
+            { 
+                return false;
+            }
         }
 
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
-        public void ReadXML()
+        public bool ReadXML()
         {
-
-            XDocument doc = XDocument.Load(this.path);    
+            XDocument doc;
+            try { doc = XDocument.Load(this.path); }
+            catch { return false; }
+              
 
             //Initieert de variablen
             gameHighscores = new List<GameHighscore>();
@@ -279,12 +291,12 @@ namespace WindesHeim_Game
                 }
                 
             }
-
+            return true;
         }
 
         //Deze functie schrijft een XML file weg
         //Geef hier de gameproperties mee in het objecdt GameProperties, vervolgens een List met GameObjects daarna eenzelfde lijst voor Highscores
-        public void WriteXML()
+        public bool WriteXML()
         {
             //Instellingen voor XML voor een juiste opmaak
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -404,8 +416,15 @@ namespace WindesHeim_Game
 
                 xmlWriter.WriteEndElement();
             }
-            xmlWriter.WriteEndDocument();
-            xmlWriter.Close(); //Sluiten van XMLWriter, dit is ook het moment dat het bestand wordt weggeschreven
+            try { 
+                xmlWriter.WriteEndDocument();
+                xmlWriter.Close(); //Sluiten van XMLWriter, dit is ook het moment dat het bestand wordt weggeschreven
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
