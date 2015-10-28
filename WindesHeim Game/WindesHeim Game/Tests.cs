@@ -3,6 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Drawing;
 using System.Diagnostics;
 using System;
+using System.IO;
+using WindesHeim_Game.Properties;
+using System.Text;
 
 namespace WindesHeim_Game {
 
@@ -150,7 +153,8 @@ namespace WindesHeim_Game {
             xmlParser.gameProperties = gameProperties;
             xmlParser.gameObjects = gameObjects;
 
-            xmlParser.WriteXML();
+            if (!xmlParser.WriteXML())
+                Assert.Fail("Kan niet Write XML uitvoeren");
         }
 
         [TestMethod]
@@ -172,12 +176,15 @@ namespace WindesHeim_Game {
             xmlParser.gameProperties = gameProperties;
             xmlParser.gameObjects = gameObjects;
 
-            xmlParser.WriteXML();
+            if (!xmlParser.WriteXML())
+                Assert.Fail("Kan niet Write XML uitvoeren");
 
             // Reset XML
             xmlParser = null;
             xmlParser = new XMLParser("unitTestXML.xml");
-            xmlParser.ReadXML();
+
+            if(!xmlParser.ReadXML())
+                Assert.Fail("Kan niet Load XML uitvoeren");
 
             Assert.AreEqual(gameProperties, xmlParser.gameProperties, "GameProperties not equal");
 
@@ -189,9 +196,19 @@ namespace WindesHeim_Game {
 
         [TestMethod]
         public void TextXMLParser_LoadAllLevels() {
-            XMLParser.LoadAllLevels();
+            if (!System.Diagnostics.Debugger.IsAttached) {
+                if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "/levels/")) {
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "/levels/");
+                }
 
+                int fileCount = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "/levels/", "*.xml", SearchOption.AllDirectories).Length;
 
+                if (fileCount == 0) {
+                    string xmlString = Resources.level1;
+                    File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + "/levels/level1.xml", Encoding.UTF8.GetBytes(Resources.level1));
+                }
+            }
+            Assert.IsTrue(XMLParser.LoadAllLevels(), "Kan levels niet loaden");
         }
     }
 }
