@@ -544,7 +544,7 @@ namespace WindesHeim_Game
                         mg.InitializeField();
                         timer.Stop();
                         if (editor)
-                        {                            
+                        {                                                        
                             gameWindow.setController(ScreenStates.editor);                            
                         }
                         else
