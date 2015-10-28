@@ -1,7 +1,7 @@
 <level>
   <properties>
-    <title>Mooi level</title>
-    <difficulty>hard</difficulty>
+    <title>Jonathan's level</title>
+    <difficulty>Expert</difficulty>
   </properties>
   <items>
     <object>
@@ -22,335 +22,225 @@
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>63</x>
-      <y>425</y>
+      <x>55</x>
+      <y>195</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>63</x>
-      <y>373</y>
+      <x>119</x>
+      <y>235</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>67</x>
-      <y>322</y>
+      <x>26</x>
+      <y>257</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>69</x>
-      <y>230</y>
+      <x>297</x>
+      <y>82</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>73</x>
-      <y>176</y>
+      <x>327</x>
+      <y>41</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>74</x>
-      <y>122</y>
+      <x>390</x>
+      <y>90</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>72</x>
-      <y>66</y>
+      <x>348</x>
+      <y>138</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>615</x>
-      <y>557</y>
+      <x>318</x>
+      <y>260</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>590</x>
-      <y>602</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <movingspeed>0</movingspeed>
-      <slowingspeed>2</slowingspeed>
-      <smart>true</smart>
-      <type>SlowingObstacle</type>
-      <x>429</x>
-      <y>34</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <movingspeed>0</movingspeed>
-      <smart>false</smart>
-      <type>MovingExplodingObstacle</type>
-      <x>477</x>
-      <y>36</y>
+      <x>268</x>
+      <y>304</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>123</x>
-      <y>233</y>
+      <x>341</x>
+      <y>368</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>168</x>
-      <y>234</y>
+      <x>350</x>
+      <y>335</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>590</x>
-      <y>623</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>190</x>
-      <y>120</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>194</x>
-      <y>69</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>247</x>
-      <y>72</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>294</x>
-      <y>74</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>349</x>
-      <y>74</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>351</x>
-      <y>122</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>351</x>
-      <y>174</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <movingspeed>0</movingspeed>
-      <smart>true</smart>
-      <type>MovingExplodingObstacle</type>
-      <x>358</x>
-      <y>225</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>269</x>
+      <x>649</x>
       <y>170</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>270</x>
-      <y>222</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>594</x>
-      <y>589</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>193</x>
-      <y>326</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>242</x>
-      <y>328</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>234</x>
-      <y>386</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>558</x>
-      <y>555</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>585</x>
-      <y>549</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>549</x>
-      <y>609</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>328</x>
-      <y>320</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>455</x>
-      <y>393</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>554</x>
-      <y>556</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>381</x>
-      <y>319</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>430</x>
-      <y>312</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <movingspeed>0</movingspeed>
-      <smart>true</smart>
-      <type>MovingExplodingObstacle</type>
-      <x>391</x>
-      <y>364</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <movingspeed>0</movingspeed>
-      <slowingspeed>2</slowingspeed>
-      <smart>false</smart>
-      <type>SlowingObstacle</type>
-      <x>648</x>
-      <y>113</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <movingspeed>0</movingspeed>
-      <smart>false</smart>
-      <type>MovingExplodingObstacle</type>
-      <x>516</x>
-      <y>131</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <movingspeed>0</movingspeed>
-      <smart>true</smart>
-      <type>MovingExplodingObstacle</type>
-      <x>666</x>
-      <y>38</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <movingspeed>0</movingspeed>
-      <slowingspeed>2</slowingspeed>
-      <smart>true</smart>
-      <type>SlowingObstacle</type>
-      <x>755</x>
+      <x>721</x>
       <y>147</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>532</x>
-      <y>627</y>
+      <x>784</x>
+      <y>110</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>455</x>
-      <y>181</y>
+      <x>598</x>
+      <y>309</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>513</x>
-      <y>191</y>
+      <x>555</x>
+      <y>359</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <type>ExplodingObstacle</type>
-      <x>561</x>
-      <y>211</y>
+      <x>118</x>
+      <y>403</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>170</x>
+      <y>125</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>543</x>
+      <y>40</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>601</x>
+      <y>71</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>705</x>
+      <y>296</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>460</x>
+      <y>388</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>30</x>
+      <y>362</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <smart>true</smart>
+      <type>MovingExplodingObstacle</type>
+      <x>105</x>
+      <y>326</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <smart>false</smart>
+      <type>MovingExplodingObstacle</type>
+      <x>385</x>
+      <y>412</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <smart>true</smart>
+      <type>MovingExplodingObstacle</type>
+      <x>458</x>
+      <y>45</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <smart>true</smart>
+      <type>MovingExplodingObstacle</type>
+      <x>694</x>
+      <y>68</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <smart>false</smart>
+      <type>MovingExplodingObstacle</type>
+      <x>739</x>
+      <y>227</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <smart>false</smart>
+      <type>MovingExplodingObstacle</type>
+      <x>663</x>
+      <y>370</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <smart>true</smart>
+      <type>MovingExplodingObstacle</type>
+      <x>483</x>
+      <y>108</y>
       <height>40</height>
       <width>40</width>
     </object>
@@ -359,86 +249,77 @@
       <slowingspeed>2</slowingspeed>
       <smart>true</smart>
       <type>SlowingObstacle</type>
-      <x>534</x>
-      <y>403</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>486</x>
-      <y>310</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>381</x>
-      <y>269</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>584</x>
-      <y>253</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>607</x>
-      <y>300</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>638</x>
-      <y>343</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>ExplodingObstacle</type>
-      <x>708</x>
-      <y>241</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
       <x>562</x>
-      <y>44</y>
-      <height>40</height>
-      <width>40</width>
-    </object>
-    <object>
-      <type>StaticObstacle</type>
-      <x>328</x>
-      <y>18</y>
+      <y>156</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
       <smart>true</smart>
-      <type>MovingExplodingObstacle</type>
-      <x>660</x>
+      <type>SlowingObstacle</type>
+      <x>463</x>
+      <y>280</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
+      <smart>true</smart>
+      <type>SlowingObstacle</type>
+      <x>188</x>
+      <y>336</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
+      <smart>false</smart>
+      <type>SlowingObstacle</type>
+      <x>265</x>
       <y>406</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
       <movingspeed>0</movingspeed>
-      <smart>true</smart>
-      <type>MovingExplodingObstacle</type>
-      <x>563</x>
-      <y>347</y>
+      <slowingspeed>2</slowingspeed>
+      <smart>false</smart>
+      <type>SlowingObstacle</type>
+      <x>268</x>
+      <y>140</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
+      <smart>false</smart>
+      <type>SlowingObstacle</type>
+      <x>768</x>
+      <y>34</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
+      <smart>false</smart>
+      <type>SlowingObstacle</type>
+      <x>575</x>
+      <y>423</y>
       <height>40</height>
       <width>40</width>
     </object>
   </items>
   <highscores>
+    <highscore>
+      <name>JONATHAN</name>
+      <datetime>28-10-2015 00:21:09</datetime>
+      <score>260</score>
+    </highscore>
   </highscores>
 </level>
