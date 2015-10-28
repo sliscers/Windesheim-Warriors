@@ -440,25 +440,5 @@
     </object>
   </items>
   <highscores>
-    <highscore>
-      <name>JONATHAN</name>
-      <datetime>13-10-2015 16:04:43</datetime>
-      <score>1375</score>
-    </highscore>
-    <highscore>
-      <name>JONATHAN</name>
-      <datetime>13-10-2015 16:05:46</datetime>
-      <score>337</score>
-    </highscore>
-    <highscore>
-      <name>JONATHAN</name>
-      <datetime>13-10-2015 16:11:43</datetime>
-      <score>423</score>
-    </highscore>
-    <highscore>
-      <name>jonat</name>
-      <datetime>13-10-2015 16:24:06</datetime>
-      <score>809</score>
-    </highscore>
   </highscores>
 </level>
