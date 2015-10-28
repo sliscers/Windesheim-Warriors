@@ -1,65 +1,237 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<level>
+﻿<level>
   <properties>
     <title>Level 1</title>
-    <difficulty>hard</difficulty>
+    <difficulty>Easy</difficulty>
   </properties>
   <items>
     <object>
+      <type></type>
+      <x>750</x>
+      <y>400</y>
+      <height>80</height>
+      <width>80</width>
+    </object>
+    <object>
+      <type></type>
+      <x>5</x>
+      <y>-5</y>
+      <height>80</height>
+      <width>80</width>
+    </object>
+    <object>
       <type>ExplodingObstacle</type>
-      <x>175</x>
-      <y>175</y>
+      <x>341</x>
+      <y>128</y>
       <height>40</height>
       <width>40</width>
     </object>
     <object>
-      <type>MovingExplodingObstacle</type>
-      <x>275</x>
-      <y>300</y>
+      <type>ExplodingObstacle</type>
+      <x>307</x>
+      <y>177</y>
       <height>40</height>
       <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>270</x>
+      <y>212</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>211</x>
+      <y>234</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>148</x>
+      <y>245</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>357</x>
+      <y>92</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>368</x>
+      <y>53</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>264</x>
+      <y>273</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>306</x>
+      <y>305</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>359</x>
+      <y>328</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>416</x>
+      <y>312</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>142</x>
+      <y>432</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>ExplodingObstacle</type>
+      <x>199</x>
+      <y>411</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>522</x>
+      <y>197</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>565</x>
+      <y>152</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>614</x>
+      <y>105</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>656</x>
+      <y>53</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>520</x>
+      <y>427</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>562</x>
+      <y>385</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>601</x>
+      <y>342</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <type>StaticObstacle</type>
+      <x>640</x>
+      <y>297</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
       <movingspeed>0</movingspeed>
-    </object>
-    <object>
-      <type>SlowingObstacle</type>
-      <x>150</x>
-      <y>200</y>
+      <smart>false</smart>
+      <type>MovingExplodingObstacle</type>
+      <x>762</x>
+      <y>304</y>
       <height>40</height>
       <width>40</width>
-      <slowdown>2</slowdown>
     </object>
     <object>
-      <type>SlowingObstacle</type>
-      <x>250</x>
-      <y>200</y>
+      <movingspeed>0</movingspeed>
+      <smart>false</smart>
+      <type>MovingExplodingObstacle</type>
+      <x>527</x>
+      <y>11</y>
       <height>40</height>
       <width>40</width>
-      <slowdown>2</slowdown>
     </object>
     <object>
+      <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
+      <smart>false</smart>
       <type>SlowingObstacle</type>
-      <x>350</x>
-      <y>200</y>
+      <x>364</x>
+      <y>395</y>
       <height>40</height>
       <width>40</width>
-      <slowdown>2</slowdown>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
+      <smart>false</smart>
+      <type>SlowingObstacle</type>
+      <x>720</x>
+      <y>152</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
+      <smart>false</smart>
+      <type>SlowingObstacle</type>
+      <x>599</x>
+      <y>235</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
+      <smart>false</smart>
+      <type>SlowingObstacle</type>
+      <x>366</x>
+      <y>229</y>
+      <height>40</height>
+      <width>40</width>
+    </object>
+    <object>
+      <movingspeed>0</movingspeed>
+      <slowingspeed>2</slowingspeed>
+      <smart>false</smart>
+      <type>SlowingObstacle</type>
+      <x>37</x>
+      <y>389</y>
+      <height>40</height>
+      <width>40</width>
     </object>
   </items>
-  <highscores>
-    <highscore>
-      <name>Jonathan</name>
-      <datetime>2015-10-06T11:59:03.1472859+02:00</datetime>
-      <score>120</score>
-    </highscore>
-    <highscore>
-      <name>Marten</name>
-      <datetime>2015-10-06T11:45:03.1472859+02:00</datetime>
-      <score>99</score>
-    </highscore>
-    <highscore>
-      <name>Kevin</name>
-      <datetime>13-10-2015 12:49:23</datetime>
-      <score>138</score>
-    </highscore>
-  </highscores>
 </level>

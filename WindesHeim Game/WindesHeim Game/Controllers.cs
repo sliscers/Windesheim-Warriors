@@ -941,7 +941,7 @@ namespace WindesHeim_Game
                     gameObjects = level.getCleanGameObjects();
                 }
                 else
-                { // Niew level maken
+                { // Niew level make
                     gameObjects = new List<GameObject>();
                 }
             }
