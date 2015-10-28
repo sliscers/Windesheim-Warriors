@@ -154,6 +154,9 @@
     <None Include="resources\otherScreen.png" />
     <None Include="resources\menuBackground.png" />
     <Content Include="resources\level1.xml" />
+    <Content Include="resources\level2.xml" />
+    <Content Include="resources\level3.xml" />
+    <Content Include="resources\level4.xml" />
     <Content Include="resources\saveLevel.png" />
     <Content Include="resources\testLevel.png" />
     <Content Include="resources\tryAgain.png" />

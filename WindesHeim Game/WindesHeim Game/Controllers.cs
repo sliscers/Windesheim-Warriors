@@ -59,8 +59,15 @@ namespace WindesHeim_Game
 
                 if (fileCount == 0)
                 {
+                    //Default levels
                     string xmlString = Resources.level1;
                     File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + "/levels/level1.xml", Encoding.UTF8.GetBytes(Resources.level1));
+                    xmlString = Resources.level2;
+                    File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + "/levels/level2.xml", Encoding.UTF8.GetBytes(Resources.level2));
+                    xmlString = Resources.level3;
+                    File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + "/levels/level3.xml", Encoding.UTF8.GetBytes(Resources.level3));
+                    xmlString = Resources.level4;
+                    File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + "/levels/level4.xml", Encoding.UTF8.GetBytes(Resources.level4));
                 }
             }
 

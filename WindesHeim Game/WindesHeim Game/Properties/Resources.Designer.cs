@@ -347,33 +347,136 @@ namespace WindesHeim_Game.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;level&gt;
+        ///   Looks up a localized string similar to &lt;level&gt;
         ///  &lt;properties&gt;
         ///    &lt;title&gt;Level 1&lt;/title&gt;
-        ///    &lt;difficulty&gt;hard&lt;/difficulty&gt;
+        ///    &lt;difficulty&gt;Easy&lt;/difficulty&gt;
         ///  &lt;/properties&gt;
         ///  &lt;items&gt;
         ///    &lt;object&gt;
-        ///      &lt;type&gt;ExplodingObstacle&lt;/type&gt;
-        ///      &lt;x&gt;175&lt;/x&gt;
-        ///      &lt;y&gt;175&lt;/y&gt;
-        ///      &lt;height&gt;40&lt;/height&gt;
-        ///      &lt;width&gt;40&lt;/width&gt;
+        ///      &lt;type&gt;&lt;/type&gt;
+        ///      &lt;x&gt;750&lt;/x&gt;
+        ///      &lt;y&gt;400&lt;/y&gt;
+        ///      &lt;height&gt;80&lt;/height&gt;
+        ///      &lt;width&gt;80&lt;/width&gt;
         ///    &lt;/object&gt;
         ///    &lt;object&gt;
-        ///      &lt;type&gt;MovingExplodingObstacle&lt;/type&gt;
-        ///      &lt;x&gt;275&lt;/x&gt;
-        ///      &lt;y&gt;300&lt;/y&gt;
-        ///      &lt;height&gt;40&lt;/height&gt;
-        ///      &lt;width&gt;40&lt;/width&gt;
-        ///      &lt;movingspeed&gt;0&lt;/movingspeed&gt;
+        ///      &lt;type&gt;&lt;/type&gt;
+        ///      &lt;x&gt;5&lt;/x&gt;
+        ///      &lt;y&gt;-5&lt;/y&gt;
+        ///      &lt;height&gt;80&lt;/height&gt;
+        ///      &lt;width&gt;80&lt;/width&gt;
         ///    &lt;/object&gt;
-        ///     [rest of string was truncated]&quot;;.
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;ExplodingObstacle&lt;/type&gt;
+        ///      &lt;x&gt;341&lt;/x&gt;
+        ///      &lt;y&gt;128&lt;/y&gt;
+        ///      &lt;height&gt;40&lt;/height&gt;
+        ///      &lt;w [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string level1 {
             get {
                 return ResourceManager.GetString("level1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;level&gt;
+        ///  &lt;properties&gt;
+        ///    &lt;title&gt;Level 2&lt;/title&gt;
+        ///    &lt;difficulty&gt;Expert&lt;/difficulty&gt;
+        ///  &lt;/properties&gt;
+        ///  &lt;items&gt;
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;
+        ///      &lt;/type&gt;
+        ///      &lt;x&gt;750&lt;/x&gt;
+        ///      &lt;y&gt;400&lt;/y&gt;
+        ///      &lt;height&gt;80&lt;/height&gt;
+        ///      &lt;width&gt;80&lt;/width&gt;
+        ///    &lt;/object&gt;
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;
+        ///      &lt;/type&gt;
+        ///      &lt;x&gt;5&lt;/x&gt;
+        ///      &lt;y&gt;-5&lt;/y&gt;
+        ///      &lt;height&gt;80&lt;/height&gt;
+        ///      &lt;width&gt;80&lt;/width&gt;
+        ///    &lt;/object&gt;
+        ///    &lt;object&gt;
+        ///      &lt;movingspeed&gt;0&lt;/movingspeed&gt;
+        ///      &lt;slowingspeed&gt;2&lt;/slowingspeed&gt;
+        ///      &lt;smart&gt;fals [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string level2 {
+            get {
+                return ResourceManager.GetString("level2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;level&gt;
+        ///  &lt;properties&gt;
+        ///    &lt;title&gt;Level 3&lt;/title&gt;
+        ///    &lt;difficulty&gt;Easy&lt;/difficulty&gt;
+        ///  &lt;/properties&gt;
+        ///  &lt;items&gt;
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;
+        ///      &lt;/type&gt;
+        ///      &lt;x&gt;750&lt;/x&gt;
+        ///      &lt;y&gt;400&lt;/y&gt;
+        ///      &lt;height&gt;80&lt;/height&gt;
+        ///      &lt;width&gt;80&lt;/width&gt;
+        ///    &lt;/object&gt;
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;
+        ///      &lt;/type&gt;
+        ///      &lt;x&gt;5&lt;/x&gt;
+        ///      &lt;y&gt;-5&lt;/y&gt;
+        ///      &lt;height&gt;80&lt;/height&gt;
+        ///      &lt;width&gt;80&lt;/width&gt;
+        ///    &lt;/object&gt;
+        ///    &lt;object&gt;
+        ///      &lt;movingspeed&gt;0&lt;/movingspeed&gt;
+        ///      &lt;slowingspeed&gt;2&lt;/slowingspeed&gt;
+        ///      &lt;smart&gt;true&lt;/ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string level3 {
+            get {
+                return ResourceManager.GetString("level3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;level&gt;
+        ///  &lt;properties&gt;
+        ///    &lt;title&gt;Level 4&lt;/title&gt;
+        ///    &lt;difficulty&gt;Hard&lt;/difficulty&gt;
+        ///  &lt;/properties&gt;
+        ///  &lt;items&gt;
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;ExplodingObstacle&lt;/type&gt;
+        ///      &lt;x&gt;689&lt;/x&gt;
+        ///      &lt;y&gt;426&lt;/y&gt;
+        ///      &lt;height&gt;40&lt;/height&gt;
+        ///      &lt;width&gt;40&lt;/width&gt;
+        ///    &lt;/object&gt;
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;ExplodingObstacle&lt;/type&gt;
+        ///      &lt;x&gt;680&lt;/x&gt;
+        ///      &lt;y&gt;372&lt;/y&gt;
+        ///      &lt;height&gt;40&lt;/height&gt;
+        ///      &lt;width&gt;40&lt;/width&gt;
+        ///    &lt;/object&gt;
+        ///    &lt;object&gt;
+        ///      &lt;type&gt;ExplodingObstacle&lt;/type&gt;
+        ///      &lt;x&gt;617&lt;/x&gt;
+        ///      &lt;y&gt;317&lt;/y&gt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string level4 {
+            get {
+                return ResourceManager.GetString("level4", resourceCulture);
             }
         }
         
