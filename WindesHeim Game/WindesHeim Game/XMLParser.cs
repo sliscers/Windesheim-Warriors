@@ -62,6 +62,7 @@ namespace WindesHeim_Game
         public XMLParser(String path = "")
         {
             this.path = path;
+            this.gameHighscores = new List<GameHighscore>();
         }
 
         public override string ToString()

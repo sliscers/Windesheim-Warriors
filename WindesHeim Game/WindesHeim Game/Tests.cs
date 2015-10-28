@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Drawing;
 using System.Diagnostics;
+using System;
 
 namespace WindesHeim_Game {
 
@@ -44,7 +45,8 @@ namespace WindesHeim_Game {
                 foreach (GameObject gameObject in safeListArray) {
                     if (gameObject is MovingExplodingObstacle) {
                         MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
-                        //gameObstacle.ChasePlayer(player);
+                        gameObstacle.ChasePlayer(player, "x");
+                        gameObstacle.ChasePlayer(player, "y");
 
                         if (gameObstacle.CollidesWith(player)) {
                             int widthOfPlayerObject = player.Location.X + player.Width;
@@ -79,16 +81,11 @@ namespace WindesHeim_Game {
                 foreach (GameObject gameObject in safeListArray) {
                     if (gameObject is SlowingObstacle) {
                         SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
-                        //gameObstacle.ChasePlayer(player);
+                        gameObstacle.ChasePlayer(player, "x");
+                        gameObstacle.ChasePlayer(player, "y");
 
                         if (gameObstacle.CollidesWith(player)) {
-
-                            int widthOfPlayerObject = player.Location.X + player.Width;
-                            int heightOfPlayerObject = player.Location.Y + player.Height;
-
-                            // We hebben het daadwerkelijk aangeraakt, dus if statement is valide
-                            bool checkIfXIsSuccess = gameObstacle.Location.X <= widthOfPlayerObject && gameObstacle.Location.Y <= heightOfPlayerObject;
-                            Assert.IsTrue(checkIfXIsSuccess, "X + Y is incorrect");
+                            Assert.IsTrue(gameObstacle.CollidesWith(player), "X + Y is incorrect");
 
                             gameLoop = false;
                         }
@@ -132,6 +129,69 @@ namespace WindesHeim_Game {
             }
 
             Debug.WriteLine("LetPlayerDieByExplodingObstacle: End");
+        }
+
+        [TestMethod]
+        public void TestXMLParser_Save() {
+            GameProperties gameProperties = new GameProperties("Test Level", "easy");
+
+            List<GameObject> gameObjects;
+            Player player;
+            BuildGameField(out gameObjects, out player);
+
+            GameHighscore gameHighscore = new GameHighscore("Test Speler", DateTime.Now.ToString(), 900);
+
+            XMLParser xmlParser = new XMLParser("unitTestXML.xml");
+
+            if(xmlParser == null)
+                Assert.Fail("NRE");
+
+            xmlParser.gameHighscores.Add(gameHighscore);
+            xmlParser.gameProperties = gameProperties;
+            xmlParser.gameObjects = gameObjects;
+
+            xmlParser.WriteXML();
+        }
+
+        [TestMethod]
+        public void TestXMLParser_Load() {
+            GameProperties gameProperties = new GameProperties("Test Level", "easy");
+
+            List<GameObject> gameObjects;
+            Player player;
+            BuildGameField(out gameObjects, out player);
+
+            GameHighscore gameHighscore = new GameHighscore("Test Speler", DateTime.Now.ToString(), 900);
+
+            XMLParser xmlParser = new XMLParser("unitTestXML.xml");
+
+            if (xmlParser == null)
+                Assert.Fail("NRE");
+
+            xmlParser.gameHighscores.Add(gameHighscore);
+            xmlParser.gameProperties = gameProperties;
+            xmlParser.gameObjects = gameObjects;
+
+            xmlParser.WriteXML();
+
+            // Reset XML
+            xmlParser = null;
+            xmlParser = new XMLParser("unitTestXML.xml");
+            xmlParser.ReadXML();
+
+            Assert.AreEqual(gameProperties, xmlParser.gameProperties, "GameProperties not equal");
+
+            // We hebben checkpoints gehardcode, dus nu even verwijderen
+            xmlParser.gameObjects.RemoveAt(0);
+            xmlParser.gameObjects.RemoveAt(1);
+            Assert.AreEqual(gameObjects.Count, xmlParser.gameObjects.Count, "GameObjects not equal");
+        }
+
+        [TestMethod]
+        public void TextXMLParser_LoadAllLevels() {
+            XMLParser.LoadAllLevels();
+
+
         }
     }
 }
