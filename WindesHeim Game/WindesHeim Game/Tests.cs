@@ -10,8 +10,6 @@ using System.Text;
 namespace WindesHeim_Game {
 
     // UNIT TEST CASES
-    // Check of MovingExplodingObstacle en SlowingObstacle ook daadwerkelijk de player aanraken
-    // Check wanneer de player een ExplodingObstacle aanraakt, het ook wordt registreerd
 
     [TestClass]
     public class Tests {
