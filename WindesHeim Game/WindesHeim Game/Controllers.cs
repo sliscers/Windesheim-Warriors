@@ -124,6 +124,7 @@ namespace WindesHeim_Game
             score = 0;
             mg.InitializeField();
             gameWindow.setController(ScreenStates.menu);
+            editor = false;
 
             timer.Stop();
         }
@@ -900,6 +901,7 @@ namespace WindesHeim_Game
         public void newLevel_Click(object sender, EventArgs e)
         {
             ModelEditor.level = null;
+            ModelGame.level = null;
             gameWindow.setController(ScreenStates.editor);
         }
     }
@@ -938,6 +940,10 @@ namespace WindesHeim_Game
                 { // Bestaand level bewerken
                     gameObjects = level.getCleanGameObjects();
                 }
+                else
+                { // Niew level maken
+                    gameObjects = new List<GameObject>();
+                }
             }
 
             ModelGame.level = null;
@@ -957,12 +963,9 @@ namespace WindesHeim_Game
             // Maakt nieuw level aan
             XMLParser tempLevel = new XMLParser();
             tempLevel.gameObjects = gameObjects;
-            if (level != null)
-            { 
-                ModelGame.level = tempLevel;
-                ControllerGame.editor = true; // Laat Game controller weten dat we aan het testen zijn
-                gameWindow.setController(ScreenStates.game);
-            }
+            ModelGame.level = tempLevel;
+            ControllerGame.editor = true; // Laat Game controller weten dat we aan het testen zijn
+            gameWindow.setController(ScreenStates.game);
         }
 
         public void saveLevel_Click(object sender, EventArgs e)
